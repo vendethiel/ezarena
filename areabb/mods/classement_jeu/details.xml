@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<plugin nom="classement_jeu" version="1.0">
+  <label>Classement d'un jeu</label>
+  <auteur>Liz@rd</auteur>
+  <type>affiche</type>
+  <page>2</page>
+  <description>Affiche les 15 meilleurs scores a un jeu.</description>
+</plugin>

@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<plugin nom="statsjeux" version="1.0">
+  <label>Statistiques de l'Arcade</label>
+  <auteur>Saint-Pere</auteur>
+  <type>affiche</type>
+  <page>?</page>
+  <description>Affiche les statistiques de l'Arcade et du joueur connecte</description>
+</plugin>

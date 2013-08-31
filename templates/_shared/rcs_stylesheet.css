@@ -1,0 +1,158 @@
+/**
+*
+* @package rank_color_system_mod
+* @version $Id: rcs_stylesheet.css,v 0.2 02/02/2007 20:29 reddog Exp $
+* @copyright (c) 2006 reddog - http://www.reddevboard.com/
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
+
+/**
+* rank color system classes
+*/
+
+/* table cells */
+html body table.cells {
+	margin:0;
+	padding:0;
+	border-spacing:1px;
+	empty-cells:show;
+}
+html body table.cells tr,
+table.cells th,
+table.cells td {
+	padding:3px;
+}
+
+html body table.subcells {
+	border:0;
+	margin:0;
+	padding:0;
+	border-spacing:1px;
+
+	width:100%;
+}
+html body table.subcells td {
+	padding:1px;
+}
+
+html body table.center {
+	margin-left:auto;
+	margin-right:auto;
+	text-align:left;
+}
+
+/* th link */
+th a,
+th a:visited {
+	color:#FFA34F !important;
+	text-decoration:none;
+}
+
+th a:hover {
+	text-decoration:underline;
+}
+
+/* floating */
+html body div.float_left { float:left; text-align:left; }
+html body div.float_right { float:right; }
+html body div.flow_auto { overflow:auto; width:100%; }
+html body div.float_right_auto { float:right; width:auto; vertical-align:top; }
+
+html body .margin_btm { padding:1px; margin-bottom:1px; }
+html body .margin_top { padding:1px; margin-top:1px; }
+
+/* elements */
+form { margin:0; padding:0; }
+html body label { cursor:pointer; }
+html body br.both { clear:both; }
+html body a img { border:none; }
+
+/* alignment */
+html body .hleft { text-align:left; }
+html body .hcenter { text-align:center; }
+html body .hright { text-align:right; }
+
+html body .abstop { vertical-align:top; }
+html body .absmiddle { vertical-align:middle; }
+html body .absbottom { vertical-align:text-bottom; }
+
+html body .middle { text-align:center; vertical-align:middle; }
+html body .bottom { vertical-align:bottom; }
+html body .nowrap { white-space:nowrap; }
+
+/**
+* levels classes
+*/
+
+/* administrator level */
+.admincolor {
+	color:#FFA34F;
+	font-weight:bold;
+	text-decoration:none;
+}
+a.admincolor:link, a.admincolor:visited {
+	color:#FFA34F;
+	font-weight:bold;
+	text-decoration:none;
+}
+a.admincolor:hover, a.admincolor:active {
+	color:#FFA34F;
+	font-weight:bold;
+	text-decoration:underline;
+}
+
+/* moderator level */
+.modcolor {
+	color:#006600;
+	font-weight:bold;
+	text-decoration:none;
+}
+a.modcolor:link, a.modcolor:visited {
+	color:#006600;
+	font-weight:bold;
+	text-decoration:none;
+}
+a.modcolor:hover, a.modcolor:active {
+	color:#006600;
+	font-weight:bold;
+	text-decoration:underline;
+}
+
+/* registered user level */
+.usercolor {
+	color:#006699;
+	font-weight:bold;
+	text-decoration:none;
+}
+a.usercolor:link, a.usercolor:visited {
+	color:#006699;
+	font-weight:bold;
+	text-decoration:none;
+}
+a.usercolor:hover, a.usercolor:active {
+	color:#006699;
+	font-weight:bold;
+	text-decoration:underline;
+}
+
+/**
+* ranks classes
+*/
+
+/* Administrator rank color */
+.Administrator {
+	color:#CC0000;
+	font-weight:bold;
+	text-decoration:none;
+}
+a.Administrator:link, a.Administrator:visited {
+	color:#CC0000;
+	font-weight:bold;
+	text-decoration:none;
+}
+a.Administrator:hover, a.Administrator:active {
+	color:#CC0000;
+	font-weight:bold;
+	text-decoration:underline;
+}

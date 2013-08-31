@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<plugin nom="menu_SP1" version="1.3">
+  <label>Menu de l'Arcade</label>
+  <auteur>Saint-Pere</auteur>
+  <type>affiche</type>
+    <page>1</page>
+  <description>Affichage des catégories et sous catégories de jeux.</description>
+</plugin>

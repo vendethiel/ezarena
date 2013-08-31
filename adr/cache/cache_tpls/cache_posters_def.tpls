@@ -1,0 +1,30 @@
+/***************************************************************************
+ *						cache_posters.php
+ *						-------------
+ *	begin			: 15/02/2004
+ *	copyright		: Ptirhiik
+ *
+ *
+ ***************************************************************************/
+
+/***************************************************************************
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *
+ ***************************************************************************/
+
+if ( !defined('IN_PHPBB') )
+{
+	die('Hacking attempt');
+	exit;
+}
+
+$adr_posters = array(
+	<!-- BEGIN cache_row -->
+	{cache_row.ID} => array({cache_row.CELLS}),
+	<!-- END cache_row -->
+);

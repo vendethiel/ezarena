@@ -1,0 +1,499 @@
+EzArena (Ullti modifiée)
+
+Templates :
+ - PussycatBlue
+ - (subSilver)
+
+!!! Mods de base
+
+# Account self-delete 1.0.0 - Poupoune
+Ce MOD permet à vos membres de supprimer leurs propres comptes sur votre forum. Cette fonctionnalité peut être désactivé dans le panneau d'administration. 
+
+# ACP Site Announcement Centre 1.2.3 - lefty74
+Permet d'ajouter une annonce en haut de votre forum facilement éditable par l'administration. Fonction de prévisualisation avant postage et usage possible des bbcodes et smilies.
+Possibilité de choisir le premier ou dernier post d'un forum ou topic comme annonce.
+L'Administrateur peut choisir qui verra l'annonce : Tous, membres enregistrés, Administrateurs ou Modérateurs.
+Possibilité de faire une annonce distincte uniquement pour les invités.
+
+# Admin Userlist 2.0.6c - Milkboy31
+Ce MOD vous permet de voir tous les membre de votre forum via l'ACP et permet d'effectuer de multiples actions sur cer derniers.
+Addons :
+ - Addon pour RCS
+
+# Advanced Admin Index Stats 1.0.0 - Civphp
+Ce MOD permet d'ajouter des statistiques supplémentaire dans le panneau d'administration. 
+
+# Advanced Board Disable 2.0.2 - S2B
+Ce MOD permet de donner la raison pour laquelle on ferme le forum mais surtout de choisir qui n'aura pas accès : 
+Exemple : invités. Invités + membres. Invités + membres + modos, etc...
+
+# Advanced Debug Mod 0.0.1 - Dark_Génova
+Ce MOD permet de rendre la fonction de débugage de phpBB bien plus puissante. En cas d'erreur le MOD va afficher les lignes qui posent problèmes, et en cas de problème SQL connu le MOD va proposer une description et solution du problème. 
+Addons :
+ - Addon Fix Debug on Windows & Show Incrimined Line - Informpro
+
+# Advanced Index Stats 1.0.1 - Rambo4104
+Ajoute sur l'index la date de création de votre forum, la moyenne des posts et topics par jour et la moyenne des membres par jour.
+
+# Advanced Posts Merging 2.1.2 - Xpert
+Fusionne les posts consécutifs d'un membre.
+
+# AreaBB 0.9.1 - Saint-Pere
+Portail avec gestionnaire d'extensions. Extension arcade ajoutée.
+Addons :
+ - Addon pour Subforums+ sur Mod News - Informpro
+ - Addon AreaBB Cached - Informpro
+ - Addon Show Room ID&Link from squelettes' admin - Informpro
+ - Addon Hide used blocks from list in squelette_blocs - Informpro
+
+# Auto Shorten URLs 1.0.4 - nfs
+Réduit toute URL postée à un nombre maximal de 60 caractères. Le nombre est désormais configurable par l'ACP.
+
+# BBCode Box Reloaded 1.2.2a - reddog
+Ce MOD remplace les boutons BBcode de base par des images dans l'écran de postage, plusieurs options sont disponibles depuis le panneau d'administration du forum.
+Addons :
+ - Addon Google Video
+ - Addon Hide
+ - Addon Thumbnails
+ - Addon Website
+ - Addon Youtube
+ - Addon Dailymotion
+
+# Better Captcha 1.0.1 - paul999
+Un système de captcha (image et code à l'enregistrement) plus performant. 
+
+# Birthday Event 1.1.0c - reddog
+Ce MOD ajoute un champ anniversaire au profil des utilisateurs, affiche en image le signe du zodiaque du membre si celui-ci a spécifié une date de naissance, et contient bien d'autres options. 
+Addons :
+ - Addon pour RCS
+
+# Cached Generation 1.2.2 - CyberAlien
+Ce mod ajoute un puissant cache SQL au forum et un "temps de génération" + compteur de requête en bas de la page
+
+# Change style 0.9.9 - Karl Tauber
+Ajoute un bloc sur chaque page, qui permet à chaque utilisateur (Membre ou invité), de changer le thème du forum. (Normalement, un utilisateur doit être enregistré pour changer le thème). 
+Addons :
+ - Addon remove current style from list - Informpro
+
+# ColorText 2.2.5 - crewstyle
+Ce MOD donne la possibilité aux membres de choisir une couleur par défaut pour leur posts. 
+L'administrateur peut choisir d'autoriser ou non cette option. 
+3 façons différentes d'ecrire la couleur : red, #ff0000 ou ff0000. 
+Option gérable depuis le profil (si l'administrateur l'autorise, sinon, l'option n'apparait pas). 
+
+# Colour on oll results 1.1.1 - Manipe
+Colorise les résultats des sondages.
+
+# CountClick 1.1.1 - eMule-Star
+Rajoute un compteur de click sur chaque lien dans un post.
+
+# Database Maintenance 1.3.8 - PhilippK
+Un puissant gestionnaire pour votre base de données avec de multiples options.
+
+# Default avatar 2.0.0b - Manipe
+Met un avatar par défaut aux membres n'en disposant pas (option applicable également aux invités).
+
+# DHTML Collapsible FAQ Mod 1.0.0 - markus_petrux
+Ce MOD permet une navigation plus aisée dans la FAQ. L'utilisateur peut étendre/réduire les réponses (une seule à la fois). Si le navigateur ne supporte pas le Javascript, la FAQ sera affichée comme par défaut. 
+
+# DHTML Slide Menu for ACP 1.0.0 - markus_petrux
+Ce MOD modifie le panneau gauche de l'administration en utilisant un menu HTML dynamique (effet roll-in/roll-out), facilitant ainsi la navigation. Il devrait fonctionner sur les dernières versions de la plupart des navigateurs, et devrait laisser toutes les catégories ouvertes sur les navigateurs non-supportés. Vraiment utile si vous avez beaucoup de MODs installés. 
+
+# Direct user link 1.0.6 - Niels
+Le nom de l'utilisateur devient un lien qui mène à son profil, sur la vue des topics.
+Si c'est un administrateur qui regarde le message, le lien mène vers la gestion de l'utilisateur
+
+# Disallowing Editing/Deleting Administrator Posts 0.0.2 - Freakin' Booty
+Empêche les modérateurs d'éfiter ou supprimer les post des administrateurs. 
+
+# Edit Forums On Index 1.0.0 - aUsTiN
+Ce MOD place une icone sur chaque forum permettant de l'éditer depuis l'index. 
+Addons :
+ - Addon pour Subforums+ - Informpro
+ - Addon Check permissions before allow forum editing - Informpro
+
+# Extended Private Message Notification 1.2.0 - ycl6
+Ajoute l'auteur et le contenu du message privé dans l'e-mail de notification.
+
+# External Forum Redirect 2.0.0 - John McKernan
+Permet de transformer le titre d'un forum en url.
+Addons :
+ - Addon pour Subforums+ - Informpro
+ - Addon Disallow viewing/posting in external forums - Informpro
+
+# eXtreme Styles 2.4.0 - CyberAlien
+Ce MOD est une version lourdement optimisée du système de templates de phpBB. 
+
+# Fast & furious 2.0.0 - Dimitri 'Dwing' Seitz
+Ce MOD accélère la vitesse de votre forum (sur certains serveurs). 
+
+# Flags 0.0.5 - reddog
+Ce MOD ajoute un menu déroulant dans le profil où l'utilisateur peut sélectionner le drapeau de son pays. L'icône du drapeau est affichée dans la liste des membres (possibilité de trier celle-ci selon ce critère), dans le profil de l'utilisateur, et dans les messages. 
+Addons :
+ - Addon pour Today Userlist
+ - Addon pour le bloc "Qui est en ligne?"
+
+# Forum Enter Post Limit 1.0.3 - emrag
+ce MODule permet de fixer un quota de messages à poster avant d'accéder à un forum ou un topic. 
+
+# Forum Icon with ACP Control 1.1.0 - ycl6
+Ce MOD permet d'allouer une icone à un forum via le panneau d'administration. Les icones apparaitront sur l'index. 
+Addons :
+ - Addon pour sf+ - Informpro
+
+# Garder le mouvement des smileys 1.0.0 - Bill Beardslee
+Le MOD permet aux smileys de ne pas se figer une fois que l'on a cliqué sur l'un d'eux. 
+
+# Gender 1.2.8 - Niels
+Ce Mod ajoute le genre/sexe de vos membres dans les sujets et leur profil (masculin/féminin). 
+Addons :
+ - Addon Gender required 0.9.1
+
+# Global Admin Template 1.2.0 - Thoul
+Pratique lorsque vous avez plusieurs templates, il permet d'avoir un unique dossier admin pour tous.
+Addons :
+ - Addon Force default template - Informpro
+
+# Global Announce 1.0.2 - BossKev & Achaab
+Ce MOD permet aux Admins de poster des annonces globales visibles dans tous les forums sans ajouter de requêtes SQL à phpBB.
+
+# Google Yahoo MSN Sitemaps and RSS V 1.2.0RC4 - dcz
+Ce MOD va créer des plans de site United Sitemaps (auparavant connu sous le nom de Google sitemaps), des flux RSS 2.0 ainsi qu'une liste d'URLS Yahoo urllist.txt pour phpBB et mxBB Portal (le cas échéant). 
+Utilise un système de cache supportant pleinement la compression Gun-zip, ainsi que de la mise en forme XSLTransform pour les plans de site Google et les flux RSS. 
+
+# Hypercell Class 1.1.0 - reddog
+Ce MOD ajoute un effet au passage de la souris sur les cellules de la liste des sujets et sur les catégories de l'index du forum, avec une icône dynamique selon le type de sujet (annonce, post-it, ...) et le statut (nouveau message, verrouillé, ...). 
+
+# Inactive Users 1.1.8 - Sko22
+Affiche les membres dont le compte n'est pas activé, ou ceux ayant 0 message. Vous avez la possibilité de les contacter ou de les supprimer.
+Addons :
+ - Addon pour RCS
+
+# Invision Style Profile 1.0.0 - joebart
+Réorganise le profil en menus
+Addons :
+ - Addon pour QTE - Informpro
+
+# Keep unread flags 2.0.7 - asinshesq
+Ce MOD permet de ne pas perdre les messages non lus lors d'une déconnexion et de garder comme non lu, un message sur lequel on voudrait revenir par la suite.)
+
+# Last Topic Title on Index 1.0.0 - MandersOnline
+Ce MOD ajoute un lien vers le dernier topic dans la cellule "dernier message" de l'index. 
+Addons :
+ - Addon pour Subforums+ - ABDev
+ - Addon pour QTE - Informpro
+
+# Latest active topics on index 1.1.9 - zparta
+Affiche un top10 des messages
+Addons :
+ - Addon pour RCS - ABDev
+ - Addon pour QTE - Informpro
+ - Addon Cache - Informpro
+
+# Logo aléatoires 1.3 - darathor
+Permet d'établir un roulement entre plusieurs logos définis dans le panneau d'administration. Le roulement se fait selon un intervalle de temps également défini dans l'ACP. Les chances qu'ont chaques logos d'être sélectionnés lors d'un remplacement peuvent être fixées individuellement. 
+
+# Méta Tags Dynamiques phpBB SEO 0.2.0 - dcz
+Ce mod va ajouter des méta tags dynamiques à votre forum phpBB. Ces balises sont construites à partir du contenu final des pages. 
+Simple et efficace, il crée des méta keywords et descriptions spécifiques pour les catégories, forums ainsi que pour l'index du forum sans ajouter une requête SQL. 
+
+# Moderator Tools on Viewforum 1.2.0 - eviL3
+Ce MOD permet d'afficher les outils de modération sur le viewforum.
+Addons :
+ - Addon Moderator Tools on Hover - Informpro
+
+# Rewrite phpBB SEO avancé 0.2.4 - dcz
+Ce mod réécrit les URLs des forums phpBB en injectant le titre des catégories, forums et sujets dans leur URLs. 
+Addons :
+ - Addon Zero Duplicate (version avancée) 0.2.2 - dcz
+  Redirige en utilisant des redirections HTTP 301 pratiquement tous les duplicates possibles de phpBB. 
+ - Addon FIX bug get_vars not erased between rewrites - Informpro
+
+# MultiVote_Mod 1.4.2 - vilaras
+Permet les choix multiples sur un sondage : 
+- Le posteur du sondage définit le nombre de choix possibles. 
+- Ceux qui répondent au sondage connaissent le maximum de choix possibles, 
+- Possibilité de fixer une durée au sondage. 
+- Le temps qui reste avant expiration du sondage apparait. 
+- Possibilité de cacher jusqu'à la fin du sondage les résulats et le nombre de votants. 
+
+# Navigateur 1.0.0 - Oyo
+Affiche le nom du navigateur de l'utilisateur dans "qui est en ligne".
+
+# No Website Signature during registration 1.1.11 - EXreaction
+Empêche de mettre un lien web ou une signature lors de l'enregistrement. Ceux-ci ne pourront être mis qu'ensuite, en éditant son profil.
+
+# Number of Female and Male on Index 1.1 - Dioxins
+Affiche un compteur pour chaque sexe sur l'Index. 
+
+# Olympus-Style Login Screen 3.0.2 - afterlife_69
+Change l'écran de login par celui du prochain phpBB Olympus. 
+
+# Online/Offline Indicator 1.3.2 - romans1423
+Montre votre statut sur le viewtopic et le memberlist : Connecté, hors-ligne ou caché.
+
+# Optimisation des titres phpBB 1.0.0 - dcz
+Ce mod va optimiser le titre des pages de phpBB. 
+Par défaut, le titre des pages du forum comporte des informations tout à fait inutiles, comme "Voir le Forum" ou "Voir le sujet". 
+Ce mod va concentrer le contenu des titres à l'essentiel, en n'utilisant que le titre des sujets, forum et catégories comme titre de page. 
+De plus, en ajoutant le numéro de page dans le titre, il autorise l'indexation en profondeur des sujets, car deux pages avec le même titre ont du mal à cohabiter dans les moteurs de recherche. 
+Ajoute également un titre spécifique aux catégories. Le tout sans ajouter une requête SQL. 
+
+# Overall Forums Permission Interactive Editor 2.0 - sjphpbb
+Addons :
+ - Addon pour Yellow Card
+ - Addon pour Subforums+ - Informpro
+ - Addon pour Attach mod - Informpro
+
+# Password-protected forums 0.5.1 - Freakin' Booty
+Ce MOD permet de mettre un mot de passe pour accéder aux forums de votre choix. Chaque forum peut avoir son propre mot de passe.
+
+# PM threshold 1.0.2 - Ptirhiik
+Définit un nombre minimal de posts avant de pouvoir se servir de sa messagerie privée.
+
+# Point system 2.1.2 - Robbie Shields
+Crée une monnaie sur votre forum. Vous pouvez définir combien gagnera un membre qui poste un message ou un topic. les membres peuvent s'échanger de l'argent entre eux et les modérateurs ont le pouvoir de retirer ou d'ajouter de l'argent à un membre. 
+
+# Post Description 1.1.3 - reddog
+Ce MOD permet d'ajouter une description au sujet ou message que vous rédigez. Cette description est visible un peu partout (résultats des recherches, prévisualisation, revue du sujet, liste des sujets d'un forum, messages, ...). 
+
+# Post numbers 1.0.2 - emrag
+Ce MOD affecte un n° à chaque post ce qui vous permet d'obtenir l'url directe de ce dernier. Pratique pour éviter d'avoir à lister tous les posts d'un topic pour en trouver un en particulier.
+
+# Postographe d'un membre depuis viewtopic 1.0 - darathor
+Ajoute un lien vers les posts d'un membre dans le viewtopic
+Fixes :
+ - Recherche par user_id 1.1 - darathor
+
+# Presentation Required 1.0.1 - Apophyss
+Ce MOD ajoute une option pour obliger les membres à se présenter sur votre forum. Seuls les utilisateurs enregistrés et ayant créé un topic de présentation sur le forum présentation pourront poster sur votre forum. 
+
+# Pseudo live verification 1.0.0 - Lefkeo
+Ce MOD permet de voir en live lors de l'enregistrement si le pseudo est déja utilisé ou non.
+
+# QuickLinks 1.0.0 - Bananeweizen
+Remplace des mots dans les postings par des liens, mots clefs et des urls qui sont gérés par l'intermédiaire de l'ACP. 
+
+# Quick Post ES (Expansion Set) 1.1.3c - reddog
+Ce MOD ajoute la fonction Réponse Rapide qui apparaîtra sous chaque sujet. Cette version propose énormément de réglages disponibles depuis la configuration générale de l'administration, ou la gestion des utilisateurs, mais également dans le profil de chaque utilisateur. Il est possible aussi de choisir dans quelles sections la Réponse Rapide pourra être utilisée. 
+Addons :
+ - Addon Focus textarea on QR - Informpro
+
+# Rank Color System 0.1.5 - reddog
+Ce MOD permet de créer et gérer des rangs de couleurs au niveau des groupes et des utilisateurs qui seront affichés sur l'ensemble du forum.
+
+# Rank Image Display 1.0.2 - reddog
+Affiche l'image du rang dans l'admin des rangs
+
+# Rank Tags 1.0.2a - eviL
+Permet de personnaliser vos rangs à l'aide de balises HTML.
+
+# Reorder ACP Categories 1.0.3 - dvandersluis
+Ce MOD permet de réorganiser l'affichage de vos catégories dans l'ACP.
+
+# Replace posts
+Ce MOD permet à l'administrateur de remplacer des bouts de texte dans les posts sans utiliser la censure. Cela se révèle très utile suite par exemple à un changement d'URL ou bien à un changement de pseudo. 
+
+# Resize Avatars Based on Max Width and Height 1.0.2 - spooky2280
+Ce MOD réduira tous les avatars de façon à ce qu'ils ne dépassent pas les standards définis dans l'ACP.
+
+# Resize Posted Images Based on Max Width 2.4.5 - spooky2280
+Ce MOD redimensionne les images pour ne pas déformer le forum mais sont cliquables et s'ouvrent ainsi en pleine page dans une nouvelle fenêtre.
+
+# Return to Profile Link 1.0.0 - reddog
+Ceci ajoute la possibilité de retourner à son profil juste après l'avoir édité et modifié.
+
+# Sauvegarde totale depuis l'ACP - Auteur : N/A 
+Ce MOD permet de sauvegarder votre base de donnée depuis le panneau d'administration, en prenant en compte les tables que vous avez ajoutées. 
+
+# Search latest 24h 48h 72h 1.1.0 - markus_petrux
+Permet de trouver les posts des dernières 24, 48 ou 72 heures. la période est définie par l'ACP.
+
+# Separate Announcements & Sticky 2.0.0 - Aiencran
+Ce MOD permet de séparer les annonces, les post-it et les messages dans le viewforum. 
+
+# Shoutbox 1.1.7 - Niels
+Une shoutbox totalement intégrée à phpBB qui tient compte des fuseaux horaires, des langues utilisées, des thèmes, permet l'utilisation des smilies, du BBCode, tient compte de la censure et des groupes/membres.
+Addons :
+ - Addon pour RCS
+ - Addon Advanced Soutbox 2.0.0 - joebart
+
+# Signature displayed once per page 1.0.1 - Agnostik
+Ce MOD ne fera afficher la signature d'un membre qu'une fois dans un topic.
+
+# Simple Hidden Users Stopper but ADMIN 1.0.2 - 3Di
+Empêche les utilisateurs (sauf admin) de se connecter en mode "caché"
+
+# Simple Show Bots 0.0.2 - dez
+Ce MOD permet de compléter le bloc "Qui est en ligne" de l'index de votre forum en ajoutant le nom des robots des moteurs de recherche en train de parcourir vos forums. 
+
+# Smilies Invasion 1.2.1 - darklordsatan
+Permet de placer des smilies presque partout : Titre de la catégorie, du forum, du topic, du sujet, dans les MPs... Apparait dans la recherche...
+Addons :
+ - Addon pour Last topic title on Index
+
+# Sort memberlist per letter 1.0.1 - Freakin' Booty
+Ce MOD permet d'afficher les membres commençant par la même lettre dans la liste des membres. 
+
+# Split Categories 1.0.1 - reddog
+Sépare les catégories sur l'index. 
+
+# Split posts and merge in one step 1.0.4 - asinshesq
+Permet à l'administrateur de diviser des messages depuis un sujet (en utilisant la fonctionnalité par défaut de phpBB) et de fusionner ces messages dans un sujet existant, en une seule étape. 
+
+# Today Userlist 1.2.2a - reddog
+Ce MOD liste sur l'index du forum les utilisateurs qui sont passés durant les 24 dernières heures. Les statistiques concernant les invités sont également disponibles. 
+
+# Today/Yesterday Relative Time Mod 1.1.1a - ewelin
+Met aujourd'hui ou hier aux posts mais intègre désormais le Last Topic Title on Index et permet d'afficher également la date relative pour les posts de moins de 24 heures
+
+# Toggle Admin CP Login 2.0.0 - MarcuS
+Permet de choisir via l'ACP si on veut se ré-identifier pour accéder au panneau d'administration
+
+# Toolbar 1.4.0 - reddog
+Ce mod ajoute une barre d'icônes visible en haut de l'index, des forums et des sujets qui permet de voir les derniers messages, ses propres messages, les messages sans réponses, les utilisateurs en ligne, surveiller/arrêter de surveiller un sujet, marquer tous les sujets comme lu et savoir lorsqu'on a reçu un nouveau message privé
+
+# Topic display order 1.0.2 - Ptirhiik
+Ce MOD permet à l'administrateur de définir pour chaque forum un ordre d'affichage des messages mais l'utilisateur peut en décider autrement. 
+
+# Topics Enhanced 2.3.2b - reddog
+Sépare les messages d'un même sujet, ajoute 6 boutons de nav, arrange la ligne de date/titre, modifie l'apparence des informations en bas des forums. (regroupe 4 mods : topic nav buttons; bottom tabs; separated topics; minitime)
+Addons :
+ - Addon (Un)watch with bottom tabs
+
+# vAgrement Terms 1.0.0 - Terms
+écran d'acception des conditions d'utilisation comme vBulletin
+
+# Vertical Displaying Authorization Table 1.0.3 - Jesper Moller
+Affiche les permissions des forums de manière verticale
+
+# View PM While Replying 1.0.0 - Manipe
+Vous permet de voir le MP auquel vous répondez, comme le topic_review en réponse à un post.
+
+# View Topic Name While Posting 1.0.5 - GPHemsley
+Vous permet de voir le topic auquel vous répondez.
+
+# Write-confirmation 1.0.0 - seb31
+Permet à l'administrateur de poser une question écrite pour empêcher les robots de s'inscrire. La question et la réponse sont paramétrables depuis le panneau d'administration. L'administrateur peut activer ou désactiver cette fonction.
+
+# Yellow card 1.4.12 - Niels
+Ce MOD affichera 4 boutons de couleurs différents à chaque posts d'un membre (rouge, jaune, vert et bleu). L'administrateur peut configurer dans le panneau d'administration dans quel forum les boutons peuvent apparaitre. Rouge = bannissement, Jaune = avertissement, Vert = débannissement, Bleu = rapport à un modérateur. Des emails seront envoyés au membre concerné, afin de le mettre au courant.
+
+ASTUCES :
+
+# CSS : Icône dynamique sur les liens hypertexte 
+Cette astuce permet d'afficher une icône à côté des liens hypertexte, changeante suivant l'état (:link, :visited, :hover, :active).
+
+# JS Tooltip - Info bulle Transparente
+Le code qui suit (combinant à la fois le javascript et les css) permet d'obtenir un effet transparent sur les balises title, avec suivi de la souris.
+
+# Anti Anti-flood
+Suppression du flood pour les Administrateurs et Modérateurs pour la recherche et dans la shoutbox.
+
+# Script de Ashe
+
+# Accélération des scripts PHP par Dr DLP
+
+FIXES :
+# includes/functions_search.php
+Ce fix empêche l'entrée des mots trop long (+ de 20 lettres) et trop courts ( - de 3 lettres). Ce fix n'est pas inclus à phpBB parce qu'il n'a pas été approuvé par l'équipe phpBB. Cependant, ce fix est fonctionnel et réduit considérablement la taille des tables search_word_list et search_word_match.
+
+!!! EzArena
+# Advanced Dungeons & Rabbits 0.4.5 - Dr DLP, Seteo-Bloke
+Ajoute un système de RPG complet à votre forum, avec feuilles de personnage, magasins, combats, etc.
+Note : Tous les mods préfixés par "ADR (ST)" sont les mods faisant parti de la prémodée ADR (version 0.3.4) de ShadowTek.
+D'autres mods ont été rajoutés, et le mod ADR en lui-même a été mis à jour (0.3.4 -> 0.4.5).
+Addons :
+ - Addon pour RCS - Informpro
+
+# ADR : Zone shoutbox & Battle Community Integration 1.0.0 - Informpro
+Permet d'utiliser la chatbox communautaire plutôt que la chatbox du zone_mod.
+
+# ADR (ST) : Cauldron 2.0.0 - one_piece
+Ajoute un système de chaudron pour faire des recettes.
+
+# ADR (ST) : Donation Mod - Seteo-Bloke
+Ajoute un système de Temple et de Lac auxquels vous pouvez faire des offrandes.
+
+# ADR (ST) : Armor Sets 0.1.2 - Seteo-Bloke
+Permet de créer des panoplies d'armures à équiper.
+
+# ADR (ST) : Graphical Battles 0.1.5 - Seteo-Bloke
+Permet d'ajouter des meilleurs graphismes aux combats.
+
+# ADR (ST) : Guild Alliances 0.0.3 - Seteo-Bloke
+Permet de faire des alliances
+
+# ADR (ST) : Jobs 0.2.0 - Seteo-Bloke
+Ajoute un système complet de métiers à ADR.
+
+# ADR (ST) : Offensive spells with elements - Dedo
+Ajoute des sorts élémentaires offensifs
+
+# ADR (ST) : Mine update - cedô l'immortel
+Des ajouts pour la mine.
+
+# ADR (ST) : Rabitoshi 2.0 - one_piece
+Ajoute un système d'animalerie complet, intégré à ADR.
+
+# ADR (ST) : Town Environment 4.1.0 - one_piece
+Donne aux villes des interfaces interactives et ajoute des images aux différentes pages.
+
+# ADR (ST) : Zone 1.0 - one_piece
+Ajoute un système très complet de zones à ADR.
+
+# File Attachment Mod 2.4.5 - Acyd Burn
+Permet d'attacher des fichiers aux messages
+Addons :
+ - Addon Attach mod stats in Userlist/profile - Informpro
+ - Addon thumbnail settings 1.1.1 - rxu
+
+# Fix Session Error 1.0.1 - TerraFrost
+Réduit les chances d'avoir une erreur type "Error creating new session"
+
+# Fix Posting for langs with accents 1.0.0 - Informpro
+Fixe l'utilisation d'htmlspecialchars() avec le mauvais charset, afin que les langues à accent dans le posting n'empêchent pas l'utilisation d'une fonctionnalité si son bouton a des accents (ex: "Prévisualisation") dans les nouvelles versions de PHP.
+
+# Groups on profile 0.0.1 - Ptirhiik
+Affiche la liste des groupes auquel l'utilisateur appartient dans le profil
+Addons :
+ - Addon pour Invision style profile - Informpro
+ - Addon pour RCS - Informpro
+
+# Group ModeratorZ 1.0.2 - Ptirhiik
+Ajoute la notion de "possesseur de groupe" (choisi depuis l'ACP) et permet d'avoir plusieurs modérateurs pour chaque groupe, permettant de faciliter la gestion de ceux-ci.
+
+# Instant Post Redirect - afterlife_69
+Redirige automatiquement après un envoi de message/mp/édition/etc
+
+# JS Reducer for Recent Topics & Shoutbox 0.0.1 - Informpro
+Ajoute un bouton pour dé/re plier les blocs "sujets récents" et "shoutbox"
+
+# phpBB eXtensive Caching 0.1.0 - Informpro
+Ajoute un cache SQL puissant à différents endroits du forum
+
+# Quick Title Edit 1.6.1 - Xavier Olive, ABDev, PastisD
+Addons :
+ - Addon QTE Cache - Informpro 
+ - Addon pour RCS' userlist - Informpro
+
+# Related topics 0.1.2 - Freakin' Booty
+Affiche les sujets similaires dans la vue de sujet.
+Addons :
+ - Addon pour RCS - Informpro
+ - Addon pour QTE - Informpro
+
+# Secondary Forum Descriptions 1.0.2 - TWoods
+Permet d'ajouter une description secondaire (comme des règles) affichée dans la vue de forum.
+Addons :
+ - Addon pour BBCode Box Reloaded - Informpro 
+ - Addon BBCode&Smilies - Informpro
+
+# Strip HTML Tags in Meta and Title 1.0.0 - Informpro
+Supprime les tags HTML des titres de forums dans les meta et dans le titre de la page
+
+# Subforums + 0.0.6a - Ptirhiik, asinshesq
+Addons :
+ - Addon pour KUF - asinshesq
+ - Addon pour RCS - ABDev
+ - Addon pour Last topic title on index - ABDev

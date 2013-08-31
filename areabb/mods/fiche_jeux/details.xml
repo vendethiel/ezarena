@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<plugin nom="fiche_jeux" version="1.3">
+  <label>Fiche detaillee sur un jeu</label>
+  <auteur>Saint-Pere</auteur>
+  <type>affiche</type>
+  <page>2</page>
+  <description>Ce mod affiche toutes les informations connues sur un jeu.</description>
+</plugin>

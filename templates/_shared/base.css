@@ -1,0 +1,17 @@
+div#tooltipDiv {
+	padding: 3px;
+	border: solid 1px #808080;
+	display: none; /*white-space: nowrap;*/
+	background: #FFF;
+	color: #2B3D2B;
+	font: 9px Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1000;
+	filter: alpha(opacity=85);
+	-moz-opacity: .85;
+}
+
+@import 

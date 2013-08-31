@@ -1,0 +1,121 @@
+<?php
+/***************************************************************************
+ *                          lang_faq.php [french]
+ *                            -------------------
+ *   begin                : Wednesday Oct 3, 2001
+ *   copyright            : (C) 2001 The phpBB Group
+ *   email                : support@phpbb.com
+ *
+ *   $Id: lang_faq.php
+ *
+ *
+ ***************************************************************************/
+
+/***************************************************************************
+ *   English
+ *   --------
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   Francais
+ *   ----------
+ *   Ce programme est un logiciel libre; vous pouvez les redistribuer
+ *   et/ou le modifier tel que le prévoit la license GNU General Public License
+ *   (GNU/GPL) publiée par la Fondation des logiciels libres (Free Software Foundation)
+ *   Est appliquée la version 2 de la licence ou n'importe qu'elle version antérieure
+ *   de votre choix.
+ *
+ ***************************************************************************/
+
+//
+// Traduction : phpBB France (http://www.phpbbfrance.org/)
+//
+ 
+// 
+// To add an entry to your FAQ simply add a line to this file in this format:
+// $faq[] = array("question", "answer");
+// If you want to separate a section enter $faq[] = array("--","Block heading goes here if wanted");
+// Links will be created automatically
+//
+// DO NOT forget the ; at the end of the line.
+// Do NOT put double quotes (") in your FAQ entries, if you absolutely must then escape them ie. \"something\"
+//
+// The FAQ items will appear on the FAQ page in the same order they are listed in this file
+//
+ 
+$faq[] = array("--","Connexion au forum");
+$faq[] = array("Pourquoi ne puis-je pas me connecter ?", "Etes vous sûr que vous êtes enregistré ? Plus sérieusement, vous devez vous enregistrer pour pouvoir vous connecter. Si vous êtes enregistré, et que vous ne pouvez vous connecter, vérifiez bien si votre compte n'a pas été banni, ou s'il est inactif (un compte peut-être inactif si l'administrateur a activé le code d'activation et que vous n'avez pas validé votre compte via le mail qui vous a été envoyé par exemple). Si vous ne pouvez vraiment pas vous connecter sans aucune raison apparente, veuillez contacter le webmaster ou l'administrateur de ce forum.");
+$faq[] = array("Pourquoi devrais-je m'inscrire au forum ?", "Personne ne vous y oblige. L'administrateur du forum est maître de décider si les personnes non enregistrées (invités) pourront poster ou non. Cependant l'enregistrement vous donnera accès à certaines options indisponibles aux invités, comme la possibilité d'utiliser une signature, un avatar, d'envoyer des mails ou des messages privés aux autres membres, de vous inscrire à des groupes, etc. La procédure d'enregistrement ne prend que deux minutes, aussi il est recommandé de le faire.");
+$faq[] = array("Pourquoi suis-je déconnecté automatiquement ?", "Si vous ne cochez pas le bouton <i>Se connecter automatiquement à chaque visite</i> lors de votre connexion, vous resterez seulement connecté le temps de votre présence sur le forum. C'est une protection pour éviter que d'autres puissent utiliser indûment votre compte. Pour rester automatiquement connecté, cochez la case lors de la connexion. Il est recommandé de ne pas la cocher si vous accédez au forum via un espace public (bibliothèque, cyber-café, université, etc.).");
+$faq[] = array("Comment puis-je cacher mon pseudo de la liste des connectés ?", "Dans votre profil vous trouverez une option <i>Cacher votre pseudo</i>. Si vous cochez <i>oui</i> pour l'option, votre pseudo sera caché dans la liste des connectés (exepté des administrateurs qui vous verront en italique). Vous serez comptabilisé comme un membre en invisible.");
+$faq[] = array("J'ai perdu mon mot de passe !", "Pas de panique ! Bien que votre mot de passe ne puisse être retrouvé, il peut être recréé à nouveau. Pour cela, veuillez vous rendre sur la page de connexion et cliquez sur le lien <u>J'ai oublié mon mot de passe</u>. Suivez les instructions et vous serez à nouveau connecté d'ici peu.");
+$faq[] = array("Je me suis enregistré, mais je ne peux pas me connecter !", "Tout d'abord, vérifiez que vous avez entré un bon pseudo / mot de passe. S'ils sont corrects, la seule raison restante est que votre compte n'a pas été activé. Lorsque vous vous enregistrez, fournissez une adresse mail valide car, suivant la configuration du forum, un mail peut vous être envoyé avec un code d'activation. Il se peut aussi que l'administrateur ait enclenché l'activation manuelle des membres, auquel cas vous devrez attendre qu'un administrateur valide votre compte avant de pouvoir vous connecter (un email les notifiera de votre inscription).");
+$faq[] = array("Je me suis déjà enregistré dans le passé mais je ne peux plus me connecter à nouveau !", "Il y a deux raisons possibles à ce problème. Soit vous avez entré un mauvais pseudo / mot de passe (vérifiez l'email que vous avez reçu lors de votre enregistrement) ou bien l'administrateur a supprimé votre compte (pour différentes raisons). Votre compte a très bien pu, par exemple, être délesté si vous n'avez jamais posté de messages et que l'administrateur a fait le ménage pour libérer un peu de place dans sa base de données.");
+
+
+$faq[] = array("--","Profil d'utilisateur");
+$faq[] = array("Comment puis-je changer mon profil ?", "Votre profil (si vous êtes inscrit) est enregistré dans la base de données. Pour le modifier cliquez sur le lien <u>Profil</u> (généralement mis en haut des pages). Vous pourrez y modifier toutes vos données.");
+$faq[] = array("La date du forum est incorrecte !", "La date est certainement correcte. Cependant les dates affichées sont gérées en fonction de différents fuseaux horaires, il se peut que le vôtre soit mal réglé. Si c'est le cas vous pouvez le changer via le profil pour le resynchroniser avec votre fuseau horaire (Londres, Paris, New York, Sydney, etc). Veuillez noter que le fuseau horaire ne peut être modifié que si vous êtes connecté. Si ce n'est pas déjà le cas, voilà une bonne occasion de le faire !");
+$faq[] = array("J'ai changé mon fuseau horaire mais la date est à nouveau fausse !", "Si vous êtes sûr d'avoir mis un fuseau horaire correct, et que la date est encore fausse, changez le à nouveau. Le forum n'est pas conçu pour gérer automatiquement les passages aux heures d'été ou d'hiver, aussi n'hésitez pas à le décaler vous-même d'une heure.");
+$faq[] = array("Ma langue n'est pas dans la liste des langues disponibles !", "La raison la plus probable est que l'administrateur n'a pas installé sur le forum le pack de langue vous concernant. Essayez de demander à l'administrateur s'il peut le faire. Vous trouverez la liste des packs de langue disponibles sur notre site web.");
+$faq[] = array("Comment puis-je mettre une image (avatar) devant mon pseudo ?", "Il y a deux types d'images possibles qui peuvent s'afficher devant votre pseudo. Le premier type est l'image du rang qui vous est associé : elle prend généralement la forme d'étoiles ou de blocs. Vous en aurez plus ou moins suivant votre nombre de messages. Juste en dessous peut se trouver une image plus large qui s'appelle <i>avatar</i>. Elle est généralement unique ou personnelle à chaque membre. C'est à l'administrateur d'activer ou non les avatars et les différentes façons d'en utiliser un (depuis une galerie, une url ou en l'important depuis votre PC). Si vous ne pouvez utiliser d'avatar, c'est dû, soit au fait que l'administrateur les ait désactivés (nous sommes sûr qu'il a de bonnes raisons !), soit que seul votre avatar l'ait été (image choquante ou trop grande ?).");
+$faq[] = array("Comment puis-je changer mon rang ?", "Vous ne pourrez pas changer votre rang en général (les rangs apparaissent dans les sujets, sous votre pseudo, ou ailleurs suivant le thème utilisé). De nombreux forums utilisent les rangs pour indiquer le nombre de messages des membres ou pour identifier certains membres. Par exemple il se peut que les modérateurs et administrateurs aient un rang spécial. Ne postez pas de messages inutiles (flood) juste pour incrémenter votre rang -- il y aura toujours un administrateur ou un modérateur qui supprimera vos messages inutiles et vous rabaissera davantage votre rang.");
+$faq[] = array("Quand je clique sur le lien pour envoyer un email à un membre, il me demande de me connecter.", "Désolé, mais seul les membres connectés (donc enregistrés) peuvent envoyer des emails. Il s'agit d'une simple protection pour éviter les envois de mails anonymes (spams, etc).");
+
+
+$faq[] = array("--","Ajout de messages");
+$faq[] = array("Comment puis-je poster un sujet dans un forum ?", "Simplement en cliquant sur le bouton approprié sur la page du forum, ou sur celle du sujet. Il vous sera peut-être nécessaire de vous enregistrer avant de poster votre message. Les droits que vous possédez sont listés en bas de la page du forum ou du sujet (par exemple la liste : <i>Vous pouvez poster de nouveaux sujets dans ce forum, Vous pouvez répondre aux sujets dans ce forum, etc.</i>)");
+$faq[] = array("Comment puis-je éditer ou supprimer un message ?", "À moins de n'être administrateur ou modérateur du forum, vous ne pouvez éditer ou supprimer que vos propres messages. Vous pouvez éditer un message (parfois seulement après un certain temps après qu'il ait été posté) en cliquant sur le bouton <i>Éditer</i> du message concerné. Si quelqu'un a déjà répondu au message, un petit texte apparaîtra tout en bas du message après que vous ayez édité, indiquant le nombre d'édition du message. Il n'apparaîtra pas si personne n'a répondu, ou si un modérateur ou un administrateur a édité le message (il devrait laisser un petit message expliquant ce qu'il a modifié, et pourquoi). Veuillez noter qu'un utilisateur normal ne peut supprimer un message une fois que quelqu'un y a répondu.");
+$faq[] = array("Comment puis-je ajouter une signature à mon message ?", "Pour ajouter une signature à un message vous devez avant tout la créer, via votre profil. Une fois créée, vous pouvez cocher la case <i>Attacher sa signature</i> dans le formulaire pour poster un message, juste en dessous de la zone de texte. Vous pouvez aussi ajouter par défaut votre signature à tous vos messages en cochant la bonne case dans votre profil. Il vous sera toujours possible de ne pas afficher votre signature sur un message en particulier, en décochant la case <i>Attacher sa signature</i> dans le formulaire.");
+$faq[] = array("Comment puis-je créer un sondage ?", "Créer un sondage est simple -- lorsque vous postez un nouveau sujet (ou que vous éditez le premier message, si vous en avez la permission) vous devriez voir un formulaire <i>Ajouter un sondage</i> en dessous de la partie <i>Poster un nouveau sujet</i>. Si vous ne le voyez pas, c'est que vous n'avez probablement pas les droits pour créer des sondages. Vous devez entrer un titre à votre sondage et ensuite au moins deux options. Pour ajouter une option, entrez la proposition dans la case et cliquez sur le bouton <i>Ajouter l'option</i>. Vous pouvez aussi ajouter un temps limite au sondage, 0 signifiant qu'aucune limite n'est fixée. Sachez qu'il y a un nombre maximum d'options que vous pouvez entrer, fixé par l'administrateur.");
+$faq[] = array("Comment puis-je éditer ou supprimer un sondage ?", "Comme pour les messages, les sondages ne peuvent être édités que par le posteur, les modérateurs ou l'administrateur. Pour éditer un sondage, cliquez sur le bouton <i>Éditer</i> du premier message, le sondage lui étant toujours associé. Si personne n'a encore voté, vous pourrez supprimer le sondage ou bien éditer les options. Sinon, seul les modérateurs et l'administrateur pourront le faire, ceci dans le but d'éviter de truquer les sondages en modifiant les options au cours des votes.");
+$faq[] = array("Pourquoi ne puis-je pas accéder à un forum ?", "Il est possible que des forums soient réservés à certains utilisateurs ou groupes. Pour voir, lire, poster, etc. vous devez avoir des autorisations spéciales que seuls les modérateurs et administrateurs peuvent donner. Vous devriez donc les contacter.");
+$faq[] = array("Pourquoi ne puis-je pas voter dans les sondages ?", "Seuls les utilisateurs enregistrés peuvent voter dans les sondages, ceci afin d'éviter le trucage des résultats. Si vous êtes enregistré et que vous ne pouvez toujours pas voter, c'est que vous n'avez probablement pas les droits d'accès appropriés.");
+
+
+$faq[] = array("--","Formatage et types de Sujets");
+$faq[] = array("Qu'est ce que le BBCode ?", "Le BBCode est un langage \"à balises\" qui vous permet de mettre en forme et d'organiser le texte de vos messages, notes et annonces. Sur le principe du code HTML, le BBCode s'appuie sur l'ouverture et la fermeture de balises, contenues dans des crochets [ et ], pour délimiter votre texte suivant le modèle [balise]texte[/balise]. Pour plus d'informations sur le BBCode, consultez le guide qui est accessible depuis la page de création / réponses des messages ou en cliquant <a href=\"faq.php?mode=bbcode\">ici</a>.");
+$faq[] = array("Puis-je utiliser le HTML ?", "Cela dépend si l'administrateur vous-y autorise ou pas. Si vous êtes autorisé à utiliser le HTML, vous remarquerez certainement que seulement certaines balises fonctionnent. C'est une mesure de sécurité pour éviter que certains tags ne détruisent la mise en page ou puissent permettre d'autres actions malveillantes.");
+$faq[] = array("Que sont les smileys ?", "Les smileys, ou émoticônes, sont de petites images qui peuvent être utilisées pour exprimer un sentiment en écrivant une combinaison courte de caractères. Par exemple :  <b>:)</b> signifie <b>content</b>,  <b>:(</b> signifie <b>triste</b>. La liste complète des smileys peut être vue à partir du formulaire pour poster les messages. Essayez de ne pas abuser des smileys, car ils peuvent rapidement rendre un message illisible et un modérateur pourrait décider de les supprimer du message, ou de supprimer le message lui-même...");
+$faq[] = array("Puis-je poster des images ?", "Des images peuvent bien évidement apparaître dans votre message, cependant il n'existe pour l'instant aucun moyen de charger les images directement sur le forum. Ainsi vous aurez besoin de lier les images vers un serveur web d'accès public. Pour poster une image, utilisez le BBCode [img] ou la balise html appropriée (si elle est autorisée).");
+$faq[] = array("Que sont les annonces ?", "Les annonces contiennent des informations importantes et vous devriez les lire aussitôt que possible. Les annonces apparaissent au sommet de chaque page du forum dans lesquelles elles sont postées. Que vous puissiez poster ou non, les annonces nécessitent des permissions pour pouvoir être postées, permissions elles-mêmes attribuées par l'administrateur.");
+$faq[] = array("Que sont les sujets Post-it ?", "Les sujets Post-it apparaissent en dessous des sujets d'annonces et seulement sur la première page. Ils sont souvent importants donc vous devriez essayer de les lire quand c'est possible. Comme pour les annonces, c'est l'administrateur qui décide quelles permissions sont requises pour poster un Post-it dans un forum.");
+$faq[] = array("Pourquoi tel sujet est verrouillé ?", "Les sujets peuvent être verrouillés soit par les modérateurs, soit par l'administrateur lui-même. Vous ne pouvez pas répondre sur un sujet verrouillé et n'importe quel sondage contenu dans un sujet verrouillé est automatiquement clos. Les sujets peuvent être verrouillés pour beaucoup de raisons différentes...");
+
+
+$faq[] = array("--","Niveaux d'utilisateurs et groupes");
+$faq[] = array("Qui sont les administrateurs ?", "Les administrateurs sont des utilisateurs qui possèdent le plus haut niveau de contrôle sur le forum. Ces personnes peuvent contrôler toutes les facettes des opérations concernant le forum, ce qui inclut la mise en place des permissions, le bannissement d'autres utilisateurs, la création de groupes d'utilisateurs, la nomination des modérateurs etc... Ils peuvent également modérer tous les forums.");
+$faq[] = array("Qui sont les modérateurs ?", "Les modérateurs sont des utilisateurs (ou des groupes d'utilisateurs) dont le travail est de surveiller le bon fonctionnement du forum jour après jour. Ils ont le pouvoir d'éditer ou de supprimer des messages ainsi que de verrouiller/déverrouiller, transférer, supprimer ou séparer les sujets situés dans les forums dont ils ont la modération. Généralement les modérateurs sont là pour prévenir des personnes qui font du <i>Hors-sujet</i> ou qui postent des messages abusifs ou diffamatoires.");
+$faq[] = array("Que sont les groupes d'utilisateurs ?", "Les groupes d'utilisateurs sont un moyen qu'utilisent les administrateurs pour regrouper des utilisateurs. Chaque utilisateur peut appartenir à plusieurs groupes (ce qui est différent de la plupart des autres forums) et chaque groupe peut être assigné par des droits d'accès particuliers. Cela devient très facile pour un administrateur de mettre plusieurs utilisateurs en modérateurs de forums, ou encore de leur donner des accès à certains forums privés etc...");
+$faq[] = array("Comment puis-je rejoindre un groupe d'utilisateurs ?", "Pour rejoindre un groupe d'utilisateurs, cliquez sur le lien <u>groupes</u> dans l'en-tête de la page (peut-être différent suivant le design du forum). Ainsi vous pouvez voir tous les groupes d'utilisateurs. Certains groupes ne sont pas en <i>accès libre</i> : ils peuvent être fermés ou même cachés. Si le groupe est ouvert, vous pouvez le rejoindre en cliquant sur le bouton approprié. Le modérateur du groupe devra approuver votre demande pour qu'elle soit acceptée, il peut aussi vous demander pour quelles raisons vous souhaitez faire partie de tel ou tel groupe. Merci donc de ne pas râler contre un modérateur de groupe s'il refuse votre demande, il aura certainement de bonnes raisons pour le faire que vous pouvez ignorer.");
+$faq[] = array("Comment puis-je devenir modérateur de groupe ?", "Les groupes d'utilisateurs sont initialement créés par un administrateur du forum. Celui-ci assigne en même temps un modérateur à chaque groupe. Si vous êtes intéressé pour devenir modérateur de groupe, votre seul contact est donc un administrateur. Essayez donc de le contacter par message privé...");
+
+
+$faq[] = array("--","Messages Privés");
+$faq[] = array("Je ne peux pas envoyer de messages privés !", "Il peut y avoir trois raisons à cela: vous n'êtes pas enregistré et/ou connecté, l'administrateur du forum a désactivé les messages privés ou l'administrateur vous empêche d'envoyer des messages. Si tel est le cas, vous devriez le contacter afin de savoir pourquoi.");
+$faq[] = array("Je n'arrête pas de recevoir des messages non sollicités !", "Dans le futur, le système de messagerie comportera une liste-noire. Pour le moment, si vous recevez trop de messages non sollicités de la part de quelqu'un, essayez de contacter l'administrateur. Il a le pouvoir d'empêcher quelqu'un d'envoyer des messages.");
+$faq[] = array("J'ai reçu des spams et autres mails abusifs de la part d'un utilisateur de ce forum !", "Nous en sommes désolés. Le formulaire d'email de ce forum inclut des barrières de sécurité pour essayer de traquer les utilisateurs qui envoient de tels spams. Vous devriez contacter l'administrateur du forum avec une copie de l'email recu (et notamment les en-têtes afin d'obtenir une recherche plus fructueuse) ainsi il pourra essayer de retrouver le coupable.");
+
+//
+// These entries should remain in all languages and for all modifications
+// -[fr]- Ces entrées doivent subsister dans tous les langages et pour toute éventuelle modification.
+//
+$faq[] = array("--","phpBB 2");
+$faq[] = array("Qui a écrit ce forum ?", "Ce programme (dans sa forme originelle) est produit, distribué et copyrighté par le <a href=\"http://www.phpbb.com/\" target=\"_blank\">phpBB Group</a>. Il est disponible sous license GNU/GPL et peut être redistribué librement. Consultez le lien pour plus de détails.");
+$faq[] = array("Pourquoi est-ce que la fonction X n'est pas disponible ?", "Ce programme a été écrit par le phpBB Group. Si vous pensez qu'une fonction devrait être ajoutée, visitez donc le site phpbb.com et voyez ce que le phpBB Group en pense. Merci de ne pas poster de demande d'ajout sur le forum phpbb.com, utilisez plutôt le système de gestion des tâches sourceforge du groupe. ");
+$faq[] = array("Qui dois-je contacter en cas de redistribution abusive ou illégale de ce forum ?", "Vous devez contacter l'administrateur de ce forum. Si vous ignorez qui c'est, contactez un modérateur et lui demander vers qui vous orienter. Si vous n'avez toujours aucune réponse, contactez le propriétaire du domaine (essayez une requête whois) ou, s'il est hébergé par un service gratuit, le département <i>abuse</i> de ce service. Notez bien que le phpBB Group n'a aucun contrôle sur la manière dont est redistribué le forum, et ne peut en être aucunement reconnu pour responsable.");
+
+# lang_faq_attach.php
+$faq[] = array("--", "Fichiers joints");
+$faq[] = array("Comment puis-je joindre un/des fichier(s) ?", "Sur le formulaire d'envoi de message (et si vous en avez l'autorisation), vous devriez voir un cadre <i>Joindre un fichier</i>. Choississez le fichier &agrave; envoyer, et ajoutez le fichier.<br />Attention toutefois, le nombre de fichier joignables dans un message et le nombre de fichier joignables au total sont limit&eacute;s");
+$faq[] = array("Comment puis-je joindre un fichier apr&egrave;s avoir envoy&eacute; le message ?", "Pour joindre un/des nouveau(x) fichier(s), vous n'avez qu'a suivre les instructions ci-dessous sur le formulaire d'&eacute;dition du message.");
+$faq[] = array("Comment puis-je supprimer un fichier joint ?", "Lorsque vous &eacute;ditez votre message, cliquez sur le lien <i>Supprimer le fichier joint</i> dans la liste des fichiers joints.");
+$faq[] = array("Comment puis-je mettre &agrave; jour le commentaire d'un fichier ?", "&Eacute;ditez votre message, modifier le commentaire pour le fichier et cliquez sur le bouton <i>Mettre &agrave; jour le commentaire</i> dans la liste des fichiers joints.");
+$faq[] = array("Pourquoi les fichiers joints ne sont pas visibles sur le message ?", "Il est possible que l'extension ne plus autoris&eacute;e, ou plus probablement qu'un mod&eacute;rateur/administrateur l'ait supprim&eacute;.");
+$faq[] = array("Pourquoi ne puis-je pas joindre de fichier ?", "Pour joindre un fichier, il faut une permission sp&eacute;ciale, qui est accord&eacute;e par d&eacute;faut, toutefois les administrateurs ont peut-&ecirc;tre d&eacute;cid&eacute; de ne pas accorder ce droit dans ce forum.");
+$faq[] = array("J'ai les permissions n&eacute;c&eacute;ssaires, pourquoi ne puis-je pas joindre de fichier ?", "Il est possible que vous ayez atteint votre liimite, que les administrateurs aient retir&eacute;s votre permission ou que votre fichier soit trop lourd / d'un type interdit. Vous devriez comprendre avec le message d'erreur.");
+$faq[] = array("Pourquoi ne puis-je pas supprimer / voir / t&eacute;l&eacute;charger de fichiers joints ?", "Dans certains forums, une permission sp&eacute;ciale est n&eacute;c&eacute;ssaire pour supprimer / voir / t&eacute;l&eacute;charger les fichiers joints. Si vous voulez avoir la permission, tentez de contacter un administrateur.");
+#$faq[] = array("Pourquoi ne puis-je pas voir / t&eacute;l&eacute;charger les fichiers joints ?", "Dans certains On some viewing/downloading forums attachments may be limited to certain users or groups. To view/download attachments you may need special authorization, only the forum moderator and board admin can grant this access, you should contact them.");
+$faq[] = array("Qui puis-je contacter si je trouve un t&eacute;l&eacute;chargement abusif ?", "Vous pouvez alertir les mod&eacute;rateurs en cliquant sur le carton bleu, a c&ocirc;t&eacute; du titre du message.");

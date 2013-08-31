@@ -1,0 +1,150 @@
+/**
+* advanced color picker cascaded stylesheet
+*/
+div#colorpicker {
+	position:absolute;
+	width:250px;
+	padding-bottom:1px;
+	background-color:#fff;
+	border:1px solid #317082;
+}
+
+div#colorpicker div.cp_toprow {
+	padding-bottom:1px;
+	border-bottom:3px double #317082;
+	background-color:#e2ebed;
+	padding-left:2px;
+
+	width:248px;
+	height:16px;
+}
+	
+div#colorpicker div.cp_statusbar {
+	height:13px;
+	padding-bottom:2px;
+	width:248px;
+	border-top:3px double #317082;
+	background-color:#e2ebed;
+	padding-left:2px;
+	clear:both;		
+}
+	
+div#colorpicker div.colorsquare {
+	margin-left:1px;
+	margin-bottom:1px;
+	float:left;
+	border:1px solid #000;
+	cursor:pointer;
+
+	width:10px;
+	height:10px;
+}
+
+div.cptab_inactive,
+div.cptab_active {
+	height:17px;
+	padding-left:4px;
+	cursor:pointer;
+}
+div.cptab_inactive span {
+	background-image:url('./images/tab_left_inactive.gif');
+}
+div.cptab_active span {
+	background-image:url('./images/tab_left_active.gif');
+}
+div.cptab_inactive span,
+div.cptab_active span {
+	line-height:16px;
+	font-weight:bold;
+	font-family:arial;
+	font-size:11px;
+	padding-top:1px;
+	vertical-align:middle;
+	background-position:top left;
+	background-repeat:no-repeat;
+	float:left;
+	padding-left:6px;
+}
+div.cptab_inactive img,
+div.cptab_active img {
+	float:left;
+}
+div.cp_closebutton {
+	width:11px;
+	height:11px;
+	text-align:center;
+	line-height:10px;
+	border:1px solid #317082;
+	position:absolute;
+	right:1px;
+	font-family:arial;
+	font-size:12px;
+	font-weight:bold;
+	top:1px;
+	padding:1px;
+	cursor:pointer;
+}
+#cp_statusbartxt {
+	font-size:11px;
+	font-family:arial;
+	vertical-align:top;
+	line-height:13px;
+}
+
+form { padding-left:5px; }
+	
+.form_widget_amount_slider {
+	border-top:1px solid #9d9c99;
+	border-left:1px solid #9d9c99;
+	border-bottom:1px solid #eee;
+	border-right:1px solid #eee;
+	background-color:#f0ede0;
+	position:absolute;
+	bottom:0px;
+
+	width:3px;
+	height:3px;
+}
+div.colorslider_label {
+	width:15px;
+	height:20px;
+	float:left;
+	font-size:11px;
+	font-weight:bold;
+}
+div.colorslider {
+	width:175px;
+	height:20px;
+	float:left;
+}
+div.colorinput {
+	width:45px;
+	height:20px;
+	float:left;
+}
+div.colorpreview_div {
+	width:186px;
+	margin-right:2px;
+	margin-top:1px;
+	border:1px solid #ccc;
+	height:20px;
+	float:left;
+	cursor:pointer;
+}
+div.colorcode_div {
+	width:50px;
+	height:20px;
+	float:left;
+}
+
+/**
+* rank color system mod
+*/
+input.cp_preview {
+	border:1px outset #000;
+	cursor:pointer;
+	width:15px;
+	height:15px;
+	vertical-align:text-bottom;
+}
+input.cp_preview:hover { border:1px inset #000; }

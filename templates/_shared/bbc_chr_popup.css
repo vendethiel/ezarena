@@ -1,0 +1,59 @@
+body {
+	background-color: #F0F0EE;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	scrollbar-3dlight-color: #F0F0EE;
+	scrollbar-arrow-color: #676662;
+	scrollbar-base-color: #F0F0EE;
+	scrollbar-darkshadow-color: #DDDDDD;
+	scrollbar-face-color: #E0E0DD;
+	scrollbar-highlight-color: #F0F0EE;
+	scrollbar-shadow-color: #F0F0EE;
+	scrollbar-track-color: #F5F5F5;
+}
+
+td {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+}
+
+.title {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+table.charmap {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #AAAAAA;
+}
+
+td.charmap, td.charmapOver, td.charmapOut {
+	color: #000000;
+	border-color: #AAAAAA;
+	border-style: solid;
+	border-width: 1px;
+	text-align: center;
+	font-size: 12px;
+}
+
+td.charmapOver {
+	background-color: #CCCCCC;
+	cursor: crosshair;
+}
+
+td.charmapOut {
+	background-color: #F0F0EE;
+	cursor: crosshair;
+}
+
+a.charmap {
+	color: #000000;
+	text-decoration: none
+}
+
+.wordWrapCode {
+	vertical-align: middle;
+	border: 1px none #000000;
+	background-color: transparent;
+}

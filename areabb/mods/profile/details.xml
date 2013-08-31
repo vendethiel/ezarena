@@ -1,0 +1,7 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<plugin nom="profile" version="1.0">
+  <label>Profile phpBB</label>
+  <auteur>Saint-Pere</auteur>
+    <page>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</page>
+  <description>Le profil phpBB apparait dans un popup</description>
+</plugin>

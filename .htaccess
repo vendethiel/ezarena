@@ -1,0 +1,58 @@
+# You could need to un-comment the following line
+# Options +FollowSymlinks
+RewriteEngine On
+RewriteBase /ultimarena
+
+#########################################################
+# PHPBB SEO REWRITE RULES				#
+#########################################################
+# AUTHOR : dcz http://www.phpbb-seo.com/
+# STARTED : 01/2006
+##################################################### 
+# FORUMS PAGES 
+########################
+# FORUM INDEX (un-comment if used)
+RewriteRule ^index\.html$ index.php [QSA,L,NC]
+# FORUM PROTECTION RULE 
+RewriteRule ^[a-z0-9_-]+/([^/]+\.html)$ index.php [R=301,L,NC]
+# CATEGORIES 
+RewriteRule ^[a-z0-9_-]*-c([0-9]+)\.html$ index.php?c=$1 [QSA,L,NC]
+# PAGINATED FORUM 
+RewriteRule ^[a-z0-9_-]*-f([0-9]+)-([0-9]+)\.html$ viewforum.php?f=$1&start=$2 [QSA,L,NC]
+# FORUM 
+RewriteRule ^[a-z0-9_-]*-f([0-9]+)\.html$ viewforum.php?f=$1 [QSA,L,NC]
+# PAGINATED TOPIC 
+RewriteRule ^[a-z0-9_-]*-t([0-9]+)-([0-9]+)\.html$ viewtopic.php?t=$1&start=$2 [QSA,L,NC]
+# TOPIC 
+RewriteRule ^[a-z0-9_-]*-t([0-9]+)\.html$ viewtopic.php?t=$1 [QSA,L,NC]
+# POST 
+RewriteRule ^post([0-9]+)\.html$ viewtopic.php?p=$1 [QSA,L,NC]
+#PROFILES 
+RewriteRule ^membre([0-9]+)\.html$ profile.php?mode=viewprofile&u=$1 [QSA,L,NC]
+# END PHPBB PAGES 
+#####################################################
+#########################################################
+# GYM SITEMAPS AND RSS REWRITE RULES			#
+#########################################################
+# AUTHOR : dcz http://www.phpbb-seo.com/
+# STARTED : 2006/02/22
+########################
+# RSS main
+RewriteRule ^rss-?(l|s)?-?(m)?\.(xml(\.gz)?)$ rss.php?$1&$2 [L]
+# RSS forums
+RewriteRule ^forums-rss-?(l|s)?-?(m)?\.(xml(\.gz)?)$ rss.php?forum&c&$1&$2 [L]
+# RSS all
+RewriteRule ^([a-zA-Z0-9_-]+)-rss([0-9]*)-?(l|s)?-?(m)?\.(xml(\.gz)?)$ rss.php?$1=$2&$3&$4 [L]
+# RSS forum topics
+RewriteRule ^.+-rf([0-9]+)-?(l|s)?-?(m)?\.(xml(\.gz)?)$ rss.php?forum=$1&$2&$3 [L]
+# SitemapIndex
+RewriteRule ^sitemaps\.(xml(\.gz)?)$ sitemap.php [L]
+# Sitemap modules
+RewriteRule ^([a-zA-Z0-9_-]+)-sitemap\.(xml(\.gz)?)$ sitemap.php?$1 [L]
+# Forum Sitemaps
+RewriteRule ^.+-gf([0-9]+)\.(xml(\.gz)?)$ sitemap.php?forum=$1 [L]
+# Yahoo! urllist.txt
+RewriteRule ^urllist\.(txt(\.gz)?)$ urllist.php [L]
+#########################################################
+# END GYM SITEMAPS AND RSS REWRITE RULES		#
+#########################################################

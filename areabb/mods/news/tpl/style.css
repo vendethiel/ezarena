@@ -1,0 +1,43 @@
+a.info {
+    position:relative; /* Très important */
+    z-index:10;
+    font-size : 11px;
+	text-decoration: none; 
+	color : #006699;
+}
+
+a.info:hover {
+    z-index:20;
+}
+
+a.info span {
+    display:none;
+}
+
+a.info:hover span { /*la tag SPAN apparaitra avec l’effet hover*/
+    display:block;
+    position:absolute;
+    top:18px;
+    left:10px;
+	font-family: Arial;
+    font-size : 9px;
+	text-decoration: none; 
+	color : #000;
+
+    /* Éléments pour positionner le texte dans la bulle */
+    padding-left:25px;
+    padding-top:24px;
+    padding-bottom:5px;
+    padding-right:8px;
+    width:205px;
+    height:45px;
+
+    /* Style du character dans la bulle */
+    text-decoration:none;
+    text-align:justify;
+}
+
+/* Pour avoir un beau background de bulle avec PNG transparent*/
+a.info:hover>span { background-image:url(../../../images/bgInfo.png);}
+*html a.info:hover span { filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=‘../../../images/bgInfo.png’, sizingMethod=‘crop’);}
+/* Import the fancy styles for IE only (NS4.x doesn't use the @import function) */

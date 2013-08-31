@@ -1,0 +1,7 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<plugin nom="whoisonline" version="1.0">
+  <label>Qui est en ligne?</label>
+  <auteur>Saint-Pere</auteur>
+  <page>?</page>
+  <description>Affiche les utilisateurs connectes au site.</description>
+</plugin>

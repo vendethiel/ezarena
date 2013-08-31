@@ -1,0 +1,21 @@
+/**
+*
+* @package quick_title_edition_mod
+* @version $Id: qte_stylesheet.css,v 1.0.0 2007/11/21 11:31 ABDev Exp $
+* @copyright (c) 2007 ABDev - http://www.oxygen-powered.net/
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
+
+.QTE_Solved {
+	color: #006600;
+	font-weight: bold;
+}
+
+.QTE_Cancelled {
+	color: #cc0000;
+	font-weight: bold;
+}
+
+/* Set Image style */
+img, .forumline img { border: 0; }

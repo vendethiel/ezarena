@@ -1,0 +1,133 @@
+	.dhtmlgoodies_floatingWindow{
+		position:absolute;
+		width:224px;
+		padding-bottom:1px;
+		background-color:#ECE9D8;
+		border:1px solid #7480DC;
+		left:50px;
+	}
+	
+	.dhtmlgoodies_floatingWindow .floatingWindow_topRow{
+		padding-bottom:1px;
+		padding-top:1px;
+		width:100%;
+		border-bottom:3px double #ECE9D8;
+		background-color:#B2B2B2;
+		white-space:nowrap;
+		overflow:hidden;
+	
+		/* CSS HACK */
+		height: 20px;	/* IE 5.x */
+		height/* */:/**/16px;	/* Other browsers */
+		height: /**/16px;
+		
+	}
+
+	.dhtmlgoodies_floatingWindow .floatingWindow_statusBar{
+		height:13px;
+		padding-bottom:1px;
+		width:100%;
+		border-top:1px solid #ACA899;	
+		background-color:#ECE9D8;
+		clear:both;
+		
+		/* CSS HACK */
+		height: 17px;	/* IE 5.x */
+		height/* */:/**/13px;	/* Other browsers */
+		height: /**/13px;		
+		
+	}
+	
+	.dhtmlgoodies_floatingWindow .floatingWindow_moveBar{
+		height:7px;
+		background-color:#006BF8;
+		border-top:2px solid #006BF8;
+		border-right:2px solid #006BF8;
+		border-left:2px solid #006BF8;
+		position:relative;
+		cursor:move;
+		
+		/* CSS HACK */
+		height: 9px;	/* IE 5.x */
+		height/* */:/**/7px;	/* Other browsers */
+		height: /**/7px;			
+	
+	}
+	
+	
+	.floatingWindowTab_inactive,.floatingWindowTab_active{
+		height:17px;
+		padding-left:4px;
+		cursor:pointer;	
+	}
+	.floatingWindowTab_inactive span{
+		background-image:url('images/skin2_tab_left_inactive.gif');
+	}
+	
+	.floatingWindowTab_active span{
+		background-image:url('images/skin2_tab_left_active.gif');
+
+	}
+	.floatingWindowTab_inactive span, .floatingWindowTab_active span{
+		line-height:16px;
+		font-weight:bold;
+		font-family:arial;
+		font-size:11px;
+		padding-top:1px;
+		vertical-align:middle;
+		background-position:top left;
+		background-repeat: no-repeat;	
+		float:left;
+		padding-left:6px;
+		-moz-user-select:no;
+	}	
+	.dhtmlgoodies_floatingWindow .floatingWindow_statusBar img{
+		position:absolute;
+		right:0px;
+		bottom:0px;
+		cursor:nw-resize;
+	}
+	.floatingWindowTab_inactive img,.floatingWindowTab_active img{
+		float:left;
+	}
+	.floatingWindowCloseButton{
+		text-align:center;
+		line-height:10px;
+		border:1px solid #5e5e5e;
+		position:absolute;
+		right:1px;
+		font-size:12px;
+		font-weight:bold;
+		top:10px;
+		padding:1px;
+		background-color: #ECE9D8;
+		
+		cursor:hand;	
+		cursor/* */:/**/pointer;	/* Other browsers */
+		cursor: /**/pointer;	
+				
+		/* CSS HACK */
+		width: 15px;	/* IE 5.x */
+		width/* */:/**/11px;	/* Other browsers */
+		width: /**/11px;	
+		
+		/* CSS HACK */
+		height: 15px;	/* IE 5.x */
+		height/* */:/**/11px;	/* Other browsers */
+		height: /**/11px;	
+				
+	}
+	#floatingWindow_statusBarTxt{
+		font-size:11px;
+		font-family:arial;
+		vertical-align:top;
+		line-height:13px;
+	}
+	.dhtmlgoodies_floatingWindow .floatingWindowContent{
+		padding:2px;
+		font-size:11px;
+		overflow-x:hidden;
+		overflow-y:scroll;
+		overflow: -moz-scrollbars-vertical;
+	
+	}

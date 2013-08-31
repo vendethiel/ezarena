@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<plugin nom="recent_games" version="1.0">
+  <label>Derniers jeux installes</label>
+  <auteur>Saint-Pere</auteur>
+  <type>affiche</type>
+  <page>?</page>
+  <description>Affichage des 10 derniers jeux installes.</description>
+</plugin>

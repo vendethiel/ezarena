@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<plugin nom="record_battu" version="1.2">
+  <label>Records Battus</label>
+  <auteur>Saint-Pere</auteur>
+  <type>affiche</type>
+  <page>?</page>
+  <description>Affiche les 5 derniers records battus.</description>
+</plugin>

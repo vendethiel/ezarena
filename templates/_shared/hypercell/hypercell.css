@@ -1,0 +1,135 @@
+/**
+*
+* @package hypercell_class_mod
+* @version $Id: hypercell.css,v 0.1 12/12/2006 16:47 reddog Exp $
+* @copyright (c) 2006 reddog - http://www.reddevboard.com/
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
+
+/**
+* Hypercell Cascading Style Sheet for subSilver Theme
+*
+* background-color #EFEFEF is the value from td.row1 class
+* background #DEE3E7 is the value from td.row2 class
+* background-color #D1D7DC is the value from td.row3Right class
+*/
+
+/* topic status */
+td.hccRow-moved { background-color: #EFEFEF; }
+td.hccRow-moved:hover, td.hccRow-movedHover {
+	background: #EBEBEB url('./images/hcc_moved.gif') bottom right no-repeat;
+}
+td.hccRow-locked { background-color: #EFEFEF; }
+td.hccRow-locked:hover, td.hccRow-lockedHover {
+	background: #EBEBEB url('./images/hcc_locked.gif') bottom right no-repeat;
+}
+td.hccRow-locked-new { background-color: #EFEFEF; }
+td.hccRow-locked-new:hover, td.hccRow-locked-newHover {
+	background: #EBEBEB url('./images/hcc_locked_new.gif') bottom right no-repeat;
+}
+
+/* topic type */
+td.hccRow-announce { background-color: #EFEFEF; }
+td.hccRow-announce:hover, td.hccRow-announceHover {
+	background: #EBEBEB url('./images/hcc_announce.gif') bottom right no-repeat;
+}
+td.hccRow-announce-new { background-color: #EFEFEF; }
+td.hccRow-announce-new:hover, td.hccRow-announce-newHover {
+	background: #EBEBEB url('./images/hcc_announce_new.gif') bottom right no-repeat;
+}
+
+td.hccRow-sticky { background-color: #EFEFEF; }
+td.hccRow-sticky:hover, td.hccRow-stickyHover {
+	background: #EBEBEB url('./images/hcc_sticky.gif') bottom right no-repeat;
+}
+td.hccRow-sticky-new { background-color: #EFEFEF; }
+td.hccRow-sticky-new:hover, td.hccRow-sticky-newHover {
+	background: #EBEBEB url('./images/hcc_sticky_new.gif') bottom right no-repeat;
+}
+
+td.hccRow { background-color: #EFEFEF; }
+td.hccRow:hover, td.hccRowHover {
+	background: #EBEBEB url('./images/hcc.gif') bottom right no-repeat;
+}
+td.hccRow-new { background-color: #EFEFEF; }
+td.hccRow-new:hover, td.hccRow-newHover {
+	background: #EBEBEB url('./images/hcc_new.gif') bottom right no-repeat;
+}
+
+/* hot threshold */
+td.hccRow-hot { background-color: #EFEFEF; }
+td.hccRow-hot:hover, td.hccRow-hotHover {
+	background: #EBEBEB url('./images/hcc_hot.gif') bottom right no-repeat;
+}
+td.hccRow-hot-new { background-color: #EFEFEF; }
+td.hccRow-hot-new:hover, td.hccRow-hot-newHover {
+	background: #EBEBEB url('./images/hcc_hot_new.gif') bottom right no-repeat;
+}
+
+/* link */
+td.hccRow-link { background-color: #EFEFEF; }
+td.hccRow-link:hover, td.hccRow-linkHover {
+	background: #EBEBEB url('./images/hcc_link.gif') bottom right no-repeat;
+}
+
+
+/**
+* row3Right and all hccRow right classes
+* Used for example in the Last Post column on board index
+*/
+
+/* background-color #CCD3D9 is a color slightly darker than td.row3Right class */
+td.row3Right:hover, td.row3RightHover { background-color: #CCD3D9; }
+
+/* topic status */
+td.hccRow-moved-right { background-color: #D1D7DC; }
+td.hccRow-moved-right:hover, td.hccRow-moved-rightHover {
+	background: #CCD3D9 url('./images/hcc_moved.gif') bottom right no-repeat;
+}
+td.hccRow-locked-right { background-color: #D1D7DC; }
+td.hccRow-locked-right:hover, td.hccRow-locked-rightHover {
+	background: #CCD3D9 url('./images/hcc_locked.gif') bottom right no-repeat;
+}
+td.hccRow-locked-new-right { background-color: #D1D7DC; }
+td.hccRow-locked-new-right:hover, td.hccRow-locked-new-rightHover {
+	background: #CCD3D9 url('./images/hcc_locked_new.gif') bottom right no-repeat;
+}
+
+/* topic type */
+td.hccRow-announce-right { background-color: #D1D7DC; }
+td.hccRow-announce-right:hover, td.hccRow-announce-rightHover {
+	background: #CCD3D9 url('./images/hcc_announce.gif') bottom right no-repeat;
+}
+td.hccRow-announce-new-right { background-color: #D1D7DC; }
+td.hccRow-announce-new-right:hover, td.hccRow-announce-new-rightHover {
+	background: #CCD3D9 url('./images/hcc_announce_new.gif') bottom right no-repeat;
+}
+
+td.hccRow-sticky-right { background-color: #D1D7DC; }
+td.hccRow-sticky-right:hover, td.hccRow-sticky-rightHover {
+	background: #CCD3D9 url('./images/hcc_sticky.gif') bottom right no-repeat;
+}
+td.hccRow-sticky-new-right { background-color: #D1D7DC; }
+td.hccRow-sticky-new-right:hover, td.hccRow-sticky-new-rightHover {
+	background: #CCD3D9 url('./images/hcc_sticky_new.gif') bottom right no-repeat;
+}
+
+td.hccRow-right { background-color: #D1D7DC; }
+td.hccRow-right:hover, td.hccRow-rightHover {
+	background: #CCD3D9 url('./images/hcc.gif') bottom right no-repeat;
+}
+td.hccRow-new-right { background-color: #D1D7DC; }
+td.hccRow-new-right:hover, td.hccRow-new-rightHover {
+	background: #CCD3D9 url('./images/hcc_new.gif') bottom right no-repeat;
+}
+
+/* hot threshold */
+td.hccRow-hot-right { background-color: #D1D7DC; }
+td.hccRow-hot-right:hover, td.hccRow-hot-rightHover {
+	background: #CCD3D9 url('./images/hcc_hot.gif') bottom right no-repeat;
+}
+td.hccRow-hot-new-right { background-color: #D1D7DC; }
+td.hccRow-hot-new-right:hover, td.hccRow-hot-new-rightHover {
+	background: #CCD3D9 url('./images/hcc_hot_new.gif') bottom right no-repeat;
+}

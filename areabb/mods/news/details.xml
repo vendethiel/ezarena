@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<plugin nom="news" version="1.0">
+  <label>News du site</label>
+  <auteur>Saint-Pere</auteur>
+  <type>affiche</type>
+  <page>?</page>
+  <description>Les dernieres news du site vous sont restituees.</description>
+</plugin>

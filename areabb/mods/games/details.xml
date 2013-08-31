@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<plugin nom="games" version="1.7">
+  <label>Arcade de jeux Flash</label>
+  <auteur>Saint-Pere</auteur>
+  <type>affiche</type>
+  <page>2</page>
+  <description>Les membres du site peuvent s'affronter sur des jeux flash. Les scores sont conserves pour organiser des classements.</description>
+</plugin>

@@ -1,0 +1,25 @@
+== Création d'un nouveau thème ==
+
+Ce fichier vous expliquera comment ajouter un thème rapidement au forum.
+Au lieu de vous forcer à adapter les fichiers 1 par 1, le mod eXtreme Styles
+ vous permet d'utiliser les fichiers .tpl de subSilver à la place.
+En utilisant cette fonctionnalité, vous pouvez créer un thème simplement avec un dossier images/
+
+Marche à suivre :
+ - Dupliquez le dossier new_theme/, par exemple en le nommant votreTheme/
+ - Renommez le fichier de configuration en "votreTheme.cfg"
+   Vous pourrez y configurer la place des images ajoutées par des mods.
+   L'édition de ce fichier est obligatoire dans presque tous les cas,
+   sauf si votre thème utilise le même chemin pour les images que subSilver.
+ - Copiez les fichiers rcs_stylesheet.css et bbcode.js
+ - Copiez vos images et vos fichiers CSS
+   Notez bien que les fichiers inclus de base dans images/ sont ceux nécessaires pour que vous puissiez
+   utiliser directement votre thème, vous pouvez bien sûr les changer.
+
+Notez bien que vous pouvez écraser les .tpl au cas par cas,
+ comme par exemple "header_links.tpl" qui représente les liens du header,
+ (cela peut être le seul fichier, avec la config, que vous aurez à modifier !)
+ réduisant votre charge de travail et vous permettant de
+ proposer encore plus de thèmes à vos utilisateurs !
+
+= Vendethiel

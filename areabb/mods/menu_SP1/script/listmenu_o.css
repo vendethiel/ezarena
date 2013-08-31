@@ -1,0 +1,82 @@
+/*
+
+Here's a demo stylesheet used to format a menu and its content.
+Feel free to alter the menu layout however you want. All you have to do is ensure the script
+has the correct CSS property name (like 'visibility' or 'display') that you want it to change.
+
+One good resource for UL/LI formatting: http://www.alistapart.com/articles/taminglists/
+Consult your favourite CSS reference for editing fonts/borders/etc.
+
+Otherwise, even if you're not very experienced at CSS, you can just go through and change
+the #RGB border/background colours where suitable to customise for your site!
+
+*/
+
+
+
+/* OFFICE-STYLE FREESTYLE MENU LAYOUT */
+
+
+/* All <ul> tags in the menu including the first level */
+.menulist, .menulist ul {
+ margin: 0px;
+ padding: 0px;
+ width: 100%;
+ list-style: none;
+ /*background: #F0F0F8 url(listmenu_o.gif) left repeat-y;*/
+/* border: 0px solid #654;*/
+}
+
+
+/* Submenus (<ul> tags) are hidden and absolutely positioned across from their parent */
+.menulist ul {
+ visibility: hidden;
+ position: absolute;
+ top: 0px;
+ left:102%;
+}
+
+/* All menu items (<li> tags) are relatively positioned (to correctly offset submenus). */
+.menulist li {
+ position: relative;
+}
+
+/* Links inside the menu */
+.menulist a {
+ display: block;
+ padding: 0px 0px 0px 0px;
+ text-decoration: none;
+ border: 1px solid transparent;
+ height:30px;
+}
+/* IE fix because it doesn't support transparent borders */
+* html .menulist a {
+ border: none;
+ margin: 1px;
+}
+
+/*
+ Lit items: hover/focus = the current item. 'highlighted' = parent items to visible menus.
+ Here, active items are given a border, and a padding tweak to 'elevate' the text within.
+ Feel free to use background-image:url(file.gif) instead of background-color:#nnn here...
+*/
+
+.menulist a.highlighted {
+ margin: 0;
+}
+
+
+/* 'subind' submenu indicators, which are automatically prepended to 'A' tag contents. */
+.menulist a .subind {
+ float: right;
+}
+
+/* This semi-commented section exists to fix bugs in IE/Windows (the 'Holly Hack'). \*/
+* html .menulist li {
+ float: left;
+ height: 0%;
+}
+* html .menulist a {
+ height: 0%;
+}
+/* End Hack */

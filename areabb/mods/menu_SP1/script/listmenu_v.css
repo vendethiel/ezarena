@@ -1,0 +1,96 @@
+/*
+
+Here's a demo stylesheet used to format a menu and its content.
+Feel free to alter the menu layout however you want. All you have to do is ensure the script
+has the correct CSS property name (like 'visibility' or 'display') that you want it to change.
+
+One good resource for UL/LI formatting: http://www.alistapart.com/articles/taminglists/
+Consult your favourite CSS reference for editing fonts/borders/etc.
+
+Otherwise, even if you're not very experienced at CSS, you can just go through and change
+the #RGB border/background colours where suitable to customise for your site!
+
+*/
+
+
+
+/* VERTICAL FREESTYLE MENU LAYOUT */
+
+
+/* All <ul> tags in the menu including the first level */
+.menulist, .menulist ul {
+ margin: 0;
+ padding: 0;
+ width: 150px;
+ list-style: none;
+}
+
+/* Submenus (<ul> tags) are hidden and absolutely positioned across from their parent */
+.menulist ul {
+ visibility: hidden;
+ position: absolute;
+ top: 0;
+ left: 155px;
+}
+
+/*
+ All menu items (<li> tags) are relatively positioned to correctly offset their submenus.
+ They have borders that are slightly overlaid on one another to avoid doubling up.
+*/
+.menulist li {
+ position: relative;
+ border: 1px solid #330;
+ background: #FED;
+ margin-bottom: -1px;
+}
+.menulist ul>li:last-child {
+ margin-bottom: 1px;
+}
+
+/* Links inside the menu */
+.menulist a {
+ display: block;
+ padding: 3px;
+ color: #000;
+ text-decoration: none;
+}
+
+/*
+ Lit items: 'hover' is mouseover, 'highlighted' are parent items to visible menus.
+*/
+.menulist a:hover, .menulist a.highlighted:hover, .menulist a:focus {
+ color: #FFF;
+ background-color: #A64;
+}
+.menulist a.highlighted {
+ color: #FFF;
+ background-color: #C86;
+}
+
+/*
+ If you want per-item background images in your menu items, here's how to do it.
+ 1) Assign a unique ID tag to each link in your menu, like so: <a id="xyz" href="#">
+ 2) Copy and paste these next lines for each link you want to have an image:
+    .menulist a#xyz {
+      background-image: url(out.gif);
+    }
+    .menulist a#xyz:hover, .menulist a.highlighted#xyz, .menulist a:focus {
+     background-image: url(over.gif);
+    }
+*/
+
+
+/* 'subind' submenu indicators, which are automatically prepended to 'A' tag contents. */
+.menulist a .subind {
+ float: right;
+}
+
+/* This semi-commented section exists to fix bugs in IE/Windows (the 'Holly Hack'). \*/
+* html .menulist li {
+ float: left;
+ height: 1%;
+}
+* html .menulist a {
+ height: 1%;
+}
+/* End Hack */
