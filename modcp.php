@@ -630,7 +630,7 @@ switch( $mode )
 
 				$message = $lang['Topics_Moved'] . '<br /><br />';
 				$db->clear_cache('posts_');
-
+				$db->clear_cache('movetopic_');
 			}
 			else
 			{

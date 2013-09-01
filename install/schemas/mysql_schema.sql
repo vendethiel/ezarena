@@ -245,6 +245,7 @@ CREATE TABLE phpbb_auth_access (
    auth_greencard tinyint(1) NOT NULL default '0',
    auth_bluecard tinyint(1) NOT NULL default '0',
    auth_download TINYINT(1) DEFAULT '0' NOT NULL,
+   auth_attachments TINYINT(1) DEFAULT '0' NOT NULL,
    KEY group_id (group_id),
    KEY forum_id (forum_id)
 );

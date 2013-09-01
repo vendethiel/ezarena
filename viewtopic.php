@@ -71,7 +71,7 @@ else
 {
 	message_die(GENERAL_MESSAGE, 'Topic_post_not_exist');
 }
-if ( !$result = $db->sql_query($sql) )
+if ( !$result = $db->sql_query($sql, false, 'movetopic_') )
 {
 	message_die(GENERAL_ERROR, 'Could not obtain topic information', '', __LINE__, __FILE__, $sql);
 }
@@ -79,6 +79,7 @@ if ( !$row = $db->sql_fetchrow($result) )
 {
 	message_die(GENERAL_MESSAGE, 'Topic_post_not_exist');
 }
+$db->sql_freeresult($result);
 $forum_id = $row['forum_id'];
 $topic_id = $row['topic_id'];
 $post_time = $row['post_time'];

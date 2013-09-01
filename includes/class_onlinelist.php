@@ -146,7 +146,7 @@ class onlinelist_class
 		$sql = 'SELECT guest_time, guest_visit
 				FROM ' . GUESTS_VISIT_TABLE . '
 				WHERE guest_time >= ' . intval($this->yesterday);
-		if( !($result = $db->sql_query($sql)) )
+		if( !($result = $db->sql_query($sql, false, 'online_guests_')) )
 		{
 			message_die(GENERAL_ERROR, 'Could not obtain guests visit data', '', __LINE__, __FILE__, $sql);
 		}
@@ -171,7 +171,7 @@ class onlinelist_class
 				WHERE user_id <> ' . ANONYMOUS . '
 					AND user_session_time >= ' . intval($this->yesterday) . '
 				ORDER BY username';
-		if( !($result = $db->sql_query($sql)) )
+		if( !($result = $db->sql_query($sql, false, 'online_users_')) )
 		{
 			message_die(GENERAL_ERROR, 'Could not obtain today userlist data', '', __LINE__, __FILE__, $sql);
 		}

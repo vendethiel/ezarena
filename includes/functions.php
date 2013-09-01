@@ -260,12 +260,13 @@ function dss_rand()
 {
 	global $db, $board_config, $dss_seeded;
 
-	$val = $board_config['rand_seed'] . microtime();
-	$val = md5($val);
-	$board_config['rand_seed'] = md5($board_config['rand_seed'] . $val . 'a');
+	//$val = $board_config['rand_seed'] . microtime();
+	//$val = md5($val);
+	$board_config['rand_seed'] = md5(uniqid($board_config['rand_seed'] . '_a', true));
    
 	if($dss_seeded !== true)
 	{
+		/*
 		$sql = "UPDATE " . CONFIG_TABLE . " SET
 			config_value = '" . $board_config['rand_seed'] . "'
 			WHERE config_name = 'rand_seed'";
@@ -274,6 +275,7 @@ function dss_rand()
 		{
 			message_die(GENERAL_ERROR, "Unable to reseed PRNG", "", __LINE__, __FILE__, $sql);
 		}
+		*/
 
 		$dss_seeded = true;
 	}
@@ -751,16 +753,13 @@ function setup_style($style)
 
 		$img_lang = ( file_exists(@phpbb_realpath($phpbb_root_path . $current_template_path . '/images/lang_' . $board_config['default_lang'])) ) ? $board_config['default_lang'] : 'french';
 
-		while( list($key, $value) = @each($images) )
+		$tpl_images = array();
+		foreach ($images as $k => &$v)
 		{
-			if ( !is_array($value) )
-			{
-				$images[$key] = str_replace('{LANG}', 'lang_' . $img_lang, $value);
-
-				// V: I'm lazy and I know it
-				$template->assign_var('I_' . strtoupper($key), $images[$key]);
-			}
+			$v = str_replace('{LANG}', 'lang_' . $img_lang, $v);
+			$tpl_images['I_' . strtoupper($k)] = $v;
 		}
+		$template->assign_vars($tpl_images);
 	}
 
 	return $row;
@@ -1946,6 +1945,11 @@ function write_cookies($userdata)
 		}
 	}
 
+	if (defined('IN_INDEX'))
+	{
+		return;
+	}
+
 	// store the unread topics
 	$sql = '';
 	if ( $board_config['keep_unreads'] )
@@ -1975,32 +1979,32 @@ function write_cookies($userdata)
 		if ( $board_config['keep_unreads_db'] && $userdata['session_logged_in'] )
 		{
 			$data = intval($tracking_floor);
-			@reset($tracking_unreads);
-			while ( list($id, $time) = @each($tracking_unreads) )
+			reset($tracking_unreads);
+			while ( list($id, $time) = each($tracking_unreads) )
 			{
 				if ($id) $data .= ';' . intval($id) . ':' . intval($time);
 			}
 			$data .= '//' . intval($board_config['tracking_time']) . '//';
-			@reset($tracking_forums);//board_config['tracking_forums']);
-			while ( list($id, $time) = @each($tracking_forums)) //$board_config['tracking_forums']) )
+			reset($tracking_forums);//board_config['tracking_forums']);
+			while ( list($id, $time) = each($tracking_forums)) //$board_config['tracking_forums']) )
 			{
 				if ($id) $data .= ';' . intval($id) . ':' . intval($time);
 			}
 			//Erase old cookies
-			@setcookie($base_name . '_tt', '', 0, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
-			@setcookie($base_name . '_f', '', 0, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
-			@setcookie($base_name . '_uf', '', 0, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
-			@setcookie($base_name . '_u', '', 0, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+			setcookie($base_name . '_tt', '', 0, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+			setcookie($base_name . '_f', '', 0, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+			setcookie($base_name . '_uf', '', 0, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+			setcookie($base_name . '_u', '', 0, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
 			$sql = "UPDATE " . USERS_TABLE . "
 				SET user_unread_topics = '$data'
 				WHERE user_id = " . intval($userdata['user_id']);
 		}
 		else
 		{
-    		@setcookie($base_name . '_tt', intval($board_config['tracking_time']), time() + 31536000, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
-    		@setcookie($base_name . '_f', serialize($board_config['tracking_forums']), time() + 31536000, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
-			@setcookie($base_name . '_uf', intval($tracking_floor), time() + 31536000, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
-			@setcookie($base_name . '_u', serialize($tracking_unreads), time() + 31536000, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+    		setcookie($base_name . '_tt', intval($board_config['tracking_time']), time() + 31536000, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+    		setcookie($base_name . '_f', serialize($board_config['tracking_forums']), time() + 31536000, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+			setcookie($base_name . '_uf', intval($tracking_floor), time() + 31536000, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+			setcookie($base_name . '_u', serialize($tracking_unreads), time() + 31536000, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
 			// erase the users table to prevent a timewrap if the user reactivate the unreads database storage
 			if ( !empty($userdata['user_unread_topics']) && $userdata['session_logged_in'] )
 			{

@@ -149,9 +149,10 @@ function adr_get_posters_adr_info()
 	include_once($phpbb_root_path .'adr/includes/adr_constants.'. $phpEx);
 
 	$q = "SELECT * FROM ". ADR_GENERAL_TABLE;
-	$r = $db->sql_query($q);
-		while ($row = $db->sql_fetchrow($r))
-			$config[$row['config_name']] = $row['config_value'];
+	$r = $db->sql_query($q, false, 'adr_config');
+	while ($row = $db->sql_fetchrow($r))
+		$config[$row['config_name']] = $row['config_value'];
+	$db->sql_freeresult($r);
 
 	return $config;
 }
@@ -162,9 +163,9 @@ function adr_get_posters_pvp_info()
 
 	#==== I tried to use the defined name, but the shit wouldn't work unless it was like this
 	$q = "SELECT * FROM ". $table_prefix .'adr_battle_pvp';
-	$r = $db->sql_query($q);
+	$r = $db->sql_query($q, false, 'adr_infos');
 	$pvp = $db->sql_fetchrowset($r);
-
+	$db->sql_freeresult($r);
 	return $pvp;
 }
 
@@ -175,7 +176,7 @@ function adr_get_posters_char_info()
 	include_once($phpbb_root_path .'adr/includes/adr_constants.'. $phpEx);
 
 	$q = "SELECT * FROM ". ADR_CHARACTERS_TABLE;
-	$r = $db->sql_query($q);
+	$r = $db->sql_query($q, false);
 	$char = $db->sql_fetchrowset($r);
 
 	return $char;
@@ -188,9 +189,9 @@ function adr_get_posters_alignment_info()
 	include_once($phpbb_root_path .'adr/includes/adr_constants.'. $phpEx);
 
 	$q = "SELECT * FROM ". ADR_ALIGNMENTS_TABLE;
-	$r = $db->sql_query($q);
+	$r = $db->sql_query($q, false, 'adr_infos');
 	$alig = $db->sql_fetchrowset($r);
-
+	$db->sql_freeresult($r);
 	return $alig;
 }
 
@@ -201,9 +202,9 @@ function adr_get_posters_class_info()
 	include_once($phpbb_root_path .'adr/includes/adr_constants.'. $phpEx);
 
 	$q = "SELECT * FROM ". ADR_CLASSES_TABLE;
-	$r = $db->sql_query($q);
+	$r = $db->sql_query($q, false, 'adr_infos');
 	$clas = $db->sql_fetchrowset($r);
-
+	$db->sql_freeresult($r);
 	return $clas;
 }
 
@@ -214,9 +215,9 @@ function adr_get_posters_races_info()
 	include_once($phpbb_root_path .'adr/includes/adr_constants.'. $phpEx);
 
 	$q = "SELECT * FROM ". ADR_RACES_TABLE;
-	$r = $db->sql_query($q);
+	$r = $db->sql_query($q, false, 'adr_infos');
 	$race = $db->sql_fetchrowset($r);
-
+	$db->sql_freeresult($r);
 	return $race;
 }
 
@@ -228,8 +229,9 @@ function adr_get_posters_elements_info()
 
 	$q = "SELECT *
 		  FROM ". ADR_ELEMENTS_TABLE;
-	$r = $db->sql_query($q);
+	$r = $db->sql_query($q, false, 'adr_infos');
 	$elem = $db->sql_fetchrowset($r);
+	$db->sql_freeresult($r);
 
 	return $elem;
 }
