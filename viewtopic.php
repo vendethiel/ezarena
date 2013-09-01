@@ -1175,12 +1175,15 @@ init_display_post_attachments($forum_topic_data['topic_attachment']);
 //
 // Update the topic view counter
 //
-$sql = "UPDATE " . TOPICS_TABLE . "
-	SET topic_views = topic_views + 1
-	WHERE topic_id = $topic_id";
-if ( !$db->sql_query($sql) )
+if (mt_rand(1, 3) == 1)
 {
-	message_die(GENERAL_ERROR, "Could not update topic views.", '', __LINE__, __FILE__, $sql);
+	$sql = "UPDATE " . TOPICS_TABLE . "
+		SET topic_views = topic_views + 3
+		WHERE topic_id = $topic_id";
+	if ( !$db->sql_query($sql) )
+	{
+		message_die(GENERAL_ERROR, "Could not update topic views.", '', __LINE__, __FILE__, $sql);
+	}
 }
 
 #==== Get all adr info OUTSIDE the looping array, so it doesn't keep adding up SQL's. We can use the
@@ -1199,7 +1202,6 @@ $adr_topic_info_adr		= adr_get_posters_adr_info();
 // and it goes like this ...
 //
 //-- mod : topics enhanced -----------------------------------------------------
-//-- add
 //-- topics nav buttons
 $num_row = 0;
 //-- fin mod : topics enhanced -------------------------------------------------
@@ -1209,7 +1211,6 @@ for($i = 0; $i < $total_posts; $i++)
 	$post_number = $post_number+1;
 	$post_id = $postrow[$i]['post_id'];
 //-- mod : topics enhanced -----------------------------------------------------
-//-- add
 //-- topics nav buttons
 	$num_row++;
 
@@ -1223,11 +1224,9 @@ for($i = 0; $i < $total_posts; $i++)
 	$poster_id = $postrow[$i]['user_id'];
 	$poster = ( $poster_id == ANONYMOUS ) ? $lang['Guest'] : $postrow[$i]['username'];
 //-- mod : flags ---------------------------------------------------------------
-//-- add
 	$poster_flag = ( $postrow[$i]['user_id'] != ANONYMOUS ) ? $postrow[$i]['user_flag'] : '';
 //-- fin mod : flags -----------------------------------------------------------	
 //-- mod : birthday ------------------------------------------------------------
-//-- add
 	$poster_birthday = ( $postrow[$i]['user_id'] != ANONYMOUS ) ? $postrow[$i]['user_birthday'] : '';
 	$poster_zodiac = ( $postrow[$i]['user_id'] != ANONYMOUS ) ? $postrow[$i]['user_zodiac'] : '';
 //-- fin mod : birthday --------------------------------------------------------	
@@ -1235,9 +1234,8 @@ for($i = 0; $i < $total_posts; $i++)
 	$post_date = create_date2($board_config['default_dateformat'], $postrow[$i]['post_created'], $board_config['board_timezone']);
 
    // DEBUT MOD Postographie d'un membre depuis viewtopic 
-   // -- DEBUT Enlevé 
+   // Delete
    // $poster_posts = ( $postrow[$i]['user_id'] != ANONYMOUS ) ? $lang['Posts'] . ': ' . $postrow[$i]['user_posts'] : ''; 
-   // -- FIN Enlevé 
    $poster_posts = ( $postrow[$i]['user_id'] != ANONYMOUS ) ? $lang['Posts'] . ' : <a href="' . append_sid("search.$phpEx?user_id" . "=" . $poster_id) . '" title="' . sprintf($lang['Search_user_posts'], $poster) . '" class="gensmall">' . $postrow[$i]['user_posts'] . '</a>': ''; 
    // FIN MOD Postographie d'un membre depuis viewtopic
 
@@ -1261,9 +1259,9 @@ for($i = 0; $i < $total_posts; $i++)
 				break;
 		}
 	}
-// Default avatar MOD, By Manipe (Begin)
-default_avatar($postrow[$i], $poster_avatar);
-// Default avatar MOD, By Manipe (End)	
+	// Default avatar MOD, By Manipe (Begin)
+	default_avatar($postrow[$i], $poster_avatar);
+	// Default avatar MOD, By Manipe (End)	
 
 	//
 	//START MOD Keep_Unread_2 * Define the little post icon
@@ -1288,9 +1286,9 @@ default_avatar($postrow[$i], $poster_avatar);
 	$poster_rank = '';
 	$rank_image = '';
 	$rank_tags = '';
-// Start add - Gender MOD
-$gender_image = ''; 
-// End add - Gender MOD	
+	// Start add - Gender MOD
+	$gender_image = ''; 
+	// End add - Gender MOD	
 	if ( $postrow[$i]['user_id'] == ANONYMOUS )
 	{
 	}
@@ -1335,11 +1333,9 @@ $gender_image = '';
 	if ( $poster_id != ANONYMOUS )
 	{
 //-- mod : rank color system ---------------------------------------------------
-//-- delete
 /*-MOD
 		$temp_url = append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$poster_id");
 MOD-*/
-//-- add
 		$temp_url = $get->url('userlist', array('mode' => 'viewprofile', POST_USERS_URL => $poster_id), true);
 //-- fin mod : rank color system -----------------------------------------------
 		$profile_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_profile'] . '" alt="' . $lang['Read_profile'] . '" title="' . $lang['Read_profile'] . '" border="0" /></a>';
@@ -1347,14 +1343,14 @@ MOD-*/
 
 		$temp_url = append_sid("privmsg.$phpEx?mode=post&amp;" . POST_USERS_URL . "=$poster_id");
 		$pm_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_pm'] . '" alt="' . $lang['Send_private_message'] . '" title="' . $lang['Send_private_message'] . '" border="0" /></a>';
-// Start add - Gender MOD
-switch ($postrow[$i]['user_gender']) 
-{ 
-	case 1 : $gender_image = $lang['Gender']." : <img src=\"" . $images['icon_minigender_male'] . "\" alt=\"" . $lang['Gender'].  ":".$lang['Male']."\" title=\"" . $lang['Gender'] . " : ".$lang['Male']. "\" border=\"0\" />"; break; 
-	case 2 : $gender_image = $lang['Gender']." : <img src=\"" . $images['icon_minigender_female'] . "\" alt=\"" . $lang['Gender']. ":".$lang['Female']. "\" title=\"" . $lang['Gender'] . " : ".$lang['Female']. "\" border=\"0\" />"; break; 
-	default : $gender_image=""; 
-}
-// End add - Gender MOD		
+		// Start add - Gender MOD
+		switch ($postrow[$i]['user_gender']) 
+		{ 
+			case 1 : $gender_image = $lang['Gender']." : <img src=\"" . $images['icon_minigender_male'] . "\" alt=\"" . $lang['Gender'].  ":".$lang['Male']."\" title=\"" . $lang['Gender'] . " : ".$lang['Male']. "\" border=\"0\" />"; break; 
+			case 2 : $gender_image = $lang['Gender']." : <img src=\"" . $images['icon_minigender_female'] . "\" alt=\"" . $lang['Gender']. ":".$lang['Female']. "\" title=\"" . $lang['Gender'] . " : ".$lang['Female']. "\" border=\"0\" />"; break; 
+			default : $gender_image=""; 
+		}
+		// End add - Gender MOD		
 		$pm = '<a href="' . $temp_url . '">' . $lang['Send_private_message'] . '</a>';
 
 		if ( !empty($postrow[$i]['user_viewemail']) || $is_auth['auth_mod'] )
@@ -1390,11 +1386,9 @@ switch ($postrow[$i]['user_gender'])
 		$aim = ( $postrow[$i]['user_aim'] ) ? '<a href="aim:goim?screenname=' . $postrow[$i]['user_aim'] . '&amp;message=Hello+Are+you+there?">' . $lang['AIM'] . '</a>' : '';
 
 //-- mod : rank color system ---------------------------------------------------
-//-- delete
 /*-MOD
 		$temp_url = append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$poster_id");
 MOD-*/
-//-- add
 		$temp_url = $get->url('userlist', array('mode' => 'viewprofile', POST_USERS_URL => $poster_id), true);
 //-- fin mod : rank color system -----------------------------------------------
 		$msn_img = ( $postrow[$i]['user_msnm'] ) ? '<a href="' . $temp_url . '"><img src="' . $images['icon_msnm'] . '" alt="' . $lang['MSNM'] . '" title="' . $lang['MSNM'] . '" border="0" /></a>' : '';

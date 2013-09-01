@@ -192,7 +192,7 @@ class show_online
 
 	private function tryUpdateBest($total)
 	{
-		global $board_config;
+		global $board_config, $db;
 
 		if ($total <= $board_config['record_online_users'])
 		{
@@ -203,7 +203,7 @@ class show_online
 		$board_config['record_online_date'] = time();
 
 		$sql = "UPDATE " . CONFIG_TABLE . "
-			SET config_value = '$total_online_users'
+			SET config_value = '$total'
 			WHERE config_name = 'record_online_users'";
 		if ( !$db->sql_query($sql) )
 		{

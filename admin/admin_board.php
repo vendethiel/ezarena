@@ -328,7 +328,6 @@ $template->assign_vars(array(
 
 	"L_BOARD_EMAIL_FORM" => $lang['Board_email_form'], 
 	"L_BOARD_EMAIL_FORM_EXPLAIN" => $lang['Board_email_form_explain'],
-	"L_MAX_SUBFORUMS_EXPLAIN" => $lang['Max_subforums_explain'],	
 //+MOD: Search latest 24h 48h 72h
 	'L_SEARCH_LATEST_HOURS' => $lang['Search_latest_hours'],
 	'L_SEARCH_LATEST_HOURS_EXPLAIN' => $lang['Search_latest_hours_explain'],

@@ -558,7 +558,10 @@ function init_userprefs($userdata)
 //-- add
 	include($phpbb_root_path . 'includes/lang_extend_mac.' . $phpEx);
 //-- fin mod : language settings -----------------------------------------------
-	include_attach_lang();
+	if (!defined('NO_ATTACH_MOD'))
+	{
+		include_attach_lang();
+	}
 	//
 	// Set up style
 	//
@@ -1243,17 +1246,10 @@ function message_die($msg_code, $msg_text = '', $msg_title = '', $err_line = '',
 	exit;
 }
 
-//
-// This function is for compatibility with PHP 4.x's realpath()
-// function.  In later versions of PHP, it needs to be called
-// to do checks with some functions.  Older versions of PHP don't
-// seem to need this, so we'll just return the original value.
-// dougk_ff7 <October 5, 2002>
+// V: Well, PHP4 is dead.
 function phpbb_realpath($path)
 {
-	global $phpbb_root_path, $phpEx;
-
-	return (!@function_exists('realpath') || !@realpath($phpbb_root_path . 'includes/functions.'.$phpEx)) ? $path : @realpath($path);
+	return realpath($path);
 }
 
 function redirect($url)

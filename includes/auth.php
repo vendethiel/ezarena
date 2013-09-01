@@ -122,8 +122,10 @@ function auth($type, $forum_id, $userdata, $f_access = '')
 		default:
 			break;
 	}
-	attach_setup_basic_auth($type, $auth_fields, $a_sql);
-
+	if (!defined('NO_ATTACH_MOD'))
+	{
+		attach_setup_basic_auth($type, $auth_fields, $a_sql);
+	}
 		
 	//
 	// If f_access has been passed, or auth is needed to return an array of forums

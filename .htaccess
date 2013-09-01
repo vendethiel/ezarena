@@ -1,7 +1,6 @@
 # You could need to un-comment the following line
 # Options +FollowSymlinks
 RewriteEngine On
-RewriteBase /ultimarena
 
 #########################################################
 # PHPBB SEO REWRITE RULES				#

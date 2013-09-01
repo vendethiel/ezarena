@@ -24,14 +24,11 @@ define('IN_PHPBB', true);
 $phpbb_root_path = './';
 include($phpbb_root_path . 'extension.inc');
 include($phpbb_root_path . 'common.'.$phpEx);
-// Start Smilies Invasion Mod
+// Smilies Invasion Mod
 include($phpbb_root_path . 'includes/bbcode.'.$phpEx);
-// End Smilies Invasion Mod
 include($phpbb_root_path . 'includes/functions_separate.'.$phpEx);
 //-- mod : quick title edition -------------------------------------------------
-//-- add
 include($get->url('includes/class_attributes'));
-//-- fin mod : quick title edition ---------------------------------------------
 
 //
 // Start initial var setup

@@ -19,10 +19,12 @@
  *
  ***************************************************************************/
 
-if(!defined("SQL_LAYER"))
+if(defined("SQL_LAYER"))
 {
+	return;
+}
 
-define("SQL_LAYER","mysql4");
+define("SQL_LAYER","mysql");
 
 class sql_db
 {
@@ -459,7 +461,3 @@ class sql_db
 	}
 
 } // class sql_db
-
-} // if ... define
-
-?>

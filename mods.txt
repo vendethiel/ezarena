@@ -16,7 +16,7 @@ L'Administrateur peut choisir qui verra l'annonce : Tous, membres enregistrés, 
 Possibilité de faire une annonce distincte uniquement pour les invités.
 
 # Admin Userlist 2.0.6c - Milkboy31
-Ce MOD vous permet de voir tous les membre de votre forum via l'ACP et permet d'effectuer de multiples actions sur cer derniers.
+Ce MOD permet de voir tous les membre de votre forum via l'ACP et permet d'effectuer de multiples actions sur cer derniers.
 Addons :
  - Addon pour RCS
 
@@ -81,7 +81,7 @@ L'administrateur peut choisir d'autoriser ou non cette option.
 3 façons différentes d'ecrire la couleur : red, #ff0000 ou ff0000. 
 Option gérable depuis le profil (si l'administrateur l'autorise, sinon, l'option n'apparait pas). 
 
-# Colour on oll results 1.1.1 - Manipe
+# Colour on poll results 1.1.1 - Manipe
 Colorise les résultats des sondages.
 
 # CountClick 1.1.1 - eMule-Star
@@ -488,6 +488,11 @@ Permet d'ajouter une description secondaire (comme des règles) affichée dans l
 Addons :
  - Addon pour BBCode Box Reloaded - Informpro 
  - Addon BBCode&Smilies - Informpro
+
+# SQL Optimizations - lanzer
+Applique des modifications proposées par lanzer : https://www.phpbb.com/community/viewtopic.php?f=18&t=135383
+Modifs :
+ - update view counter 1/3 times for 3 views
 
 # Strip HTML Tags in Meta and Title 1.0.0 - Informpro
 Supprime les tags HTML des titres de forums dans les meta et dans le titre de la page

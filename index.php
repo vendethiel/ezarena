@@ -20,6 +20,7 @@
  *
  ***************************************************************************/
 define('IN_PHPBB', true);
+define('NO_ATTACH_MOD', true);
 //-- mod: sf
 if ( !defined('IN_VIEWFORUM') )
 {
