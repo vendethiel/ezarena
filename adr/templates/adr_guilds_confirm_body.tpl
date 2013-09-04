@@ -11,8 +11,8 @@
 	</tr>
     </tr>
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_CREATE_YES}';" width="449"><span class="gen"><b>{L_YES}</b></span></td>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_CREATE_NO}';" width="450"><span class="gen"><b>{L_NO}</b></span></td>
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_CREATE_YES}';" width="449"><span class="gen"><b>{L_YES}</b></span></td>
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_CREATE_NO}';" width="450"><span class="gen"><b>{L_NO}</b></span></td>
 	</tr>
 	</table>
 <!-- END guilds_create_confirm -->
@@ -28,8 +28,8 @@
 	</tr>
     </tr>
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_APPLY_YES}';" width="449"><span class="gen"><b>{L_YES}</b></span></td>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_APPLY_NO}';" width="450"><span class="gen"><b>{L_NO}</b></span></td>
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_APPLY_YES}';" width="449"><span class="gen"><b>{L_YES}</b></span></td>
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_APPLY_NO}';" width="450"><span class="gen"><b>{L_NO}</b></span></td>
 	</tr>
 	</table>
 <!-- END guilds_apply_confirm -->
@@ -45,8 +45,8 @@
 	</tr>
     </tr>
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_LEAVE_YES}';" width="449"><span class="gen"><b>{L_YES}</b></span></td>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_LEAVE_NO}';" width="450"><span class="gen"><b>{L_NO}</b></span></td>
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_LEAVE_YES}';" width="449"><span class="gen"><b>{L_YES}</b></span></td>
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_LEAVE_NO}';" width="450"><span class="gen"><b>{L_NO}</b></span></td>
 	</tr>
 	</table>
 <!-- END guilds_leave_confirm -->
@@ -62,8 +62,8 @@
 	</tr>
     </tr>
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_DELETE_YES}';" width="449"><span class="gen"><b>{L_YES}</b></span></td>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_DELETE_NO}';" width="450"><span class="gen"><b>{L_NO}</b></span></td>
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_DELETE_YES}';" width="449"><span class="gen"><b>{L_YES}</b></span></td>
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_DELETE_NO}';" width="450"><span class="gen"><b>{L_NO}</b></span></td>
 	</tr>
 	</table>
 <!-- END guilds_leader_delete_confirm -->

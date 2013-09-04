@@ -24,11 +24,16 @@ define('IN_ADR_CHARACTER', 1);
 
 if( !empty($setmodules) )
 {
+	// V: Since we're not using town map, let's disable townmap's admin
+	return;
+
 	$filename = basename(__FILE__);
 	$module['Adr']['Adr_townmap'] = $filename;
 
 	return;
 }
+
+exit('TownMap is disabled, this file is to be removed.');
 
 $phpbb_root_path = "./../";
 require($phpbb_root_path . 'extension.inc');

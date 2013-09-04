@@ -23,6 +23,7 @@ define('IN_ADR_TOWN', true);
 define('IN_ADR_SHOPS', true);
 define('IN_ADR_CHARACTER', true);
 define('IN_ADR_ZONES', true);
+define('IN_ADR_TOWNMAP', true); 
 $phpbb_root_path = './';
 include_once($phpbb_root_path . 'extension.inc');
 include_once($phpbb_root_path . 'common.'.$phpEx);
@@ -98,19 +99,7 @@ $zone_pointwin2 = $zone['zone_pointwin2'];
 $zone_pointloss1 = $zone['zone_pointloss1'];
 $zone_pointloss2 = $zone['zone_pointloss2'];
 $zone_chance = $zone['zone_chance'];
-$npc_price = $zone['npc_price'];
-$zone_npc1 = $zone['npc1_enable'];
-$zone_npc2 = $zone['npc2_enable'];
-$zone_npc3 = $zone['npc3_enable'];
-$zone_npc4 = $zone['npc4_enable'];
-$zone_npc5 = $zone['npc5_enable'];
-$zone_npc6 = $zone['npc6_enable'];
-$npc1_message = $zone['npc1_message'];
-$npc2_message = $zone['npc2_message'];
-$npc3_message = $zone['npc3_message'];
-$npc4_message = $zone['npc4_message'];
-$npc5_message = $zone['npc5_message'];
-$npc6_message = $zone['npc6_message'];
+
 
 //prevent blank destination
 if ( $goto2_name == '' )
@@ -149,6 +138,92 @@ else
 	$template->assign_var('HAS_GOTO_RETURN', true);
 }
 
+/** V:
+ * Let's check for fighting a bit.
+ */
+// first, let's check if we have any monster ...
+$template->assign_var('HAS_MONSTERS', $has_monsters = !empty($zone['zone_monsters_list']));
+
+// now, let's check for duels. Code ripped off adr_battle_pvp
+// ... Duh. I can't understand how this link ever worked, tbh
+// since adr_battle_pvp needs a battle ID to work.
+// Maybe I should do a duel listing page...
+//$template->assign_var('HAS_DUELS', $has_duels = false);
+
+// Global check
+//$template->assign_var('CAN_BATTLE', $has_duels || $has_monsters);
+// - End fighting stuff check.
+
+/** V:
+ * Let's integrate Town Env and Zones Mod together.
+ */
+$template->assign_vars(array(
+	// Let's assign some switches to
+	// show unoccupied ground if not av
+	'HAS_SHOPS' => $zone['zone_shops'],
+	'HAS_FORGE' => $zone['zone_forge'],
+	'HAS_MINE' => $zone['zone_mine'],
+	'HAS_ENCHANT' => $zone['zone_enchant'],
+	'HAS_TEMPLE' => $zone['zone_temple'],
+	'HAS_PRISON' => $zone['zone_prison'],
+	'HAS_BANK' => $zone['zone_bank'],
+	'SAISON' => 'Carte'.$board_config['adr_seasons'],
+	// FROM adr_TownMap.php
+	'L_TOWNMAP' => $lang['Adr_TownMap_name'],
+	'L_TOWNMAP_MONSTRE' => $lang['TownMap_Monstre'],
+	'L_TOWNMAP_TEMPLE' => $lang['TownMap_Temple'],
+	'L_TOWNMAP_FORGE' => $lang['TownMap_Forge'],
+	'L_TOWNMAP_PRISON' => $lang['TownMap_Prison'],
+	'L_TOWNMAP_BANQUE' => $lang['TownMap_Banque'],
+	'L_TOWNMAP_BOUTIQUE' => $lang['TownMap_Boutique'],
+	'L_TOWNMAP_MAISON' => $lang['TownMap_Maison'],
+	'L_TOWNMAP_ENTRAINEMENT' => $lang['TownMap_Entrainement'],
+	'L_TOWNMAP_ENTREPOT' => $lang['TownMap_Entrepot'],
+	'L_TOWNMAP_COMBAT' => $lang['TownMap_Combat'],
+	'L_TOWNMAP_MINE' => $lang['TownMap_Mine'],
+	'L_TOWNMAP_ENCHANTEMENT' => $lang['TownMap_Enchantement'],
+	'L_TOWNMAP_CLAN' => $lang['TownMap_Clan'],
+	'L_TOWNBOUTONINFO1' => $lang['Adr_TownMap_Bouton_Infos1'],
+	'L_TOWNBOUTONINFO2' => $lang['Adr_TownMap_Bouton_Infos2'],
+	'L_TOWNBOUTONINFO3' => $lang['Adr_TownMap_Bouton_Infos3'],
+	'L_TOWNBOUTONINFO4' => $lang['Adr_TownMap_Bouton_Infos4'],
+	'L_TOWNBOUTONINFO5' => $lang['Adr_TownMap_Bouton_Infos5'],
+	'L_TOWNBOUTONINFO6' => $lang['Adr_TownMap_Bouton_Infos6'],
+	'L_TOWNBOUTONINFO7' => $lang['Adr_TownMap_Bouton_Infos7'],
+	'L_TOWNBOUTONINFO8' => $lang['Adr_TownMap_Bouton_Infos8'],
+	'L_TOWNBOUTONINFO9' => $lang['Adr_TownMap_Bouton_Infos9'],
+	'L_TOWNBOUTONINFO10' => $lang['Adr_TownMap_Bouton_Infos10'],
+	'L_TOWNBOUTONINFO11' => $lang['Adr_TownMap_Bouton_Infos11'],
+	'L_TOWNBOUTONINFO12' => $lang['Adr_TownMap_Bouton_Infos12'],
+	'L_TEMPLEPRESENTATION' => $lang['Adr_TownMap_Temple_Presentation'],
+	'L_PRISONPRESENTATION' => $lang['Adr_TownMap_Prison_Presentation'],
+	'L_BANQUEPRESENTATION' => $lang['Adr_TownMap_Banque_Presentation'],
+	'L_MAISONPRESENTATION' => $lang['Adr_TownMap_Maison_Presentation'],
+	'L_FORGEPRESENTATION' => $lang['Adr_TownMap_Forge_Presentation'],
+	'L_BOUTIQUEPRESENTATION' => $lang['Adr_TownMap_Boutique_Presentation'],
+	'L_ENTRAINEMENTPRESENTATION' => $lang['Adr_TownMap_Entrainement_Presentation'],
+	'L_ENTREPOTPRESENTATION' => $lang['Adr_TownMap_Entrepot_Presentation'],
+	'L_COMBATPRESENTATION' => $lang['Adr_TownMap_Combat_Presentation'],
+	'L_MINEPRESENTATION' => $lang['Adr_TownMap_Mine_Presentation'],
+	'L_ENCHANTEMENTPRESENTATION' => $lang['Adr_TownMap_Enchantement_Presentation'],
+	'L_CLANPRESENTATION' => $lang['Adr_TownMap_Clan_Presentation'],
+	'L_COPYRIGHT' => $lang['TownMap_Copyright'],
+	'U_TOWNMAP_TEMPLE' => append_sid("adr_temple.$phpEx"),
+	'U_TOWNMAP_FORGE' => append_sid("adr_TownMap_forge.$phpEx"),
+	'U_TOWNMAP_PRISON' => append_sid("adr_TownMap_Prison.$phpEx"),
+	'U_TOWNMAP_BANQUE' => append_sid("adr_TownMap_Banque.$phpEx"),
+	'U_TOWNMAP_BOUTIQUE' => append_sid("adr_TownMap_Boutique.$phpEx"),
+	'U_TOWNMAP_MAISON' => append_sid("adr_TownMap_Maison.$phpEx"),
+	'U_TOWNMAP_ENTRAINEMENT' => append_sid("adr_TownMap_Entrainement.$phpEx"),
+	'U_TOWNMAP_ENTREPOT' => append_sid("adr_TownMap_Entrepot.$phpEx"),
+	'U_TOWNMAP_COMBAT' => append_sid("adr_battle.$phpEx"),
+	'U_TOWNMAP_MINE' => append_sid("adr_TownMap_mine.$phpEx"),
+	'U_TOWNMAP_ENCHANTEMENT' => append_sid("adr_TownMap_pierrerunique.$phpEx"),
+	'U_TOWNMAP_CLAN' => append_sid("adr_TownMap_Clan.$phpEx"),
+	'U_COPYRIGHT' => append_sid("TownMap_Copyright.$phpEx"),
+	'S_CHARACTER_ACTION' => append_sid("adr_TownMap.$phpEx"),
+));
+// END - Enhanced Town Env for Zones Mod
 
 //
 // BEGIN of Zones Navigation
@@ -383,7 +458,7 @@ if ( $return )
 		adr_previous( Adr_zone_change_dead , adr_zones , '' );
 
 	//Prevent blank destination error
-	if ( $return_name == '' . $lang['Adr_zone_destination_none'] . '' )
+	if ( $return_name == '' . $lang['Adr_zone_destination_none'] )
 		adr_previous( Adr_zone_change_unavaible , adr_zones , '' );
 
 	//Select the zone destination
@@ -610,103 +685,717 @@ if ( $zone_events == '1' )
 // END of Zones Events
 //
 
+if ( isset($HTTP_GET_VARS['npc']) || isset($HTTP_POST_VARS['npc']) )
+	$npc_action = ( isset($HTTP_POST_VARS['npc']) ) ? htmlspecialchars($HTTP_POST_VARS['npc']) : htmlspecialchars($HTTP_GET_VARS['npc']);
 
-//
-// BEGIN of NPCs Action
-//
+$npc_give_action = $HTTP_POST_VARS['npc_give'];
+$user_npc_visit_array = explode( ',' , $adr_user['character_npc_visited'] );
+$user_npc_quest_array = explode( ';' , $adr_user['character_npc_check'] );
 
-// NPCs images
-( $zone_npc1 == '1' ) ? $npc1 = 'npc1_enable' : $npc1 = 'npc1_disable';
-( $zone_npc2 == '1' ) ? $npc2 = 'npc2_enable' : $npc2 = 'npc2_disable';
-( $zone_npc3 == '1' ) ? $npc3 = 'npc3_enable' : $npc3 = 'npc3_disable';
-( $zone_npc4 == '1' ) ? $npc4 = 'npc4_enable' : $npc4 = 'npc4_disable';
-( $zone_npc5 == '1' ) ? $npc5 = 'npc5_enable' : $npc5 = 'npc5_disable';
-( $zone_npc6 == '1' ) ? $npc6 = 'npc6_enable' : $npc6 = 'npc6_disable';
-
-// NPCs links
-( $zone_npc1 == '1' ) ? $npc1_link = '<input type="submit" name="npc1" value="'. $lang['Adr_zone_npc_talk'] .'" class="mainoption" />' : $npc1_link = $lang['Adr_zone_npc_disable'];
-( $zone_npc2 == '1' ) ? $npc2_link = '<input type="submit" name="npc2" value="'. $lang['Adr_zone_npc_talk'] .'" class="mainoption" />' : $npc2_link = $lang['Adr_zone_npc_disable'];
-( $zone_npc3 == '1' ) ? $npc3_link = '<input type="submit" name="npc3" value="'. $lang['Adr_zone_npc_talk'] .'" class="mainoption" />' : $npc3_link = $lang['Adr_zone_npc_disable'];
-( $zone_npc4 == '1' ) ? $npc4_link = '<input type="submit" name="npc4" value="'. $lang['Adr_zone_npc_talk'] .'" class="mainoption" />' : $npc4_link = $lang['Adr_zone_npc_disable'];
-( $zone_npc5 == '1' ) ? $npc5_link = '<input type="submit" name="npc5" value="'. $lang['Adr_zone_npc_talk'] .'" class="mainoption" />' : $npc5_link = $lang['Adr_zone_npc_disable'];
-( $zone_npc6 == '1' ) ? $npc6_link = '<input type="submit" name="npc6" value="'. $lang['Adr_zone_npc_event'] .'" class="mainoption" />' : $npc6_link = $lang['Adr_zone_npc_disable'];
-
-//NPC1
-$npc1_action = $HTTP_POST_VARS['npc1'];
-
-if ( $npc1_action )
+if( isset($npc_action) )
 {
-	adr_substract_points( $user_id , $npc_price , adr_zones , '' );
+	// Deny access if user is imprisioned
+	if($userdata['user_cell_time']){
+		adr_previous(Adr_zone_no_thief_npc, adr_cell, '');}
 
-	$message = '<img src="adr/images/zones/npc/npc1_enable.gif"><br \><br \>' . $npc1_message . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-	message_die(GENERAL_ERROR, $message , Zones , '' );
-	break;
+	if ( isset($HTTP_GET_VARS['npc_id']) || isset($HTTP_POST_VARS['npc_id']) )
+	{
+		$npc_id = ( isset($HTTP_POST_VARS['npc_id']) ) ? htmlspecialchars($HTTP_POST_VARS['npc_id']) : htmlspecialchars($HTTP_GET_VARS['npc_id']);
+	}
+    $adr_user = adr_npc_visit_update( $npc_id, $adr_user );
+	$sql = "SELECT * FROM  " . ADR_NPC_TABLE . "
+			WHERE npc_id = '$npc_id'
+				AND npc_enable = '1'";
+	if ( !($result = $db->sql_query($sql)) )
+        message_die(GENERAL_ERROR, 'Could not query npc information', '', __LINE__, __FILE__, $sql);
+
+	//prevent user exploit
+	if ( !($npc_row = $db->sql_fetchrow($result)))
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+
+	$npc_zone_array = explode( ',' , $npc_row['npc_zone'] );
+	$npc_race_array = explode( ',' , $npc_row['npc_race'] );
+	$npc_class_array = explode( ',' , $npc_row['npc_class'] );
+	$npc_alignment_array = explode( ',' , $npc_row['npc_alignment'] );
+	$npc_element_array = explode( ',' , $npc_row['npc_element'] );
+	$npc_character_level_array = explode( ',' , $npc_row['npc_character_level'] );
+	$npc_visit_array = explode( ',' , $npc_row['npc_visit_prerequisite'] );
+	$npc_quest_array = explode( ',' , $npc_row['npc_quest_prerequisite'] );
+
+	$npc_visit = array();
+	$npc_quest = array();
+	$no_talk_message = array();
+	$npc_quest_hide_array = array();
+	$x = 0;
+
+	if ( !($npc_row['npc_enable']) )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	if ( !in_array( $area_id , $npc_zone_array ) && $npc_zone_array[0] != '0' )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	if ( !in_array( $adr_user['character_race'] , $npc_race_array ) && $npc_race_array[0] != '0' && !$npc_row['npc_view'] )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	else if ( !in_array( $adr_user['character_race'] , $npc_race_array ) && $npc_race_array[0] != '0' && $npc_row['npc_view'] )
+	{
+	    $no_talk_message[$x] = $lang['Adr_Npc_race_no_talk_message'];
+	    $x = $x + 1;
+	}
+
+	if ( !in_array( $adr_user['character_class'] , $npc_class_array ) && $npc_class_array[0] != '0' && !$npc_row['npc_view'] )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	else if ( !in_array( $adr_user['character_class'] , $npc_class_array ) && $npc_class_array[0] != '0' && $npc_row['npc_view'] )
+	{
+	    $no_talk_message[$x] = $lang['Adr_Npc_class_no_talk_message'];
+	    $x = $x + 1;
+	}
+
+	if ( !in_array( $adr_user['character_alignment'] , $npc_alignment_array ) && $npc_alignment_array[0] != '0' && !$npc_row['npc_view'] )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	else if ( !in_array( $adr_user['character_alignment'] , $npc_alignment_array ) && $npc_alignment_array[0] != '0' && $npc_row['npc_view'] )
+	{
+	    $no_talk_message[$x] = $lang['Adr_Npc_alignment_no_talk_message'];
+	    $x = $x + 1;
+	}
+
+	if ( !in_array( $adr_user['character_element'] , $npc_element_array ) && $npc_element_array[0] != '0' && !$npc_row['npc_view'] )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	else if( !in_array( $adr_user['character_element'] , $npc_element_array ) && $npc_element_array[0] != '0' && $npc_row['npc_view'] )
+	{
+	    $no_talk_message[$x] = $lang['Adr_Npc_element_no_talk_message'];
+	    $x = $x + 1;
+	}
+	if ( !in_array( $adr_user['character_level'] , $npc_character_level_array ) && $npc_character_level_array[0] != '0' && !$npc_row['npc_view'] )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	else if ( !in_array( $adr_user['character_level'] , $npc_character_level_array ) && $npc_character_level_array[0] != '0' && $npc_row['npc_view'] )
+	{
+	    $no_talk_message[$x] = $lang['Adr_Npc_character_level_no_talk_message'];
+	    $x = $x + 1;
+	}
+
+	for ( $y = 0 ; $y < count( $user_npc_visit_array ) ; $y++ )
+		$npc_visit[$y] = ( in_array( $user_npc_visit_array[$y] , $npc_visit_array ) ) ? '1' : '0';
+	
+	if ( !in_array( '1' , $npc_visit ) && $npc_visit_array[0] != '0' && !$npc_row['npc_view'] )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	else if ( !in_array( '1' , $npc_visit ) && $npc_visit_array[0] != '0' && $npc_row['npc_view'] )
+	{
+	    $no_talk_message[$x] = $lang['Adr_Npc_character_visit_no_talk_message'];
+	    $x = $x + 1;
+	}
+	
+	for ( $y = 0 ; $y < count( $user_npc_quest_array ) ; $y++ )
+	{
+		$npc_quest_id = explode( ':' , $user_npc_quest_array[$y] );
+		$npc_quest[$y] = ( in_array( $npc_quest_id[0] , $npc_quest_array ) ) ? '1' : '0';
+		$npc_quest_hide_array[$y] = ( $npc_quest_id[0] == $npc_row['npc_id'] ) ? '1' : '0';
+	}
+	
+	if ( !in_array( '1' , $npc_quest ) && $npc_quest_array[0] != '0' && !$npc_row['npc_view'] )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	else if ( !in_array( '1' , $npc_quest ) && $npc_quest_array[0] != '0' && $npc_row['npc_view'] )
+	{
+	    $no_talk_message[$x] = $lang['Adr_Npc_character_quest_no_talk_message'];
+	}
+	
+	if 	( in_array( '1' , $npc_quest_hide_array ) && $npc_row['npc_quest_hide'] )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	$adr_moderators_array = explode( ',' , $board_config['zone_adr_moderators'] );
+	if ( $npc_row['npc_user_level'] != '0' && !( ( $npc_row['npc_user_level'] == '1' && $userdata['user_level'] == ADMIN ) || ( $npc_row['npc_user_level'] == '2' && ( in_array( $user_id , $adr_moderators_array ) || $userdata['user_level'] == ADMIN ) ) ) )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	//----
+
+	adr_substract_points( $user_id , $npc_row['npc_price'] , adr_zones , '' );
+	if ( count( $no_talk_message ) >= 1 )
+	{
+		$message_id = rand( 0 , ( count( $no_talk_message ) - 1 ) );
+		$message = "<img src=\"adr/images/zones/npc/" . $npc_row['npc_img'] . "\"><br \><br \><b>" . $npc_row['npc_name'] . ":</b> <i>\"" . $no_talk_message[$message_id] . "\"</i><br \><br \>" . $lang['Adr_zone_event_return'];
+		$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
+		message_die(GENERAL_ERROR, $message , $adr_zone_npc_title , '' );
+		break;
+	}
+	else
+	{
+		if ( adr_item_quest_check($npc_row['npc_id'], $adr_user['character_npc_check'], $npc_row['npc_times'] ) )
+		{
+			//[QUEST] Check if the NPC needs an item(s)
+			if ( $npc_row['npc_item'] != "0" || $npc_row['npc_item'] != "" || $npc_row['npc_quest_clue'] )
+			{
+				if ( !$npc_row['npc_quest_clue'] )
+				{
+					$npc_item_array = explode( ',' , $npc_row['npc_item'] );
+					$npc_item_list = '';
+					$npc_item_id_list = '';
+					$required_items = false;
+					for ( $i = 0 ; $i < count( $npc_item_array ) ; $i++ )
+					{
+			 			// Check if user has the item
+						$sql = "SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . "
+					   			WHERE item_name = '" . $npc_item_array[$i] . "'
+					   				AND item_owner_id = '$user_id'
+		   							AND item_in_shop = '0'
+		   							AND item_in_warehouse = '0'
+								LIMIT 1 ";
+						$result = $db->sql_query($sql);
+						if( !$result )
+					   		message_die( GENERAL_ERROR , 'Could not obtain required item information' , "" , __LINE__ , __FILE__ , $sql );
+						if ( $item_npc = $db->sql_fetchrow($result) )
+						{
+							if ( ( count( $npc_item_array ) == 1 ) || ( $i == ( count( $npc_item_array ) - 1 ) ) )
+							{
+								if ( $i == ( count( $npc_item_array ) - 1 ) && $i != 0 )
+									$npc_item_list .= ' et ' . adr_get_lang( $npc_item_array[$i] );
+								else
+									$npc_item_list .= adr_get_lang( $npc_item_array[$i] );
+								$npc_item_id_list .= $item_npc['item_id'];
+							}
+							else
+							{
+								if ( $i != 0 )
+									$npc_item_list .=  ', ';
+								$npc_item_list .= adr_get_lang( $npc_item_array[$i] );
+								$npc_item_id_list .= $item_npc['item_id'] . ',';
+							}
+						    $required_items = true;
+						}
+						else
+						{
+						    $required_items = false;
+						    break;
+						}
+					}
+					############ QUESTBOOK MOD v1.0.2 - START ############
+					// Get Quest Info
+					$sql = " SELECT * FROM  " . ADR_QUEST_LOG_TABLE . "
+						WHERE user_id = '$user_id'
+						AND npc_id = '$npc_id'
+				   		";
+					$result = $db->sql_query($sql);
+					if( !$result )
+			   		message_die(GENERAL_ERROR, 'Could not obtain required quest information', "", __LINE__, __FILE__, $sql);
+					
+					if ( $quest_log = $db->sql_fetchrow($result))
+					{
+						if ( $required_items == true && ($npc_row['npc_kill_monster'] == '0' || $npc_row['npc_kill_monster'] == ""))
+						{
+							$give_lang = sprintf($lang['Adr_zone_npc_give_item'], $npc_item_list, $npc_row['npc_name']);
+							$give = "<br \><br \><form method=\"post\" action=\"".append_sid("adr_zones.$phpEx")."\"><input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\"><input type=\"hidden\" name=\"item_id\" value=\"".$npc_item_id_list."\"><input type=\"submit\" name=\"npc_give\" value=\"$give_lang\" class=\"mainoption\" /></form>";
+						}
+						elseif ( $required_items == true && $quest_log['quest_kill_monster_amount'] == $quest_log['quest_kill_monster_current_amount'])
+						{
+							$give_lang = sprintf($lang['Adr_zone_npc_give_item'], $npc_item_list, $npc_row['npc_name']);
+							$give = "<br \><br \><form method=\"post\" action=\"".append_sid("adr_zones.$phpEx")."\"><input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\"><input type=\"hidden\" name=\"item_id\" value=\"".$npc_item_id_list."\"><input type=\"submit\" name=\"npc_give\" value=\"$give_lang\" class=\"mainoption\" /></form>";
+						}
+					}
+					############ QUESTBOOK MOD v1.0.2 - END ############
+				}
+				else
+				{
+					$give_lang = sprintf($lang['Adr_zone_npc_pay_price'], number_format( intval( $npc_row['npc_quest_clue_price'] ) ) . ' ' . $board_config['points_name'], $npc_row['npc_name']);
+					$give = "<br \><br \><form method=\"post\" action=\"".append_sid("adr_zones.$phpEx")."\"><input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\"><input type=\"hidden\" name=\"item_id\" value=\"0\"><input type=\"submit\" name=\"npc_give\" value=\"$give_lang\" class=\"mainoption\" /></form>";
+				}
+			}
+
+			############ QUESTBOOK MOD v1.0.2 - START ############
+			if ( ($npc_row['npc_item'] != "0" && $npc_row['npc_item'] != "") OR ($npc_row['npc_kill_monster'] != "0" && $npc_row['npc_kill_monster'] != "" && $npc_row['npc_kill_monster_amount'] != "0"))
+			{
+				// Check if the character already has the Quest !
+				$sql = " SELECT * FROM  " . ADR_QUEST_LOG_TABLE . "
+			   		WHERE (quest_item_need = '".$npc_row['npc_item']."'
+					OR quest_kill_monster = '".$npc_row['npc_kill_monster']."')
+					AND user_id = '$user_id'
+					AND npc_id = '$npc_id'
+			   		";
+				$result = $db->sql_query($sql);
+				if( !$result )
+			   		message_die(GENERAL_ERROR, 'Could not obtain required quest information', "", __LINE__, __FILE__, $sql);
+				if ( !($quest_log = $db->sql_fetchrow($result)) )
+				{
+					//Add the quest to the questlog
+					$sql = "INSERT INTO " . ADR_QUEST_LOG_TABLE . "
+						( user_id, quest_kill_monster , quest_kill_monster_amount , quest_kill_monster_current_amount , quest_item_have, quest_item_need, npc_id )
+						VALUES ( '$user_id' , '".$npc_row['npc_kill_monster']."' , '".$npc_row['npc_monster_amount']."' , '0' , '', '". $npc_row['npc_item'] ."' , '". $npc_row['npc_id'] ."' )";
+					$result = $db->sql_query($sql);
+					if( !$result )
+						message_die(GENERAL_ERROR, "Couldn't insert new quest", "", __LINE__, __FILE__, $sql);
+				}
+			}
+			// Check if user has killed enough monsters
+			$sqlm3 = " SELECT * FROM  " . ADR_QUEST_LOG_TABLE . "
+		   		WHERE quest_kill_monster = '".$npc_row['npc_kill_monster']."'
+		   		AND quest_kill_monster_current_amount = '".$npc_row['npc_monster_amount']."'
+				AND user_id = '$user_id'
+				AND npc_id = '$npc_id'
+		   		";
+			$resultm3 = $db->sql_query($sqlm3);
+			if( !$resultm3 )
+		   		message_die(GENERAL_ERROR, 'Could not obtain required quest information', "", __LINE__, __FILE__, $sqlm3);
+			if ( $kills_npc = $db->sql_fetchrow($resultm3) )
+			{
+				if ($kills_npc['quest_kill_monster'] != "" && $kills_npc['quest_kill_monster'] != '0' && ($kills_npc['quest_item_need'] == '0' || $kills_npc['quest_item_need'] == ""))
+				{
+					$give_lang = sprintf($lang['Adr_zone_npc_complete_kill_quest'], $npc_row['npc_monster_amount'], adr_get_lang($npc_row['npc_kill_monster']));
+					$give = "<br \><br \><form method=\"post\" action=\"".append_sid("adr_zones.$phpEx")."\"><input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\"><input type=\"submit\" name=\"npc_give\" value=\"$give_lang\" class=\"mainoption\" /></form>";
+				}
+			}
+			############ QUESTBOOK MOD v1.0.2 - END ############
+
+			$message = "<img src=\"adr/images/zones/npc/" . $npc_row['npc_img'] . "\"><br \><br \><b>" . $npc_row['npc_name'] . ":</b> <i>\"" . $npc_row['npc_message'] . "\"</i>$give<br \><br \>" . $lang['Adr_zone_event_return'];
+			$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
+			message_die(GENERAL_ERROR, $message , $adr_zone_npc_title , '' );
+			break;
+		}
+		else
+		{
+			$message = "<img src=\"adr/images/zones/npc/" . $npc_row['npc_img'] . "\"><br \><br \><b>" . $npc_row['npc_name'] . ":</b> <i>\"" . $npc_row['npc_message3'] . "\"</i><br \><br \>" . $lang['Adr_zone_event_return'];
+			$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
+			message_die(GENERAL_ERROR, $message , $adr_zone_npc_title , '' );
+			break;
+		}
+	}
+}
+else if( isset($npc_give_action) )
+{
+	$npc_id = intval($HTTP_POST_VARS['npc_id']);
+	$item_id_array = explode( ',' , $HTTP_POST_VARS['item_id']);
+	$sql = "SELECT * FROM  " . ADR_NPC_TABLE . "
+			WHERE npc_id = '$npc_id'
+				AND npc_enable = 1 " ;
+	if ( !($result = $db->sql_query($sql)) )
+        message_die(GENERAL_ERROR, 'Could not query npc information', '', __LINE__, __FILE__, $sql);
+
+	//prevent user exploit
+	if ( !($npc_give_row = $db->sql_fetchrow($result)))
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	if ( !($npc_give_row['npc_enable']) )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+
+	$npc_zone_array = explode( ',' , $npc_give_row['npc_zone'] );
+	$npc_race_array = explode( ',' , $npc_give_row['npc_race'] );
+	$npc_class_array = explode( ',' , $npc_give_row['npc_class'] );
+	$npc_alignment_array = explode( ',' , $npc_give_row['npc_alignment'] );
+	$npc_element_array = explode( ',' , $npc_give_row['npc_element'] );
+	$npc_character_level_array = explode( ',' , $npc_give_row['npc_character_level'] );
+	$npc_visit_array = explode( ',' , $npc_give_row['npc_visit_prerequisite'] );
+	$npc_quest_array = explode( ',' , $npc_give_row['npc_quest_prerequisite'] );
+
+	$npc_visit = array();
+	$npc_quest = array();
+	$npc_quest_hide_array = array();
+	if ( !in_array( $area_id , $npc_zone_array ) && $npc_zone_array[0] != '0' )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	if ( !in_array( $adr_user['character_race'] , $npc_race_array ) && $npc_race_array[0] != '0' )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	if ( !in_array( $adr_user['character_class'] , $npc_class_array ) && $npc_class_array[0] != '0' )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	if ( !in_array( $adr_user['character_alignment'] , $npc_alignment_array ) && $npc_alignment_array[0] != '0' )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	if ( !in_array( $adr_user['character_element'] , $npc_element_array ) && $npc_element_array[0] != '0' )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	if ( !in_array( $adr_user['character_level'] , $npc_character_level_array ) && $npc_character_level_array[0] != '0' )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	for ( $y = 0 ; $y < count( $user_npc_visit_array ) ; $y++ )
+		$npc_visit[$y] = ( in_array( $user_npc_visit_array[$y] , $npc_visit_array ) ) ? '1' : '0';
+	if ( !in_array( '1' , $npc_visit ) && $npc_visit_array[0] != '0' && !$npc_give_row['npc_view'] )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	for ( $y = 0 ; $y < count( $user_npc_quest_array ) ; $y++ )
+	{
+		$npc_quest_id = explode( ':' , $user_npc_quest_array[$y] );
+		$npc_quest[$y] = ( in_array( $npc_quest_id[0] , $npc_quest_array ) ) ? '1' : '0';
+		$npc_quest_hide_array[$y] = ( $npc_quest_id[0] == $npc_give_row['npc_id'] ) ? '1' : '0';
+	}
+	if ( !in_array( '1' , $npc_quest ) && $npc_quest_array[0] != '0' && !$npc_give_row['npc_view'] )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	if 	( in_array( '1' , $npc_quest_hide_array ) && $npc_give_row['npc_quest_hide'] )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	$adr_moderators_array = explode( ',' , $board_config['zone_adr_moderators'] );
+	if ( $npc_give_row['npc_user_level'] != '0' && !( ( $npc_give_row['npc_user_level'] == '1' && $userdata['user_level'] == ADMIN ) || ( $npc_give_row['npc_user_level'] == '2' && ( in_array( $user_id , $adr_moderators_array ) || $userdata['user_level'] == ADMIN ) ) ) )
+		adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+
+	if ( !$npc_give_row['npc_quest_clue'] )
+	{
+ 		// Check if user has the item(s)
+		$npc_item_array = explode( ',' , $npc_give_row['npc_item'] );
+		for ( $i = 0 ; $i < count( $npc_item_array ) ; $i++ )
+		{
+			$sql = "SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . "
+   					WHERE item_id = '" . $item_id_array[$i] ."'
+   					    AND item_name = '" . $npc_item_array[$i] . "'
+   						AND item_owner_id = '$user_id'
+	   					AND item_in_shop = '0'
+		   				AND item_in_warehouse = '0'
+					LIMIT 1 ";
+			if ( !($result = $db->sql_query($sql)) )
+    		    message_die(GENERAL_ERROR, 'Could not query shop item information', '', __LINE__, __FILE__, $sql);
+	    	$item_npc = $db->sql_fetchrowset($result);
+			if ( count($item_npc) == 0 && ($npc_give_row['npc_kill_monster'] == "" or $npc_give_row['npc_kill_monster'] == '0'))
+		        adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_1']);
+		}
+	}
+	else
+	{
+		if ( !$npc_give_row['npc_quest_clue'] )
+			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+	}
+	//----
+
+	if ( adr_item_quest_check($npc_give_row['npc_id'], $adr_user['character_npc_check'], $npc_give_row['npc_times'] ) )
+	{
+		if ( !$npc_give_row['npc_quest_clue'] )
+		{
+			//Delete item(s) from character inventory
+			for ( $i = 0 ; $i < count( $npc_item_array ) ; $i++ )
+			{
+				$delsql =  "DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
+							WHERE item_owner_id = '$user_id'
+								AND item_id = '" . $item_id_array[$i] . "' ";
+				if( !($aresult = $db->sql_query($delsql)) )
+					message_die(GENERAL_ERROR, "Couldn't update inventory info", "", __LINE__, __FILE__, $asql);
+
+				############ QUESTBOOK MOD v1.0.2 - START ############
+				$sql5 = "SELECT * FROM " . ADR_QUEST_LOG_TABLE . "
+					WHERE quest_item_need like '".$npc_item_array[$i].","."%' 
+					OR quest_item_need like '".$npc_item_array[$i]."'
+					OR quest_item_need like '".$npc_item_array[$i].","."'
+					OR quest_item_need like '%".",".$npc_item_array[$i].","."%'
+					OR quest_item_need like '%".",".$npc_item_array[$i]."'
+					AND user_id = '$user_id'
+					";
+				$cresult = $db->sql_query($sql5);
+				if( !$cresult )
+			   		message_die(GENERAL_ERROR, 'Could not obtain required quest information', "", __LINE__, __FILE__, $sql5);
+				if ( $got_item_log = $db->sql_fetchrow($cresult) )
+					$got_item += 1;
+				
+				if ($got_item == count( $npc_item_array ) && ($npc_give_row['npc_kill_monster'] == '0' || $npc_give_row['npc_kill_monster'] == ""))
+				{
+					//Copy Quest to the History
+					$insertsql = "INSERT INTO " . ADR_QUEST_LOG_HISTORY_TABLE . "
+						( user_id, quest_killed_monster , quest_killed_monsters_amount , npc_id, quest_item_gave)
+						VALUES ( '$user_id' , '".$npc_give_row['npc_kill_monster']."' , '".$npc_give_row['npc_monster_amount']."' , '". $npc_give_row['npc_id'] ."', '".$npc_give_row['npc_item']."' )";
+					$result = $db->sql_query($insertsql);
+					if( !$result )
+						message_die(GENERAL_ERROR, "Couldn't insert finished quest", "", __LINE__, __FILE__, $insertsql);
+
+					//Delete the Quest of the log
+					$delsql2 = " DELETE FROM  " . ADR_QUEST_LOG_TABLE . "
+				   		WHERE user_id = '$user_id'
+						AND npc_id = '$npc_id'
+				   		";
+					if( !($bresult = $db->sql_query($delsql2)) )
+						message_die(GENERAL_ERROR, "Couldn't update questlog info", "", __LINE__, __FILE__, $delsql2);
+				}
+				############ QUESTBOOK MOD v1.0.2 - END ############
+			}
+			############ QUESTBOOK MOD v1.0.2 - START ############
+			if ($npc_give_row['npc_kill_monster'] != '0' && $npc_give_row['npc_kill_monster'] != "" && ($npc_give_row['quest_kill_monster_current_amount'] == $npc_give_row['npc_kill_monster_amount']))
+			{
+				//Copy Quest to the History
+				$insertsql = "INSERT INTO " . ADR_QUEST_LOG_HISTORY_TABLE . "
+					( user_id, quest_killed_monster , quest_killed_monsters_amount , npc_id, quest_item_gave)
+					VALUES ( '$user_id' , '".$npc_give_row['npc_kill_monster']."' , '".$npc_give_row['npc_monster_amount']."' , '". $npc_give_row['npc_id'] ."', '".$npc_give_row['npc_item']."' )";
+				$result = $db->sql_query($insertsql);
+				if( !$result )
+					message_die(GENERAL_ERROR, "Couldn't insert finished quest", "", __LINE__, __FILE__, $insertsql);
+				
+				//Delete the Quest of the log
+				$delsql3 = " DELETE FROM  " . ADR_QUEST_LOG_TABLE . "
+		   			WHERE quest_kill_monster = '".$npc_give_row['npc_kill_monster']."'
+		   			AND quest_kill_monster_current_amount = '".$npc_give_row['npc_monster_amount']."'
+					AND user_id = '$user_id'
+					AND npc_id = '$npc_id'
+			   		";
+				if( !($dresult = $db->sql_query($delsql3)) )
+					message_die(GENERAL_ERROR, "Couldn't update questlog info", "", __LINE__, __FILE__, $delsql3);
+			}
+			############ QUESTBOOK MOD v1.0.2 - END ############
+		}
+		else
+		############ QUESTBOOK MOD v1.0.2 - START ############
+		{
+			adr_substract_points( $user_id , $npc_give_row['npc_quest_clue_price'] , adr_zones , '' );
+			//Delete the Quest of the log
+			$delsql2 = " DELETE FROM  " . ADR_QUEST_LOG_TABLE . "
+		   		WHERE user_id = '$user_id'
+				AND npc_id = '$npc_id'
+		   		";
+			if( !($bresult = $db->sql_query($delsql2)) )
+				message_die(GENERAL_ERROR, "Couldn't update questlog info", "", __LINE__, __FILE__, $delsql2);
+		}
+		############ QUESTBOOK MOD v1.0.2 - END ############
+
+		//give points prize
+		adr_add_points( $user_id , $npc_give_row['npc_points'] );
+
+		//give exp and sp prize
+		$sql = "UPDATE  " . ADR_CHARACTERS_TABLE . "
+				SET character_xp = character_xp + '".$npc_give_row['npc_exp']."',
+					character_sp = character_sp + '".$npc_give_row['npc_sp']."'
+				WHERE character_id = '$user_id' ";
+		if ( !($result = $db->sql_query($sql)) )
+	        message_die(GENERAL_ERROR, 'Could not update character information', '', __LINE__, __FILE__, $sql);
+
+		$prize_item = '';
+		if ( $npc_give_row['npc_item2'] != "0" && $npc_give_row['npc_item2'] != "" )
+		{
+			$npc_item2_array = explode( ',' , $npc_give_row['npc_item2'] );
+			for ( $i = 0 ; $i < count( $npc_item2_array ) ; $i++ )
+			{
+				// Make the new id for the item
+				$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE . "
+						WHERE item_owner_id = '$user_id'
+						ORDER BY 'item_id' DESC
+						LIMIT 1";
+				$result = $db->sql_query($sql);
+				if( !$result )
+					message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+
+				$data = $db->sql_fetchrow($result);
+				$new_item_id = $data['item_id'] + 1 ;
+
+				//Select NPC specific items
+				$sql = "SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . "
+						WHERE item_owner_id = '1'
+							AND item_name = '" . $npc_item2_array[$i] . "' LIMIT 1 ";
+				if( !($result = $db->sql_query($sql)) )
+					message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
+
+				$new_item					= $db->sql_fetchrow($result);
+				$item_type_use 				= $new_item['item_type_use'];
+				$item_name 					= trim(rtrim(addslashes(stripslashes($new_item['item_name']))));
+				$item_desc 					= trim(rtrim(addslashes(stripslashes($new_item['item_desc']))));
+				$item_icon 					= trim(rtrim($new_item['item_icon']));
+				$item_price					= $new_item['item_price'];
+				$item_quality 				= $new_item['item_quality'];
+				$item_duration 				= $new_item['item_duration'];
+				$item_duration_max 			= $new_item['item_duration_max'];
+				$item_power 				= $new_item['item_power'];
+				$item_add_power 			= $new_item['item_add_power'];
+				$item_mp_use 				= $new_item['item_mp_use'];
+				$item_element 				= $new_item['item_element'];
+				$item_element_str_dmg 		= $new_item['item_element_str_dmg'];
+				$item_element_same_dmg 		= $new_item['item_element_same_dmg'];
+				$item_element_weak_dmg 		= $new_item['item_element_weak_dmg'];
+				$item_weight 				= $new_item['item_weight'];
+				$item_max_skill 			= $new_item['item_max_skill'];
+				$item_sell_back_percentage 	= $new_item['item_sell_back_percentage'];
+
+				if ( $item_duration_max < $item_duration ) $item_duration_max = $item_duration;
+
+				$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . "
+						( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , item_duration , item_duration_max , item_power , item_add_power , item_mp_use , item_weight , item_auth , item_element , item_element_str_dmg , item_element_same_dmg , item_element_weak_dmg , item_max_skill , item_sell_back_percentage )
+						VALUES ( '$new_item_id' , '$user_id' , '$item_type_use' , '$item_name' , '$item_desc' , '" . str_replace("\'", "''", $item_icon) . "' , '$item_price' , '$item_quality' , '$item_duration' , '$item_duration_max' , '$item_power' , '$item_add_power' , '$item_mp_use' , '$item_weight' , '0' , '$item_element' , '$item_element_str_dmg' , '$item_element_same_dmg' , '$item_element_weak_dmg' , '$item_max_skill' , '$item_sell_back_percentage' )";
+				$result = $db->sql_query($sql);
+				if( !$result )
+					message_die(GENERAL_ERROR, "Couldn't insert new item", "", __LINE__, __FILE__, $sql);
+				if ( count( $npc_item2_array ) == 1 )
+					$prize_item .= adr_get_lang( $npc_item2_array[$i] ) ;
+				else
+				{
+					if ( ( $i >= 1 ) && ( $i == ( count( $npc_item2_array ) + 1 ) ) )
+						$prize_item .= ' and ' . adr_get_lang( $npc_item2_array[$i] ) ;
+					else
+						$prize_item .= ', ' . adr_get_lang( $npc_item2_array[$i] ) ;
+				}
+			}
+			$prize_message = sprintf($lang['Adr_zone_npc_item_prize'], $npc_give_row['npc_name'] , $prize_item ) ;
+		}
+
+		//Insert Character in check field
+		if( $npc_give_row['npc_times'] > 0 )
+			adr_item_quest_check_insert( $adr_user['character_npc_check'] , $npc_give_row['npc_id'] , $user_id );
+		//----
+
+		$points_prize_lang = ( $npc_give_row['npc_points'] == 0 ) ? "" : sprintf( $lang['Adr_zone_npc_points_prize'] , number_format( intval( $npc_give_row['npc_points'] ) ) , $board_config['points_name'] ) ;
+		$exp_prize_lang = ( $npc_give_row['npc_exp'] == 0 ) ? "" : sprintf( $lang['Adr_zone_npc_exp_prize'] , number_format( intval( $npc_give_row['npc_exp'] ) ) ) ;
+		$sp_prize_lang = ( $npc_give_row['npc_sp'] == 0 ) ? "" : sprintf( $lang['Adr_zone_npc_sp_prize'] , number_format( intval( $npc_give_row['npc_sp'] ) ) ) ;
+		$item_prize_lang = ( count( $npc_item2_array ) == 0 || $npc_give_row['npc_item2'] == "" ) ? "" : $prize_message;
+
+		$message = "<img src=\"adr/images/zones/npc/" . $npc_give_row['npc_img'] . "\"><br \><br \><b>" . $npc_give_row['npc_name'] . ":</b> <i>\"" . $npc_give_row['npc_message2'] . "\"</i><br \><br \>".$item_prize_lang."".$points_prize_lang."".$exp_prize_lang."".$sp_prize_lang."<br \>" . $lang['Adr_zone_event_return'];
+		$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
+		message_die(GENERAL_ERROR, $message , $adr_zone_npc_title , '' );
+		break;
+	}
+	else
+	{
+		$message = "<img src=\"adr/images/zones/npc/" . $npc_give_row['npc_img'] . "\"><br \><br \><b>" . $npc_give_row['npc_name'] . ":</b> <i>\"" . $npc_give_row['npc_message2'] . "\"</i><br \><br \>" . $lang['Adr_zone_event_return'];
+		$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
+		message_die(GENERAL_ERROR, $message , $adr_zone_npc_title , '' );
+		break;
+	}
 }
 
-//NPC2
-$npc2_action = $HTTP_POST_VARS['npc2'];
+$sql = "SELECT * FROM  " . ADR_NPC_TABLE . "
+		WHERE npc_enable = 1 ";
+if( !($result = $db->sql_query($sql)) )
+        message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
-if ( $npc2_action )
+$row = $db->sql_fetchrowset($result);
+
+$npc_count1 = 0;
+for ( $i = 0 ; $i < count( $row ) ; $i++ )
 {
-	adr_substract_points( $user_id , $npc_price , adr_zones , '' );
+	$npc_zone_array = explode( ',' , $row[$i]['npc_zone'] );
+	$npc_race_array = explode( ',' , $row[$i]['npc_race'] );
+	$npc_class_array = explode( ',' , $row[$i]['npc_class'] );
+	$npc_alignment_array = explode( ',' , $row[$i]['npc_alignment'] );
+	$npc_element_array = explode( ',' , $row[$i]['npc_element'] );
+	// V: I believe using a list like that is pretty dumb ...
+	// But does it allow for range and more, mmh
+	$npc_character_level_array = explode( ',' , $row[$i]['npc_character_level'] );
+	$npc_visit_array = explode( ',' , $row[$i]['npc_visit_prerequisite'] );
+	$npc_quest_array = explode( ',' , $row[$i]['npc_quest_prerequisite'] );
 
-	$message = '<img src="adr/images/zones/npc/npc2_enable.gif"><br \><br \>' . $npc2_message . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-	message_die(GENERAL_ERROR, $message , Zones , '' );
-	break;
+	$npc_visit = array();
+	$npc_quest = array();
+	$npc_quest_hide_array = array();
+	$npc_zone_check = ( in_array( $area_id , $npc_zone_array ) || $npc_zone_array[0] == '0' ) ? true : false;
+	$npc_race_check = ( in_array( $adr_user['character_race'] , $npc_race_array ) || $npc_race_array[0] == '0' || $row[$i]['npc_view'] ) ? true : false;
+	$npc_class_check = ( in_array( $adr_user['character_class'] , $npc_class_array ) || $npc_class_array[0] == '0' || $row[$i]['npc_view'] ) ? true : false;
+	$npc_alignment_check = ( in_array( $adr_user['character_alignment'] , $npc_alignment_array ) || $npc_alignment_array[0] == '0' || $row[$i]['npc_view'] ) ? true : false;
+	$npc_element_check = ( in_array( $adr_user['character_element'] , $npc_element_array ) || $npc_element_array[0] == '0' || $row[$i]['npc_view'] ) ? true : false;
+	$npc_character_level_check = ( in_array( $adr_user['character_level'] , $npc_character_level_array ) || $npc_character_level_array[0] == '0' || $row[$i]['npc_view'] ) ? true : false;
+	for ( $x = 0 ; $x < count( $user_npc_visit_array ) ; $x++ )
+		$npc_visit[$x] = ( in_array( $user_npc_visit_array[$x] , $npc_visit_array ) ) ? '1' : '0';
+	$npc_visit_check = ( in_array( '1' , $npc_visit ) || $npc_visit_array[0] == '0' || $row[$i]['npc_view'] ) ? true : false;
+	for ( $x = 0 ; $x < count( $user_npc_quest_array ) ; $x++ )
+	{
+		$npc_quest_id = explode( ':' , $user_npc_quest_array[$x] );
+		$npc_quest[$x] = ( in_array( $npc_quest_id[0] , $npc_quest_array ) ) ? '1' : '0';
+		$npc_quest_hide_array[$x] = ( $npc_quest_id[0] == $row[$i]['npc_id'] ) ? '1' : '0';
+	}
+	$npc_quest_check = ( in_array( '1' , $npc_quest ) || $npc_quest_array[0] == '0' || $row[$i]['npc_view'] ) ? true : false;
+	$npc_quest_hide_check = ( in_array( '1' , $npc_quest_hide_array ) && $row[$i]['npc_quest_hide'] ) ? false : true;
+	$adr_moderators_array = explode( ',' , $board_config['zone_adr_moderators'] );
+	if ( $row[$i]['npc_user_level'] == '0' )
+	    $npc_user_level_check = true;
+	else if  ( $row[$i]['npc_user_level'] == '1' && $userdata['user_level'] == ADMIN )
+	    $npc_user_level_check = true;
+	else if  ( $row[$i]['npc_user_level'] == '2' && ( in_array( $user_id , $adr_moderators_array ) || $userdata['user_level'] == ADMIN ) )
+	    $npc_user_level_check = true;
+	else
+		$npc_user_level_check = false;
+
+	if ( $npc_zone_check && $npc_race_check && $npc_class_check && $npc_alignment_check && $npc_element_check && $npc_character_level_check && $npc_user_level_check && $npc_visit_check && $npc_quest_check && $npc_quest_hide_check )
+	{
+		if ( $row[$i]['npc_random'] )
+		{
+			$npc_display = rand( 1 , $row[$i]['npc_random_chance'] );
+			if ( $npc_display == 1 )
+			{
+				$row1[$npc_count1] = $row[$i];
+				$npc_count1++;
+			}
+		}
+		else
+		{
+			$row1[$npc_count1] = $row[$i];
+			$npc_count1++;
+		}
+	}
 }
 
-//NPC3
-$npc3_action = $HTTP_POST_VARS['npc3'];
+$npc_count = ( $npc_count1 <= $adr_general['npc_image_count'] ) ? $npc_count1 : $adr_general['npc_image_count'];
 
-if ( $npc3_action )
+if ( $adr_general['npc_display_enable'] && ( $npc_count >= '1' ) )
+	$template->assign_block_vars("npc_display_enable" , array());
+
+$a=0;
+$r=0;
+for ( $i = 0 ; $i < $npc_count1 ; $i++ )
 {
-	adr_substract_points( $user_id , $npc_price , adr_zones , '' );
+	$npc_link = '';
+	$hidden_fields = '';
+	$npc_input = '';
+	$npc_title = '';
+	$points_name = $board_config['points_name'];
+    $npc_id = $row1[$i]['npc_id'];
+    $npc_price = $row1[$i]['npc_price'];
+   	$npc_name1 = sprintf( $lang['Adr_zone_npc_link_text'], $row1[$i]['npc_name'], number_format( intval( $npc_price ) ), $points_name );
+    $npc_img = $row1[$i]['npc_img'];
 
-	$message = '<img src="adr/images/zones/npc/npc3_enable.gif"><br \><br \>' . $npc3_message . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-	message_die(GENERAL_ERROR, $message , Zones , '' );
-	break;
+	if ( $adr_general['npc_display_text'] )
+	{
+		// V: better display ...
+		if ($npc_price)
+		{
+			$npc_title = sprintf( $lang['Adr_zone_npc_title_text'], $row1[$i]['npc_name'],
+				number_format( intval( $npc_price ) ), $points_name );
+		}
+		else
+		{
+			$npc_title = sprintf( $lang['Adr_zone_npc_title_text_simple'], $row1[$i]['npc_name']);
+		}
+	}
+	if ( $adr_general['npc_button_link'] )
+	{
+		$hidden_fields = "<input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\">";
+		$npc_input = "<input type=\"submit\" name=\"npc\" value=\"". $lang['Adr_zone_npc_talk'] ."\" class=\"mainoption\" />";
+		$npc_button = '<br /><br />' . $hidden_fields . $npc_input . '<br /><br />';
+	}
+	if ( !$adr_general['npc_button_link'] && $adr_general['npc_display_text'] )
+		$npc_button = '<br /><br />';
+	if ( $adr_general['npc_image_link'] || ( !$adr_general['npc_image_link'] && !$adr_general['npc_button_link'] ) )
+	{
+		$npc_link = '<a href="' . append_sid("adr_zones.$phpEx?npc=". $lang['Adr_zone_npc_talk'] . "&amp;npc_id=" . $npc_id . "") .' "><img src="adr/images/zones/npc/' . $npc_img . '" border="0" height="' . $adr_general['npc_image_size'] . 'px" alt="' . $npc_name1 . '" title="' . $npc_name1 . '" ></a>';
+	}
+	else
+	{
+		$npc_link = '<img src="adr/images/zones/npc/' . $npc_img . '" border="0" height="' . $adr_general['npc_image_size'] . 'px" alt="' . $npc_name1 . '" title="' . $npc_name1 . '" >';
+	}
+
+	if ($a==0)
+	{
+	    $tr1 = "<tr align=\"center\">";
+    	$r++;
+	}
+	else
+    	$tr1 = "";
+
+    if  ($r % 2)
+	    $row_class = ( !($a % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
+	else
+	    $row_class = ( !($a % 2) ) ? $theme['td_class2'] : $theme['td_class1'];
+	$a++;
+
+	if ($a==$npc_count ) {
+		$tr2 = "</tr>";
+		$a=0;
+	}
+	else
+		$tr2 = "";
+
+	if ( $adr_general['npc_display_enable'] )
+	{
+		$template->assign_block_vars("npc_display_enable.npc", array(
+			"ROW_CLASS" => $row_class,
+			"VAL_A" => $a,
+			"TR_INIT" => $tr1,
+			"TR_END" => $tr2,
+			"NPC_TITLE" => $npc_title,
+			"NPC_BUTTON" => $npc_button,
+			"NPC_LINK" => $npc_link,
+			"NPC_IMG" => $npc_img,
+			"NPC_PRICE" => $npc_price,
+			"POINTS_NAME" => $board_config['points_name'],
+			"NPC_INPUT" => $npc_input,
+			"HIDDEN_FIELDS" => $hidden_fields,
+		));
+	}
 }
-
-//NPC4
-$npc4_action = $HTTP_POST_VARS['npc4'];
-
-if ( $npc4_action )
+if($a!=0)
 {
-	adr_substract_points( $user_id , $npc_price , adr_zones , '' );
-
-	$message = '<img src="adr/images/zones/npc/npc4_enable.gif"><br \><br \>' . $npc4_message . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-	message_die(GENERAL_ERROR, $message , Zones , '' );
-	break;
+	for(;$a<$npc_count;$a++)
+	{
+	    $row_class = ( $row_class == $theme['td_class1'] ) ? $theme['td_class2'] : $theme['td_class1'];
+	    $tr2 = ( $a == ( $npc_count ) ) ? "</tr>" : "" ;
+		if ( $adr_general['npc_display_enable'] )
+		{
+			$template->assign_block_vars("npc_display_enable.npc_end", array(
+				"ROW_CLASS" => $row_class,
+				"TR_END" => $tr2,
+			));
+		}
+	}
 }
-
-//NPC5
-$npc5_action = $HTTP_POST_VARS['npc5'];
-
-if ( $npc5_action )
-{
-	adr_substract_points( $user_id , $npc_price , adr_zones , '' );
-
-	$message = '<img src="adr/images/zones/npc/npc5_enable.gif"><br \><br \>' . $npc5_message . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-	message_die(GENERAL_ERROR, $message , Zones , '' );
-	break;
-}
-
-//NPC6
-$npc6_action = $HTTP_POST_VARS['npc6'];
-
-if ( $npc6_action )
-{
-	adr_substract_points( $user_id , $npc_price , adr_zones , '' );
-
-	$message = '<img src="adr/images/zones/npc/npc6_enable.gif"><br \><br \>' . $npc6_message . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-	message_die(GENERAL_ERROR, $message , Zones , '' );
-	break;
-}
-
-//
-// END of NPCs Action
-//
-
 
 //
 // BEGIN of zones seasons and weather
@@ -840,15 +1529,15 @@ $users_connected_list = '<b><u>'. $lang['Adr_zone_connected']. '</u></b> : ' . $
 
 // Define user money
 $points = $userdata['user_points'] . ' ' . $board_config['points_name'];
-$zone_npc_price = $npc_price ? '<b><u>' . $lang['Adr_zone_npc_price'] . '</u> :</b> ' . $npc_price. ' ' . $board_config['points_name'] : '';
 
 $template->assign_vars(array(
 	'LANG' => $board_config['default_lang'],
 	'POINTS' => $points,
-	'ZONE_NPC_PRICE' => $zone_npc_price,
 	'ZONE_NAME' => $zone_name,
 	'ZONE_IMG' => $zone_img,
 	'ZONE_DESCRIPTION' => $zone_desc,
+	'NPC_SPAN' => $npc_count,
+	'NPC_WIDTH' => ($npc_count != 0 ) ? ( 100 / $npc_count ) : '',
 	'ZONE_ELEMENT' => $zone_element,
 	'ZONE_SEASON' => $actual_season,
 	'ZONE_SEASON_NAME' => $season_name,
@@ -880,18 +1569,6 @@ $template->assign_vars(array(
 	'ENCHANT_LINK' => $enchant_link,
 	'BANK_LINK' => $bank_link,
 	'PRISON_LINK' => $prison_link,
-	'NPC1_IMG' => $npc1,
-	'NPC2_IMG' => $npc2,
-	'NPC3_IMG' => $npc3,
-	'NPC4_IMG' => $npc4,
-	'NPC5_IMG' => $npc5,
-	'NPC6_IMG' => $npc6,
-	'NPC1_LINK' => $npc1_link,
-	'NPC2_LINK' => $npc2_link,
-	'NPC3_LINK' => $npc3_link,
-	'NPC4_LINK' => $npc4_link,
-	'NPC5_LINK' => $npc5_link,
-	'NPC6_LINK' => $npc6_link,
 	'L_TEMPLE_NAME' => $lang['Adr_zone_goto_temple'],
 	'L_FORGE_NAME' => $lang['Adr_zone_goto_forge'],
 	'L_MINE_NAME' => $lang['Adr_zone_goto_mine'],
@@ -899,12 +1576,6 @@ $template->assign_vars(array(
 	'L_SHOPS_NAME' => $lang['Adr_zone_goto_shops'],
 	'L_PRISON_NAME' => $lang['Adr_zone_goto_prison'],
 	'L_BANK_NAME' => $lang['Adr_zone_goto_bank'],
-	'L_NPC1_NAME' => $lang['Adr_zone_npc1_name'],
-	'L_NPC2_NAME' => $lang['Adr_zone_npc2_name'],
-	'L_NPC3_NAME' => $lang['Adr_zone_npc3_name'],
-	'L_NPC4_NAME' => $lang['Adr_zone_npc4_name'],
-	'L_NPC5_NAME' => $lang['Adr_zone_npc5_name'],
-	'L_NPC6_NAME' => $lang['Adr_zone_npc6_name'],
 	'L_ZONE_NPC' => $lang['Adr_zone_npc_title'],
 	'L_ZONE_BUILDINGS' => $lang['Adr_zone_buildings_title'],
 	'L_ZONE_ACTION' => $lang['Adr_zone_action_title'],
@@ -938,11 +1609,12 @@ $template->assign_vars(array(
 	'U_ZONE_BATTLE' => append_sid("adr_battle.$phpEx"),
 	'U_ZONE_PVP_BATTLE' => append_sid("adr_battle_pvp.$phpEx"),
 	'S_ZONES_ACTION' => append_sid("adr_zones.$phpEx"),
+
+	'U_SHOUTBOX_BODY' =>  append_sid("adr_battle_community.$phpEx?only_body=1"),
 ));
 
 $template->pparse('body');
 
-include_once($phpbb_root_path . 'adr_battle_community.'.$phpEx);
 include_once($phpbb_root_path . 'includes/page_tail.'.$phpEx);
 
 ?>

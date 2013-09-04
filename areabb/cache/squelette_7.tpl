@@ -4,7 +4,7 @@
 <tr>
     <td width='22%' align='center' valign='top'>
          {statistiques} 
-          
+         {liens} 
          {welcome} 
          {sondage} 
          {qui_joue} 
@@ -12,10 +12,10 @@
       <td width='56%' align='center' valign='top'>{news}</td>
       <td width='22%' align='center' valign='top'>
          {recent_topics} 
-          
+         {changestyle} 
          {whoisonline} 
-          
-          
+         {classvictoire} 
+         {calendrier} 
        </td>
 </tr>
 </table><br /><center><a href="http://www.areabb.com" target="_phpbb" class="copyright">Portail AreaBB</a></center>

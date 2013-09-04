@@ -57,7 +57,7 @@ adr_template_file('adr_lake_body.tpl');
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
 // Deny access if the user is into a battle
-$sql = " SELECT * FROM  " . ADR_BATTLE_LIST_TABLE . " 
+$sql = "SELECT * FROM  " . ADR_BATTLE_LIST_TABLE . " 
 	WHERE battle_challenger_id = $user_id
 	AND battle_result = 0
 	AND battle_type = 1 ";

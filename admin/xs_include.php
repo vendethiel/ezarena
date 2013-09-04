@@ -1245,6 +1245,7 @@ function xs_tpl_name($name)
 function xs_exit()
 {
 	global $db;
+	$db->clear_cache();
 	if(isset($db))
 	{
 		$db->sql_close();

@@ -55,49 +55,19 @@ include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
 $user_id = $userdata['user_id'];
 $points = $userdata['user_points'];
-$carte = '';
 
-$lsql = "select  townmap_map  from " . ADR_TOWNMAPMAP_TABLE ;
-if ( !($lresult = $db->sql_query($lsql)) ) message_die(GENERAL_ERROR, "Could not acces TownMapMAP table.", '', __LINE__, __FILE__, $sql);
-if ($alignments = $db->sql_fetchrow($lresult))
-{
-	$carte = $alignments['townmap_map'];
-}
-	if ( $carte == '1' ) 
-	{
-	$saison = 'Carte1';
-	}
-
-	if ( $carte == '2' ) 
-	{
-	$saison = 'Carte2';
-	}
-
-	if ( $carte == '3' ) 
-	{
-	$saison = 'Carte3';
-	}
-
-	if ( $carte == '4' ) 
-	{
-	$saison = 'Carte4';
-	}
+$saison = 'Carte' . $board_config['adr_seasons'];
 
 
 // Get the general settings
 $vault_general = adr_get_general_config();
 
-if ( !$vault_general['Adr_disable_rpg'] && $userdata['user_level'] != ADMIN ) 
-{	
-	adr_previous ( Adr_disable_rpg , 'index' , '' );
-}
+adr_enable_check();
+adr_ban_check($user_id);
+adr_character_created_check($user_id);
 // Deny access if user is imprisioned
 if($userdata['user_cell_time']){
 	adr_previous(Adr_shops_no_thief, adr_cell, '');}
-if ( !$vault_general['vault_enable'] )
-{
-	adr_previous( Adr_vault_closed , adr_character , '' );
-}
 
 // Define the actions
 $open = isset($HTTP_POST_VARS['open']);
@@ -865,7 +835,7 @@ $template->assign_vars(array(
 	'L_BLACK_LISTED_DUE'     => $lang['Adr_vault_blacklist_due'],
 	'L_DUE_PAYOFF'           => $lang['Adr_vault_blacklist_due_payoff'],
 	'L_TOWNBOUTONRETOUR' => $lang['Adr_TownMap_Bouton_Retour'],
-	'U_TOWNBOUTONRETOUR' => append_sid("adr_TownMap.$phpEx"),
+	'U_TOWNBOUTONRETOUR' => append_sid("adr_zones.$phpEx"),
 	'L_TOWNMAP_BANQUE' => $lang['TownMap_Banque'],
 	'L_TOWNBOUTONINFO' => $lang['Adr_TownMap_Bouton_Infos'],
 	'L_TOWNBOUTONRETOUR' => $lang['Adr_TownMap_Bouton_Retour'],

@@ -63,7 +63,8 @@ class phpbb_seo {
 		// --> Zero Dupe
 		$this->do_redir = FALSE;		
 		// URL Settings
-		$this->seo_url = array( 'cat' =>  array(), 
+		$this->seo_url = array(
+			'cat' =>  array(), 
 			'forum' =>  array(), 
 			'topic' =>  array(), 
 			'user' =>  array()
@@ -92,9 +93,6 @@ class phpbb_seo {
 			'gz_ext' => '.gz',
 			'index' => 'index.html'
 		);
-		if ($board_config['default_lang'] === 'french') {
-			$this->seo_static['user'] = 'membre';
-		}
 		// URL Filters
 		$this->phpbb_filter = array('postdays' => 0, 'topicdays' => 0, 'postorder' => 'asc', 'highlight' => '');
 		// Stop files
@@ -202,6 +200,13 @@ class phpbb_seo {
 		}
 		return;
 	}
+	/**
+	 * userlist
+	 */
+	function userlist() {
+		$this->profile();
+	}
+
 	/**
 	* URL rewritting for profile.php
 	* @access private

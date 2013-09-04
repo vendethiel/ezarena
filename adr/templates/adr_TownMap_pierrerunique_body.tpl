@@ -6,8 +6,10 @@
 		<th align="center" colspan="3" >{L_TOWNMAP_ENCHANTEMENT}</td>
 	</tr>
 	<tr>
-		<td align="center" class="row1" width="20%" ><span class="gen"><br /><img src="adr/images/TownMap/{SAISON}/Icone_Enchantement.gif " alt="{L_TOWNMAP_ENCHANTEMENT}" /><br /><br />{L_ENCHANTEMENTENTREE}<br /><br /><img src="adr/images/TownMap/Sorcier.gif" /><br /><br />{L_ENCHANTEMENTPRESENTATION} :<br /><br /><input type="submit" name="InfoEnchantement" value="{L_TOWNBOUTONINFO}" class="mainoption" /><br /><br /></span></td>
-		<td align="center" class="row2" ><span class="gen"><br /><br />{L_RECHARGE_ITEM}:<br /><br /><a href="{U_RECHARGE_ITEM}"><img src="adr/images/TownMap/Recharge.gif " /></a><br /><br /><br /><br />{L_ENCHANT_ITEM}:<br /><br /><a href="{U_ENCHANT_ITEM}"><img src="adr/images/TownMap/Enchante.gif " /></a><br /><br /><br /><br /></span></td>
+		<td align="center" class="row1" width="30%" ><span class="gen"><br /><img src="adr/images/TownMap/{SAISON}/Icone_Enchantement.gif " alt="{L_TOWNMAP_ENCHANTEMENT}" /><br /><br />{L_ENCHANTEMENTENTREE}<br /><br /><img src="adr/images/TownMap/Sorcier.gif" /><br /><br />{L_ENCHANTEMENTPRESENTATION} :<br /><br /><input type="submit" name="InfoEnchantement" value="{L_TOWNBOUTONINFO}" class="mainoption" /><br /><br /></span></td>
+		<td align="center" width="70%" class="row2" valign="top">
+			<span class="gen"><br /><br />{L_ENCHANT_ITEM}:<br /><br /><a href="{U_ENCHANT_ITEM}"><img src="adr/images/TownMap/Enchante.gif " /></a><br /><br /><br /><br />{L_RECHARGE_ITEM}:<br /><br /><a href="{U_RECHARGE_ITEM}"><img src="adr/images/TownMap/Recharge.gif " /></a></span>
+		</td>
 	</tr>
 
 </table>

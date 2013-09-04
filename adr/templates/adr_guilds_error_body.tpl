@@ -12,7 +12,7 @@
 <br /><br />
 <table class="forumline" align="center" width="200" cellspacing="1" cellpadding="3" border="0">
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
 	</tr>
 </table>
 <!-- END guilds_general_error -->
@@ -29,7 +29,7 @@
 <br /><br />
 <table class="forumline" align="center" width="200" cellspacing="1" cellpadding="3" border="0">
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
 	</tr>
 </table>
 <!-- END guilds_money_error_create -->
@@ -46,7 +46,7 @@
 <br /><br />
 <table class="forumline" align="center" width="200" cellspacing="1" cellpadding="3" border="0">
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
 	</tr>
 </table>
 <!-- END guilds_money_error_join -->

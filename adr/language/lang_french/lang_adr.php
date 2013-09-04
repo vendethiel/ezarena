@@ -5,13 +5,14 @@
 *
 *                   		Translation : Okinawa
 *                		 http://www.kingdom-evolution.fr.vu
+*                     + Informpro
 *
 ****************************************************************************/
 
 // General language keys
 //ZONE
 $lang['Adr_shops_user_money']='Votre argent';
-$lang['Adr_zone_building_noaccess']='This building is not avaible on this zone.';
+$lang['Adr_zone_building_noaccess']='Cette zone ne possède pas ce bâtiment.';
 $lang['Adr_zone_goto_bank']='Banque';
 $lang['Adr_zone_goto_temple']='Temple';
 $lang['Adr_zone_goto_shops']='Magasins';
@@ -638,7 +639,7 @@ if ( defined ('IN_ADR_VAULT'))
    $lang['Adr_vault_due_ok']='Merci pour votre mise en règle . Veuillez veiller à ce que ceci ne se reproduise pas .';
    $lang['Adr_vault_pref_account_protect']='Cacher le montant de mon compte aux autres utilisateurs';
    $lang['Adr_vault_not_available']='Vous devez avoir un compte pour modifier vos préférences';
-   $lang['Adr_vault_pref_loan_protect']='Cacher le montant sur mon compte aux autres utilisateurs';
+   $lang['Adr_vault_pref_loan_protect']='Cacher le montant de ma dette aux autres utilisateurs';
    $lang['Adr_vault_account_amount']='Capital';
    $lang['Adr_vault_loan_amount']='Emprunt';
    $lang['Adr_vault_confidential']='Confidentiel';
@@ -1062,7 +1063,7 @@ if ( defined('IN_ADR_COPYRIGHT'))
    $lang['Adr_copyright_images']='Images';
    $lang['Adr_copyright_thanks']='Remerciements';
    $lang['Adr_copyright_author']='Auteur original';
-   $lang['Adr_copyright_new_author']='Nouveau Dévellopeur ADR (v0.30+)';
+   $lang['Adr_copyright_new_author']='Nouveau Développeur ADR (v0.3.0+)';
 }
 
 if ( defined('IN_ADR_TOWN'))
@@ -1338,3 +1339,161 @@ $lang['Adr_shop_inventory_link']='Cliquez %sici%s pour retourner à votre magasin
 $lang['Adr_shop_steal_min_lvl']='Vous n\'êtes pas assez haut niveau pour utiliser la compétence de vol.';
 $lang['Adr_shop_steal_min_lvl2']='Le niveau requis pour cette compétence est %s%s%s.';
 $lang['Adr_shop_donated_by']='%sDonné%s par %s le %s%s';
+
+$lang['Adr_zone_npc_give_item']='Donnez %s à %s';
+$lang['Adr_zone_npc_points_prize']='Vous gagnez <b>%d %s</b>!<br>';
+$lang['Adr_zone_npc_exp_prize']='Vous gagnez <b>%d points d\'expérience</b>!<br>';
+$lang['Adr_zone_npc_sp_prize']='Vous gagnez <b>%d points de spiritualité</b>!<br>';
+$lang['Adr_zone_npc_item_prize']='%s vous donne <b>%s</b>!<br><br>';
+
+if ( defined ('IN_ADR_NPC_ADMIN'))
+{
+   $lang['Adr_Npc_acp_title']='Personnage non Jouable (PNJ)';
+   $lang['Adr_Npc_acp_title_explain']='Ici, vous pouvez définir les PNJ de toutes vos zones.<br>Vous pouvez mettre le nom du PNJ, son image, le prix qu\'il faut payer pour lui parler (En Option) et son message!';
+   $lang['Adr_Npc_acp_settings']='PNJ Options';
+   $lang['Adr_Npc_acp_npc_enable']='Activé';
+   $lang['Adr_Npc_acp_npc_enable_explain']='Cochez la case si vous voulez que le PNJ apparaisse dans la/les zone(s) sélectionnée(s)<br \>N\'oubliez pas de mettre le nom du PNJ, son image, et son message si vous décidez de l\'activer.';
+   $lang['Adr_Npc_acp_npc_cost']='Prix';
+   $lang['Adr_Npc_acp_npc_cost_explain']='Prix qu\'un personnage devra payer pour parler avec ce PNJ';
+   $lang['Adr_Npc_acp_npc_name']='Nom';
+   $lang['Adr_Npc_acp_npc_name_explain']='Insérez le nom du PNJ. Ex: "Seigneur Terence" ou encore "Paysan"';
+   $lang['Adr_Npc_acp_npc_img']='Image';
+   $lang['Adr_Npc_acp_npc_img_explain']='Insérez le nom du fichier qui sera l\'image du PNJ. Cette image doit être dans le dossier "adr/images/zones/npc/".';
+   $lang['Adr_Npc_acp_npc_message']='Message';
+   $lang['Adr_Npc_acp_npc_message_explain']='Message à dire au joueur';
+   $lang['Adr_Npc_acp_zone_name']='Zone';
+   $lang['Adr_Npc_acp_zone_name_explain']='Choisissez la/les zone(s) dans laquelle/lesquelles le PNJ apparaîtra.';
+   $lang['Npc_Fields_empty']='Si vous activez le PNJ, vous devez définir son nom, son image et son message!';
+   $lang['Adr_npc_successful_deleted']='Le PNJ a été supprimé avec succès';
+   $lang['Adr_Npc_edit_success']='Le PNJ a été édité avec succès';
+   $lang['Adr_Npc_add_success']='Le PNJ a été ajouté avec succès';
+   $lang['Adr_Npc_acp_add']='Ajouter un PNJ';
+   $lang['Adr_npc_name']='Nom';
+   $lang['Adr_npc_price']='Prix';
+   $lang['Adr_npc_zone']='Zone(s)';
+   $lang['Adr_Npc_acp_npc_random_title']='Aléatoire';
+   $lang['Adr_npc_zone_id']='Numéro de zone';
+   $lang['Adr_npc_zone_name']='Nom de la zone';
+   $lang['Adr_npc_no_npc_requirement']='Pas de PNJ prérequis';
+   //Version 2.0.0
+   $lang['Adr_Npc_acp_quest_name']='Quête';
+   $lang['Adr_Npc_acp_quest']='Quête Options';
+   $lang['Adr_Npc_acp_item_name']='Est-ce que le PNJ a besoin d\'un objet?';
+   $lang['Adr_Npc_acp_item_name_explain']='Choisissez un/des objet(s) dans la liste. Si le personnage possède cet(s) objet(s) dans son inventaire, il peut le(s) donner au PNJ. Si vous ne voulez pas choisir d\'objet, passez à l\'étape suivante.';
+   $lang['Adr_Npc_acp_npc_message2']='Le message du PNJ après qu\'il ait reçu le(s) objet(s)';
+   $lang['Adr_Npc_acp_npc_message2_explain']='C\'est ce que le PNJ va dire quand un personnage lui donne le(s) objets. (Champ Obligatoire si vous avez choisi un/des objet(s) ou si vous avez activé l\'option "payer pour finir la quête")';
+   $lang['Adr_Npc_acp_npc_message3']='Second message du PNJ après qu\'il ait reçu le/les objet(s)';
+   $lang['Adr_Npc_acp_npc_message3_explain']='C\'est ce que le PNJ va dire quand un personnage reviendra voir le PNJ alors qu\'il lui a déjà donné le(s) objets. (Champ Obligatoire si vous avez choisi un/des objet(s) ou si vous avez activé l\'option "payer pour finir la quête")';
+   $lang['Adr_Npc_acp_npc_points']='Gain de Points';
+   $lang['Adr_Npc_acp_npc_points_explain']='Insérez le nombre de points que le personnage gagnera s\'il donne l\'objet au PNJ. Si vous ne voulez pas donner cette récompense, mettez 0 ou rien du tout.';
+   $lang['Adr_Npc_acp_npc_exp']='Gain d\'Expérience';
+   $lang['Adr_Npc_acp_npc_exp_explain']='Insérez le nombre de points d\'expérience que le personnage gagnera s\'il donne l\'objet au PNJ. Si vous ne voulez pas donner cette récompense, mettez 0 ou rien du tout.';
+   $lang['Adr_Npc_acp_npc_sp']='Gain de SP';
+   $lang['Adr_Npc_acp_npc_sp_explain']='Insérez le nombre de points de spiritualité que le personnage gagnera s\'il donne l\'objet au PNJ. Si vous ne voulez pas donner cette récompense, mettez 0 ou rien du tout.';
+   $lang['Adr_Npc_acp_item2_name']='Gain d\'objet';
+   $lang['Adr_Npc_acp_item2_name_explain']='Choisissez dans la liste un ou des objet(s) que le personnage gagnera s\'il donne le(s) objet(s) requis au PNJ.';
+   $lang['Npc_quest_Fields_empty']='[Quête] Si vous choisissez un objet, vous devez insérer le prochain message du PNJ!';
+
+   $lang['Adr_Npc_acp_times_name']='Nombre de répétitions';
+   $lang['Adr_Npc_acp_times_name_explain']='Choisissez combien de fois un joueur est autorisé à faire cette quête. Choisissez "0" ou laissez vide pour ne pas limiter.';
+   $lang['Npc_quest_Fields_empty']='[Quête] Si vous choisissez un objet, vous devez rentrer un message !';
+   // Expansion
+   $lang['Adr_Npc_acp_npc_random']='Rendre ce PNJ aléatoire ?';
+   $lang['Adr_Npc_acp_npc_random_explain']='Le PNJ apparaîtra à des intervalles aléatoires à choisir ci-dessous.';
+   $lang['Adr_Npc_acp_npc_random_chance']='Chances d\'apparition';
+   $lang['Adr_Npc_acp_npc_random_chance_explain']='La probabilité que le PNJ apparaîtra (requiert que le PNJ soit aléatoire).';
+   $lang['Adr_Npc_acp_npc_user_level']='Type d\'utilisateur :';
+   $lang['Adr_Npc_acp_npc_user_level_explain']='Choisissez le niveau requis pour qu\'un utilisateur soit autorisé à voir/parler au PNJ. Permet de tester un personnage avant de le laisser visible aux joueurs';
+   $lang['Adr_Npc_acp_npc_class']='Classe(s) requise :';
+   $lang['Adr_Npc_acp_npc_class_explain']='Seuls les personnages ayant une des classes requises requis pourront voir ce PNJ (tant qu\'ils valident aussi les autres critères).';
+   $lang['Adr_Npc_acp_npc_race']='Race(s) requise :';
+   $lang['Adr_Npc_acp_npc_race_explain']='Seuls les personnages ayant une des races requises pourront voir ce PNJ (tant qu\'ils valident aussi les autres critères).';
+   $lang['Adr_Npc_acp_npc_character_level']='Niveau requis :';
+   $lang['Adr_Npc_acp_npc_character_level_explain']='Seuls les personnages ayant le niveau requis pourront voir ce PNJ (tant qu\'ils valident aussi les autres critères).';
+   $lang['Adr_Npc_acp_npc_element']='&Eacute;lément(s) requis :';
+   $lang['Adr_Npc_acp_npc_element_explain']='Seuls les personnages ayant un des éléments requis pourront voir ce PNJ (tant qu\'ils valident aussi les autres critères).';
+   $lang['Adr_Npc_acp_npc_alignment']='Alignement(s) requis :';
+   $lang['Adr_Npc_acp_npc_alignment_explain']='Seuls les personnages ayant un des alignements requis pourront voir ce PNJ (tant qu\'ils valident aussi les autres critères).';
+   $lang['Adr_Npc_acp_npc_visit']='PNJ(s) auxquels le joueur doit avoir parlé :';
+   $lang['Adr_Npc_acp_npc_visit_explain']='PNJ(s) auxquels le joueur doit avoir PARL&Eacute; pour voir ce PNJ (tant qu\'il valide aussi les autres critères).';
+   $lang['Adr_Npc_acp_npc_quest']='PNJ(s) que le joueur doit avoir aidé :';
+   $lang['Adr_Npc_acp_npc_quest_explain']='PNJ(s) que le joueur doit avoir aidé (en complétant leur quête) pour voir ce PNJ (tant qu\'ils valident aussi les autres critères).';
+   $lang['Adr_Npc_acp_npc_view']='Montrer ce PNJ à tout le monde :';
+   $lang['Adr_Npc_acp_npc_view_explain']='Affiche le PNJ même si le personnage ne répond pas aux critères (race, classe, niveau, vites de PNJ, quêtes complétées ...).';
+   $lang['Adr_Npc_acp_npc_quest_hide']='Cacher le PNJ une fois que le joueur ?';
+   $lang['Adr_Npc_acp_npc_quest_hide_explain']='Cochez cette case cachera le PNJ une fois que le joueur aura fini la quête. Ce réglage permet, par exemple, de faire une suite de quête (en demandant au joueur de compléter la quête du PNJ précédent).';
+   // $lang['Adr_Npc_acp_npc_quest_clue']='Proposer au joueur de payer pour un finir la quête ?';
+   // $lang['Adr_Npc_acp_npc_quest_clue_explain']='Propose au joueur de payer pour obtenir les récompenses sans avoir d\'objet (ignore les objets nécessaires, requiert les 2 messages d\'entrés)';
+   $lang['Adr_Npc_acp_npc_quest_clue']='Permettre de payer pour finir la quête ?';
+   $lang['Adr_Npc_acp_npc_quest_clue_explain']='Au lieu de demander un objet pour finir la quête, le PNJ demandera de l\'argent';
+   $lang['Adr_Npc_acp_npc_quest_clue_price']='Prix de l\'indice';
+   $lang['Adr_Npc_acp_npc_quest_clue_price_explain']='Prix que le joueur doit payer pour voir l\'indice.';
+}
+$lang['Adr_zone_npc_talk'] = 'Parler';
+
+if ( defined('IN_ADR_CHEAT'))
+{
+   // Cheat Log
+   $lang['Adr_zone_cheat_log_title']='Page des rapports du RPG';
+   $lang['Adr_zone_cheat_log_title_explain']='Ici vous pouvez supprimer ou rendre publiques les entrées du journal des tricheurs, et assigner des punitions. Les entrées cachées contiendront with "<span class="genmed"><font color="red">**</font></span>".';
+   $lang['Adr_zone_cheat_log_title2']='Punition';
+   $lang['Adr_zone_cheat_log_ip']='IP';
+   $lang['Adr_zone_cheat_log_attempted']='Action tentée';
+   $lang['Adr_zone_cheat_log_date']='Date';
+   $lang['Adr_zone_cheat_log_character_name']='Nom du personnage';
+   $lang['Adr_zone_cheat_log_view_profile']='Voir le profil';
+   $lang['Adr_zone_cheat_log_moderator_link_title']='Mod';
+   $lang['Adr_zone_cheat_log_hide_link_title']='Cacher';
+   $lang['Adr_zone_cheat_log_public_link_title']='Pub';
+   $lang['Adr_zone_cheat_log_banned_adr']='Banni du RPG';
+   $lang['Adr_zone_cheat_log_banned_board']='Banni du forum';
+   $lang['Adr_zone_cheat_log_comma_and_sprintf']=', et %s';
+   $lang['Adr_zone_cheat_log_comma_and']=', et ';
+   $lang['Adr_zone_cheat_log_and_sprintf']=' et %s';
+   $lang['Adr_zone_cheat_log_and']=' et ';
+   $lang['Adr_zone_cheat_log_page_note']='Note : Survolez l\'action tentée pour voir la punition donnée.';
+   $lang['Adr_zone_cheat_log_ban_board']='Bannir du forum';
+   $lang['Adr_zone_cheat_log_ban_adr']='Bannir du RPG';
+   $lang['Adr_zone_cheat_log_imprisoned_for']='Emprisonné pour ';
+   $lang['Adr_zone_cheat_log_days']=' Jours';
+   $lang['Adr_zone_cheat_log_day']=' Jour';
+   $lang['Adr_zone_cheat_log_hours']=' Heures';
+   $lang['Adr_zone_cheat_log_hour']=' Heure';
+   $lang['Adr_zone_cheat_log_minutes']=' Minutes';
+   $lang['Adr_zone_cheat_log_minute']=' Minute';
+   $lang['Adr_zone_cheat_log_no_punishment']='Cet utilisateur n\'a pas encore été puni.';
+   $lang['Adr_zone_cheat_log_punishment']='La sanction pour cet utilisateur était "%s".';
+   $lang['Adr_zone_cheat_log_evaluating']='Vous revoyez le cas de %s';
+   $lang['Adr_zone_cheat_log_punish']='punir';
+   $lang['Adr_zone_cheat_log_action']='Action';
+   $lang['Adr_zone_cheat_log_punish_text']='Punir l\'utilisateur pour triche';
+   $lang['Adr_zone_cheat_log_punish_2']='Punir';
+   $lang['Adr_zone_cheat_log_punished']='Punis';
+   $lang['Adr_zone_cheat_log_delete']='Supprimer';
+   $lang['Adr_zone_cheat_log_hide']='Cacher';
+   $lang['Adr_zone_cheat_log_public']='Rendre publique';
+}
+$lang['Adr_zone_no_monsters']='Tout est calme par ici ... Il n\'y a pas de monstre !';
+
+$lang['BUILDING_UNAV'] = 'Bâtiment indisponible';
+
+if ( defined ('IN_ADR_QUESTBOOK'))
+{
+   //Links
+   $lang['Adr_questbook_link']='Voir votre journal de quête';
+   $lang['Adr_questbook_link_townmap']='Cliquez sur l\'image pour voir votre journal de quête';
+   $lang['Adr_questbook_history_link']='Quêtes complétées';
+   //History
+   $lang['Adr_questbook_history_title']='Quêtes complétées';
+   $lang['Adr_questbook_npc_zone']='Zone : ';
+   $lang['Adr_questbook_npc_name']='Nom : ';
+   $lang['Adr_questbook_npc_message']='Conversation : ';
+   $lang['Adr_questbook_quest_typ_killed']='<font color="green">Vous avez réussi à tuer %s %s !</font><br>';
+   $lang['Adr_questbook_quest_typ_item_gave']='<font color="green">Vous avez donné un %s !</font><br>';
+   //Log
+   $lang['Adr_questbook_title']='Quêtes actuellement dans votre journal';
+   $lang['Adr_questbook_quest_typ_kill']='Monstres que vous devez encore tuer : <font color="red">%s</font> (statut actuel : <font color="green">%s</font> / <font color="red">%s</font>) <br>';
+   $lang['Adr_questbook_quest_typ_kill_done']='<font color="green">Partie de quête complétée ! Vous avez tué %s %s !</font><br>';
+   $lang['Adr_questbook_quest_typ_item_need']='Vous devez encore trouver un <font color="red">%s</font> pour compléter cette quête !<br>';
+   $lang['Adr_questbook_quest_typ_item_have']='<font color="green">Partie de quête complétée ! Vous avez trouvé un %s !</font><br>';
+}

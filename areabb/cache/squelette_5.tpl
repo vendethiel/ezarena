@@ -7,12 +7,12 @@
          {statistiques} 
          {qui_joue} 
          {whoisonline} 
-          
+         {classvictoire} 
       </td>
       <td width='56%' align='center' valign='top'>{liste_jeux_SP2}</td>
       <td width='22%' align='center' valign='top'>
-          
-          
+         {calendrier} 
+         {minichat} 
          {recent_topics} 
          {menu_SP1} 
          {changestyle} 

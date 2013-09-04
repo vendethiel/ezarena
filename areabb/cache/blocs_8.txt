@@ -1,1 +1,1 @@
-record_battu|aleatoire|qui_joue|recent_games|classvictoire|recent_topics|whoisonline
+minichat

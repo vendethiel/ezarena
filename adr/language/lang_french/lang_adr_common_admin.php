@@ -54,3 +54,9 @@ $lang['Adr_equipment_mine']='Mon équipement';
 $lang['Adr_battle_submenu']='Combats JcE';
 $lang['Adr_battle_pvp_submenu']='Combats JcJ';
 $lang['Adr_battle_community_submenu']='Communauté';
+
+$lang['Cheat CP'] = 'Contrôle de la triche';
+$lang['Zone General'] = 'Réglages des zones';
+$lang['NPC'] = 'PNJs';
+$lang['Seasons'] = 'Saisons';
+$lang['Check ADR Version'] = 'Vérification de version';

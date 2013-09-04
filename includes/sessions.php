@@ -272,11 +272,11 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 
 	return $userdata;
 }
-				// Add the session_key to the userdata array if it is set
-				if ( isset($sessiondata['autologinid']) && $sessiondata['autologinid'] != '' )
-				{
-					$userdata['session_key'] = $sessiondata['autologinid'];
-				}
+// Add the session_key to the userdata array if it is set
+if ( isset($sessiondata['autologinid']) && $sessiondata['autologinid'] != '' )
+{
+	$userdata['session_key'] = $sessiondata['autologinid'];
+}
 
 //
 // Checks for a given user session, tidies session table and updates user

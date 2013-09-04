@@ -1306,4 +1306,9 @@ $lang['Forum_desc_long_explain'] = 'Description plus détaillée du forum, ou ses 
 // Related topics
 $lang['Related_topics'] = 'Sujets similaires';
 
+// Rabbitoshi
 $lang['Rabbitoshi_topic']='Voir le familier du membre'; 
+
+// Mini profile
+$lang['Read_mini_profile'] = 'Mini profil de l\'utilisateur';
+$lang['Viewing_user_mini_profile'] = 'Mini profil de %s'; // %s is username

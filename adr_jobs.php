@@ -59,7 +59,7 @@ $apply = isset($HTTP_POST_VARS['apply']);
 $quit = isset($HTTP_POST_VARS['quit']);
 
 // Grab character details
-$sql = " SELECT * FROM " . ADR_CHARACTERS_TABLE . "
+$sql = "SELECT * FROM " . ADR_CHARACTERS_TABLE . "
 	WHERE character_id = $user_id";
 if( !($result = $db->sql_query($sql)) )
 {

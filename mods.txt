@@ -1,8 +1,22 @@
 EzArena (Ullti modifiée)
 
 Templates :
- - PussycatBlue
- - (subSilver)
+ - subSilver
+ - acid
+ - aqua
+ - chronicles
+ - dark ages
+ - jasidog
+ - jedi knights 2
+ - macintosh
+ - WorkStation[Fusion]
+
+ - pussycatblue
+ - subsilverplus
+ - phpbbeos
+ - creamywhite
+ - odysseygrey
+ - christmas
 
 !!! Mods de base
 
@@ -39,9 +53,10 @@ Ajoute sur l'index la date de création de votre forum, la moyenne des posts et 
 Fusionne les posts consécutifs d'un membre.
 
 # AreaBB 0.9.1 - Saint-Pere
-Portail avec gestionnaire d'extensions. Extension arcade ajoutée.
+Portail avec gestionnaire d'extensions. Extension arcade ajoutée, ainsi que beaucoup d'autres.
 Addons :
  - Addon pour Subforums+ sur Mod News - Informpro
+ - Addon pour RCS sur le Mod news - Informpro
  - Addon AreaBB Cached - Informpro
  - Addon Show Room ID&Link from squelettes' admin - Informpro
  - Addon Hide used blocks from list in squelette_blocs - Informpro
@@ -342,7 +357,9 @@ Sépare les catégories sur l'index.
 Permet à l'administrateur de diviser des messages depuis un sujet (en utilisant la fonctionnalité par défaut de phpBB) et de fusionner ces messages dans un sujet existant, en une seule étape. 
 
 # Today Userlist 1.2.2a - reddog
-Ce MOD liste sur l'index du forum les utilisateurs qui sont passés durant les 24 dernières heures. Les statistiques concernant les invités sont également disponibles. 
+Ce MOD liste sur l'index du forum les utilisateurs qui sont passés durant les 24 dernières heures. Les statistiques concernant les invités sont également disponibles.
+Addons :
+ - Addon pour RCS - Informpro
 
 # Today/Yesterday Relative Time Mod 1.1.1a - ewelin
 Met aujourd'hui ou hier aux posts mais intègre désormais le Last Topic Title on Index et permet d'afficher également la date relative pour les posts de moins de 24 heures
@@ -406,6 +423,22 @@ D'autres mods ont été rajoutés, et le mod ADR en lui-même a été mis à jou
 Addons :
  - Addon pour RCS - Informpro
 
+# ADR : Advanced NPC System 2.2.0-beta - Dedo
+Ajoute un système de NPC (PNJ) avancé au Zone Mod, permettant de dépasser la limite des 6 PNJs par zone, et de créer un système de quête simple où le PNJ peut demander à un joueur de lui rapporter un objet contre une expérience/des points/SP/objet
+
+# ADR : Advanced NPC System Expansion 0.2.3-beta - Ozzie
+Ajoute de nombreuses fonctionnalités au mod "Advanced NPC System", comme la possibilité de reporter un tricheur (avec la possiblité pour un administrateur de mp/bannir/... le joueur), permet aux PNJs d'apparaître dans plusieurs zones, les PNJs peuvent demander plusieurs objets, et vous pouvez ajouter des restrictions de classe/race/niveau/élément/alignement/a parlé avec tel PNJ/a fini tel quête (aucune, une ou plusieurs).
+
+# ADR : Monster in multiple zones 1.0-beta - Dedo
+Permet de mettre les monstres dans plusieurs zones.
+
+# ADR : QuestBook System v1.0.2 - Himmelweiss
+Ajoute un système pour garder la liste des quêtes en cours, incluant le nom du PNJ, sa zone, son message, quel objet il vous faut encore ou quel monstre vous devez toujours tuer.
+
+# ADR : Town Environment Enhanced into Zone Mod - Informpro
+Intègre le mod Town Environment dans le Zone mod, et modifie l'interface de la page des zones pour retirer les informations inutiles et libérer de l'espace (remplace la map du Zone Mod par celles du Town Env tout en gérant les bâtiments inaccessibles, modifie les pages du Town Env pour utiliser les saisons du Zone Mod).
+Intègre aussi différents mods ensemble (comme le quest book) et fixe certaines parties manquantes du Town Env (page des clans remplacé par une page des guildes).
+
 # ADR : Zone shoutbox & Battle Community Integration 1.0.0 - Informpro
 Permet d'utiliser la chatbox communautaire plutôt que la chatbox du zone_mod.
 
@@ -423,6 +456,7 @@ Permet d'ajouter des meilleurs graphismes aux combats.
 
 # ADR (ST) : Guild Alliances 0.0.3 - Seteo-Bloke
 Permet de faire des alliances
+Mise à jour en 0.0.5 dans l'ezArena (manque encore la mise à jour 0.0.4 !!).
 
 # ADR (ST) : Jobs 0.2.0 - Seteo-Bloke
 Ajoute un système complet de métiers à ADR.
@@ -469,8 +503,20 @@ Redirige automatiquement après un envoi de message/mp/édition/etc
 # JS Reducer for Recent Topics & Shoutbox 0.0.1 - Informpro
 Ajoute un bouton pour dé/re plier les blocs "sujets récents" et "shoutbox"
 
-# phpBB eXtensive Caching 0.1.0 - Informpro
-Ajoute un cache SQL puissant à différents endroits du forum
+# Mini Profile 2.3.2 - crewstyle
+Ajoute un bouton pour avoir un aperçu du profil de l'utilisateur
+Addons :
+ - Addon AJAX - Informpro
+ - Addon pour RCS - Informpro
+ - Addon pour Birthday Event - Informpro
+ - Addon pour Gender - crewstyle
+
+# phpBB Optimized 0.3.0 - Informpro
+Ajoute de nombreuses optimisations à phpBB :
+ - Caching sur beaucoup de requêtes
+ - Changement de phpbb_realpath() pour utiliser realpath()
+ - Caching des infos ADR
+ - Suppression de la requête SQL de dss_rand()
 
 # Quick Title Edit 1.6.1 - Xavier Olive, ABDev, PastisD
 Addons :
@@ -493,6 +539,7 @@ Addons :
 Applique des modifications proposées par lanzer : https://www.phpbb.com/community/viewtopic.php?f=18&t=135383
 Modifs :
  - update view counter 1/3 times for 3 views
+ - order by user_id rather than user_regdate
 
 # Strip HTML Tags in Meta and Title 1.0.0 - Informpro
 Supprime les tags HTML des titres de forums dans les meta et dans le titre de la page

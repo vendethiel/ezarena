@@ -12,6 +12,7 @@ if ( !$board_config['adr_seasons_last_time'] )
 		message_die(GENERAL_ERROR, 'Error updating config' , "", __LINE__, __FILE__, $sql); 
 
 	$board_config['adr_seasons_last_time'] = time();
+	$db->clear_cache('config_');
 }
 
 if ( ( time() - $board_config['adr_seasons_last_time'] ) > $board_config['adr_seasons_time'])
@@ -37,7 +38,6 @@ if ( ( time() - $board_config['adr_seasons_last_time'] ) > $board_config['adr_se
 		SET config_value = '$new_time' 
 		WHERE config_name = 'adr_seasons_last_time' ";
 	if ( !($result = $db->sql_query($sql)) ) 
-		message_die(GENERAL_ERROR, 'Error updating config' , "", __LINE__, __FILE__, $sql); 
+		message_die(GENERAL_ERROR, 'Error updating config' , "", __LINE__, __FILE__, $sql);
+	$db->clear_cache('config_');
 }
-
-?>

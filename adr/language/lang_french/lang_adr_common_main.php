@@ -51,3 +51,7 @@ $lang['Adr_cauldron_title']='Chaudron Magique';
 
 $lang['Adr_shops_users_page_name']='Marché noir';
 $lang['Adr_shops_general_page_name']='Magasins généraux';
+
+// Advanced NPC System Expansion
+$lang['Adr_page_of_shame']='Page des rapports du RPG';
+$lang['Adr_Npc_character_no_cheat_message']='Personne n\'a essayé de tricher sur le site.';

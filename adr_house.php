@@ -60,6 +60,7 @@ $template->assign_vars(array(
 	'U_ZONE_CHARACTER_SHEET' => append_sid("adr_character.$phpEx"),
 	'U_ZONE_CHARACTER_INVENTORY' => append_sid("adr_character_inventory.$phpEx"),
 	'S_ZONES_ACTION' => append_sid("adr_house.$phpEx"),
+	'U_GUILD' => append_sid("adr_guilds.$phpEx"),
 ));
 
 include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);

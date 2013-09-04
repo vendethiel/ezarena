@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<plugin nom="recherche" version="1.0">
+  <label>Recherche multi-moteurs</label>
+  <auteur>Saint-Pere</auteur>
+   <type>affiche</type>
+    <page>?</page>
+  <description>Interface de recherche pour les principaux moteurs (wiki, google, exalead, site).</description>
+</plugin>

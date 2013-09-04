@@ -2019,3 +2019,88 @@ CREATE TABLE phpbb_adr_stores_user_history(
 # ADR 0.4.5
 ALTER TABLE phpbb_adr_shops_items_type ADD item_type_order MEDIUMINT( 8 ) NOT NULL DEFAULT '1';
 ALTER TABLE `phpbb_adr_shops_items_type` ADD `item_type_category` VARCHAR( 50 ) NOT NULL DEFAULT '';
+
+# ADR - Advanced NPC System
+ALTER TABLE `phpbb_adr_zones` DROP `npc_price`, DROP `npc1_enable`, DROP `npc2_enable`, DROP `npc3_enable`, DROP `npc4_enable`, DROP `npc5_enable`, DROP `npc1_message`, DROP `npc2_message`, DROP `npc3_message`, DROP `npc4_message`, DROP `npc5_message`;
+# drop shadowtek's event kruft too
+ALTER TABLE `phpbb_adr_zones` DROP `npc6_message`, DROP `npc6_enable`;
+ALTER TABLE `phpbb_adr_characters` ADD `character_npc_check` TEXT NOT NULL;
+
+CREATE TABLE `phpbb_adr_npc` (
+  `npc_id` INT( 8 ) NOT NULL AUTO_INCREMENT,
+  `npc_zone` VARCHAR( 255 ) NOT NULL ,
+  `npc_name` VARCHAR( 255 ) NOT NULL ,
+  `npc_img` VARCHAR( 255 ) NOT NULL ,
+  `npc_enable` INT( 8 ) DEFAULT '0' NOT NULL ,
+  `npc_price` INT( 8 ) DEFAULT '0' NOT NULL ,
+  `npc_message` TEXT NOT NULL ,
+  `npc_item` VARCHAR( 255 ) NOT NULL ,
+  `npc_message2` TEXT NOT NULL ,
+  `npc_points` INT( 8 ) DEFAULT '0' NOT NULL ,
+  `npc_exp` INT( 8 ) DEFAULT '0' NOT NULL ,
+  `npc_sp` INT( 8 ) DEFAULT '0' NOT NULL ,
+  `npc_item2` VARCHAR( 255 ) NOT NULL ,
+  `npc_times` INT( 4 ) DEFAULT '0' NOT NULL ,
+  PRIMARY KEY ( `npc_id` )
+);
+
+# ADR - Advanced NPC System Expansion
+ALTER TABLE `phpbb_adr_characters` ADD `character_npc_visited` TEXT NOT NULL;
+ALTER TABLE `phpbb_adr_npc` ADD `npc_message3` TEXT NOT NULL;
+ALTER TABLE `phpbb_adr_npc` ADD `npc_random` int(1) NOT NULL default '0';
+ALTER TABLE `phpbb_adr_npc` ADD `npc_random_chance` int(7) NOT NULL default '1';
+ALTER TABLE `phpbb_adr_npc` ADD `npc_user_level` int(1) NOT NULL default '0';
+ALTER TABLE `phpbb_adr_npc` ADD `npc_class` TEXT NOT NULL;
+ALTER TABLE `phpbb_adr_npc` ADD `npc_race` TEXT NOT NULL;
+ALTER TABLE `phpbb_adr_npc` ADD `npc_character_level` TEXT NOT NULL;
+ALTER TABLE `phpbb_adr_npc` ADD `npc_element` TEXT NOT NULL;
+ALTER TABLE `phpbb_adr_npc` ADD `npc_alignment` TEXT NOT NULL;
+ALTER TABLE `phpbb_adr_npc` ADD `npc_visit_prerequisite` TEXT NOT NULL;
+ALTER TABLE `phpbb_adr_npc` ADD `npc_quest_prerequisite` TEXT NOT NULL;
+ALTER TABLE `phpbb_adr_npc` ADD `npc_view` TEXT NOT NULL;
+ALTER TABLE `phpbb_adr_npc` ADD `npc_quest_hide` int(1) NOT NULL default '0';
+ALTER TABLE `phpbb_adr_npc` ADD `npc_quest_clue` int(1) NOT NULL default '0';
+ALTER TABLE `phpbb_adr_npc` ADD `npc_quest_clue_price` int(8) NOT NULL default '0';
+ALTER TABLE `phpbb_adr_npc` CHANGE `npc_zone` `npc_zone` TEXT NOT NULL;
+ALTER TABLE `phpbb_adr_npc` CHANGE `npc_item` `npc_item` TEXT NOT NULL;
+ALTER TABLE `phpbb_adr_npc` CHANGE `npc_item2` `npc_item2` TEXT NOT NULL;
+
+CREATE TABLE `phpbb_adr_cheat_log` (
+  `cheat_id` mediumint(8) NOT NULL auto_increment,
+  `cheat_ip` varchar(15) NOT NULL default '',
+  `cheat_reason` varchar(50) NOT NULL default '',
+  `cheat_date` int(10) NOT NULL default '0',
+  `cheat_user_id` mediumint(8) NOT NULL default '0',
+  `cheat_punished` varchar(255) NOT NULL default '',
+  `cheat_public` int(1) NOT NULL default '0',
+  PRIMARY KEY  (`cheat_id`)
+);
+
+# ADR - Monsters in multiple zones
+ALTER TABLE `phpbb_adr_battle_monsters` DROP `monster_area`;
+ALTER TABLE `phpbb_adr_battle_monsters` DROP `monster_area_name`;
+ALTER TABLE `phpbb_adr_zones` ADD `zone_monsters_list` TEXT NOT NULL;
+
+# ADR - Questbook
+ALTER TABLE `phpbb_adr_npc` ADD `npc_kill_monster` VARCHAR( 255 ) NOT NULL ;
+ALTER TABLE `phpbb_adr_npc` ADD `npc_monster_amount` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ;
+
+CREATE TABLE `phpbb_adr_character_quest_log` (
+`user_id` INT( 8 ) NOT NULL,
+`quest_kill_monster` VARCHAR( 255 ) NULL,
+`quest_kill_monster_amount` INT( 8 ) DEFAULT '0' NOT NULL,
+`quest_kill_monster_current_amount` INT( 8 ) DEFAULT '0' NOT NULL,
+`quest_item_have` VARCHAR( 255 ) NOT NULL,
+`quest_item_need` VARCHAR( 255 ) NOT NULL,
+`npc_id` INT( 8 ) NOT NULL
+);
+
+CREATE TABLE `phpbb_adr_character_quest_log_history` (
+  `quest_id` int(15) NOT NULL auto_increment,
+  `user_id` int(8) NOT NULL,
+  `quest_killed_monster` varchar(255) NOT NULL,
+  `quest_killed_monsters_amount` int(8) NOT NULL default '0',
+  `quest_item_gave` varchar(255) NOT NULL,
+  `npc_id` int(8) NOT NULL,
+  PRIMARY KEY  (`quest_id`)
+);

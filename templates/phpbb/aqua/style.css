@@ -1,0 +1,219 @@
+/* The original aqua Theme Created by Arthur Chen design. http://bbs.arthur.com.tw */
+
+body {
+background-color: #FFFFFF;
+background-image: url(images/background1.gif);
+background-attachment : fixed;
+scrollbar-3dlight-color:#cccccc;
+scrollbar-arrow-color:#000000;
+scrollbar-base-color:#cccccc;
+scrollbar-darkshadow-color:#2f4f4f;
+scrollbar-face-color:#cccccc;
+scrollbar-highlight-color:#cccccc;
+scrollbar-shadow-color:#cccccc;
+scrollbar-track-color:#f1f1f1;
+margin: 0px
+}
+
+font,th,td,p { font-family: Verdana, Arial, Helvetica, sans-serif }
+a:link,a:active,a:visited { color : #3B678D; }
+a:hover { text-decoration: underline; color : #9C9E9C; }
+hr { height: 0px; border: solid #000000 0px; border-top-width: 1px;}
+
+.bodyline { background-color: #FFFFFF; border: 1px #FFFFFF solid; } 
+.forumline { background-color: #FFFFFF; border: 1px #BEBEBE solid; }
+
+td.row1 { background-color: #F8F8F8; }
+td.row2 { background-color: #F8F8F8; }
+td.row3 { background-color: #F0F0F0; }
+td.aqua { background-image: url(images/cellpic3.gif); }
+td.aqua1 { background-color: #EDF3FE; }
+td.aqua2 { background-image: url(images/cellpic0.gif); }
+
+td.rowpic {
+background-color: #FFFFFF;
+background-image: url(images/cellpic2.jpg);
+background-repeat: repeat-y;
+}
+
+th {
+color: #63605E; font-size: 13px; font-weight : bold;
+background-color: #333333; height: 25px;
+background-image: url(images/cellpic3.gif);
+}
+
+td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom {
+background-image: url(images/aquatbm.gif);
+background-color:#C0C0C0; border: #FFFFFF; border-style: solid; height: 22px;
+}
+
+td.cat,td.catHead,td.catBottom {
+height: 25px;
+border-width: 0px 0px 0px 0px;
+}
+
+th.thHead,th.thSides,th.thTop,th.thLeft,th.thRight,th.thBottom,th.thCornerL,th.thCornerR {
+font-weight: bold; border: #FFFFFF; border-style: solid; height: 28px; }
+td.row3Right,td.spaceRow {
+background-color: #555555; border: #FFFFFF; border-style: solid; }
+
+th.thHead,td.catHead { font-size: 13px; border-width: 0px 0px 0px 0px; }
+th.thSides,td.catSides,td.spaceRow { border-width: 0px 0px 0px 0px; }
+th.thRight,td.catRight,td.row3Right { border-width: 0px 0px 0px 0px; }
+th.thLeft,td.catLeft { border-width: 0px 0px 0px 0px; }
+th.thBottom,td.catBottom { border-width: 0px 0px 0px 0px; }
+th.thTop { border-width: 0px 0px 0px 0px; }
+th.thCornerL { border-width: 0px 0px 0px 0px; }
+th.thCornerR { border-width: 0px 0px 0px 0px; }
+
+.maintitle,h1,h2 {
+font-weight: bold; font-size: 22px; font-family: "Arial Black",Verdana, Arial, Helvetica, sans-serif;
+text-decoration: none; line-height : 120%; color : #333333;
+}
+
+.loslogos {
+font-weight: bold; font-size: 10px; font-family: "Arial",Verdana, Arial, Helvetica, sans-serif;
+text-decoration: none; line-height : 120%; color : #FFFFFF;
+}
+
+.loslogosbig {
+font-weight: bold; font-size: 22px; font-family: "Arial Black",Verdana, Arial, Helvetica, sans-serif;
+text-decoration: none; line-height : 120%; color : #FFFFFF;
+}
+
+.gen { font-size : 13px; }
+.genmed { font-size : 12px; }
+.gensmall { font-size : 11px; }
+.gen,.genmed,.gensmall { color : #333333; }
+a.gen,a.genmed,a.gensmall { color: #333333; text-decoration: none; }
+a.gen:hover,a.genmed:hover,a.gensmall:hover { color: #446D8C; text-decoration: underline; }
+
+.mainmenu { font-size : 12px; color : #333333 }
+a.mainmenu { text-decoration: none; color : #006699; }
+a.mainmenu:hover{ text-decoration: underline; color : #333333; }
+
+.aquamenu { font-size : 10px; color : #000000 }
+a.aquamenu { text-decoration: none; color : #000000; }
+a.aquamenu:visited { text-decoration: none; color : #000000; }
+a.aquamenu:hover{ text-decoration: none; color : #333333; }
+
+.cattitle { font-weight: bold; font-size: 13px ; letter-spacing: 1px; color : #333333}
+a.cattitle { text-decoration: none; color : #333333; }
+a.cattitle:hover{ text-decoration: underline; }
+
+.forumlink { font-weight: bold; font-size: 13px; color : #006699; }
+a.forumlink { text-decoration: none; color : #333333; }
+a.forumlink:hover{ text-decoration: underline; color : #DDE4EC; }
+
+.nav { font-weight: bold; font-size: 12px; color : #333333;}
+a.nav { text-decoration: none; color : #333333; }
+a.nav:hover { text-decoration: underline; }
+
+.topictitle { font-weight: bold; font-size: 12px; color : #333333; }
+a.topictitle:link { text-decoration: none; color : #333333; }
+a.topictitle:visited { text-decoration: none; color : #559EE2; }
+a.topictitle:hover { text-decoration: underline; color : #DDE4EC; }
+
+.name { font-size : 12px; color : #333333;}
+
+.postdetails { font-size : 11px; color : #333333; }
+
+.postbody { font-size : 13px;}
+a.postlink:link { text-decoration: none; color : #333333 }
+a.postlink:visited { text-decoration: none; color : #559EE2; }
+a.postlink:hover { text-decoration: underline; color : #DDE4EC}
+
+.code {
+font-family: Courier, 'Courier New', sans-serif; font-size: 12px; color: #006600;
+background-color: #FFFFFF; border: #555555; border-style: solid;
+border-left-width: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px;
+overflow: auto; max-height: 400px;
+}
+
+.quote {
+font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #444444; line-height: 125%;
+background-color: #FFFFFF; border: #555555; border-style: solid;
+border-left-width: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px
+}
+
+.copyright { font-size: 11px; font-family: Verdana, Arial, Helvetica, sans-serif; color: #444444; letter-spacing: -1px;}
+a.copyright { color: #444444; text-decoration: none;}
+a.copyright:hover { color: #333333; text-decoration: underline;}
+
+input,textarea, select {
+color : #333333;
+font: normal 12px Verdana, Arial, Helvetica, sans-serif;
+border-color : #333333;
+}
+
+input.post, textarea.post, select {
+background-color : #FFFFFF;
+}
+
+input.button {
+background-color : #FFFFFF;
+color : #333333;
+font-size: 12px; font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+input.mainoption {
+background-color : #FFFFFF;
+font-weight : bold;
+}
+
+input.liteoption {
+background-color : #FFFFFF;
+font-weight : normal;
+}
+
+.helpline { background-color: #FFFFFF; border-style: none; }
+fieldset { margin: 2px 30px; border: none; }
+blockquote { margin: 0; padding: 3px; }
+blockquote.code>div { white-space: nowrap; width: 100%; max-height: 400px; overflow: auto; }
+.aquawords { color: #63605E; font-size: 13px; font-weight : bold; }
+
+/* Début Mod Bulle */
+.hg {
+	background:none;
+	border:none;
+	width:52px;
+	height:33px;
+	padding:0px;
+	cursor:default;
+}
+.contenu {
+	background:#D1DAFF;
+	border-bottom:double 2px #000000;
+	border-left:solid 1px #000000;
+	border-right:double 2px #000000;
+	border-top:solid 1px #000000;
+	padding-top:15px;
+	padding-bottom:15px;
+	padding-left:15px;
+	padding-right:15px;
+	empty-cells:hide;
+	cursor:default;
+}
+a.bubule {
+   background: none;
+   z-index: 5000;
+   cursor:pointer;
+   color:#000000;
+   border-bottom:double #FFA384;
+   text-decoration:none;
+}
+a:hover.bubule {
+   background: none;
+   z-index: 5000;
+   cursor:pointer;
+   color:#000000;
+   text-decoration:none;
+   border:none;
+}
+a.bubule div {
+	display:none;
+}
+a:hover.bubule div {
+	position:absolute;
+	display:inline;
+}

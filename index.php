@@ -690,7 +690,11 @@ if ($total_categories = count($category_rows))
 	                			}
 	                			$last_post .=  '</a><br /><b>' . $lang['TY-by'] . '</b>';
 								$style_color = $rcs->get_colors($forum_data[$j]);
-								$last_post .= ($forum_data[$j]['user_id'] == ANONYMOUS) ? ((($forum_data[$j]['post_username'] != '') ? $forum_data[$j]['post_username'] : $lang['Guest']) . '&nbsp;') : '<a href="' . $get->url('userlist', array('mode' => 'viewprofile', POST_USERS_URL => $forum_data[$j]['user_id']), true) . '"' . $style_color . ' title="' . $lang['Read_profile'] . '">' . $forum_data[$j]['username'] . '</a>&nbsp;';
+								if ( !isset($phpbb_seo->seo_url['user'][$forum_data[$j]['user_id']]) )
+								{
+									$phpbb_seo->seo_url['user'][$forum_data[$j]['user_id']] = $phpbb_seo->format_url($forum_data[$j]['username'], $phpbb_seo->seo_static['user']);
+								}
+								$last_post .= ($forum_data[$j]['user_id'] == ANONYMOUS) ? ((($forum_data[$j]['post_username'] != '') ? $forum_data[$j]['post_username'] : $lang['Guest']) . '&nbsp;') : '<a href="' . append_sid("userlist.$phpEx?mode=viewprofile&".POST_USERS_URL."=".$forum_data[$j]['user_id']) . '"' . $style_color . ' title="' . $lang['Read_profile'] . '">' . $forum_data[$j]['username'] . '</a>&nbsp;';
 								
 								$last_post_sub = '<a href="' . append_sid("viewtopic.$phpEx?"  . POST_POST_URL . '=' . $forum_data[$j]['forum_last_post_id']) . '#' . $forum_data[$j]['forum_last_post_id'] . '"><img src="' . ($unread_topic ? $images['icon_newest_reply'] : $images['icon_latest_reply']) . '" border="0" alt="' . $lang['View_latest_post'] . '" title="' . $lang['View_latest_post'] . '" /></a>';
 								$last_post_time = $forum_data[$j]['post_time'];

@@ -64,7 +64,8 @@ if ( !$adr_general['battle_pvp_enable'] )
 
 // Deny access if user is imprisioned
 if($userdata['user_cell_time']){
-    adr_previous(Adr_shops_no_thief, adr_cell, '');}
+    adr_previous(Adr_shops_no_thief, adr_cell, '');
+}
 
 
 // Get the battle id
@@ -347,7 +348,7 @@ if ( $turn_check && ( $attack || ( $spell && intval($HTTP_POST_VARS['item_spell'
 			}
 
  		    $dice = rand(0,5);
-	      	$power = $item['item_power'] + $item['item_add_power'] + $dice);
+	      	$power = ($item['item_power'] + $item['item_add_power'] + $dice);
 
             adr_use_item($item_spell , $user_id);
 
@@ -852,61 +853,64 @@ if ( $turn_check && ( $attack || ( $spell && intval($HTTP_POST_VARS['item_spell'
                 $reward = floor( ( ( $opponent_level - $current_level ) * $adr_general['pvp_base_reward_modifier'] ) / 100 );
         }
 
+        //Guild Experience
+        $guild_exp = rand($adr_general['battle_guild_exp_min'], $adr_general['battle_guild_exp_max']);
+
         // Write the result in the db
         if ( $user_id == $battle_pvp['battle_challenger_id'] )
         {
-                $sql = " UPDATE  " . ADR_BATTLE_PVP_TABLE . "
-                SET battle_result = 1
-                WHERE battle_id = $battle_id
-                AND battle_result = 3 ";
-                if( !($result = $db->sql_query($sql)) )
-                {
-                        message_die(GENERAL_ERROR, 'Could not update battle list', '', __LINE__, __FILE__, $sql);
-                }
+            $sql = " UPDATE  " . ADR_BATTLE_PVP_TABLE . "
+            SET battle_result = 1
+            WHERE battle_id = $battle_id
+            AND battle_result = 3 ";
+            if( !($result = $db->sql_query($sql)) )
+            {
+                    message_die(GENERAL_ERROR, 'Could not update battle list', '', __LINE__, __FILE__, $sql);
+            }
         }
         else
         {
-                $sql = " UPDATE  " . ADR_BATTLE_PVP_TABLE . "
-                SET battle_result = 2
-                WHERE battle_id = $battle_id
-                AND battle_result = 3 ";
-                if( !($result = $db->sql_query($sql)) )
-                {
-                        message_die(GENERAL_ERROR, 'Could not update battle list', '', __LINE__, __FILE__, $sql);
-                }
+            $sql = " UPDATE  " . ADR_BATTLE_PVP_TABLE . "
+            SET battle_result = 2
+            WHERE battle_id = $battle_id
+            AND battle_result = 3 ";
+            if( !($result = $db->sql_query($sql)) )
+            {
+                    message_die(GENERAL_ERROR, 'Could not update battle list', '', __LINE__, __FILE__, $sql);
+            }
         }
 
          // Give the rewards 
-         add_reward( $user_id, $reward );
+             add_reward( $user_id, $reward );
 
-                $sql = " UPDATE  " . ADR_CHARACTERS_TABLE . "
-                        SET character_xp = character_xp + $exp ,
-                                character_victories_pvp = character_victories_pvp + 1
-                        WHERE character_id = $user_id ";
-                if( !($result = $db->sql_query($sql)) )
-                {
-                        message_die(GENERAL_ERROR, 'Could not update character', '', __LINE__, __FILE__, $sql);
-                }
+            $sql = " UPDATE  " . ADR_CHARACTERS_TABLE . "
+                    SET character_xp = character_xp + $exp ,
+                            character_victories_pvp = character_victories_pvp + 1
+                    WHERE character_id = $user_id ";
+            if( !($result = $db->sql_query($sql)) )
+            {
+                    message_die(GENERAL_ERROR, 'Could not update character', '', __LINE__, __FILE__, $sql);
+            }
 
-                $sql = " UPDATE  " . ADR_CHARACTERS_TABLE . "
-                        SET character_defeats_pvp = character_defeats_pvp + 1
-                        WHERE character_id = $dest ";
-                if( !($result = $db->sql_query($sql)) )
-                {
-                        message_die(GENERAL_ERROR, 'Could not update character', '', __LINE__, __FILE__, $sql);
-                }
+            $sql = " UPDATE  " . ADR_CHARACTERS_TABLE . "
+                    SET character_defeats_pvp = character_defeats_pvp + 1
+                    WHERE character_id = $dest ";
+            if( !($result = $db->sql_query($sql)) )
+            {
+                    message_die(GENERAL_ERROR, 'Could not update character', '', __LINE__, __FILE__, $sql);
+            }
 
-                if ( $opponent_pm_me )
-                {
-                        $subject = $lang['Adr_pvp_lost'];
-                        $message = sprintf($lang['Adr_pvp_lost_by'] , $current_infos['character_name'] , $opponent_dmg);
+            if ( $opponent_pm_me )
+            {
+                    $subject = $lang['Adr_pvp_lost'];
+                    $message = sprintf($lang['Adr_pvp_lost_by'] , $current_infos['character_name'] , $opponent_dmg);
 
-                        adr_send_pm ( $dest , $subject  , $message );
-                }
+                    adr_send_pm ( $dest , $subject  , $message );
+            }
 
-                $message = sprintf($lang['Adr_battle_pvp_won'] , $opponent_dmg , $exp , $reward , get_reward_name() );
-                $message .= '<br /><br />'.sprintf($lang['Adr_pvp_return'] ,"<a href=\"" . 'adr_character.'.$phpEx . "\">", "</a>") ;
-                message_die ( GENERAL_MESSAGE , $message );
+            $message = sprintf($lang['Adr_battle_pvp_won'] , $opponent_dmg , $exp , $reward , get_reward_name() );
+            $message .= '<br /><br />'.sprintf($lang['Adr_pvp_return'] ,"<a href=\"" . 'adr_character.'.$phpEx . "\">", "</a>") ;
+            message_die ( GENERAL_MESSAGE , $message );
         }
 
         if ( $current_hp < 1 )

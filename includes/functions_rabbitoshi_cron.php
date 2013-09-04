@@ -20,8 +20,9 @@ if ( !$board_config['rabbitoshi_cron_last_time'] )
 	if ( !($lresult = $db->sql_query($lsql)) ) 
 	{ 
 		message_die(GENERAL_ERROR, 'Error updating config' , "", __LINE__, __FILE__, $lsql); 
-	} 
+	}
 	$board_config['rabbitoshi_cron_last_time']  = time();
+	$db->clear_cache('config_');
 }
 
 if ( ( time() - $board_config['rabbitoshi_cron_last_time'] ) > $board_config['rabbitoshi_cron_time'])
@@ -254,7 +255,8 @@ if ( ( time() - $board_config['rabbitoshi_cron_last_time'] ) > $board_config['ra
 	if ( !($lresult = $db->sql_query($lsql)) ) 
 	{ 
 		message_die(GENERAL_ERROR, 'Error updating config' , "", __LINE__, __FILE__, $lsql); 
-	} 
+	}
+	$db->clear_cache('config_');
 }
 
 ?>

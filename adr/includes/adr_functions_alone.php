@@ -417,9 +417,9 @@ function adr_display_poster_infos($poster_id, $character_info, $race_info, $elem
 						{
 						if ($character_info[$adr]['character_race'] == $race_info[$race]['race_id'])
 							{
-						$race_lang 	= adr_get_lang([$race_info[$race]['race_name']]);
-						$race_img	= $race_info[$race]['race_img'];
-						break;
+								$race_lang 	= adr_get_lang($race_info[$race]['race_name']);
+								$race_img	= $race_info[$race]['race_img'];
+								break;
 							}
 						}
 

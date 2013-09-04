@@ -1,0 +1,162 @@
+/*                                */
+/* Calendar style sheet           */
+/* Feuille de style du calendrier */
+/*                                */
+
+/* Style de la table principale contenant le calendrier */
+/* Style de la table principale contenant le calendrier */
+table.calendar_main {
+	font-family: Arial, Times, serif;
+	font-size: 10px;
+}
+
+/* Style for the calendar header (<< month year >>) */
+/* Style du titre du calendrier (<< mois annee >>)  */
+.calendar_title {
+	color: #000000;
+	text-align: center;
+}
+
+/* Style of the cell "month year" of the header */
+/* Style de la cellule "mois annee" du titre    */
+.calendar_title_month {
+}
+
+/* Style of the link "month year" of the header */
+/* Style du lien "mois annee" du titre          */
+.calendar_title_month_clickable {
+	color: #000000;
+	text-decoration: none;
+}
+
+/* Style of the cell that contains the link "<<" in the header */
+/* Style de la cellule contenant le lien "<<" du titre         */
+.calendar_title_left_arrow {
+	text-align: left;
+	width: 10px;
+}
+
+/* Style of the cell that contains the link ">>" in the header */
+/* Style de la cellule contenant le lien ">>" du titre         */
+.calendar_title_right_arrow {
+	text-align: right;
+	width: 10px;
+}
+
+/* Style of the link "<<" of the header */
+/* Style du lien "<<" du titre          */
+.calendar_title_left_arrow_clickable {
+	color: #000000;
+	text-decoration: none;
+}
+
+/* Style of the link ">>" of the header */
+/* Style du lien ">>" du titre          */
+.calendar_title_right_arrow_clickable {
+	color: #000000;
+	text-decoration: none;
+}
+
+/* Global style of the main calendar table */
+/* Style global de la table du calendrier  */
+.calendar_table {
+	border: none;
+	border-collapse: collapse;
+	font-size: 10px;
+}
+
+/* Generic style of the calendar table cells              */
+/* Style generique des cellules de la table du calendrier */
+.calendar_table td {
+	border: 1px solid #99A9B6;
+	text-align: center;
+	width: 20px;
+}
+
+/* Style of the table header cells that contains the days                   */
+/* Style des cellules d'en-tete la table du calendrier, contenant les jours */
+.calendar_table th {
+	border: 1px solid #99A9B6;
+	background-color: #99A9B6;
+	font-weight: normal;
+	text-align: center;
+}
+
+/* Style of the calendar cells the contains the week-end days (saturday and */
+/* sunday)                                                                  */
+/* Style des cellules de la table contenant les jours du week-end (samedi et*/
+/* dimanche)                                                                */
+.calendar_weekend {
+	background-color: #cccccc;
+}
+
+/* Style of the table cells that contains the days that are not part of the */
+/* monthly currently displayed                                              */
+/* Style des cellules contenant des jours ne faisant pas partie du mois en  */
+/* cours d'affichage                                                        */
+.calendar_other_month {
+	color: #999999;
+}
+
+/* Style for the links of days not part of the month currently displayed */
+/* Style des liens des jours ne faisant pas partie du mois en cours      */
+/* d'affichage                                                           */
+.calendar_other_month_clickable {
+	color: #999999;
+	text-decoration: none;
+}
+
+/* Style for today's day (non-clickable)                  */
+/* Style du jour (non cliquable) representant aujourd'hui */
+.calendar_today {
+	color: #ff0000;
+}
+
+/* Style of today's link                              */
+/* Style du lien sur le jour representant aujourd'hui */
+.calendar_today_clickable {
+	color: #ff0000;
+	text-decoration: none;
+}
+
+/* Style for the links of days part of the month currently displayed     */
+/* Style des liens des jours faisant partie du mois en cours d'affichage */
+.calendar_day_clickable {
+	color: #000000;
+	text-decoration: none;
+}
+
+/* Style for the calendar footer row (link back to the current month)            */
+/* Style de la ligne du pied du calendrier (lien de retour vers le mois courant) */
+.calendar_footer {
+	color: #000000;
+	text-align: center;
+}
+
+/* Style of the cell that contains the link back to the current month used */
+/* when the month being displayed is the current month                     */
+/* Style de la cellule contenant le lien de retour au mois courant utilise */
+/* lorsque le mois affiche est le mois courant                             */
+.calendar_footer_current_month {
+}
+
+/* Style of the back link inside the cell of class .calendar_footer_current_month   */
+/* Style du lien de retour dans la cellule de classe .calendar_footer_current_month */
+.calendar_footer_current_month_clickable {
+	color: #000000;
+	text-decoration: none;
+}
+
+/* Style of the cell that contains the link back to the current month used */
+/* when the month being displayed is not the current month                 */
+/* Style de la cellule contenant le lien de retour au mois courant utilise */
+/* lorsque le mois affiche n'est pas le mois courant                       */
+.calendar_footer_other_month {
+}
+
+/* Style of the back link inside the cell of class .calendar_footer_other_month   */
+/* Style du lien de retour dans la cellule de classe .calendar_footer_other_month */
+.calendar_footer_other_month_clickable {
+	color: #000000;
+	text-decoration: none;
+}

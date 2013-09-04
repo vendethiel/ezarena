@@ -42,7 +42,7 @@ $template->set_filenames(array(
 $start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
 $areabb['news_forums'] =  ($areabb['news_forums'] == '') ? '""' : $areabb['news_forums'];
 $topic_id = intval($HTTP_GET_VARS['article']);
-$forum_icon = ($areabb['news_aff_icone'] == '1') ? ' forum_icon, ' : ''; 
+$forum_icon = ($areabb['news_aff_icone'] == '1') ? ' f.forum_icon, ' : ''; 
 
 // on affiche l'ASV ?
 if ($areabb['news_aff_asv'] == '1')
@@ -50,16 +50,22 @@ if ($areabb['news_aff_asv'] == '1')
 	$asv = ',u.user_website, u.user_email, u.user_icq, u.user_aim, u.user_yim, u.user_regdate, u.user_msnm, u.user_viewemail, u.user_rank, u.user_sig, u.user_sig_bbcode_uid, u.user_avatar, u.user_avatar_type, u.user_allowavatar ';
 }
 
-$sql = 'SELECT t.topic_id, t.topic_time, t.topic_title, pt.post_text, u.username, u.user_id,'.$forum_icon.'
-		  t.topic_replies, pt.bbcode_uid, t.forum_id, t.topic_poster, p.post_id, p.enable_smilies '.$asv.' 
-		  FROM ' . TOPICS_TABLE . 
-		  ' AS t, ' . USERS_TABLE . ' AS u, ' . POSTS_TEXT_TABLE . ' AS pt, ' . POSTS_TABLE .
-		  ' AS p, '.FORUMS_TABLE.' as f WHERE  t.forum_id IN (' . $areabb['news_forums'] . ') 
-		  AND t.topic_id='.$topic_id.'
-		  AND f.forum_id=t.forum_id 
-		  AND t.topic_poster = u.user_id 
-		  AND t.topic_first_post_id = pt.post_id 
-		  AND t.topic_first_post_id = p.post_id';
+$sql = 'SELECT t.topic_id, t.topic_time, t.topic_title,
+			pt.post_text,
+			u.username, u.user_id, u.user_level, u.user_color, u.user_group_id,
+			'.$forum_icon.'
+		t.topic_replies, pt.bbcode_uid, t.forum_id, t.topic_poster, p.post_id, p.enable_smilies '.$asv.' 
+		FROM ' . TOPICS_TABLE . ' AS t,
+			' . USERS_TABLE . ' AS u,
+			' . POSTS_TEXT_TABLE . ' AS pt,
+			' . POSTS_TABLE . ' AS p,
+			' . FORUMS_TABLE . ' as f
+		WHERE  t.forum_id IN (' . $areabb['news_forums'] . ') 
+			AND t.topic_id='.$topic_id.'
+			AND f.forum_id=t.forum_id 
+			AND t.topic_poster = u.user_id 
+			AND t.topic_first_post_id = pt.post_id 
+			AND t.topic_first_post_id = p.post_id';
 if ( !($result = $db->sql_query($sql)) )
 {
 	message_die(GENERAL_ERROR, 'Could not obtain newer/older topic information', '', __LINE__, __FILE__, $sql);
@@ -151,7 +157,7 @@ if ($areabb['news_aff_asv'] == '1')
 	//
 	if ( $poster_id == ANONYMOUS && $row['post_username'] != '' )
 	{
-		$poster = $postrow[$i]['post_username'];
+		$poster = $rcs->get_colors($postrow[$i], $postrow[$i]['post_username']);
 		$poster_rank = $lang['Guest'];
 	}
 

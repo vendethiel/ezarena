@@ -73,22 +73,22 @@
 		<td class="row1" align="center" width="189" >&nbsp;</td>
 	</tr>
 	<tr>
-		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_INFO_RANKS}';"><span class="gen"><b>{L_GUILDS_INFO_RANKS}</b></span></td>	
+		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR3}" onClick="window.location.href='{U_GUILDS_INFO_RANKS}';"><span class="gen"><b>{L_GUILDS_INFO_RANKS}</b></span></td>	
 	</tr>
 	<tr>
-		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_LEADER_APPROVE}';"><span class="gen"><b>{L_GUILDS_LEADER_APPROVE} ({U_GUILDS_APPROVE_COUNT})</b></span></td>	
+		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR3}" onClick="window.location.href='{U_GUILDS_LEADER_APPROVE}';"><span class="gen"><b>{L_GUILDS_LEADER_APPROVE} ({U_GUILDS_APPROVE_COUNT})</b></span></td>	
 	</tr>
     <tr>
-		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_LEADER_USERS}';"><span class="gen"><b>{L_GUILDS_LEADER_USERS}</b></span></td>	
+		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR3}" onClick="window.location.href='{U_GUILDS_LEADER_USERS}';"><span class="gen"><b>{L_GUILDS_LEADER_USERS}</b></span></td>	
 	</tr>
     <tr>
-		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_LEADER_SET_RANKS}';"><span class="gen"><b>{L_GUILDS_LEADER_SET_RANKS}</b></span></td>	
+		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR3}" onClick="window.location.href='{U_GUILDS_LEADER_SET_RANKS}';"><span class="gen"><b>{L_GUILDS_LEADER_SET_RANKS}</b></span></td>	
 	</tr>
 	<tr>
-		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_LEADER_NEW_LEADER}';"><span class="gen"><b>{L_GUILDS_LEADER_NEW_LEADER}</b></span></td>	
+		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR3}" onClick="window.location.href='{U_GUILDS_LEADER_NEW_LEADER}';"><span class="gen"><b>{L_GUILDS_LEADER_NEW_LEADER}</b></span></td>	
 	</tr>
 	<tr>
-		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_LEADER_DELETE}';"><span class="gen"><b>{L_GUILDS_LEADER_DELETE}</b></span></td>	
+		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR3}" onClick="window.location.href='{U_GUILDS_LEADER_DELETE}';"><span class="gen"><b>{L_GUILDS_LEADER_DELETE}</b></span></td>	
 	</tr>
 	<tr>
 		<td class="row1" width="603" colspan="2">&nbsp;</td>
@@ -203,7 +203,7 @@
 	  <td class="row1" height="28" width="189">&nbsp;</td>
 	</tr>
     <tr>
-		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_LEADER_BIO}';"><span class="gen"><b>{L_GUILDS_LEADER_BIO}</b></span></td>	
+		<td align="center" class="row3" colspan="3" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR3}" onClick="window.location.href='{U_GUILDS_LEADER_BIO}';"><span class="gen"><b>{L_GUILDS_LEADER_BIO}</b></span></td>	
 	</tr>
     <tr>
 	  <td class="row1" height="28" width="298">&nbsp;</td>
@@ -223,7 +223,7 @@
 <br />
 <table class="forumline" align="center" width="200" cellspacing="1" cellpadding="3" border="0">
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
 	</tr>
 </table>
 <!-- END guilds_leader_page  -->

@@ -654,7 +654,7 @@ INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('job_salary_en
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('job_salary_cron_time', 1);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('job_salary_cron_last_time', 1104681333);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_overall_allow', 1);
-INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_create_allow', 0);
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_create_allow', 1);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_join_allow', 1);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_create_min_posts', 0);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_create_min_level', 1);
@@ -948,3 +948,36 @@ UPDATE phpbb_adr_shops_items SET item_element_str_dmg = 100, item_element_same_d
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_shop_steal_sell', 1);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_shop_steal_min_lvl', 5);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_shop_steal_show', 0);
+
+# ADR - Advanced NPC System Expansion
+UPDATE `phpbb_adr_npc` SET `npc_class` = '0';
+UPDATE `phpbb_adr_npc` SET `npc_race` = '0';
+UPDATE `phpbb_adr_npc` SET `npc_character_level` = '0';
+UPDATE `phpbb_adr_npc` SET `npc_element` = '0';
+UPDATE `phpbb_adr_npc` SET `npc_alignment` = '0';
+UPDATE `phpbb_adr_npc` SET `npc_visit_prerequisite` = '0';
+UPDATE `phpbb_adr_npc` SET `npc_quest_prerequisite` = '0';
+UPDATE `phpbb_adr_npc` SET `npc_view` = '0';
+INSERT INTO `phpbb_adr_general` VALUES ('npc_image_size', 75);
+INSERT INTO `phpbb_adr_general` VALUES ('npc_image_count', 10);
+INSERT INTO `phpbb_adr_general` VALUES ('npc_display_enable', 1);
+INSERT INTO `phpbb_config` VALUES ('zone_adr_moderators', '');
+INSERT INTO `phpbb_config` VALUES ('zone_cheat_member_pm', '2');
+INSERT INTO `phpbb_config` VALUES ('zone_cheat_auto_ban_adr', '0');
+INSERT INTO `phpbb_config` VALUES ('zone_cheat_auto_ban_board', '0');
+INSERT INTO `phpbb_config` VALUES ('zone_cheat_auto_jail', '0');
+INSERT INTO `phpbb_config` VALUES ('zone_cheat_auto_time_day', '1');
+INSERT INTO `phpbb_config` VALUES ('zone_cheat_auto_time_hour', '0');
+INSERT INTO `phpbb_config` VALUES ('zone_cheat_auto_time_minute', '0');
+INSERT INTO `phpbb_config` VALUES ('zone_cheat_auto_caution', '0');
+INSERT INTO `phpbb_config` VALUES ('zone_cheat_auto_freeable', '0');
+INSERT INTO `phpbb_config` VALUES ('zone_cheat_auto_cautionable', '0');
+INSERT INTO `phpbb_config` VALUES ('zone_cheat_auto_punishment', '1');
+INSERT INTO `phpbb_config` VALUES ('zone_cheat_auto_public', '0');
+INSERT INTO `phpbb_adr_general` VALUES ('npc_display_text', 1);
+INSERT INTO `phpbb_adr_general` VALUES ('npc_image_link', 1);
+INSERT INTO `phpbb_adr_general` VALUES ('npc_button_link', 1);
+
+# upgrade guild alliances
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('battle_guild_exp_min', 1);
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('battle_guild_exp_max', 100);

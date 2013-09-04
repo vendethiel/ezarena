@@ -648,68 +648,67 @@ function init_userprefs($userdata)
 
 function setup_style($style)
 {
-	global $db, $board_config, $template, $images, $phpbb_root_path;
-	if ( !is_numeric($style) )
-	{
-		$sql = "SELECT *
-			FROM " . THEMES_TABLE . "
-			WHERE style_name = '$style'";
-	}
-	else
-	{	
+	global $db, $board_config, $template, $images, $phpbb_root_path, $template;
+	// V: let's just query all the themes ...
+	$sql = "SELECT * FROM " . THEMES_TABLE;
 
-	$sql = 'SELECT *
-		FROM ' . THEMES_TABLE . '
-		WHERE themes_id = ' . (int) $style;
-	}	
 	if ( !($result = $db->sql_query($sql, 0, 'style_')) )
 	{
 		message_die(CRITICAL_ERROR, 'Could not query database for theme info');
 	}
 
-	if ( !($row = $db->sql_fetchrow($result)) )
+	$style_names = array();
+	while ($row = $db->sql_fetchrow($result))
+	{
+		$style_names[] = $row['style_name'];
+
+		if ($style == $row['style_name'] || $style == $row['themes_id'])
+		{
+			$selected_style = $row;
+		}
+		else if ($row['themes_id'] == $board_config['default_style'])
+		{
+			$default_style = $row;
+		}
+	}
+	$db->sql_freeresult($result);
+
+	if (empty($selected_style))
 	{
 		// We are trying to setup a style which does not exist in the database
 		// Try to fallback to the board default (if the user had a custom style)
 		// and then any users using this style to the default if it succeeds
 		if ( $style != $board_config['default_style'])
 		{
-			$sql = 'SELECT *
-				FROM ' . THEMES_TABLE . '
-				WHERE themes_id = ' . (int) $board_config['default_style'];
-			if ( !($result2 = $db->sql_query($sql, false, 'style_')) )
-			{
-				message_die(CRITICAL_ERROR, 'Could not query database for theme info');
-			}
-
-			if ( $row = $db->sql_fetchrow($result2) )
-			{
-				$db->sql_freeresult($result2);
-
+			if (!empty($default_style))
+			{ // we're safe, default style exists.
 				$sql = 'UPDATE ' . USERS_TABLE . '
 					SET user_style = ' . (int) $board_config['default_style'] . "
 					WHERE user_style = '$style'";
-				if ( !($result3 = $db->sql_query($sql, false, 'style_')) )
+				if ( !$db->sql_query($sql) )
 				{
 					message_die(CRITICAL_ERROR, 'Could not update user theme info');
 				}
-				$db->sql_freeresult($result3);
+				$row = $default_style;
 			}
 			else
 			{
-				message_die(CRITICAL_ERROR, "Could not get theme data for themes_id [$style]");
+				message_die(CRITICAL_ERROR, "No default theme is available");
 			}
-			$db->sql_freeresult($result2);
 		}
 		else
-		{
-			message_die(CRITICAL_ERROR, "Could not get theme data for themes_id [$style]");
+		{ // style is board's default but not available. We're in big trouble !
+			message_die(CRITICAL_ERROR, "Could not get default style data for themes_id [$style]");
 		}
 	}
-	$db->sql_freeresult($result);
+	else
+	{
+		$row = $selected_style;
+	}
 
-	$template_path = 'templates/' ;
-	$template_name = $row['template_name'] ;
+	$template_path = 'templates/';
+	$template_name = $row['template_name'];
+	$style_name = $row['style_name'];
 
 	$template = new Template($phpbb_root_path . $template_path . $template_name);
 //------------------------------------------------------------------------------
@@ -717,14 +716,22 @@ function setup_style($style)
 //
 	if ( defined('IN_ADMIN') )
 	{
-		// V: mod -- Force tpldef for admin
-		$template_name = $template->tpldef;
-		// V: mod end -- Force tpldef for admin
+		// V: mod -- Force subSilver for admin
+		$template_name = 'phpbb';
+		$style_name = 'subSilver';
+		// V: mod end -- Force subSilver for admin
 		$template->set_rootdir($phpbb_root_path . 'admin/templates');
 	}
 //
 // Global Admin Template - End Code Alteration
 //------------------------------------------------------------------------------	
+
+	foreach ($style_names as $s)
+	{
+		$template->assign_block_vars('style_list', array(
+		 	'NAME' => $s,
+		));
+	}
 
 	if ( $template )
 	{
@@ -2051,11 +2058,10 @@ function list_new_unreads(&$forum_unread, $check_auth = 0)
 	$new_unreads = array();
 	$forum_unread = array();
 	$sql_and = array();
-	$sql_and[0] = " AND p.post_time > $tracking_time";
-	// V: comment ça pourrait être def?
+	$sql_and[] = "p.post_time > $tracking_time";
 	if (!empty($list_unreads))
 	{
-		$sql_and[1] = " AND t.topic_id IN ($list_unreads) AND (p.post_time <= $tracking_time)";
+		$sql_and[] = "t.topic_id IN ($list_unreads) AND (p.post_time <= $tracking_time)";
 	}
 	$check_auth_sql = '';
 	
@@ -2092,12 +2098,13 @@ function list_new_unreads(&$forum_unread, $check_auth = 0)
 	// since the user will not be shown any unreads, and that's what the next if statement is for
 	if ($auth_list)
 	{
-		for ( $i = 0; $i < count($sql_and); $i++)
+		// let's try to make it one query, shall we :-) ?
+		//for ( $i = 0; $i < count($sql_and); $i++)
 		{
 			$sql = "SELECT t.forum_id, t.topic_id, p.post_time
 					FROM " . TOPICS_TABLE . " t, " . POSTS_TABLE . " p
 					WHERE p.post_id = t.topic_last_post_id
-					$sql_and[$i]
+					AND (" . implode(') OR (', $sql_and) . ")
 					$check_auth_sql
 					AND t.topic_moved_id = 0";
 

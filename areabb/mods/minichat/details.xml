@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<plugin nom="minichat" version="1.0">
+  <label>Mini Chat</label>
+  <auteur>Informpro</auteur>
+  <type>affiche</type>
+  <page>?</page>
+  <description>Un espace de chat sur votre portail ca vous tente?</description>
+</plugin>

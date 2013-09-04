@@ -471,6 +471,7 @@ if( isset($HTTP_POST_VARS['delete_confirm']) )
       message_die(GENERAL_ERROR, 'Could not delete private message text', '', __LINE__, __FILE__, $delete_text_sql);
     }
   }
+  $db->clear_cache('usercount');
 
   $message = $lang['User_deleted'] . '<br /><br />' . sprintf($lang['Click_return_index'], '<a href="' . append_sid("index.$phpEx") . '">', '</a>');
 
@@ -509,7 +510,7 @@ if ( isset($HTTP_POST_VARS['submit']) )
 			$error_msg .= ( ( isset($error_msg) ) ? '<br />' : '' ) . $lang['Wrong_Profile'];
 		}
 	}
-else if ( $mode == 'register' )
+	else if ( $mode == 'register' )
 	{
 		if ( empty($username) || empty($new_password) || empty($password_confirm) || empty($email) )
 		{
@@ -1088,6 +1089,7 @@ else if ( $mode == 'register' )
 				}
 				$db->sql_freeresult($result);
 			}
+  			$db->clear_cache('usercount');
 
 			$message = $message . '<br /><br />' . sprintf($lang['Click_return_index'],  '<a href="' . append_sid("index.$phpEx") . '">', '</a>');
 

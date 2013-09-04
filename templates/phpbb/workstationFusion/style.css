@@ -1,0 +1,291 @@
+/*
+  WorkStation_fusion Theme for phpBB version 2+
+  Created by larme d'ange
+  http://lda-creation.conceptbb.com
+
+  NOTE: These CSS definitions are stored within the main page body so that you can use the phpBB2
+  theme administration centre. When you have finalised your style you could cut the final CSS code
+  and place it in an external file, deleting this section to save bandwidth.
+*/
+
+/* General page style. The scroll bar colours only visible in IE5.5+ */
+body {
+
+	background-image: url(images/background.jpg);
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-position: top right;
+	background-color: #1a1a1a;
+
+}
+
+/* General font families for common tags */
+font,th,td,p { font-family: Verdana, Arial, Helvetica, sans-serif; font-size : 11px; color : #ff9900; } 
+a:link,a:active,a:visited { color : #b5b5b5; }
+a:hover		{ text-decoration: none; color : #ff9900; }
+hr	{ height: 0px; border: solid #1f1f1f 0px; border-top-width: 1px;}
+
+/* This is the border line & background colour round the entire page */
+.bodyline	{ background-color: ""; border: 0px #111111 solid; }
+
+/* This is the outline round the main forum tables */
+.forumline	{ background-color: #444444; border: 2px #010101 solid; }
+
+/* Main table cell colours and backgrounds */
+td.row1	{ background-color: #2a2a2a; }
+td.row2	{ background-color: #262626; }
+td.row3	{ background-color: #1f1f1f; }
+
+/*
+  This is for the table cell above the Topics, Post & Last posts on the index.php page
+  By default this is the fading out gradiated silver background.
+  However, you could replace this with a bitmap specific for each forum
+*/
+td.rowpic {
+		background-color: #1f1f1f;
+		background-image: url(images/back_catd.jpg);
+		background-repeat: repeat-y;
+}
+
+/* Header cells - the blue and silver gradient backgrounds */
+th	{
+	color: #111111; font-size: 11px; font-weight : bold;
+	background-color: #b5b5b5; height: 25px;
+	background-image: url(images/back_title.jpg);
+}
+
+td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom {
+			background-image: url(images/back_catg.jpg);
+			background-color:#1f1f1f; border: #444444; border-style: solid; height: 28px;
+}
+
+/*
+  Setting additional nice inner borders for the main table cells.
+  The names indicate which sides the border will be on.
+  Don't worry if you don't understand this, just ignore it :-)
+*/
+td.cat,td.catHead,td.catBottom {
+	height: 29px;
+	border-width: 0px 0px 0px 0px;
+}
+th.thHead,th.thSides,th.thTop,th.thLeft,th.thRight,th.thBottom,th.thCornerL,th.thCornerR {
+	font-weight: bold; border: #111111; border-style: solid; height: 25px;
+}
+td.row3Right,td.spaceRow {
+	background-color: #1f1f1f; border: #444444; border-style: solid;
+}
+
+th.thHead,td.catHead { font-size: 12px; border-width: 1px 1px 0px 1px; }
+th.thSides,td.catSides,td.spaceRow	 { border-width: 0px 1px 0px 1px; }
+th.thRight,td.catRight,td.row3Right	 { border-width: 0px 1px 0px 0px; }
+th.thLeft,td.catLeft	  { border-width: 0px 0px 0px 1px; }
+th.thBottom,td.catBottom  { border-width: 0px 1px 1px 1px; }
+th.thTop	 { border-width: 1px 0px 0px 0px; }
+th.thCornerL { border-width: 1px 0px 0px 1px; }
+th.thCornerR { border-width: 1px 1px 0px 0px; }
+
+/* The largest text used in the index page title and toptic title etc. */
+.maintitle	{
+	font-weight: bold; font-size: 18px; font-family: "Trebuchet MS",Verdana, Arial, Helvetica, sans-serif;
+	text-decoration: none; line-height : 120%; color : #8f8f8f;
+}
+
+/* General text */
+.gen { font-size : 12px; }
+.genmed { font-size : 11px; }
+.gensmall { font-size : 10px; }
+.gen,.genmed,.gensmall { color : #8f8f8f; }
+a.gen,a.genmed,a.gensmall { color: #b5b5b5; text-decoration: none; }
+a.gen:hover,a.genmed:hover,a.gensmall:hover	{ color: #ff9900; text-decoration: none; }
+
+/* Optionnal text */
+.class1 { font-size : 11px; color : #2a2a2a; }
+.class2 { font-size : 10px; color : #2a2a2a; }
+.class3	{ font-weight: bold; font-size: 11px; color : #2a2a2a; }
+
+/* The register, login, search etc links at the top of the page */
+.mainmenu		{ font-size : 11px; color : #8f8f8f }
+a.mainmenu		{ text-decoration: none; color : #b5b5b5;  }
+a.mainmenu:hover{ text-decoration: none; color : #ff9900; }
+
+/* Forum category titles */
+.cattitle		{ font-weight: bold; font-size: 12px ; letter-spacing: 1px; color : #2a2a2a}
+a.cattitle		{ text-decoration: none; color : #2a2a2a; }
+a.cattitle:hover{ text-decoration: none; }
+
+/* Forum title: Text and link to the forums used in: index.php */
+.forumlink		{ font-weight: bold; font-size: 12px; color : #b5b5b5; }
+a.forumlink 	{ text-decoration: none; color : #b5b5b5; }
+a.forumlink:hover{ text-decoration: none; color : #ff9900; }
+
+/* Used for the navigation text, (Page 1,2,3 etc) and the navigation bar when in a forum */
+.nav			{ font-weight: bold; font-size: 11px; color : #8f8f8f;}
+a.nav			{ text-decoration: none; color : #b5b5b5; }
+a.nav:hover		{ text-decoration: none; }
+
+/* titles for the topics: could specify viewed link colour too */
+.topictitle,h1,h2	{ font-weight: bold; font-size: 11px; color : #8f8f8f; }
+a.topictitle:link   { text-decoration: none; color : #b5b5b5; }
+a.topictitle:visited { text-decoration: none; color : #c69373; }
+a.topictitle:hover	{ text-decoration: none; color : #ff9900; }
+
+/* Name of poster in viewmsg.php and viewtopic.php and other places */
+.name			{ font-size : 11px; color : #8f8f8f;}
+
+/* Location, number of posts, post date etc */
+.postdetails		{ font-size : 10px; color : #8f8f8f; }
+
+/* The content of the posts (body of text) */
+.postbody { font-size : 12px; line-height: 18px}
+a.postlink:link	{ text-decoration: none; color : #b5b5b5 }
+a.postlink:visited { text-decoration: none; color : #c69373; }
+a.postlink:hover { text-decoration: none; color : #ff9900}
+
+/* Quote & Code blocks */
+.code {
+	font-family: Courier, 'Courier New', sans-serif; font-size: 11px; color: #ff7e00;
+	background-color: #242424; border: #111111; border-style: solid;
+	border-left-width: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px;
+	overflow: auto; max-height: 400px;
+}
+
+.quote {
+	font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #696969; line-height: 125%;
+	background-color: #242424; border: #111111; border-style: solid;
+	border-left-width: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px
+}
+
+/* Copyright and bottom info */
+.copyright		{ font-size: 10px; font-family: Verdana, Arial, Helvetica, sans-serif; color: #696969; letter-spacing: -1px;}
+a.copyright		{ color: #ff9900; text-decoration: none;}
+a.copyright:hover { color: #ff7e00; text-decoration: none;}
+
+/* Form elements */
+input,textarea, select {
+    border-left-width: 1px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px;
+	color : #ff9900;
+	font: normal 11px Verdana, Arial, Helvetica, sans-serif;
+	border-color : #696969;
+}
+
+/* The text input fields background colour */
+input.post, textarea.post, select {
+	background-color : #444444;
+}
+
+input { text-indent : 2px;
+	    background-color : #242424; }
+
+/* The buttons used for bbCode styling in message post */
+input.button {
+	background-color : #262626;
+	color : #8f8f8f;
+	font-size: 11px; font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+/* The main submit button option */
+input.mainoption {
+	background-color : #242424;
+	font-weight : bold;
+}
+
+/* None-bold submit button */
+input.liteoption {
+	background-color : #242424;
+	font-weight : normal;
+}
+
+/* This is the line in the posting page which shows the rollover
+  help line. This is actually a text box, but if set to be the same
+  colour as the background no one will know ;)
+*/
+.helpline { background-color: #262626; border-style: none; }
+
+img { border-style: none; }
+body { font-family: {T_FONTFACE1} }
+h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
+.nowrap { white-space: nowrap; }
+.bold { font-weight : bold; }
+.italic { font-style : italic; }
+.spacer { height: 1px; font-size: 0; }
+.complet { width: 100%; }
+.demi { width: 50%; }
+.tiers { width: 33%; }
+.quart { width: 25%; }
+.w200px { width: 200px; }
+/* Classes complétées */
+td.cat, td.catHead, td.catSides, td.catLeft, td.catRight, td.catBottom, th.thHead, th.thSides, th.thTop, th.thLeft, th.thRight, th.thBottom, th.thCornerL, th.thCornerR { padding: 0 2px; }
+.forumline { margin: 2px 0; }
+/* Formulaires */
+form { margin: 0; padding: 0; }
+input { margin: 0; }
+input.gen { height: {T_FONTSIZE3}px; }
+input.genmed { height: {T_FONTSIZE2}px; }
+input.gensmall { height: {T_FONTSIZE1}px; }
+/* Alignements */
+.lt { text-align: left; vertical-align: top; }
+.rt { text-align: right; vertical-align: top; }
+.ct { text-align: center; vertical-align: top; }
+.jt { text-align: justify; vertical-align: top; }
+.lm { text-align: left; vertical-align: middle; }
+.rm { text-align: right; vertical-align: middle; }
+.cm { text-align: center; vertical-align: middle; }
+.jm { text-align: justify; vertical-align: middle; }
+.lb { text-align: left; vertical-align: bottom; }
+.rb { text-align: right; vertical-align: bottom; }
+.cb { text-align: center; vertical-align: bottom; }
+.jb { text-align: justify; vertical-align: bottom; }
+/* Flottement */
+.fl { float:left; }
+.fr { float:right; }
+.clear { clear: both; visibility: hidden; }
+
+/* Début Mod Bulle */
+.hg {
+	background:none;
+	border:none;
+	width:52px;
+	height:33px;
+	padding:0px;
+	cursor:default;
+}
+.contenu {
+	background:#D1DAFF;
+	border-bottom:double 2px #000000;
+	border-left:solid 1px #000000;
+	border-right:double 2px #000000;
+	border-top:solid 1px #000000;
+	padding-top:15px;
+	padding-bottom:15px;
+	padding-left:15px;
+	padding-right:15px;
+	empty-cells:hide;
+	cursor:default;
+}
+a.bubule {
+   background: none;
+   z-index: 5000;
+   cursor:pointer;
+   color:#000000;
+   border-bottom:double #FFA384;
+   text-decoration:none;
+}
+a:hover.bubule {
+   background: none;
+   z-index: 5000;
+   cursor:pointer;
+   color:#000000;
+   text-decoration:none;
+   border:none;
+}
+a.bubule div {
+	display:none;
+}
+a:hover.bubule div {
+	position:absolute;
+	display:inline;
+}
+
+fieldset { margin: 2px 30px; border: none; }
+blockquote { margin: 0; padding: 3px; }
+blockquote.code>div { white-space: nowrap; width: 100%; max-height: 400px; overflow: auto; }

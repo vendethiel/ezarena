@@ -141,7 +141,7 @@ $template->assign_vars(array(
 switch( $mode )
 {
 	case 'joined':
-		$order_by = "user_regdate $sort_order LIMIT $start, " . $board_config['topics_per_page'];
+		$order_by = "user_id $sort_order LIMIT $start, " . $board_config['topics_per_page'];
 		break;
 	case 'username':
 		$order_by = "username $sort_order LIMIT $start, " . $board_config['topics_per_page'];
@@ -193,7 +193,7 @@ $template->assign_vars(array(
 	'S_LETTER_HIDDEN' => '<input type="hidden" name="letter" value="' . $by_letter . '">')
 );
 
-if($by_letter == 'all')
+if($by_letter == 'all' || !$by_letter)
 {
 	$letter_sql = '';
 }
@@ -374,7 +374,7 @@ if ( $mode != 'topten' || $board_config['topics_per_page'] < 10 )
 		FROM " . USERS_TABLE . "
 		WHERE user_id <> " . ANONYMOUS . $letter_sql;
 
-	if ( !($result = $db->sql_query($sql)) )
+	if ( !($result = $db->sql_query($sql, false, 'usercount')) )
 	{
 		message_die(GENERAL_ERROR, 'Error getting total users', '', __LINE__, __FILE__, $sql);
 	}

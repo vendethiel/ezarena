@@ -407,6 +407,7 @@ $template->assign_vars(array(
 	'S_LOGIN_ACTION' => append_sid('login.'.$phpEx),
 	'BBC_BOX_SHEET' => isset($images['bbc_box_sheet']) ? $images['bbc_box_sheet'] : '',
 	'T_TEMPLATE_NAME' => $theme['template_name'],
+	'T_STYLE_NAME' => $theme['style_name'],
 	'T_HEAD_STYLESHEET' => $theme['head_stylesheet'],
 	'HYPERCELL_PATH' => $theme['template_name'] . '/hypercell',
 	'T_BODY_BACKGROUND' => $theme['body_background'],

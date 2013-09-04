@@ -54,33 +54,7 @@ if ( !$userdata['session_logged_in'] )
 adr_template_file('adr_TownMap_Boutique_body.tpl');
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
-$carte = '';
-
-$lsql = "select  townmap_map  from " . ADR_TOWNMAPMAP_TABLE ;
-if ( !($lresult = $db->sql_query($lsql)) ) message_die(GENERAL_ERROR, "Could not acces TownMapMAP table.", '', __LINE__, __FILE__, $sql);
-if ($alignments = $db->sql_fetchrow($lresult))
-{
-	$carte = $alignments['townmap_map'];
-}
-	if ( $carte == '1' ) 
-	{
-	$saison = 'Carte1';
-	}
-
-	if ( $carte == '2' ) 
-	{
-	$saison = 'Carte2';
-	}
-
-	if ( $carte == '3' ) 
-	{
-	$saison = 'Carte3';
-	}
-
-	if ( $carte == '4' ) 
-	{
-	$saison = 'Carte4';
-	}
+$saison = 'Carte' . $board_config['adr_seasons'];
 
 // Deny access if the user is into a battle
 $sql = " SELECT * FROM  " . ADR_BATTLE_LIST_TABLE . " 
@@ -102,10 +76,9 @@ if ( is_numeric($bat['battle_id']) )
 // Get the general config
 $adr_general = adr_get_general_config();
 
-if ( !$adr_general['Adr_disable_rpg'] && $userdata['user_level'] != ADMIN ) 
-{	
-	adr_previous ( Adr_disable_rpg , 'index' , '' );
-}
+adr_enable_check();
+adr_ban_check($user_id);
+adr_character_created_check($user_id);
 // Deny access if user is imprisioned
 if($userdata['user_cell_time']){
 	adr_previous(Adr_shops_no_thief, adr_cell, '');}
@@ -139,7 +112,7 @@ else
 		'L_TOWNMAPCOPYRIGHT' => $lang['TownMap_Copyright'],
 	      'L_COPYRIGHT' => $lang['Adr_copyright'],
 	      'U_COPYRIGHT' => append_sid("adr_copyright.$phpEx"),
-		'U_TOWNBOUTONRETOUR' => append_sid("adr_TownMap.$phpEx"),
+		'U_TOWNBOUTONRETOUR' => append_sid("adr_zones.$phpEx"),
 		'U_TOWNMAP_BOUTIQUE' => append_sid("adr_TownMap_Boutique.$phpEx"),
 		'U_BOUTIQUE' => append_sid("adr_shops.$phpEx"),
 		'U_LISTEBOUTIQUE' => append_sid("adr_shops.$phpEx?mode=shop_list"),

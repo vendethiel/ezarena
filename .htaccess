@@ -27,7 +27,7 @@ RewriteRule ^[a-z0-9_-]*-t([0-9]+)\.html$ viewtopic.php?t=$1 [QSA,L,NC]
 # POST 
 RewriteRule ^post([0-9]+)\.html$ viewtopic.php?p=$1 [QSA,L,NC]
 #PROFILES 
-RewriteRule ^membre([0-9]+)\.html$ profile.php?mode=viewprofile&u=$1 [QSA,L,NC]
+RewriteRule ^membre([0-9]+)\.html$ userlist.php?mode=viewprofile&u=$1 [QSA,L,NC]
 # END PHPBB PAGES 
 #####################################################
 #########################################################

@@ -3,6 +3,6 @@
   <label>Bloc de bienvenue</label>
   <auteur>Saint-Pere</auteur>
   <type>affiche</type>
-  <page>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</page>
+  <page>?</page>
   <description>Affiche l'avatar du visiteur ainsi qu'un lien vers les derniers messages.</description>
 </plugin>

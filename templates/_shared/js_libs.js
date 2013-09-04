@@ -1,5 +1,7 @@
 /**
  * V: contaisn
+ *  - ajax
+ *
  *  - dom_menu
  *  - dom_toggle
  *  - tooltips
@@ -7,6 +9,102 @@
  *  - rmwa
  *  - collapsible_forum_index
  */
+
+/**
+ * @author Informpro
+ */
+var ajax = function() {
+   /**
+    * @param string url URL to query
+    * @param function cb Callback to call on success or null
+    * @param object|boolean params Params to pass to the POST request.
+    *  You can pass an empty string to force a POST without params.
+    */
+   function ajax(url, cb, params) {
+      var xmlHttp = getXmlHttpObject();
+
+      xmlHttp.onreadystatechange = function() {
+         if (xmlHttp.readyState == 4) {
+            cb && cb(xmlHttp.responseText);
+         }
+      }
+
+      xmlHttp.open(params ? 'POST' : 'GET', url, true);
+      xmlHttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      if (params != null)
+      {
+         xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+         xmlHttp.send(params);
+      }
+      else
+      {
+         xmlHttp.send(null);
+      }
+   }
+
+   function getXmlHttpObject() {
+      var xmlHttp;
+      try {
+         xmlHttp = new XMLHttpRequest();
+      } catch (e) {
+         // DO NOT HANDLE OLDER BROWSERS.
+         xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
+      }
+
+      return xmlHttp;
+   }
+
+   return ajax;
+}();
+
+// Apply AJAX functions
+function ajaxifyTooltips() {
+   var ajax_tooltips = document.getElementsByClassName('ajax_tooltip');
+   var in_flight = [];
+   var datas = {};
+
+   for (var i = 0; i < ajax_tooltips.length; ++i) {
+      void function (at, i) {
+         var url = at.getAttribute('data-url');
+         at.onmouseover = function() {
+            getData(url, function (data) {
+               tooltip.show(data);
+            });
+         }; 
+         at.onmouseout = function() {
+            tooltip.hide();
+         };
+      }(ajax_tooltips[i], i);
+   }
+
+   function getData(url, cb) {
+      if (datas[url]) {
+         cb(datas[url]);
+         return;
+      }
+      if (~in_flight.indexOf(url)) {
+         // we're already querying this
+         return;
+      }
+
+      in_flight.push(url);
+      ajax(url, function (data) {
+         datas[url] = data;
+         in_flight.splice(in_flight.indexOf(url), 1);
+         cb && cb(data);
+      });
+   }
+};
+var oldReady = window.onload;
+window.onload = function () {
+   oldReady && oldReady();
+   ajaxifyTooltips();
+}
+
+/*
+ * libs
+ */
+
 function _dom_menu(menus)
 {
    // V: let's fix this crap a bit ...
@@ -181,7 +279,9 @@ tooltip.hide = function () {
    this.tip.innerHTML = ""; 
 }; 
 
-window.onload = function () { 
+var oldLoad = window.onload;
+window.onload = function () {
+   oldLoad && oldLoad();
    tooltip.init(); 
 }
 

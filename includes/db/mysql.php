@@ -144,12 +144,12 @@ class sql_db
 				}
 				$this->in_transaction = TRUE;
 			}
-			$qstart = microtime();
+			$qstart = microtime(true);
 			$this->query_result = mysql_query($query, $this->db_connect_id);
 			
 			if (DEBUG)
 			{
-				$qend = microtime();
+				$qend = microtime(true);
 				ob_start();
 				debug_print_backtrace();
 				$backtrace = ob_get_clean();

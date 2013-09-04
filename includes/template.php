@@ -106,7 +106,7 @@ class Template {
 
 	// Default template directory.
 	// If file for default template isn't found file from this template is used.
-	var $tpldef = 'subSilver';
+	var $tpldef = '_shared';
 
 	// this will hash handle names to the compiled code for that handle.
 	var $compiled_code = array();
@@ -205,7 +205,7 @@ class Template {
 			'xs_auto_recompile'			=> 1,
 			'xs_use_cache'				=> 1,
 			'xs_php'					=> $phpEx,
-			'xs_def_template'			=> 'subSilver',
+			'xs_def_template'			=> '_shared',
 			'xs_check_switches'			=> 1,
 			'xs_warn_includes'			=> 1,
 			'xs_add_comments'			=> 0,
@@ -831,7 +831,8 @@ class Template {
 		if (defined('ROOT_STYLE') && ROOT_STYLE == 'admin')
 		{
 			$this->assign_var('ROOT_STYLE', $root_style = '../../../');
-		}else if (defined('IN_ADMIN') || (defined('ROOT_STYLE') && ROOT_STYLE == 'page')) {
+		}else if (defined('IN_ADMIN')) // || (defined('ROOT_STYLE') && ROOT_STYLE == 'page'))
+		{
 			$this->assign_var('ROOT_STYLE', $root_style = '../');
 		} else {
 			$this->assign_var('ROOT_STYLE', $root_style = './');

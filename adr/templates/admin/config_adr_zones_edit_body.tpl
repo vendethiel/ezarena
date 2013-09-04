@@ -80,7 +80,17 @@
 </table>
 
 <br clear="all" />
+<table class="forumline" cellspacing="1" cellpadding="4" border="0" align="center" width="100%">
+	<tr>
+		<th align="center" colspan="10" ><u>{L_ZONE_BATTLE}</u></td>
+	</tr>
+	<tr>
+		<td class="row1" width="60%" ><b>{L_ZONE_MONSTER_LIST} :</b><br \>{L_ZONE_MONSTER_LIST_EXPLAIN}</td>
+		<td class="row1" align="center" ><span class="gen">{ZONE_MONSTER_LIST}</span></td>
+	</tr>
+</table>
 
+<br clear="all" />
 <table class="forumline" cellspacing="1" cellpadding="4" border="0" align="center" width="100%">
 	<tr>
 		<th align="center" colspan="10" ><u>{L_ZONE_BUILDINGS}</u></td>
@@ -172,66 +182,6 @@
 	<tr>
 		<td class="row1" width="60%"><b>{L_ZONE_EVENT8} :</b><br />{L_ZONE_EVENT8_EXPLAIN}</td>
 		<td class="row1" align="center" ><input type="checkbox" name="zone_event8" value="1" {ZONE_EVENT8} /></td>
-	</tr>
-</table>
-
-<br clear="all" />
-
-<table class="forumline" cellspacing="1" cellpadding="4" border="0" align="center" width="100%">
-	<tr>
-		<th align="center" colspan="10" ><u>{L_ZONE_NPC}</u></td>
-	</tr>
-	<tr>
-		<td class="row1" width="60%"><b>{L_ZONE_NPC_COST} :</b><br />{L_ZONE_NPC_COST_EXLAIN}</td>
-		<td class="row1" align="center" ><input type="text" name="zone_costnpc" value="{ZONE_COSTNPC}" size="10" maxlength="255" /></td>
-	</tr>
-	<tr>
-		<td class="row2" width="60%"><b>{L_ZONE_NPC1} :</b><br />{L_ZONE_NPC1_EXPLAIN}</td>
-		<td class="row2" align="center" ><input type="checkbox" name="zone_npc1" value="1" {ZONE_NPC1} /></td>
-	</tr>
-	<tr>
-		<td class="row2" width="60%"><b>{L_ZONE_NPC1_MESSAGE} :</b><br />{L_ZONE_NPC1_MESSAGE_EXPLAIN}</td>
-		<td class="row2" align="center" ><textarea name="npc1_msg" cols="60" rows="10" class="post">{NPC1_MSG}</textarea></td>
-	</tr>
-	<tr>
-		<td class="row1" width="60%"><b>{L_ZONE_NPC2} :</b><br />{L_ZONE_NPC2_EXPLAIN}</td>
-		<td class="row1" align="center" ><input type="checkbox" name="zone_npc2" value="1" {ZONE_NPC2} /></td>
-	</tr>
-	<tr>
-		<td class="row1" width="60%"><b>{L_ZONE_NPC2_MESSAGE} :</b><br />{L_ZONE_NPC2_MESSAGE_EXPLAIN}</td>
-		<td class="row1" align="center" ><textarea name="npc2_msg" cols="60" rows="10" class="post">{NPC2_MSG}</textarea></td>
-	</tr>
-	<tr>
-		<td class="row2" width="60%"><b>{L_ZONE_NPC3} :</b><br />{L_ZONE_NPC3_EXPLAIN}</td>
-		<td class="row2" align="center" ><input type="checkbox" name="zone_npc3" value="1" {ZONE_NPC3} /></td>
-	</tr>
-	<tr>
-		<td class="row2" width="60%"><b>{L_ZONE_NPC3_MESSAGE} :</b><br />{L_ZONE_NPC3_MESSAGE_EXPLAIN}</td>
-		<td class="row2" align="center" ><textarea name="npc3_msg" cols="60" rows="10" class="post">{NPC3_MSG}</textarea></td>
-	</tr>
-	<tr>
-		<td class="row1" width="60%"><b>{L_ZONE_NPC4} :</b><br />{L_ZONE_NPC4_EXPLAIN}</td>
-		<td class="row1" align="center" ><input type="checkbox" name="zone_npc4" value="1" {ZONE_NPC4} /></td>
-	</tr>
-	<tr>
-		<td class="row1" width="60%"><b>{L_ZONE_NPC4_MESSAGE} :</b><br />{L_ZONE_NPC4_MESSAGE_EXPLAIN}</td>
-		<td class="row1" align="center" ><textarea name="npc4_msg" cols="60" rows="10" class="post">{NPC4_MSG}</textarea></td>
-	</tr>
-	<tr>
-		<td class="row2" width="60%"><b>{L_ZONE_NPC5} :</b><br />{L_ZONE_NPC5_EXPLAIN}</td>
-		<td class="row2" align="center" ><input type="checkbox" name="zone_npc5" value="1" {ZONE_NPC5} /></td>
-	</tr>
-	<tr>
-		<td class="row2" width="60%"><b>{L_ZONE_NPC5_MESSAGE} :</b><br />{L_ZONE_NPC5_MESSAGE_EXPLAIN}</td>
-		<td class="row2" align="center" ><textarea name="npc5_msg" cols="60" rows="10" class="post">{NPC5_MSG}</textarea></td>
-	</tr>
-	<tr>
-		<td class="row1" width="60%"><b>{L_ZONE_NPC6} :</b><br />{L_ZONE_NPC6_EXPLAIN}</td>
-		<td class="row1" align="center" ><input type="checkbox" name="zone_npc6" value="1" {ZONE_NPC6} /></td>
-	</tr>
-	<tr>
-		<td class="row1" width="60%"><b>{L_ZONE_NPC6_MESSAGE} :</b><br />{L_ZONE_NPC6_MESSAGE_EXPLAIN}</td>
-		<td class="row1" align="center" ><textarea name="npc6_msg" cols="60" rows="10" class="post">{NPC6_MSG}</textarea></td>
 	</tr>
 </table>
 

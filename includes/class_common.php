@@ -364,7 +364,8 @@ class common_get
 			$url_parms .= (empty($url_parms) ? '?#' : '#') . $fragments;
 		}
 
-		return ($add_sid && (substr($this->root, 0, 2) == './') ? substr($this->root, 2) : $this->root) . $basename . '.' . $this->ext . $url_parms;
+		$url = $basename . '.' . $this->ext . $url_parms;
+		return $add_sid ? append_sid($url) : $url;
 	}
 }
 

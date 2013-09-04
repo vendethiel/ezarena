@@ -1397,6 +1397,11 @@ MOD-*/
 
 		$yim_img = ( $postrow[$i]['user_yim'] ) ? '<a href="http://edit.yahoo.com/config/send_webmesg?.target=' . $postrow[$i]['user_yim'] . '&amp;.src=pg"><img src="' . $images['icon_yim'] . '" alt="' . $lang['YIM'] . '" title="' . $lang['YIM'] . '" border="0" /></a>' : '';
 		$yim = ( $postrow[$i]['user_yim'] ) ? '<a href="http://edit.yahoo.com/config/send_webmesg?.target=' . $postrow[$i]['user_yim'] . '&amp;.src=pg">' . $lang['YIM'] . '</a>' : '';
+
+		$temp_url = append_sid("profile.$phpEx?mode=miniprofile&amp;" . POST_USERS_URL . "=$poster_id");
+
+		$mini_profile_img = '<a href="#" class="ajax_tooltip" data-url="' . $temp_url . '" onclick="window.open(\'' . $temp_url . '\',\'\',\'width=470,height=250,scrollbars=yes\');return(false)"><img src="' . $images['icon_mini_profile'] . '" alt="' . $lang['Read_mini_profile'] . '" title="' . $lang['Read_mini_profile'] . '" border="0" /></a>';
+		$mini_profile = '<a href="#" class="ajax_tooltip" data-url="' . $temp_url . '" onclick="window.open(\'' . $temp_url . '\',\'\',\'width=470,height=250,scrollbars=yes\');return(false)">' . $lang['Read_mini_profile'] . '</a>';
 	}
 	else
 	{
@@ -1417,6 +1422,8 @@ MOD-*/
 		$msn = '';
 		$yim_img = '';
 		$yim = '';
+		$mini_profile_img = '';
+		$mini_profile = '';
 	}
 
 	$temp_url = append_sid("posting.$phpEx?mode=quote&amp;" . POST_POST_URL . "=" . $postrow[$i]['post_id']);
@@ -1740,15 +1747,16 @@ $card_hidden = ($g_card_img || $r_card_img || $y_card_img || $b_card_img) ? '<in
 // Start add - Direct user link MOD
 	switch ($postrow[$i]['user_level'])
 	{
-		case ADMIN :
-		      $poster = "<b>$poster</b>"; 
+		case ADMIN:
+		    $poster = "<b>$poster</b>"; 
       		$poster_style_color = 'style="color:#' . $theme['fontcolor3'] . '"';
 			break;
-		case MOD :
-		      $poster = "<b>$poster</b>"; 
+		case MOD:
+		    $poster = "<b>$poster</b>"; 
       		$poster_style_color = 'style="color:#' . $theme['fontcolor2'] . '"';
 			break;
-		default : $poster_style_color = '';
+		default:
+			$poster_style_color = '';
 	}
 // End add - Direct user link MOD
 //Online/Offline
@@ -1818,6 +1826,8 @@ MOD-*/
 		'MINI_POST_IMG' => $mini_post_img,
 		'PROFILE_IMG' => $profile_img,
 		'PROFILE' => $profile,
+		'MINI_PROFILE_IMG' => $mini_profile_img,
+		'MINI_PROFILE' => $mini_profile,
 		'SEARCH_IMG' => $search_img,
 		'SEARCH' => $search,
 		'PM_IMG' => $pm_img,

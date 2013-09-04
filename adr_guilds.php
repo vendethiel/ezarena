@@ -33,7 +33,7 @@ $sub_loc = 'adr_guilds';
 
 //
 // Start session management
-$userdata = session_pagestart($user_ip, PAGE_ADR); 
+$userdata = session_pagestart($user_ip, PAGE_INDEX); 
 init_userprefs($userdata); 
 // End session management
 //
@@ -107,8 +107,6 @@ $character_guild = $char['character_guild'];
 $character_guild_id = $char['character_guild_id'];
 $character_guild_rank = $char['character_guild_rank'];
 $character_guild_approval = $char['character_guild_approval'];
-
-
 
 if ( $mode != "" )
 {
@@ -302,6 +300,28 @@ if ( $mode != "" )
 							$guilds_table = $db->sql_fetchrow($result);
 							$date_created = date( "F jS Y" , $guilds_table['guild_date_created'] );
 							$date_length = floor( ( time() - $guilds_table['guild_date_created'] ) / 86400 ) ;
+
+							//If the Guild has reached the maximum experience,
+							//increase the level and reset the experience
+							if ( $guilds_table['guild_exp'] >= $guilds_table['guild_exp_max'] )
+							{
+								$sql = " UPDATE  " . ADR_GUILDS_TABLE . " 
+									SET guild_level = guild_level + 1, 
+										guild_exp = '0'
+									WHERE guild_id = $guild_id ";
+								if( !($result = $db->sql_query($sql)) )
+								{
+									message_die(GENERAL_ERROR, 'Could not update guild\'s level', '', __LINE__, __FILE__, $sql);
+								}
+
+								$sql = " SELECT * FROM " . ADR_GUILDS_TABLE . "
+									WHERE guild_id = $guild_id ";
+								if( !($result = $db->sql_query($sql)) )
+								{
+									message_die(GENERAL_ERROR, 'Could not query Guild table for info page', '', __LINE__, __FILE__, $sql);
+								}
+								$guilds_table = $db->sql_fetchrow($result);
+							}
 
 							// Show new applicant status...
 							if ($guilds_table['guild_accepting_new'] == '0')
@@ -801,7 +821,7 @@ if ( $mode != "" )
 									'L_GUILD_MEMBERS' => $guilds_table['guild_rank_member'],
 									'U_GUILD_MEMBERS' => $members_list,
 									'L_GUILDS_BACK' => $lang['Adr_guilds_back'],
-									'U_GUILDS_BACK' => append_sid("adr_guilds.$phpEx?mode=guilds_leader&amp;sub_mode=guilds_leader_page&amp;guild_id=$guild_id"),
+									'U_GUILDS_BACK' => append_sid("adr_guilds.$phpEx?mode=guilds_join&amp;sub_mode=guilds_info_page&amp;guild_id=$guild_id"),
 								));
                                                 
 							break;

@@ -13,6 +13,7 @@ if ( !$board_config['townmap_seasons_cron_last_time'] )
 		message_die(GENERAL_ERROR, 'Error updating config' , "", __LINE__, __FILE__, $lsql); 
 	} 
 	$board_config['townmap_seasons_cron_last_time']  = time();
+	$db->clear_cache('config_');
 }
 
 if ( ( time() - $board_config['townmap_seasons_cron_last_time'] ) > $board_config['townmap_seasons_cron_time'])
@@ -69,7 +70,6 @@ if ($alignments = $db->sql_fetchrow($result))
 	if ( !($lresult = $db->sql_query($lsql)) ) 
 	{ 
 		message_die(GENERAL_ERROR, 'Error updating config' , "", __LINE__, __FILE__, $lsql); 
-	} 
+	}
+	$db->clear_cache('config_');
 }
-
-?>

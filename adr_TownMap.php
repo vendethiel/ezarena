@@ -18,6 +18,28 @@
  *
  ***************************************************************************/
 
+/*
+ *V:
+ * Just a note if you come check what's in here.
+ *  ShadowTek's ADR premod (included in ezArena)
+ *  DOES NOT USE TOWN ENVIRONMENT. Using townenv would
+ *  defeat the purpose of the modifications made.
+ *
+ * However, it *does* use the graphical modifications
+ *  This is why there are no "carteX" folders.
+ *  See the old ShadowTek todos from the ADR github issue :
+ *   https://github.com/Nami-Doc/ezarena/issues/7#issuecomment-23674076
+ *
+ * Basically, yes, we could remove those files now, they're not used
+ *  and we could probably remove them. However, we could also go the
+ *  other way around and integrate them. I have not done this because
+ * I think they're more cumbersome with all those added texts
+ *  and they keep adding more and more barriers to a fast user experience
+ *
+ * !!! EDIT !!!
+ * So, this got integrated and we know use Town Env with Zone mod \o/
+ */
+
 define('IN_PHPBB', true); 
 define('IN_ADR_TOWNMAP', true); 
 define('IN_TOWNMAP_TEMPLE', true);
@@ -70,49 +92,20 @@ $music_summer = '';
 $music_automn = '';
 $music_winter = '';
 
-$sql = "select  music_spring, music_summer, music_automn, music_winter from " . phpbb_adr_townmap_music ;
+$sql = "SELECT music_spring, music_summer, music_automn, music_winter FROM " . ADR_TOWNMAP_MUSIC_TABLE ;
 if ( !($result = $db->sql_query($sql)) ) message_die(GENERAL_ERROR, "Could not acces music table.", '', __LINE__, __FILE__, $sql);
 if ($alignments = $db->sql_fetchrow($result))
 {
-	$music_spring = $alignments['music_spring'];
-	$music_summer = $alignments['music_summer'];
-	$music_automn = $alignments['music_automn'];
-	$music_winter = $alignments['music_winter'];
+	$musics = array(
+		$alignments['music_spring'],
+		$alignments['music_summer'],
+		$alignments['music_automn'],
+		$alignments['music_winter'],
+	);
 }
 
-$carte = '';
-
-$sql = "select  townmap_map  from " . ADR_TOWNMAPMAP_TABLE ;
-if ( !($result = $db->sql_query($sql)) ) message_die(GENERAL_ERROR, "Could not acces TownMapMAP table.", '', __LINE__, __FILE__, $sql);
-if ($alignments = $db->sql_fetchrow($result))
-
-{
-	$carte = $alignments['townmap_map'];
-}
-
-	if ( $carte == '1' ) 
-	{
-	$saison = 'Carte1';
-	$musique = $music_spring;
-	}
-
-	if ( $carte == '2' ) 
-	{
-	$saison = 'Carte2';
-	$musique = $music_summer;
-	}
-
-	if ( $carte == '3' ) 
-	{
-	$saison = 'Carte3';
-	$musique = $music_automn;
-	}
-
-	if ( $carte == '4' ) 
-	{
-	$saison = 'Carte4';
-	$musique = $music_winter;
-	}
+$saison = 'Carte' . $board_config['adr_seasons'];
+$musique = $musics[$board_config['adr_seasons'] - 1];
 
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 adr_template_file('adr_TownMap_body.tpl');
@@ -146,12 +139,9 @@ if ( is_numeric($bat['battle_id']) )
 
 
 // Get the general config
-$adr_general = adr_get_general_config();
-
-if ( !$adr_general['Adr_disable_rpg'] && $userdata['user_level'] != ADMIN ) 
-{	
-	adr_previous ( Adr_disable_rpg , 'index' , '' );
-}
+adr_enable_check();
+adr_ban_check($user_id);
+adr_character_created_check($user_id);
 // Deny access if user is imprisioned
 if($userdata['user_cell_time']){
 	adr_previous(Adr_shops_no_thief, adr_cell, '');}
@@ -163,150 +153,161 @@ $adr_char = adr_get_user_infos($user_id);
 
 // Begin Infos
 
+include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
+
 $InfoPrison = $HTTP_POST_VARS['InfoPrison'];
 
 if ( $InfoPrison )
 {
-	adr_previous( Adr_TownMap_Prison_Infos , adr_TownMap , '' );
+	adr_previous( "Adr_TownMap_Prison_Infos" , "adr_zones" , '' );
 }
 
 $InfoBanque = $HTTP_POST_VARS['InfoBanque'];
 
 if ( $InfoBanque )
 {
-	adr_previous( Adr_TownMap_Banque_Infos , adr_TownMap , '' );
+	adr_previous( "Adr_TownMap_Banque_Infos" , "adr_zones" , '' );
 }
 
 $InfoMaison = $HTTP_POST_VARS['InfoMaison'];
 
 if ( $InfoMaison )
 {
-	adr_previous( Adr_TownMap_Maison_Infos , adr_TownMap , '' );
+	adr_previous( "Adr_TownMap_Maison_Infos" , "adr_zones" , '' );
 }
 
 $InfoForge = $HTTP_POST_VARS['InfoForge'];
 
 if ( $InfoForge )
 {
-	adr_previous( Adr_TownMap_Forge_Infos , adr_TownMap , '' );
+	adr_previous( "Adr_TownMap_Forge_Infos" , "adr_zones" , '' );
 }
 
 $InfoTemple = $HTTP_POST_VARS['InfoTemple'];
 
 if ( $InfoTemple )
 {
-	adr_previous( Adr_TownMap_Temple_Infos , adr_TownMap , '' );
+	adr_previous( "Adr_TownMap_Temple_Infos" , "adr_zones" , '' );
 }
 
 $InfoBoutique = $HTTP_POST_VARS['InfoBoutique'];
 
 if ( $InfoBoutique )
 {
-	adr_previous( Adr_TownMap_Boutique_Infos , adr_TownMap , '' );
+	adr_previous( "Adr_TownMap_Boutique_Infos" , "adr_zones" , '' );
 }
 
 $InfoEntrainement = $HTTP_POST_VARS['InfoEntrainement'];
 
 if ( $InfoEntrainement )
 {
-	adr_previous( Adr_TownMap_Entrainement_Infos , adr_TownMap , '' );
+	adr_previous( "Adr_TownMap_Entrainement_Infos" , "adr_zones" , '' );
 }
 
 $InfoEntrepot = $HTTP_POST_VARS['InfoEntrepot'];
 
 if ( $InfoEntrepot )
 {
-	adr_previous( Adr_TownMap_Entrepot_Infos , adr_TownMap , '' );
+	adr_previous( "Adr_TownMap_Entrepot_Infos" , "adr_zones" , '' );
 }
 
 $InfoCombat = $HTTP_POST_VARS['InfoCombat'];
 
 if ( $InfoCombat )
 {
-	adr_previous( Adr_TownMap_Combat_Infos , adr_TownMap , '' );
+	adr_previous( "Adr_TownMap_Combat_Infos" , "adr_zones" , '' );
 }
 
 $InfoMine = $HTTP_POST_VARS['InfoMine'];
 
 if ( $InfoMine )
 {
-	adr_previous( Adr_TownMap_Mine_Infos , adr_TownMap , '' );
+	adr_previous( "Adr_TownMap_Mine_Infos" , "adr_zones" , '' );
 }
 
 $InfoEnchantement = $HTTP_POST_VARS['InfoEnchantement'];
 
 if ( $InfoEnchantement )
 {
-	adr_previous( Adr_TownMap_Enchantement_Infos , adr_TownMap , '' );
+	adr_previous( "Adr_TownMap_Enchantement_Infos" , "adr_zones" , '' );
 }
 
 $InfoClan = $HTTP_POST_VARS['InfoClan'];
 
 if ( $InfoClan )
 {
-	adr_previous( Adr_TownMap_Clan_Infos , adr_TownMap , '' );
+	adr_previous( "Adr_TownMap_Clan_Infos" , "adr_zones" , '' );
 }
 
+// V: Disable that french crap ... :p
+define('PAGE_DISABLED', true);
+
+if (PAGE_DISABLED && $userdata['user_level'] != ADMIN)
 {
-	$template->assign_vars(array(
-
-		'MUSIQUE' => $musique,
-		'SAISON' => $saison,
-		'L_TOWNMAP' => $lang['Adr_TownMap_name'],
-		'L_TOWNMAP_MONSTRE' => $lang['TownMap_Monstre'],
-		'L_TOWNMAP_TEMPLE' => $lang['TownMap_Temple'],
-		'L_TOWNMAP_FORGE' => $lang['TownMap_Forge'],
-		'L_TOWNMAP_PRISON' => $lang['TownMap_Prison'],
-		'L_TOWNMAP_BANQUE' => $lang['TownMap_Banque'],
-		'L_TOWNMAP_BOUTIQUE' => $lang['TownMap_Boutique'],
-		'L_TOWNMAP_MAISON' => $lang['TownMap_Maison'],
-		'L_TOWNMAP_ENTRAINEMENT' => $lang['TownMap_Entrainement'],
-		'L_TOWNMAP_ENTREPOT' => $lang['TownMap_Entrepot'],
-		'L_TOWNMAP_COMBAT' => $lang['TownMap_Combat'],
-		'L_TOWNMAP_MINE' => $lang['TownMap_Mine'],
-		'L_TOWNMAP_ENCHANTEMENT' => $lang['TownMap_Enchantement'],
-		'L_TOWNMAP_CLAN' => $lang['TownMap_Clan'],
-		'L_TOWNBOUTONINFO1' => $lang['Adr_TownMap_Bouton_Infos1'],
-		'L_TOWNBOUTONINFO2' => $lang['Adr_TownMap_Bouton_Infos2'],
-		'L_TOWNBOUTONINFO3' => $lang['Adr_TownMap_Bouton_Infos3'],
-		'L_TOWNBOUTONINFO4' => $lang['Adr_TownMap_Bouton_Infos4'],
-		'L_TOWNBOUTONINFO5' => $lang['Adr_TownMap_Bouton_Infos5'],
-		'L_TOWNBOUTONINFO6' => $lang['Adr_TownMap_Bouton_Infos6'],
-		'L_TOWNBOUTONINFO7' => $lang['Adr_TownMap_Bouton_Infos7'],
-		'L_TOWNBOUTONINFO8' => $lang['Adr_TownMap_Bouton_Infos8'],
-		'L_TOWNBOUTONINFO9' => $lang['Adr_TownMap_Bouton_Infos9'],
-		'L_TOWNBOUTONINFO10' => $lang['Adr_TownMap_Bouton_Infos10'],
-		'L_TOWNBOUTONINFO11' => $lang['Adr_TownMap_Bouton_Infos11'],
-		'L_TOWNBOUTONINFO12' => $lang['Adr_TownMap_Bouton_Infos12'],
-		'L_TEMPLEPRESENTATION' => $lang['Adr_TownMap_Temple_Presentation'],
-		'L_PRISONPRESENTATION' => $lang['Adr_TownMap_Prison_Presentation'],
-		'L_BANQUEPRESENTATION' => $lang['Adr_TownMap_Banque_Presentation'],
-		'L_MAISONPRESENTATION' => $lang['Adr_TownMap_Maison_Presentation'],
-		'L_FORGEPRESENTATION' => $lang['Adr_TownMap_Forge_Presentation'],
-		'L_BOUTIQUEPRESENTATION' => $lang['Adr_TownMap_Boutique_Presentation'],
-		'L_ENTRAINEMENTPRESENTATION' => $lang['Adr_TownMap_Entrainement_Presentation'],
-		'L_ENTREPOTPRESENTATION' => $lang['Adr_TownMap_Entrepot_Presentation'],
-		'L_COMBATPRESENTATION' => $lang['Adr_TownMap_Combat_Presentation'],
-		'L_MINEPRESENTATION' => $lang['Adr_TownMap_Mine_Presentation'],
-		'L_ENCHANTEMENTPRESENTATION' => $lang['Adr_TownMap_Enchantement_Presentation'],
-		'L_CLANPRESENTATION' => $lang['Adr_TownMap_Clan_Presentation'],
-		'L_COPYRIGHT' => $lang['TownMap_Copyright'],
-		'U_TOWNMAP_TEMPLE' => append_sid("adr_temple.$phpEx"),
-		'U_TOWNMAP_FORGE' => append_sid("adr_TownMap_forge.$phpEx"),
-		'U_TOWNMAP_PRISON' => append_sid("adr_TownMap_Prison.$phpEx"),
-		'U_TOWNMAP_BANQUE' => append_sid("adr_TownMap_Banque.$phpEx"),
-		'U_TOWNMAP_BOUTIQUE' => append_sid("adr_TownMap_Boutique.$phpEx"),
-		'U_TOWNMAP_MAISON' => append_sid("adr_TownMap_Maison.$phpEx"),
-		'U_TOWNMAP_ENTRAINEMENT' => append_sid("adr_TownMap_Entrainement.$phpEx"),
-		'U_TOWNMAP_ENTREPOT' => append_sid("adr_TownMap_Entrepot.$phpEx"),
-		'U_TOWNMAP_COMBAT' => append_sid("adr_battle.$phpEx"),
-		'U_TOWNMAP_MINE' => append_sid("adr_TownMap_mine.$phpEx"),
-		'U_TOWNMAP_ENCHANTEMENT' => append_sid("adr_TownMap_pierrerunique.$phpEx"),
-		'U_TOWNMAP_CLAN' => append_sid("adr_TownMap_Clan.$phpEx"),
-		'U_COPYRIGHT' => append_sid("TownMap_Copyright.$phpEx"),
-		'S_CHARACTER_ACTION' => append_sid("adr_TownMap.$phpEx"),
-	));
+	header('location:'.append_sid("adr_zones.$phpEx"));
+	exit;
 }
+
+$template->assign_vars(array(
+	// V: adr_townmap is disabled, show alert message
+	'ADMIN_ALERT' => PAGE_DISABLED,
+
+	'MUSIQUE' => $musique,
+	'SAISON' => $saison,
+	'L_TOWNMAP' => $lang['Adr_TownMap_name'],
+	'L_TOWNMAP_MONSTRE' => $lang['TownMap_Monstre'],
+	'L_TOWNMAP_TEMPLE' => $lang['TownMap_Temple'],
+	'L_TOWNMAP_FORGE' => $lang['TownMap_Forge'],
+	'L_TOWNMAP_PRISON' => $lang['TownMap_Prison'],
+	'L_TOWNMAP_BANQUE' => $lang['TownMap_Banque'],
+	'L_TOWNMAP_BOUTIQUE' => $lang['TownMap_Boutique'],
+	'L_TOWNMAP_MAISON' => $lang['TownMap_Maison'],
+	'L_TOWNMAP_ENTRAINEMENT' => $lang['TownMap_Entrainement'],
+	'L_TOWNMAP_ENTREPOT' => $lang['TownMap_Entrepot'],
+	'L_TOWNMAP_COMBAT' => $lang['TownMap_Combat'],
+	'L_TOWNMAP_MINE' => $lang['TownMap_Mine'],
+	'L_TOWNMAP_ENCHANTEMENT' => $lang['TownMap_Enchantement'],
+	'L_TOWNMAP_CLAN' => $lang['TownMap_Clan'],
+	'L_TOWNBOUTONINFO1' => $lang['Adr_TownMap_Bouton_Infos1'],
+	'L_TOWNBOUTONINFO2' => $lang['Adr_TownMap_Bouton_Infos2'],
+	'L_TOWNBOUTONINFO3' => $lang['Adr_TownMap_Bouton_Infos3'],
+	'L_TOWNBOUTONINFO4' => $lang['Adr_TownMap_Bouton_Infos4'],
+	'L_TOWNBOUTONINFO5' => $lang['Adr_TownMap_Bouton_Infos5'],
+	'L_TOWNBOUTONINFO6' => $lang['Adr_TownMap_Bouton_Infos6'],
+	'L_TOWNBOUTONINFO7' => $lang['Adr_TownMap_Bouton_Infos7'],
+	'L_TOWNBOUTONINFO8' => $lang['Adr_TownMap_Bouton_Infos8'],
+	'L_TOWNBOUTONINFO9' => $lang['Adr_TownMap_Bouton_Infos9'],
+	'L_TOWNBOUTONINFO10' => $lang['Adr_TownMap_Bouton_Infos10'],
+	'L_TOWNBOUTONINFO11' => $lang['Adr_TownMap_Bouton_Infos11'],
+	'L_TOWNBOUTONINFO12' => $lang['Adr_TownMap_Bouton_Infos12'],
+	'L_TEMPLEPRESENTATION' => $lang['Adr_TownMap_Temple_Presentation'],
+	'L_PRISONPRESENTATION' => $lang['Adr_TownMap_Prison_Presentation'],
+	'L_BANQUEPRESENTATION' => $lang['Adr_TownMap_Banque_Presentation'],
+	'L_MAISONPRESENTATION' => $lang['Adr_TownMap_Maison_Presentation'],
+	'L_FORGEPRESENTATION' => $lang['Adr_TownMap_Forge_Presentation'],
+	'L_BOUTIQUEPRESENTATION' => $lang['Adr_TownMap_Boutique_Presentation'],
+	'L_ENTRAINEMENTPRESENTATION' => $lang['Adr_TownMap_Entrainement_Presentation'],
+	'L_ENTREPOTPRESENTATION' => $lang['Adr_TownMap_Entrepot_Presentation'],
+	'L_COMBATPRESENTATION' => $lang['Adr_TownMap_Combat_Presentation'],
+	'L_MINEPRESENTATION' => $lang['Adr_TownMap_Mine_Presentation'],
+	'L_ENCHANTEMENTPRESENTATION' => $lang['Adr_TownMap_Enchantement_Presentation'],
+	'L_CLANPRESENTATION' => $lang['Adr_TownMap_Clan_Presentation'],
+	'L_COPYRIGHT' => $lang['TownMap_Copyright'],
+	'U_TOWNMAP_TEMPLE' => append_sid("adr_temple.$phpEx"),
+	'U_TOWNMAP_FORGE' => append_sid("adr_TownMap_forge.$phpEx"),
+	'U_TOWNMAP_PRISON' => append_sid("adr_TownMap_Prison.$phpEx"),
+	'U_TOWNMAP_BANQUE' => append_sid("adr_TownMap_Banque.$phpEx"),
+	'U_TOWNMAP_BOUTIQUE' => append_sid("adr_TownMap_Boutique.$phpEx"),
+	'U_TOWNMAP_MAISON' => append_sid("adr_TownMap_Maison.$phpEx"),
+	'U_TOWNMAP_ENTRAINEMENT' => append_sid("adr_TownMap_Entrainement.$phpEx"),
+	'U_TOWNMAP_ENTREPOT' => append_sid("adr_TownMap_Entrepot.$phpEx"),
+	'U_TOWNMAP_COMBAT' => append_sid("adr_battle.$phpEx"),
+	'U_TOWNMAP_MINE' => append_sid("adr_TownMap_mine.$phpEx"),
+	'U_TOWNMAP_ENCHANTEMENT' => append_sid("adr_TownMap_pierrerunique.$phpEx"),
+	'U_TOWNMAP_CLAN' => append_sid("adr_TownMap_Clan.$phpEx"),
+	'U_COPYRIGHT' => append_sid("TownMap_Copyright.$phpEx"),
+	'S_CHARACTER_ACTION' => append_sid("adr_TownMap.$phpEx"),
+));
 
 $template->pparse('body');
 include($phpbb_root_path . 'includes/page_tail.'.$phpEx);

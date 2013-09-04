@@ -206,13 +206,16 @@ class onlinelist_class
 			{
 				if ( $viewable = (!$hidden || $is_admin) )
 				{
-					// get user style
+					/* V: let's just go the RCS way ...
+					/ get user style
 					$fields_color = array(
 						'user_level' => intval($row['user_level']),
-						'user_color' => $this->rcs_compliance ? intval($row['user_color']) : 0,
+						'user_color' => $this->rcs_compliance ? $rcs->get_colors($row) : 0,
 						'user_group_id' => $this->rcs_compliance ? intval($row['user_group_id']) : 0,
 					);
 					$user_style = $this->get_user_style($fields_color);
+					*/
+					$user_style = $rcs->get_colors($row);
 					$u_profile = $get->url(($this->rcs_compliance ? 'userlist' : 'profile'), array('mode' => 'viewprofile', POST_USERS_URL => intval($row['user_id'])), true);
 				}
 				$user_style_done = true;
@@ -229,7 +232,7 @@ class onlinelist_class
 					$template->assign_block_vars($blockname . 'online.today.row', $tpl_data + array(
 						'U_VIEW_PROFILE' => $u_profile,
 						'USERNAME' => $row['username'],
-						'STYLE' => $user_style,
+						'CLASS' => $user_style ? $user_style : 'gensmall',
 					));
 					$get->assign_switch($blockname . 'online.today.row.hidden', $hidden);
 					$get->assign_switch($blockname . 'online.today.row.sep', $counts['today']['displayed']);
@@ -238,7 +241,7 @@ class onlinelist_class
 					$template->assign_block_vars($blockname . 'online.today.row', array(
 						'U_VIEW_PROFILE' => $get->url('index', array('see' => 'alltoday'), true),
 						'USERNAME' => '...',
-						'STYLE' => '',
+						'CLASS' => '',
 					));
 					$get->assign_switch($blockname . 'online.today.row.sep');
 					break;

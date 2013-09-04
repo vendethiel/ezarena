@@ -1,6 +1,5 @@
-<HEAD><META http-equiv="refresh" content="60;url={U_CHAT_VIEW}?auto_refresh=1"></HEAD>
+<HEAD><META http-equiv="refresh" content="60;url={U_CHAT_VIEW}?auto_refresh=1{PARAMS}"></HEAD>
 
-<br>
 <table class="forumline" width="100%" align="center" border="0" cellspacing="1" cellpadding="0">
 	<tr>
 		<th align="center" class="CatHead"><b>{L_COMMUNITY}</b></th>

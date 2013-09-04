@@ -85,32 +85,6 @@ if ( defined ('IN_ADR_ZONES_ADMIN'))
    $lang['Adr_zone_acp_choose_destination']='Choisir une destination';
    $lang['Adr_zone_acp_choose_nothing']='Pas de destination';
    $lang['Adr_Zone_acp_npc_title']='Personnages Non Joueurs';
-   $lang['Adr_Zone_acp_npc_cost']='Prix pour parler aux PNJs';
-   $lang['Adr_Zone_acp_npc_cost_explain']='Mettez ici le prix que les joueurs doivent payer pour parler avec un PNJ<br \>Vous devez mettre une valeur même si vous ne souhaitez pas utiliser les PNJs';
-   $lang['Adr_Zone_acp_npc1_enable']='PNJ1 : Paysan';
-   $lang['Adr_Zone_acp_npc1_enable_explain']='Cochez la case pour activer le paysan dans cette zone<br \>N\'oubliez pas de mettre un message dans la zone de texte du paysan si vous décidez de l\'activer';
-   $lang['Adr_Zone_acp_npc2_enable']='PNJ2 : Nain';
-   $lang['Adr_Zone_acp_npc2_enable_explain']='Cochez la case pour activer le tavernier dans cette zone<br \>N\'oubliez pas de mettre un message dans la zone de texte du nain si vous décidez de l\'activer';
-   $lang['Adr_Zone_acp_npc3_enable']='PNJ3 : Sage';
-   $lang['Adr_Zone_acp_npc3_enable_explain']='Cochez la case pour activer le sage dans cette zone<br \>N\'oubliez pas de mettre un message dans la zone de texte du sage si vous décidez de l\'activer';
-   $lang['Adr_Zone_acp_npc4_enable']='PNJ4 : Elfe';
-   $lang['Adr_Zone_acp_npc4_enable_explain']='Cochez la case pour activer l\'elfe dans cette zone<br \>N\'oubliez pas de mettre un message dans la zone de texte de la voyante si vous décidez de l\'activer';
-   $lang['Adr_Zone_acp_npc5_enable']='PNJ5 Druide';                 
-   $lang['Adr_Zone_acp_npc5_enable_explain']='Cochez la case pour activer le druide dans cette zone<br \>N\'oubliez pas de mettre un message dans la zone de texte du druide si vous décidez de l\'activer';
-   $lang['Adr_Zone_acp_npc6_enable']='NPC 6 : Evenement';
-   $lang['Adr_Zone_acp_npc6_enable_explain']='Cochez la case pour activer les évenements dans cette zone<br \>N\'oubliez pas de mettre un message dans la zone de texte du druide si vous décidez de l\'activer';
-   $lang['Adr_Zone_acp_npc1_message']='Message du Paysan';
-   $lang['Adr_Zone_acp_npc1_message_explain']='Message qui sera délivré lorsque le joueur paiera pour parler au paysan';
-   $lang['Adr_Zone_acp_npc2_message']='Message du Nain';
-   $lang['Adr_Zone_acp_npc2_message_explain']='Message qui sera délivré lorsque le joueur paiera pour parler au nain';
-   $lang['Adr_Zone_acp_npc3_message']='Message du Sage';
-   $lang['Adr_Zone_acp_npc3_message_explain']='Message qui sera délivré lorsque le joueur paiera pour parler au sage';
-   $lang['Adr_Zone_acp_npc4_message']='Message de l\'elfe';
-   $lang['Adr_Zone_acp_npc4_message_explain']='Message qui sera délivré lorsque le joueur paiera pour parler a l\'elfe';
-   $lang['Adr_Zone_acp_npc5_message']='Message du Druide';
-   $lang['Adr_Zone_acp_npc5_message_explain']='Message qui sera délivré lorsque le joueur paiera pour parler au druide';
-   $lang['Adr_Zone_acp_npc6_message']='Message d\'évenement';
-   $lang['Adr_Zone_acp_npc6_message_explain']='Message qui sera délivré lorsque le joueur selectionnera l\évenement';
    $lang['Adr_zone_acp_item_nothing']='Pas d\'objet';
    $lang['Adr_Zone_acp_item']='Objet requis pour entrer dans cette zone';
    $lang['Adr_Zone_acp_item_explain']='Choisissez un objet que le membre devra avoir dans son inventaire pour pouvoir entrer dans cette zone';
@@ -126,6 +100,11 @@ if ( defined ('IN_ADR_ZONES_ADMIN'))
    $lang['Adr_zone_acp_race_zone']='Choisissez la zone de départ pour cette race';
    $lang['Adr_zone_acp_race_zone_explain']='Selon la race choisie, le personnage debutera dans une zone différente';
    $lang['Adr_zone_acp_race_zone_list']='Zone';
+   $lang['Adr_Zone_acp_battle']='Combat';
+   $lang['Adr_Zone_acp_monsters_list']='Quels monstres apparaîtront dans cette zone ?';
+   $lang['Adr_Zone_acp_monsters_list_explain']='Comme pour tous les sélections, gardez CTRL appuyé pour sélectionner plusieurs éléments ou MAJ pour sélectionner d\'un monstre A à B. Si vous ne voulez pas avoir de monstre dans cette zone, ne sélectionnez rien';
+   $lang['Adr_zones_all_monsters']='-Tous les monstres-';
+   $lang['Adr_zones_monster_level']='Niv.';
 }
 
 if ( defined ('IN_ADR_ZONES'))
@@ -183,17 +162,8 @@ if ( defined ('IN_ADR_ZONES'))
    $lang['Adr_zone_event_weakness']='Vous vous sentez envahi par une très grande fatigue.<br \>Vous en faites peu être un peu trop ces derniers temps. vous devriez vous reposer.<br \>Vous perdez tous vos points de mana.';
    $lang['Adr_zone_event_item']='Quelle chance !!! Dans des ruines, vous trouvez un objet derrière une grande statue.<br \>Voici sa description :';
    $lang['Adr_zone_event_ambush']='Malheur !!! Une bande de brigands vous a tendu une embuscade et vous a détroussé de votre bourse. Elle contenait';
-   $lang['Adr_zone_npc1_name']='Paysan';
-   $lang['Adr_zone_npc2_name']='Nain';
-   $lang['Adr_zone_npc3_name']='Sage';
-   $lang['Adr_zone_npc4_name']='Elfe';
-   $lang['Adr_zone_npc5_name']='Druide';
-   $lang['Adr_zone_npc6_name']='Evenement';
    $lang['Adr_zone_npc_title']='Personnages Non Joueurs';
-   $lang['Adr_zone_npc_price']='Prix à payer pour discuter avec un PNJ';
-   $lang['Adr_zone_npc_talk']='Parler';
    $lang['Adr_zone_npc_event']='Selectionner';
-   $lang['Adr_zone_npc_disable']='Non Disponible';
    $lang['Adr_zone_change_unavaible']='Cette destination est désactivée. Veuillez en choisir une autre';
    $lang['Adr_zone_tower_title']='Tour';
    $lang['Adr_zone_character_skills']='Compétences de votre personnage';
@@ -209,4 +179,65 @@ if ( defined ('IN_ADR_ZONES'))
    $lang['Adr_zone_change_dead']='Vous ne pouvez pas voyager en étant mort';
 }
 
-?>
+// -- Advanced NPC System Expansion
+// ADR Zone General and Cheat Settings
+$lang['Adr_zone_npc_display_enable']='Afficher les PNJ<br /><span class="gensmall">Affiche les PNJ dans la page des zones.</span>';
+$lang['Adr_zone_npc_display_text']='Afficher le nom et le prix au dessus du PNJ';
+$lang['Adr_zone_npc_image_link']='Transformer l\'image du PNJ est un lien pour lui parler';
+$lang['Adr_zone_npc_button_link']='Ajouter un bouton en dessous du PNJ pour lui parler';
+$lang['Adr_zone_npc_image_count']='Nombre de PNJs par ligne';
+$lang['Adr_zone_npc_image_size']='Hauteur de l\'image';
+$lang['Adr_zone_cheat_member_pm']='Modérateurs globaux des zones<br /><span class="gensmall">Membres qui recevront des MPs pour tentative de triche dans TOUTES LES ZONES.</span>';
+$lang['Adr_zone_moderators']='Modérateurs ADR';
+$lang['Adr_zone_acp_cheat_entry_successful_deleted']='Entrée du journal des tentatives de triche supprimée';
+$lang['Adr_zone_acp_cheat_entry_successful_hidden']='Entrée du journal des tentatives de triche cachée';
+$lang['Adr_zone_acp_cheat_entry_successful_public']='Entrée du journal des tentatives de triche rendue publique';
+$lang['Adr_zone_acp_banned_adr_ok']='L\'utilisateur a été banni du RPG.';
+$lang['Adr_zone_acp_banned_board_ok']='L\'utilisateur a été banni du forum.';
+$lang['Adr_zone_acp_zones_all']='Toutes les zones';
+$lang['Adr_zone_acp_level_all']='Tous les utilisateurs';
+$lang['Adr_zone_acp_level_admin']='Administrateur';
+$lang['Adr_zone_acp_level_mod']='Modérateur ADR';
+$lang['Adr_zone_genral_cheat_log_title']='Réglages de la page des rapports';
+$lang['Adr_zone_genral_cheat_log_ban_adr']='ACTIVER le bannissement automatique du <b>RPG</b> quand un utilisateur est pris à tricher :';
+$lang['Adr_zone_genral_cheat_log_ban_board']='ACTIVER le bannissement automatique du <b>FORUM</b> quand un utilisateur est pris à tricher :';
+$lang['Adr_zone_genral_cheat_log_impisonment']='ACTIVER l\'emprisonnement automatique du RPG quand un utilisateur est pris à tricher :';
+$lang['Adr_zone_genral_cheat_log_auto_imprisonment']='Réglage de l\'emprisonnement %s:<br /><span class="gensmall">%s</span>';
+$lang['Adr_zone_genral_cheat_log_auto_public']='Est-ce que les entrées du journal de triche doivent être rendues publique par défaut (sans intervention d\'un modérateur/administrateur) ?';
+
+$lang['Adr_zone_npc_title']='Parlez aux habitants';
+$lang['Adr_zone_npc_talk']='Parler';
+$lang['Adr_zone_npc_link_text']='Parler à %s pour %s %s';
+$lang['Adr_zone_npc_title_text']='<b>%s</b><br /><i>%s %s</i><br /><br />'; // npc name, price, currency name
+$lang['Adr_zone_npc_title_text_simple']='<b>%s</b><br /><br />'; // npc name (used if talking to npc is free)
+$lang['Adr_zone_npc_give_item']='Donner %s ) %s';
+$lang['Adr_zone_npc_pay_price']='Payer %s à %s pour savoir ce qu\'il veut';
+$lang['Adr_zone_npc_points_prize']='Vous gagnez <b>%d %s</b>!<br>';
+$lang['Adr_zone_npc_exp_prize']='Vous gagnez <b>%d points d\'expérience</b>!<br>';
+$lang['Adr_zone_npc_sp_prize']='Vous gagnez <b>%d points de spiritualité</b>!<br>';
+$lang['Adr_zone_npc_item_prize']='%s vous donne <b>%s</b>!<br><br>';
+$lang['Adr_zone_npc_cheating']='Vous avez été repéré en train de tricher. Les modérateurs et les administrateurs ont été notifiés de votre tentative.';
+$lang['Adr_zone_npc_cheating_pm_subject']='%s a été repéré en pleine triche !';
+$lang['Adr_zone_npc_cheating_pm_message']='Le personnage de %s, %s, a été pris en flagrant délit de triche ! Ils ont essayé d\'utiliser le %s! %s Vous pouvez voir leur profil [url=%s]ici[/url].';
+$lang['Adr_zone_npc_cheating_type_1']='Rafraîchissement de la page d\'un PNJ';
+$lang['Adr_zone_npc_cheating_type_2']='Accès à un PNJ par changement d\'URL';
+$lang['Adr_zone_no_thief_npc']='Désolé, les prisonniers ne sont pas autorisés à parler aux habitants depuis leur celulle.';
+$lang['Adr_Npc_speaking_with']='Vous parlez avec %s';
+$lang['Adr_Npc_race_no_talk_message']='Quelqu\'un d\'autre pourra peut-être répondre à vos questions.';
+$lang['Adr_Npc_class_no_talk_message']='Malheureusement, vos questions restent sans réponse.';
+$lang['Adr_Npc_alignment_no_talk_message']='Vous avez l\'air d\'avoir un esprit fermé ... Veuillez me laisser seul ...';
+$lang['Adr_Npc_element_no_talk_message']='Vous avez l\'air d\'être loin de chez vous, faites attention durant votre voyage !';
+$lang['Adr_Npc_character_level_no_talk_message']='Vous n\'avez pas l\'air d\'être digne de mon temps. Veuillez disposer !';
+$lang['Adr_Npc_character_visit_no_talk_message']='Vous DEVEZ d\'abord chercher la connaissance d\'autrui avant que je ne puisse vous aider. Au revoir ...';
+$lang['Adr_Npc_character_quest_no_talk_message']='Vous DEVEZ d\'abord assister autrui avant que je ne puisse vous aider. Au revoir ...';
+
+// Quest Book
+$lang['Adr_zone_acp_choose_quest_kill_monster']='Pas de monstre';
+$lang['Adr_zone_npc_complete_kill_quest']='J\'ai tué %s %s !';
+
+$lang['Adr_Npc_acp_quest_kill_name']='Monstres à tuer';
+$lang['Adr_Npc_acp_quest_kill']='Réglez le monstre à tuer';
+$lang['Adr_Npc_acp_quest_monsterkill_name']='Quels monstres doivent être tués ?';
+$lang['Adr_Npc_acp_quest_monsterkill_amount']='Combien doivent être tués ';
+$lang['Adr_Npc_acp_quest_monsterkill_explain']='Choisissez les monstres que le joueur doit tuer.';
+$lang['Adr_Npc_acp_quest_monsteramount_explain']='Combien de monstres doivent être tués ? Laissez blanc pour que le joueur n\'ait pas à tuer de monstre.';

@@ -120,7 +120,7 @@ else if ( $mode != "" )
 
 			$pack_id = ( !empty($HTTP_POST_VARS['id']) ) ? intval($HTTP_POST_VARS['id']) : intval($HTTP_GET_VARS['id']);
 
-			$sql = "DELETE FROM " . phpbb_adr_cauldron_pack  . "
+			$sql = "DELETE FROM " . ADR_CAULDRON_TABLE  . "
 				WHERE pack_id = " . $pack_id;
 			$result = $db->sql_query($sql);
 			if( !$result )
@@ -138,7 +138,7 @@ else if ( $mode != "" )
 			adr_template_file('admin/config_adr_cauldron_edit_body.tpl');
 
 			$sql = "SELECT *
-				FROM " . phpbb_adr_cauldron_pack ."
+				FROM " . ADR_CAULDRON_TABLE ."
 				WHERE pack_id = " . $pack_id;
 			$result = $db->sql_query($sql);
 			if( !$result )
@@ -165,7 +165,7 @@ else if ( $mode != "" )
 			$third_item = $HTTP_POST_VARS['item3'];
 
 			// Show item created list
-			$wsql = " SELECT * FROM  " . phpbb_adr_shops_items . " 
+			$wsql = " SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . " 
 				WHERE item_owner_id = '1' ";
 			$wresult = $db->sql_query($wsql);
 			If( !$wresult )
@@ -183,7 +183,7 @@ else if ( $mode != "" )
 			$item_created_list .= '</select>';
 
 			// Show item1 list
-			$xsql = " SELECT * FROM  " . phpbb_adr_shops_items . " 
+			$xsql = " SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . " 
 				WHERE item_owner_id = '1' ";
 			$xresult = $db->sql_query($xsql);
 			If( !$xresult )
@@ -201,7 +201,7 @@ else if ( $mode != "" )
 			$item1_list .= '</select>';
 
 			// Show item2 list
-			$ysql = " SELECT * FROM  " . phpbb_adr_shops_items . " 
+			$ysql = " SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . " 
 				WHERE item_owner_id = '1' ";
 			$yresult = $db->sql_query($ysql);
 			If( !$yresult )
@@ -219,7 +219,7 @@ else if ( $mode != "" )
 			$item2_list .= '</select>';
 
 			// Show item3 list
-			$zsql = " SELECT * FROM  " . phpbb_adr_shops_items . " 
+			$zsql = " SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . " 
 				WHERE item_owner_id = '1' ";
 			$zresult = $db->sql_query($zsql);
 			If( !$zresult )
@@ -272,7 +272,7 @@ else if ( $mode != "" )
 				message_die(MESSAGE, $lang['Fields_empty']);
 			}
 
-			$sql = "UPDATE " . phpbb_adr_cauldron_pack . "
+			$sql = "UPDATE " . ADR_CAULDRON_TABLE . "
 				SET item1_name = '" . str_replace("\'", "''", $combine1) . "', 	
 					item2_name = '" . str_replace("\'", "''", $combine2) . "', 
 					item3_name = '" . str_replace("\'", "''", $combine3) . "',
@@ -289,7 +289,7 @@ else if ( $mode != "" )
 		case "savenew":
 
 			$sql = "SELECT *
-			FROM " . phpbb_adr_cauldron_pack ."
+			FROM " . ADR_CAULDRON_TABLE ."
 			ORDER BY pack_id 
 			DESC LIMIT 1";
 			$result = $db->sql_query($sql);
@@ -311,7 +311,7 @@ else if ( $mode != "" )
 				message_die(MESSAGE, $lang['Fields_empty']);
 			}
 
-			$sql = "INSERT INTO " . phpbb_adr_cauldron_pack . " 
+			$sql = "INSERT INTO " . ADR_CAULDRON_TABLE . " 
 				( pack_id , item1_name , item2_name ,  item3_name , itemwin_name )
 				VALUES ( $new_id,'" . str_replace("\'", "''", $combine1) . "', '" . str_replace("\'", "''", $combine2) . "' , '" . str_replace("\'", "''", $combine3) . "' , '" . str_replace("\'", "''", $combine_result) . "' )";
 			$result = $db->sql_query($sql);
@@ -333,7 +333,7 @@ else
 			);
 			
 	$sql = "SELECT *
-		FROM " . phpbb_adr_cauldron_pack;
+		FROM " . ADR_CAULDRON_TABLE;
 	$result = $db->sql_query($sql);
 	if( !$result )
 	{

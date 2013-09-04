@@ -26,11 +26,11 @@ $template->set_filenames(array(
 
 $start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
 $areabb['news_forums'] =  ($areabb['news_forums'] == '') ? '""' : $areabb['news_forums'];
-$forum_icon = ($areabb['news_aff_icone'] == '1') ? ' forum_icon, ' : ''; 
+$forum_icon = ($areabb['news_aff_icone'] == '1') ? ' f.forum_icon,' : ''; 
 
 $sql = 'SELECT count(topic_id) as max_news
 	FROM ' . TOPICS_TABLE . ' 
-	WHERE  forum_id IN (' . $areabb['news_forums'] . ')';
+	WHERE forum_id IN (' . $areabb['news_forums'] . ')';
 if ( !($result = $db->sql_query($sql)) )
 {
 	message_die(GENERAL_ERROR, 'Could not obtain newer/older topic information', '', __LINE__, __FILE__, $sql);
@@ -39,17 +39,23 @@ $row = $db->sql_fetchrow($result);
 $max_news = $row['max_news'];
 
 
-$sql = 'SELECT t.topic_id, t.topic_time, t.topic_title, pt.post_text, u.username, u.user_id,'.$forum_icon.'
-		  t.topic_replies,t.topic_views, pt.bbcode_uid, t.forum_id, t.topic_poster, t.topic_first_post_id,
-		  t.topic_status, pt.post_id, p.post_id, p.enable_smilies FROM ' . TOPICS_TABLE . 
-		  ' AS t, ' . USERS_TABLE . ' AS u, ' . POSTS_TEXT_TABLE . ' AS pt, ' . POSTS_TABLE .
-		  ' AS p , '.FORUMS_TABLE.' as f WHERE  t.forum_id IN (' . $areabb['news_forums'] . 
-		  ') AND t.topic_poster = u.user_id 
-		  AND f.forum_id=t.forum_id 
-		  AND t.topic_first_post_id = pt.post_id 
-		  AND t.topic_first_post_id = p.post_id 
-		  AND t.topic_vote <> 1
-		  AND t.topic_status <> 2
+$sql = 'SELECT t.topic_id, t.topic_time, t.topic_title, t.topic_replies,t.topic_views, t.forum_id, t.topic_poster, t.topic_first_post_id,'.$forum_icon.'
+			pt.post_text, pt.bbcode_uid,
+			u.username, u.user_id,
+			p.post_id, p.enable_smilies,
+			f.forum_name
+		FROM ' . TOPICS_TABLE .  ' AS t,
+			' . USERS_TABLE . ' AS u,
+			' . POSTS_TEXT_TABLE . ' AS pt,
+			' . POSTS_TABLE . ' AS p,
+			' . FORUMS_TABLE . ' as f
+		WHERE t.forum_id IN (' . $areabb['news_forums'] . ')
+			AND t.topic_poster = u.user_id 
+			AND f.forum_id=t.forum_id 
+			AND t.topic_first_post_id = pt.post_id 
+			AND t.topic_first_post_id = p.post_id 
+			AND t.topic_vote <> 1
+			AND t.topic_status <> 2
 		ORDER BY
 		  t.topic_time DESC LIMIT '.$start.','.$areabb['news_nbre_news'];
 if ( !($result = $db->sql_query($sql)) )

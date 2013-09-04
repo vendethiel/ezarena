@@ -31,14 +31,14 @@
 	</tr>
 <!-- BEGIN rows -->
 	<tr> 
-	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='hand';" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_ROW}</span></td>
-	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='hand';" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen"><a href="{guilds_main.rows.U_GUILD_INFO_PAGE}" class="gen">{guilds_main.rows.GUILD_NAME}</a></span></td>
-	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='hand';" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_LEADER}</span></td>
-	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='hand';" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_WINS}</span></td>
-	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='hand';" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_DEFS}</span></td>
-	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='hand';" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_ESCS}</span></td>
-	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='hand';" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_DIFF}</span></td>
-	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='hand';" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_LEVEL}</span></td>
+	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{guilds_main.rows.ROW_CLASS}" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_ROW}</span></td>
+	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{guilds_main.rows.ROW_CLASS}" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen"><a href="{guilds_main.rows.U_GUILD_INFO_PAGE}" class="gen">{guilds_main.rows.GUILD_NAME}</a></span></td>
+	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{guilds_main.rows.ROW_CLASS}" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_LEADER}</span></td>
+	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{guilds_main.rows.ROW_CLASS}" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_WINS}</span></td>
+	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{guilds_main.rows.ROW_CLASS}" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_DEFS}</span></td>
+	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{guilds_main.rows.ROW_CLASS}" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_ESCS}</span></td>
+	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{guilds_main.rows.ROW_CLASS}" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_DIFF}</span></td>
+	  <td class="{guilds_main.rows.ROW_CLASS}" align="center" onMouseOver="this.style.backgroundColor='{guilds_main.rows.ROW_CLASS}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{guilds_main.rows.ROW_CLASS}" onClick="window.location.href='{guilds_main.rows.U_GUILD_INFO_PAGE}';"><span class="gen">{guilds_main.rows.GUILD_LEVEL}</span></td>
 	</tr>
 <!-- END rows -->
 	<tr> 
@@ -51,7 +51,7 @@
 <!-- BEGIN create_allow -->
 <table class="forumline" align="center" width="400" cellspacing="1" cellpadding="3" border="0">
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_CREATE}';" width="449"><span class="gen"><b>{L_GUILDS_CREATE}</b></span></td>
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_CREATE}';" width="449"><span class="gen"><b>{L_GUILDS_CREATE}</b></span></td>
 	</tr>
 </table>
 <!-- END create_allow -->
@@ -81,7 +81,7 @@
 <br /><br />
 <table class="forumline" align="center" width="200" cellspacing="1" cellpadding="3" border="0">
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
 	</tr>
 </table>
 <!-- END guilds_create_info -->
@@ -90,13 +90,13 @@
 <br />
 <table border="0" cellpadding="4" cellspacing="1" width="811" class="forumline" align="center">
 	<tr>
-		<td class="row2" width="810" colspan="3" align="center"><b><font size="6">{U_GUILDS_INFO_NAME}</font></b></td>
+		<td class="row2" width="810" colspan="3" align="center"><b><h1>{U_GUILDS_INFO_NAME}</h1></b></td>
 	</tr>
 	<tr>
 		<td class="row1" width="810" colspan="3">&nbsp;</td>
 	</tr>
 	<tr>
-		<td class="row2" width="810" colspan="3"><p align="center"><i><font size="4">"{U_GUILDS_INFO_DESC}"</font></i></td>
+		<td class="row2" width="810" colspan="3"><p class="gen" align="center"><i><font size="4">"{U_GUILDS_INFO_DESC}"</font></i></p></td>
 	</tr>
 	<tr>
 		<td class="row1" width="810" colspan="3">&nbsp;</td>
@@ -112,28 +112,28 @@
 		<td class="row1" align="center" width="225" height="150" rowspan="8" >{U_GUILDS_INFO_LOGO}</td>
 	</tr>
 	<tr>
-		<td class="row1" width="382"><font SIZE="2">{L_GUILDS_INFO_LEADER}</font></td>
-		<td class="row1" width="205" align="center"><font size="2">{U_GUILDS_INFO_LEADER}</font></td>
+		<td class="row1" width="382"><font SIZE="2"><span class="gen">{L_GUILDS_INFO_LEADER}</span></td>
+		<td class="row1" width="205" align="center"><span class="gen">{U_GUILDS_INFO_LEADER}</span></td>
 	</tr>
 	<tr>
-		<td class="row1" width="382"><font SIZE="2">{L_GUILDS_INFO_LEVEL}</font></td>
-		<td class="row1" width="205" align="center"><font size="2">{U_GUILDS_INFO_LEVEL}</font></td>
+		<td class="row1" width="382"><font SIZE="2"><span class="gen">{L_GUILDS_INFO_LEVEL}</span></td>
+		<td class="row1" width="205" align="center"><span class="gen">{U_GUILDS_INFO_LEVEL}</span></td>
 	</tr>
 	<tr>
-		<td class="row1" width="382"><font SIZE="2">{L_GUILDS_INFO_MEMBERS}</font></td>
-		<td class="row1" width="205" align="center"><font size="2">{U_GUILDS_INFO_MEMBERS}</font></td>
+		<td class="row1" width="382"><font SIZE="2"><span class="gen">{L_GUILDS_INFO_MEMBERS}</span></td>
+		<td class="row1" width="205" align="center"><span class="gen">{U_GUILDS_INFO_MEMBERS}</span></td>
 	</tr>
 	<tr>
-		<td class="row1" width="382"><font SIZE="2">{L_GUILDS_INFO_VAULT}</font></td>
-		<td class="row1" width="205" align="center"><font size="2">{U_GUILDS_INFO_VAULT} {L_GUILDS_INFO_POINTS}</font></td>
+		<td class="row1" width="382"><font SIZE="2"><span class="gen">{L_GUILDS_INFO_VAULT}</span></td>
+		<td class="row1" width="205" align="center"><span class="gen">{U_GUILDS_INFO_VAULT} {L_GUILDS_INFO_POINTS}</span></td>
 	</tr>
 	<tr>
-		<td class="row1" width="382"><font SIZE="2">{L_GUILDS_INFO_DATE}</font></td>
-		<td class="row1" width="205" align="center"><font size="2">{U_GUILDS_INFO_DATE}</font></td>
+		<td class="row1" width="382"><font SIZE="2"><span class="gen">{L_GUILDS_INFO_DATE}</span></td>
+		<td class="row1" width="205" align="center"><span class="gen">{U_GUILDS_INFO_DATE}</span></td>
 	</tr>
     <tr>
-		<td class="row1" width="294"><font SIZE="2">{L_GUILDS_INFO_LENGTH}</font></td>
-		<td class="row1" width="293"><p align="center"><font size="2">{U_GUILDS_INFO_DATE2}{L_GUILDS_INFO_DATE2}</font></td>
+		<td class="row1" width="294"><font SIZE="2"><span class="gen">{L_GUILDS_INFO_LENGTH}</span></td>
+		<td class="row1" width="293"><p align="center"><span class="gen">{U_GUILDS_INFO_DATE2}{L_GUILDS_INFO_DATE2}</span></td>
 		</tr>
     <tr>
 		<td class="row1" width="587" colspan="2">&nbsp;</td>
@@ -143,11 +143,11 @@
 		<td class="row1" align="center" width="223" >{U_GUILDS_INFO_EXP}</td>	
 	</tr>
 	<tr>
-		<td align="center" class="row3" colspan="2" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_INFO_RANKS}';"><span class="gen"><b>{L_GUILDS_INFO_RANKS}</b></span></td>
+		<td align="center" class="row3" colspan="2" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR3}" onClick="window.location.href='{U_GUILDS_INFO_RANKS}';"><span class="gen"><b>{L_GUILDS_INFO_RANKS}</b></span></td>
 		<td class="row1" align="center" width="223" >&nbsp;</td>	
 	</tr>
 	<tr>
-		<td align="center" class="row3" colspan="2" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_INFO_BIO}';"><span class="gen"><b>{L_GUILDS_INFO_BIO}</b></span></td>
+		<td align="center" class="row3" colspan="2" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR3}" onClick="window.location.href='{U_GUILDS_INFO_BIO}';"><span class="gen"><b>{L_GUILDS_INFO_BIO}</b></span></td>
 		<td class="row1" align="center" width="223" >&nbsp;</td>	
 	</tr>
 	<tr>
@@ -166,23 +166,23 @@
 		<td class="row1" align="center" width="223" >&nbsp;</td>
 	</tr>
 	<tr>
-		<td class="row1" width="382"><font SIZE="2">{L_GUILDS_INFO_JOIN_ACCEPT_NEW}</font></td>
-		<td class="row1" width="205" align="center"><font size="2">{L_GUILDS_INFO_JOIN_ACCEPT}</font></td>
+		<td class="row1" width="382"><font SIZE="2"><span class="gen">{L_GUILDS_INFO_JOIN_ACCEPT_NEW}</span></td>
+		<td class="row1" width="205" align="center"><span class="gen">{L_GUILDS_INFO_JOIN_ACCEPT}</span></td>
 		<td class="row1" align="center" width="223" >&nbsp;</td>
 	</tr>
       <tr>
-		<td class="row1" width="382"><font SIZE="2">{L_GUILDS_INFO_JOIN_APPROVE_NEW}</font></td>
-		<td class="row1" width="205" align="center"><font size="2">{L_GUILDS_INFO_JOIN_APPROVE}</font></td>
+		<td class="row1" width="382"><font SIZE="2"><span class="gen">{L_GUILDS_INFO_JOIN_APPROVE_NEW}</span></td>
+		<td class="row1" width="205" align="center"><span class="gen">{L_GUILDS_INFO_JOIN_APPROVE}</span></td>
 		<td class="row1" align="center" width="223" >&nbsp;</td>
 	</tr>
 	<tr>
-		<td class="row1" width="382"><font SIZE="2">{L_GUILDS_INFO_JOIN_LEVEL}</font></td>
-		<td class="row1" width="205" align="center"><font size="2">{U_GUILDS_INFO_JOIN_LEVEL}</font></td>
+		<td class="row1" width="382"><font SIZE="2"><span class="gen">{L_GUILDS_INFO_JOIN_LEVEL}</span></td>
+		<td class="row1" width="205" align="center"><span class="gen">{U_GUILDS_INFO_JOIN_LEVEL}</span></td>
 		<td class="row1" align="center" width="223" >&nbsp;</td>
 	</tr>
 	<tr>
-		<td class="row1" width="382"><font SIZE="2">{L_GUILDS_INFO_JOIN_MONEY}</font></td>
-		<td class="row1" width="205" align="center"><font size="2">{U_GUILDS_INFO_JOIN_MONEY}</font></td>
+		<td class="row1" width="382"><font SIZE="2"><span class="gen">{L_GUILDS_INFO_JOIN_MONEY}</span></td>
+		<td class="row1" width="205" align="center"><span class="gen">{U_GUILDS_INFO_JOIN_MONEY}</span></td>
 		<td class="row1" align="center" width="223" >&nbsp;</td>
 	</tr>
 	<tr>
@@ -196,7 +196,7 @@
 <br />
 <table class="forumline" align="center" width="200" cellspacing="1" cellpadding="3" border="0">
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
 	</tr>
 </table>
 <!-- END guilds_info_page -->
@@ -205,7 +205,7 @@
 <br /><br />
 <table class="forumline" align="center" width="400" cellspacing="1" cellpadding="3" border="0">
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_JOIN_BUTTON}';" width="449"><span class="gen"><b>{L_GUILDS_JOIN_BUTTON}</b></span></td>	
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_JOIN_BUTTON}';" width="449"><span class="gen"><b>{L_GUILDS_JOIN_BUTTON}</b></span></td>	
 	</tr>
 </table>
 <!-- END guilds_join_button -->
@@ -216,7 +216,7 @@
 <table class="forumline" align="center" width="400" cellspacing="1" cellpadding="3" border="0">
 
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_RETRACT_BUTTON}';" width="449"><span class="gen"><b>{L_GUILDS_RETRACT_BUTTON}</b></span></td>	
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_RETRACT_BUTTON}';" width="449"><span class="gen"><b>{L_GUILDS_RETRACT_BUTTON}</b></span></td>	
 	</tr>
 </table>
 <!-- END guilds_retract_button -->
@@ -226,7 +226,7 @@
 <table class="forumline" align="center" width="400" cellspacing="1" cellpadding="3" border="0">
 
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_LEAVE_BUTTON}';" width="449"><span class="gen"><b>{L_GUILDS_LEAVE_BUTTON}</b></span></td>	
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_LEAVE_BUTTON}';" width="449"><span class="gen"><b>{L_GUILDS_LEAVE_BUTTON}</b></span></td>	
 	</tr>
 </table>
 <!-- END guilds_leave_button -->
@@ -236,7 +236,7 @@
 <table class="forumline" align="center" width="400" cellspacing="1" cellpadding="3" border="0">
 
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_LEADER_BUTTON}';" width="449"><span class="gen"><b>{L_GUILDS_LEADER_BUTTON}</b></span></td>	
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_LEADER_BUTTON}';" width="449"><span class="gen"><b>{L_GUILDS_LEADER_BUTTON}</b></span></td>	
 	</tr>
 </table>
 <!-- END guilds_leader_button -->
@@ -254,7 +254,7 @@
 		<td class="row1" width="792" colspan="8">&nbsp;</td>
 	</tr>
     	<tr>
-		<td class="row2" width="792" colspan="8"><p align="center"><b>{L_GUILDS_RANKS}</b></td>
+		<td class="row2" width="792" colspan="8" align="center"><h1><b>{L_GUILDS_RANKS}</b></h1></td>
 	</tr>
     	<tr>
 		<td class="row1" width="801" colspan="8">&nbsp;</td>
@@ -262,14 +262,14 @@
 	<tr>
 		<td class="row1" width="162">&nbsp;</td>
 		<td class="row1" width="162" colspan="2" style="border-right-style: solid; border-right-width: 1">&nbsp;</td>
-		<td class="row3" width="162" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"><p align="center"><b>{L_GUILD_LEADER}</b></td>
+		<td class="row3" width="162" colspan="2" align="center" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"><span class="gen"><b>{L_GUILD_LEADER}</b></span></td>
 		<td class="row1" width="162" colspan="2" style="border-left-style: solid; border-left-width: 1">&nbsp;</td>
 		<td class="row1" width="162">&nbsp;</td>
 	</tr>
 	<tr>
 		<td class="row1" width="162">&nbsp;</td>
 		<td class="row1" width="162" colspan="2" style="border-right-style: solid; border-right-width: 1">&nbsp;</td>
-		<td class="row2" width="162" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><p align="center">{U_GUILD_LEADER}</td>
+		<td class="row2" width="162" colspan="2" align="center" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><span class="gen">{U_GUILD_LEADER}</span></td>
 		<td class="row1" width="162" colspan="2" style="border-left-style: solid; border-left-width: 1">&nbsp;</td>
 		<td class="row1" width="162">&nbsp;</td>
 	</tr>
@@ -283,17 +283,17 @@
 	</tr>
 	<tr>
 		<td class="row1" width="162" align="center" style="border-right-style: solid; border-right-width: 1">&nbsp;</td>
-		<td class="row3" width="162" align="center" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"><b>{L_GUILD_RANK1}</b></td>
+		<td class="row3" width="162" align="center" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"><span class="gen"><b>{L_GUILD_RANK1}</span></b></td>
 		<td class="row1" width="81" align="center" style="border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1; border-left-style:solid; border-left-width:1">&nbsp;</td>
 		<td class="row1" width="81" align="center" style="border-left-style: solid; border-left-width: 1; border-bottom-style: solid; border-bottom-width: 1; border-right-style:solid; border-right-width:1">&nbsp;</td>
-		<td class="row3" width="162" align="center" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"><b>{L_GUILD_RANK2}</b></td>
+		<td class="row3" width="162" align="center" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"><span class="gen"><b>{L_GUILD_RANK2}</b></span></td>
 		<td class="row1" width="162" align="center" style="border-left-style: solid; border-left-width: 1">&nbsp;</td>
 	</tr>
 	<tr>
 		<td class="row1" width="162" align="center" style="border-right-style: solid; border-right-width: 1">&nbsp;</td>
-		<td class="row2" width="162" align="center" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1">{U_GUILD_RANK1}</td>
+		<td class="row2" width="162" align="center" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><span class="gen">{U_GUILD_RANK1}</span></td>
 		<td class="row1" width="162" align="center" colspan="2" style="border-top-style: solid; border-top-width: 1; border-left-style:solid; border-left-width:1; border-right-style:solid; border-right-width:1">&nbsp;</td>
-		<td class="row2" width="162" align="center" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1">{U_GUILD_RANK2}</td>
+		<td class="row2" width="162" align="center" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><span class="gen">{U_GUILD_RANK2}</span></td>
 		<td class="row1" width="162" align="center" style="border-left-style: solid; border-left-width: 1">&nbsp;</td>
 	</tr>
 	<tr>
@@ -306,20 +306,20 @@
 		<td class="row1" width="162" align="center" style="border-bottom-style: solid; border-bottom-width: 1">&nbsp;</td>
 	</tr>
 	<tr>
-		<td class="row3" width="162" align="center" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"><b>{L_GUILD_RANK3}</b></td>
+		<td class="row3" width="162" align="center" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"><span class="gen"><b>{L_GUILD_RANK3}</b></span></td>
 		<td class="row1" width="81" align="center" style="border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1; border-left-style:solid; border-left-width:1">&nbsp;</td>
 		<td class="row1" width="81" align="center" style="border-left-style: solid; border-left-width: 1; border-bottom-style: solid; border-bottom-width: 1; border-right-style:solid; border-right-width:1">&nbsp;</td>
-		<td class="row3" width="162" align="center" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"><b>{L_GUILD_RANK4}</b></td>
+		<td class="row3" width="162" align="center" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"><span class="gen"><b>{L_GUILD_RANK4}</b></span></td>
 		<td class="row1" width="81" align="center" style="border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1; border-left-style:solid; border-left-width:1">&nbsp;</td>
 		<td class="row1" width="81" align="center" style="border-left-style: solid; border-left-width: 1; border-bottom-style: solid; border-bottom-width: 1; border-right-style:solid; border-right-width:1">&nbsp;</td>
-		<td class="row3" width="162" align="center" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"><b>{L_GUILD_RANK5}</b></td>
+		<td class="row3" width="162" align="center" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"><span class="gen"><b>{L_GUILD_RANK5}</b></span></td>
 	</tr>
 	<tr>
-		<td class="row2" width="162" align="center" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><p align="center">{U_GUILD_RANK3}</td>
+		<td class="row2" width="162" align="center" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><span class="gen">{U_GUILD_RANK3}</span></span></td>
 		<td class="row1" width="162" align="center" colspan="2" style="border-top-style: solid; border-top-width: 1; border-left-style:solid; border-left-width:1; border-right-style:solid; border-right-width:1">&nbsp;</td>
-		<td class="row2" width="162" align="center" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1">{U_GUILD_RANK4}</td>
+		<td class="row2" width="162" align="center" colspan="2" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><span class="gen">{U_GUILD_RANK4}</span></td>
 		<td class="row1" width="162" align="center" colspan="2" style="border-top-style: solid; border-top-width: 1; border-left-style:solid; border-left-width:1; border-right-style:solid; border-right-width:1">&nbsp;</td>
-		<td class="row2" width="162" align="center" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1">{U_GUILD_RANK5}</td>
+		<td class="row2" width="162" align="center" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><span class="gen">{U_GUILD_RANK5}</span></td>
 	</tr>
 	<tr>
 		<td class="row1" width="405" colspan="4" style="border-right-style: solid; border-right-width: 1">&nbsp;</td>
@@ -334,10 +334,10 @@
 		<td class="row1" width="405" colspan="4" style="border-left-style: solid; border-left-width: 1; border-bottom-style:solid; border-bottom-width:1">&nbsp;</td>
 	</tr>
 	<tr>
-		<td class="row3" width="810" colspan="8" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1"><p align="center"><b><i>{L_GUILD_MEMBERS}</i></b></td>
+		<td class="row3" width="810" colspan="8" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-top-style: solid; border-top-width: 1" align="center"><span class="gen"><b><i>{L_GUILD_MEMBERS}</i></b></span></td>
 	</tr>
 	<tr>
-		<td class="row2" width="810" colspan="8" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1"><p align="center"><i>{U_GUILD_MEMBERS}</i></td>
+		<td class="row2" width="810" colspan="8" style="border-left-style: solid; border-left-width: 1; border-right-style: solid; border-right-width: 1; border-bottom-style: solid; border-bottom-width: 1" align="center"><span class="gen"><i>{U_GUILD_MEMBERS}</i></span></td>
 	</tr>
 	<tr> 
 	  <td class="row1" colspan="8" height="28" width="801" style="border-top-style: solid; border-top-width: 1">&nbsp;</td>
@@ -351,7 +351,7 @@
 
 <table class="forumline" align="center" width="200" cellspacing="1" cellpadding="3" border="0">
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
 	</tr>
 </table>
 <!-- END guilds_ranks -->
@@ -382,7 +382,7 @@
 <br /><br />
 <table class="forumline" align="center" width="200" cellspacing="1" cellpadding="3" border="0">
 	<tr>
-		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='hand';" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
+		<td align="center" class="row1" onMouseOver="this.style.backgroundColor='{T_TD_COLOR2}'; this.style.cursor='pointer';" onMouseOut=this.style.backgroundColor="{T_TR_COLOR1}" onClick="window.location.href='{U_GUILDS_BACK}';" width="449"><span class="gen">{L_GUILDS_BACK}</span></td>	
 	</tr>
 </table>
 <!-- END guilds_bio -->

@@ -217,6 +217,7 @@ class show_online
 		{
 			message_die(GENERAL_ERROR, 'Could not update online user record (date)', '', __LINE__, __FILE__, $sql);
 		}
+		$db->clear_cache('config');
 	}
 
 	private function getBrowserIcon($agent)

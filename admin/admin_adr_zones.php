@@ -21,6 +21,7 @@ define('IN_ADR_ADMIN', 1);
 define('IN_ADR_ZONES_ADMIN', 1);
 define('IN_ADR_CHARACTER', 1);
 define('IN_ADR_SHOPS', 1);
+define('IN_ADR_BATTLE', 1);
 
 if( !empty($setmodules) )
 {
@@ -124,6 +125,21 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
      		$item_list .= '<option value = "'. adr_get_lang($itemlist[$i]['item_name']) .'" class="post">' . adr_get_lang($itemlist[$i]['item_name']) . '</option>';
    	$item_list .= '</select>';
 
+   	//monsters lists
+   	$sql = "SELECT * FROM " . ADR_BATTLE_MONSTERS_TABLE ."
+   		ORDER BY monster_name ASC";
+   	$result = $db->sql_query($sql);
+   	if( !$result )
+   		message_die(GENERAL_ERROR, 'Could not obtain monster information', "", __LINE__, __FILE__, $sql);
+
+   	$monsterlist = $db->sql_fetchrowset($result);
+
+   	$monsters_list = '<select name="monsters[]" size="8" multiple>';
+   	$monsters_list .= '<option value = "0" selected>' . $lang['Adr_zones_all_monsters'] . '</option>';
+   	for ( $i = 0 ; $i < count($monsterlist) ; $i++ )
+   	  	$monsters_list .= '<option value = "' . $monsterlist[$i]['monster_id'] . '" >' . $monsterlist[$i]['monster_name'] . ' - ' . $lang['Adr_zones_monster_level'] . ' ' . $monsterlist[$i]['monster_level'] . '</option>';
+   	$monsters_list .= '</select>';
+
 	//
 	//END lists
 	//
@@ -131,6 +147,7 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 	$template->assign_vars(array(
 		"ZONE_ELEMENT" => $element_list,
 		"ZONE_ITEM" => $item_list,
+		"ZONE_MONSTER_LIST" => $monsters_list,
 		"ZONE_DESTINATION1" => $destination1_list,
 		"ZONE_DESTINATION2" => $destination2_list,
 		"ZONE_DESTINATION3" => $destination3_list,
@@ -169,6 +186,9 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 		"L_ZONE_DESTINATION4_COST_EXPLAIN" => $lang['Adr_Zone_acp_destination4_cost_explain'],
 		"L_ZONE_RETURN_COST" => $lang['Adr_Zone_acp_return_cost'],
 		"L_ZONE_RETURN_COST_EXPLAIN" => $lang['Adr_Zone_acp_return_cost_explain'],
+		"L_ZONE_BATTLE" => $lang['Adr_Zone_acp_battle'],
+		"L_ZONE_MONSTER_LIST" => $lang['Adr_Zone_acp_monsters_list'],
+		"L_ZONE_MONSTER_LIST_EXPLAIN" => $lang['Adr_Zone_acp_monsters_list_explain'],
 		"L_ZONE_TEMPLE" => $lang['Adr_Zone_acp_temple'],
 		"L_ZONE_TEMPLE_EXPLAIN" => $lang['Adr_Zone_acp_temple_explain'],
 		"L_ZONE_FORGE" => $lang['Adr_Zone_acp_forge'],
@@ -212,33 +232,6 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 		"L_ZONE_EVENT7_EXPLAIN" => $lang['Adr_Zone_acp_event7_explain'],
 		"L_ZONE_EVENT8" => $lang['Adr_Zone_acp_event8'],
 		"L_ZONE_EVENT8_EXPLAIN" => $lang['Adr_Zone_acp_event8_explain'],
-		"L_ZONE_NPC" => $lang['Adr_Zone_acp_npc_title'],
-		"L_ZONE_NPC_COST" => $lang['Adr_Zone_acp_npc_cost'],
-		"L_ZONE_NPC_COST_EXLAIN" => $lang['Adr_Zone_acp_npc_cost_explain'],
-		"L_ZONE_NPC1" => $lang['Adr_Zone_acp_npc1_enable'],
-		"L_ZONE_NPC1_EXPLAIN" => $lang['Adr_Zone_acp_npc1_enable_explain'],
-		"L_ZONE_NPC2" => $lang['Adr_Zone_acp_npc2_enable'],
-		"L_ZONE_NPC2_EXPLAIN" => $lang['Adr_Zone_acp_npc2_enable_explain'],
-		"L_ZONE_NPC3" => $lang['Adr_Zone_acp_npc3_enable'],
-		"L_ZONE_NPC3_EXPLAIN" => $lang['Adr_Zone_acp_npc3_enable_explain'],
-		"L_ZONE_NPC4" => $lang['Adr_Zone_acp_npc4_enable'],
-		"L_ZONE_NPC4_EXPLAIN" => $lang['Adr_Zone_acp_npc4_enable_explain'],
-		"L_ZONE_NPC5" => $lang['Adr_Zone_acp_npc5_enable'],
-		"L_ZONE_NPC5_EXPLAIN" => $lang['Adr_Zone_acp_npc5_enable_explain'],
-		"L_ZONE_NPC6" => $lang['Adr_Zone_acp_npc6_enable'],
-		"L_ZONE_NPC6_EXPLAIN" => $lang['Adr_Zone_acp_npc6_enable_explain'],
-		"L_ZONE_NPC1_MESSAGE" => $lang['Adr_Zone_acp_npc1_message'],
-		"L_ZONE_NPC1_MESSAGE_EXPLAIN" => $lang['Adr_Zone_acp_npc1_message_explain'],
-		"L_ZONE_NPC2_MESSAGE" => $lang['Adr_Zone_acp_npc2_message'],
-		"L_ZONE_NPC2_MESSAGE_EXPLAIN" => $lang['Adr_Zone_acp_npc2_message_explain'],
-		"L_ZONE_NPC3_MESSAGE" => $lang['Adr_Zone_acp_npc3_message'],
-		"L_ZONE_NPC3_MESSAGE_EXPLAIN" => $lang['Adr_Zone_acp_npc3_message_explain'],
-		"L_ZONE_NPC4_MESSAGE" => $lang['Adr_Zone_acp_npc4_message'],
-		"L_ZONE_NPC4_MESSAGE_EXPLAIN" => $lang['Adr_Zone_acp_npc4_message_explain'],
-		"L_ZONE_NPC5_MESSAGE" => $lang['Adr_Zone_acp_npc5_message'],
-		"L_ZONE_NPC5_MESSAGE_EXPLAIN" => $lang['Adr_Zone_acp_npc5_message_explain'],
-		"L_ZONE_NPC6_MESSAGE" => $lang['Adr_Zone_acp_npc6_message'],
-		"L_ZONE_NPC6_MESSAGE_EXPLAIN" => $lang['Adr_Zone_acp_npc6_message_explain'],
 		"L_SUBMIT" => $lang['Submit'],
 		"S_HIDDEN_FIELDS" => $s_hidden_fields,
 		"S_ZONES_ACTION" => append_sid("admin_adr_zones.$phpEx")) 
@@ -367,6 +360,30 @@ else if ( $mode != "" )
      				$item_list .= '<option value = "'. adr_get_lang($itemlist[$i]['item_name']) .'" class="post">' . adr_get_lang($itemlist[$i]['item_name']) . '</option>';
    			$item_list .= '</select>';
 
+   			//monsters lists
+			$sql = "SELECT * FROM " . ADR_BATTLE_MONSTERS_TABLE ."
+				ORDER BY monster_name ASC";
+			$result = $db->sql_query($sql);
+			if( !$result )
+				message_die(GENERAL_ERROR, 'Could not obtain monsters information', "", __LINE__, __FILE__, $sql);
+
+			$monsterlist = $db->sql_fetchrowset($result);
+
+            $existing_monsters = explode(", ",$zones['zone_monsters_list']);
+
+			$monsters_list = '<select name="monsters[]" size="8" multiple>';
+			if( in_array('0',$existing_monsters) )
+			    $selected_all_monsters = 'selected';
+			$monsters_list .= '<option value = "0" '.$selected_all_monsters.'>' . $lang['Adr_zones_all_monsters'] . '</option>';
+			for ( $i = 0 ; $i < count($monsterlist) ; $i++ )
+			{
+			    if( in_array($monsterlist[$i]['monster_id'], $existing_monsters) && !isset($selected_all_monsters) )
+			        $selected_monster = 'selected';
+	  			$monsters_list .= '<option value = "' . $monsterlist[$i]['monster_id'] . '" '.$selected_monster.'>' . $monsterlist[$i]['monster_name'] . ' - ' . $lang['Adr_zones_monster_level'] . ' ' . $monsterlist[$i]['monster_level'] . '</option>';
+	  			$selected_monster = '';
+			}
+			$monsters_list .= '</select>';
+
 			//
 			//END lists
 			//
@@ -377,6 +394,7 @@ else if ( $mode != "" )
 				"ZONE_IMG" => $zones['zone_img'],
 				"ZONE_ELEMENT" => $element_list,
 				"ZONE_ITEM" => $item_list,
+				"ZONE_MONSTER_LIST" => $monsters_list,
 				"ZONE_DESTINATION1" => $destination1_list,
 				"ZONE_DESTINATION2" => $destination2_list,
 				"ZONE_DESTINATION3" => $destination3_list,
@@ -407,19 +425,9 @@ else if ( $mode != "" )
 				"ZONE_EVENT6" => ($zones['zone_event6'] ? 'CHECKED' : ''),
 				"ZONE_EVENT7" => ($zones['zone_event7'] ? 'CHECKED' : ''),
 				"ZONE_EVENT8" => ($zones['zone_event8'] ? 'CHECKED' : ''),
-				"ZONE_COSTNPC" => $zones['npc_price'],
-				"ZONE_NPC1" => ($zones['npc1_enable'] ? 'CHECKED' : ''),
-				"ZONE_NPC2" => ($zones['npc2_enable'] ? 'CHECKED' : ''),
-				"ZONE_NPC3" => ($zones['npc3_enable'] ? 'CHECKED' : ''),
-				"ZONE_NPC4" => ($zones['npc4_enable'] ? 'CHECKED' : ''),
-				"ZONE_NPC5" => ($zones['npc5_enable'] ? 'CHECKED' : ''),
-				"ZONE_NPC6" => ($zones['npc6_enable'] ? 'CHECKED' : ''),
-				"NPC1_MSG" => $zones['npc1_message'],
-				"NPC2_MSG" => $zones['npc2_message'],
-				"NPC3_MSG" => $zones['npc3_message'],
-				"NPC4_MSG" => $zones['npc4_message'],
-				"NPC5_MSG" => $zones['npc5_message'],
-				"NPC6_MSG" => $zones['npc6_message'],
+				"L_ZONE_BATTLE" => $lang['Adr_Zone_acp_battle'],
+				"L_ZONE_MONSTER_LIST" => $lang['Adr_Zone_acp_monsters_list'],
+				"L_ZONE_MONSTER_LIST_EXPLAIN" => $lang['Adr_Zone_acp_monsters_list_explain'],
 				"L_ZONE_TITLE" => $lang['Adr_Zone_acp_title'],
 				"L_ZONE_EXPLAIN" => $lang['Adr_Zone_acp_title_explain'],
 				"L_ZONE_SETTINGS" => $lang['Adr_Zone_acp_settings_title'],
@@ -496,33 +504,6 @@ else if ( $mode != "" )
 				"L_ZONE_EVENT7_EXPLAIN" => $lang['Adr_Zone_acp_event7_explain'],
 				"L_ZONE_EVENT8" => $lang['Adr_Zone_acp_event8'],
 				"L_ZONE_EVENT8_EXPLAIN" => $lang['Adr_Zone_acp_event8_explain'],
-				"L_ZONE_NPC" => $lang['Adr_Zone_acp_npc_title'],
-				"L_ZONE_NPC_COST" => $lang['Adr_Zone_acp_npc_cost'],
-				"L_ZONE_NPC_COST_EXLAIN" => $lang['Adr_Zone_acp_npc_cost_explain'],
-				"L_ZONE_NPC1" => $lang['Adr_Zone_acp_npc1_enable'],
-				"L_ZONE_NPC1_EXPLAIN" => $lang['Adr_Zone_acp_npc1_enable_explain'],
-				"L_ZONE_NPC2" => $lang['Adr_Zone_acp_npc2_enable'],
-				"L_ZONE_NPC2_EXPLAIN" => $lang['Adr_Zone_acp_npc2_enable_explain'],
-				"L_ZONE_NPC3" => $lang['Adr_Zone_acp_npc3_enable'],
-				"L_ZONE_NPC3_EXPLAIN" => $lang['Adr_Zone_acp_npc3_enable_explain'],
-				"L_ZONE_NPC4" => $lang['Adr_Zone_acp_npc4_enable'],
-				"L_ZONE_NPC4_EXPLAIN" => $lang['Adr_Zone_acp_npc4_enable_explain'],
-				"L_ZONE_NPC5" => $lang['Adr_Zone_acp_npc5_enable'],
-				"L_ZONE_NPC5_EXPLAIN" => $lang['Adr_Zone_acp_npc5_enable_explain'],
-				"L_ZONE_NPC6" => $lang['Adr_Zone_acp_npc6_enable'],
-				"L_ZONE_NPC6_EXPLAIN" => $lang['Adr_Zone_acp_npc6_enable_explain'],
-				"L_ZONE_NPC1_MESSAGE" => $lang['Adr_Zone_acp_npc1_message'],
-				"L_ZONE_NPC1_MESSAGE_EXPLAIN" => $lang['Adr_Zone_acp_npc1_message_explain'],
-				"L_ZONE_NPC2_MESSAGE" => $lang['Adr_Zone_acp_npc2_message'],
-				"L_ZONE_NPC2_MESSAGE_EXPLAIN" => $lang['Adr_Zone_acp_npc2_message_explain'],
-				"L_ZONE_NPC3_MESSAGE" => $lang['Adr_Zone_acp_npc3_message'],
-				"L_ZONE_NPC3_MESSAGE_EXPLAIN" => $lang['Adr_Zone_acp_npc3_message_explain'],
-				"L_ZONE_NPC4_MESSAGE" => $lang['Adr_Zone_acp_npc4_message'],
-				"L_ZONE_NPC4_MESSAGE_EXPLAIN" => $lang['Adr_Zone_acp_npc4_message_explain'],
-				"L_ZONE_NPC5_MESSAGE" => $lang['Adr_Zone_acp_npc5_message'],
-				"L_ZONE_NPC5_MESSAGE_EXPLAIN" => $lang['Adr_Zone_acp_npc5_message_explain'],
-				"L_ZONE_NPC6_MESSAGE" => $lang['Adr_Zone_acp_npc6_message'],
-				"L_ZONE_NPC6_MESSAGE_EXPLAIN" => $lang['Adr_Zone_acp_npc6_message_explain'],
 				"L_SUBMIT" => $lang['Submit'],
 				"S_HIDDEN_FIELDS" => $s_hidden_fields,
 				"S_ZONES_ACTION" => append_sid("admin_adr_zones.$phpEx"))
@@ -569,21 +550,24 @@ else if ( $mode != "" )
 			$pointloss1 = $HTTP_POST_VARS['zone_pointloss1'];
 			$pointloss2 = $HTTP_POST_VARS['zone_pointloss2'];
 			$chance = $HTTP_POST_VARS['zone_chance'];
-			$npcprice = $HTTP_POST_VARS['zone_costnpc'];
-			$npc1 = intval($HTTP_POST_VARS['zone_npc1']);
-			$npc2 = intval($HTTP_POST_VARS['zone_npc2']);
-			$npc3 = intval($HTTP_POST_VARS['zone_npc3']);
-			$npc4 = intval($HTTP_POST_VARS['zone_npc4']);
-			$npc5 = intval($HTTP_POST_VARS['zone_npc5']);
-			$npc6 = intval($HTTP_POST_VARS['zone_npc6']);
-			$message1 = ( isset($HTTP_POST_VARS['npc1_msg']) ) ? trim($HTTP_POST_VARS['npc1_msg']) : trim($HTTP_GET_VARS['npc1_msg']);
-			$message2 = ( isset($HTTP_POST_VARS['npc2_msg']) ) ? trim($HTTP_POST_VARS['npc2_msg']) : trim($HTTP_GET_VARS['npc2_msg']);
-			$message3 = ( isset($HTTP_POST_VARS['npc3_msg']) ) ? trim($HTTP_POST_VARS['npc3_msg']) : trim($HTTP_GET_VARS['npc3_msg']);
-			$message4 = ( isset($HTTP_POST_VARS['npc4_msg']) ) ? trim($HTTP_POST_VARS['npc4_msg']) : trim($HTTP_GET_VARS['npc4_msg']);
-			$message5 = ( isset($HTTP_POST_VARS['npc5_msg']) ) ? trim($HTTP_POST_VARS['npc5_msg']) : trim($HTTP_GET_VARS['npc5_msg']);
-			$message6 = ( isset($HTTP_POST_VARS['npc6_msg']) ) ? trim($HTTP_POST_VARS['npc6_msg']) : trim($HTTP_GET_VARS['npc6_msg']);
 
-			if ( $name == '' || $description == '' || $image == '' || $element == '' || $goto1 == '' || $cost1 == '' || $cost2 == '' || $cost3 == '' || $cost4 == '' || $costreturn == '' || $pointwin1 == '' || $pointwin2 == '' || $pointloss1 == '' || $pointloss2 == '' || $chance == '' || $npcprice == '' )
+			$monsters = array();
+			$monsters = $HTTP_POST_VARS['monsters'];
+			
+			$selected_monsters = count($monsters);
+			if ( $selected_monsters == 0 )
+				$monsters_list = '';
+			elseif ( in_array('0',$monsters) )
+				$monsters_list = '0';
+			else
+			{
+	            sort($monsters);
+				$monsters_list = '';
+				for ($a = 0; $a < $selected_monsters; $a++)
+					$monsters_list .= ( $monsters_list == '' ) ? $monsters[$a] : ", ".$monsters[$a];
+			}
+
+			if ( $name == '' || $description == '' || $image == '' || $element == '' || $goto1 == '' || $cost1 == '' || $cost2 == '' || $cost3 == '' || $cost4 == '' || $costreturn == '' || $pointwin1 == '' || $pointwin2 == '' || $pointloss1 == '' || $pointloss2 == '' || $chance == '' )
 				adr_previous( Fields_empty , admin_adr_zones , '' );
 
 			$sql = "UPDATE " . ADR_ZONES_TABLE . "
@@ -609,6 +593,7 @@ else if ( $mode != "" )
 				zone_prison = '$prison',
 				zone_temple = '$temple',
 				zone_bank = '$bank',
+				zone_monsters_list = '" . $monsters_list . "',
 				zone_event1 = '$event1',
 				zone_event2 = '$event2',
 				zone_event3 = '$event3',
@@ -621,20 +606,7 @@ else if ( $mode != "" )
 				zone_pointwin2 = '$pointwin2',
 				zone_pointloss1 = '$pointloss1',
 				zone_pointloss2 = '$pointloss2',
-				zone_chance = '$chance',
-				npc_price = '$npcprice',
-				npc1_enable = '$npc1',
-				npc2_enable = '$npc2',
-				npc3_enable = '$npc3',
-				npc4_enable = '$npc4',
-				npc5_enable = '$npc5',
-				npc6_enable = '$npc6', 
-				npc1_message = '" . str_replace("\'", "''", $message1) . "',
-				npc2_message = '" . str_replace("\'", "''", $message2) . "',
-				npc3_message = '" . str_replace("\'", "''", $message3) . "',
-				npc4_message = '" . str_replace("\'", "''", $message4) . "',
-				npc5_message = '" . str_replace("\'", "''", $message5) . "',
-				npc6_message = '" . str_replace("\'", "''", $message6) . "'
+				zone_chance = '$chance'
 				WHERE zone_id = '$zone_id'";
 			if( !($result = $db->sql_query($sql)) )
 				message_die(GENERAL_ERROR, "Couldn't update zones info", "", __LINE__, __FILE__, $sql);
@@ -688,26 +660,29 @@ else if ( $mode != "" )
 			$pointloss1 = $HTTP_POST_VARS['zone_pointloss1'];
 			$pointloss2 = $HTTP_POST_VARS['zone_pointloss2'];
 			$chance = $HTTP_POST_VARS['zone_chance'];
-			$npcprice = $HTTP_POST_VARS['zone_costnpc'];
-			$npc1 = intval($HTTP_POST_VARS['zone_npc1']);
-			$npc2 = intval($HTTP_POST_VARS['zone_npc2']);
-			$npc3 = intval($HTTP_POST_VARS['zone_npc3']);
-			$npc4 = intval($HTTP_POST_VARS['zone_npc4']);
-			$npc5 = intval($HTTP_POST_VARS['zone_npc5']);
-			$npc6 = intval($HTTP_POST_VARS['zone_npc6']);
-			$message1 = ( isset($HTTP_POST_VARS['npc1_msg']) ) ? trim($HTTP_POST_VARS['npc1_msg']) : trim($HTTP_GET_VARS['npc1_msg']);
-			$message2 = ( isset($HTTP_POST_VARS['npc2_msg']) ) ? trim($HTTP_POST_VARS['npc2_msg']) : trim($HTTP_GET_VARS['npc2_msg']);
-			$message3 = ( isset($HTTP_POST_VARS['npc3_msg']) ) ? trim($HTTP_POST_VARS['npc3_msg']) : trim($HTTP_GET_VARS['npc3_msg']);
-			$message4 = ( isset($HTTP_POST_VARS['npc4_msg']) ) ? trim($HTTP_POST_VARS['npc4_msg']) : trim($HTTP_GET_VARS['npc4_msg']);
-			$message5 = ( isset($HTTP_POST_VARS['npc5_msg']) ) ? trim($HTTP_POST_VARS['npc5_msg']) : trim($HTTP_GET_VARS['npc5_msg']);
-			$message6 = ( isset($HTTP_POST_VARS['npc6_msg']) ) ? trim($HTTP_POST_VARS['npc6_msg']) : trim($HTTP_GET_VARS['npc6_msg']);
 
-			if ( $name == '' || $description == '' || $image == '' || $element == '' || $goto1 == '' || $cost1 == '' || $cost2 == '' || $cost3 == '' || $cost4 == '' || $costreturn == '' || $pointwin1 == '' || $pointwin2 == '' || $pointloss1 == '' || $pointloss2 == '' || $chance == '' || $npcprice == '' )
+			$monsters = array();
+			$monsters = $HTTP_POST_VARS['monsters'];
+
+			$selected_monsters = count($monsters);
+			if ( $selected_monsters == 0 )
+				$monsters_list = '';
+			elseif ( in_array('0',$monsters) )
+				$monsters_list = '0';
+			else
+			{
+	            sort($monsters);
+				$monsters_list = '';
+				for ($a = 0; $a < $selected_monsters; $a++)
+					$monsters_list .= ( $monsters_list == '' ) ? $monsters[$a] : ", ".$monsters[$a];
+			}
+
+			if ( $name == '' || $description == '' || $image == '' || $element == '' || $goto1 == '' || $cost1 == '' || $cost2 == '' || $cost3 == '' || $cost4 == '' || $costreturn == '' || $pointwin1 == '' || $pointwin2 == '' || $pointloss1 == '' || $pointloss2 == '' || $chance == '' )
 				adr_previous( Fields_empty , admin_adr_zones , '' );
 
 			$sql = "INSERT INTO " . ADR_ZONES_TABLE . " 
-				( zone_id , zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto1, cost_goto2, cost_goto3, cost_goto4, cost_return, goto1_name, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, npc_price, npc1_enable, npc2_enable, npc3_enable, npc4_enable, npc5_enable, npc6_enable, npc1_message, npc2_message, npc3_message, npc4_message, npc5_message, npc6_message, zone_mine, zone_enchant )
-				VALUES ( '$zone_id' ,'" . str_replace("\'", "''", $name) . "','" . str_replace("\'", "''", $description) . "', '" . str_replace("\'", "''", $image) . "' , '" . str_replace("\'", "''", $element) . "', '" . str_replace("\'", "''", $item) . "' , '$cost1' , '$cost2' , '$cost3' , '$cost4' , '$costreturn' , '" . str_replace("\'", "''", $goto1) . "' , '" . str_replace("\'", "''", $goto2) . "' , '" . str_replace("\'", "''", $goto3) . "' , '" . str_replace("\'", "''", $goto4) . "' , '" . str_replace("\'", "''", $return) . "', '$shops' , '$forge' , '$prison' , '$temple' , '$bank' , '$event1' , '$event2' , '$event3' , '$event4' , '$event5' , '$event6' , '$event7' , '$event8' , '$pointwin1' , '$pointwin2' , '$pointloss1' , '$pointloss2' , '$chance' , '$npcprice' , '$npc1' , '$npc2' , '$npc3' , '$npc4' , '$npc5', '$npc6' , '" . str_replace("\'", "''", $message1) . "', '" . str_replace("\'", "''", $message2) . "', '" . str_replace("\'", "''", $message3) . "', '" . str_replace("\'", "''", $message4) . "', '" . str_replace("\'", "''", $message5) . "', '" . str_replace("\'", "''", $message6) . "' , '$mine' , '$enchant'  )";
+				( zone_id , zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto1, cost_goto2, cost_goto3, cost_goto4, cost_return, goto1_name, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, zone_mine, zone_enchant, zone_monsters_list )
+				VALUES ( '$zone_id' ,'" . str_replace("\'", "''", $name) . "','" . str_replace("\'", "''", $description) . "', '" . str_replace("\'", "''", $image) . "' , '" . str_replace("\'", "''", $element) . "', '" . str_replace("\'", "''", $item) . "' , '$cost1' , '$cost2' , '$cost3' , '$cost4' , '$costreturn' , '" . str_replace("\'", "''", $goto1) . "' , '" . str_replace("\'", "''", $goto2) . "' , '" . str_replace("\'", "''", $goto3) . "' , '" . str_replace("\'", "''", $goto4) . "' , '" . str_replace("\'", "''", $return) . "', '$shops' , '$forge' , '$prison' , '$temple' , '$bank' , '$event1' , '$event2' , '$event3' , '$event4' , '$event5' , '$event6' , '$event7' , '$event8' , '$pointwin1' , '$pointwin2' , '$pointloss1' , '$pointloss2' , '$chance' , '$mine' , '$enchant', '" . $monsters_list . "' )";
 			$result = $db->sql_query($sql);
 			if( !$result )
 				message_die(GENERAL_ERROR, "Couldn't insert new zones", "", __LINE__, __FILE__, $sql);

@@ -52,44 +52,21 @@ if ( !$userdata['session_logged_in'] )
 	$redirect .= ( isset($user_id) ) ? '&user_id=' . $user_id : '';
 	header('Location: ' . append_sid("login.$phpEx?redirect=$redirect", true));
 }
+adr_enable_check();
+adr_ban_check($user_id);
+adr_character_created_check($user_id);
 
 // Includes the tpl and the header and the choice of season
 adr_template_file('adr_TownMap_mine_body.tpl');
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
-$carte = '';
-
-$lsql = "select  townmap_map  from " . ADR_TOWNMAPMAP_TABLE ;
-if ( !($lresult = $db->sql_query($lsql)) ) message_die(GENERAL_ERROR, "Could not acces TownMapMAP table.", '', __LINE__, __FILE__, $sql);
-if ($alignments = $db->sql_fetchrow($lresult))
-{
-	$carte = $alignments['townmap_map'];
-}
-	if ( $carte == '1' ) 
-	{
-	$saison = 'Carte1';
-	}
-
-	if ( $carte == '2' ) 
-	{
-	$saison = 'Carte2';
-	}
-
-	if ( $carte == '3' ) 
-	{
-	$saison = 'Carte3';
-	}
-
-	if ( $carte == '4' ) 
-	{
-	$saison = 'Carte4';
-	}
+$saison = 'Carte' . $board_config['adr_seasons'];
 
 // Get the general config
 $adr_general = adr_get_general_config();
 
 // Grab details for skill limit
-$sql = " SELECT character_skill_limit FROM " . ADR_CHARACTERS_TABLE . "
+$sql = "SELECT character_skill_limit FROM " . ADR_CHARACTERS_TABLE . "
 		WHERE character_id = $user_id ";
 if( !($result = $db->sql_query($sql)) )
 {
@@ -103,7 +80,8 @@ if ( !$adr_general['Adr_disable_rpg'] && $userdata['user_level'] != ADMIN )
 }
 // Deny access if user is imprisioned
 if($userdata['user_cell_time']){
-	adr_previous(Adr_shops_no_thief, adr_cell, '');}
+	adr_previous(Adr_shops_no_thief, adr_cell, '');
+}
 	
 if ( $adr_general['Adr_character_limit_enable'] != 0 && $limit_update['character_skill_limit'] <= 0 ) 
 {	
@@ -231,7 +209,7 @@ $template->assign_vars(array(
 	'L_MINING' => $lang['Adr_forge_mining'],
 	'L_COPYRIGHT' => $lang['Adr_copyright'],
 	'L_TOWNMAPCOPYRIGHT' => $lang['TownMap_Copyright'],
-	'U_TOWNBOUTONRETOUR' => append_sid("adr_TownMap.$phpEx"),
+	'U_TOWNBOUTONRETOUR' => append_sid("adr_zones.$phpEx"),
 	'U_TOWNMAP_MINE' => append_sid("adr_TownMap_mine.$phpEx"),
 	'U_COPYRIGHT' => append_sid("adr_copyright.$phpEx"),
 	'U_TOWNMAPCOPYRIGHT' => append_sid("TownMap_Copyright.$phpEx"),

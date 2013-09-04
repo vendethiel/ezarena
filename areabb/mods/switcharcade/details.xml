@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<plugin nom="switcharcade" version="1.2">
+  <label>Switcheur d'Arcades</label>
+  <auteur>Saint-Pere</auteur>
+  <type>affiche</type>
+  <page>1,2</page>
+  <description>Petit menu affichant la liste des salles d'Arcades disponibles.</description>
+</plugin>

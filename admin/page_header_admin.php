@@ -98,6 +98,7 @@ $template->assign_vars(array(
 //-- add
 	'T_TEMPLATE_NAME' => $theme['template_name'],
 //-- fin mod : rank color system -----------------------------------------------
+	'T_STYLE_NAME' => $theme['style_name'],
 	'T_HEAD_STYLESHEET' => $theme['head_stylesheet'],
 	'T_BODY_BACKGROUND' => $theme['body_background'],
 	'T_BODY_BGCOLOR' => '#'.$theme['body_bgcolor'],

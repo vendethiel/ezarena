@@ -1,3 +1,4 @@
+<!-- IF ADMIN_ALERT -->{L_ADR_ADMIN_ALERT}<br/><br/><!-- ENDIF -->
 <form method="post" action="{S_CHARACTER_ACTION}">
 <br />
 <bgsound src="adr/images/TownMap/Musiques/{MUSIQUE}.mid ">

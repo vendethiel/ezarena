@@ -139,7 +139,7 @@ if ( defined('IN_ADR_GUILDS'))
    $lang['Adr_guilds_approve_pm_yes']='Le chef de la %s Guilde, %s, a pris une décision positive concernant votre application récente à la guilde. <br /><br />Vous avez été approuvés et pouvez maintenant acceder à toutes les activités de la guilde. <br /><br />Si vous avez des questions ou des soucis contactez le chef de guilde pour l\'aide.'; 
    $lang['Adr_guilds_approve_pm_no']='Le chef de la %s Guilde, %s, a pris une décision concernant votre application récente à la guilde. <br /><br />Votre application à joindre a été rejetée. <br /><br />Si vous avez des questions concernant ceci contactez le chef de guilde.'; 
    $lang['Adr_guilds_prefs_notification_pm']='Permettre les avis de la guilde par PM'; 
-   $lang['Adr_guilds_prefs']='Alliance Addon de la Guilde'; 
+   $lang['Adr_guilds_prefs']='Alliance de Guilde'; 
 
    // 'Delete Guild' messages... 
    $lang['Adr_guilds_delete_title']='Effacement entiére de la Guilde'; 
@@ -181,7 +181,8 @@ if ( defined('IN_ADR_GUILDS'))
    $lang['Adr_guilds_set_rank']='Position Vacante'; 
    $lang['Adr_guilds_rank_none']='<i>Non selectionné</i>'; 
    $lang['Adr_guilds_leader_set_ranks_updated']='Le rang de la Guilde a été mis à jour a avec succès'; 
-} 
 
-
-?>
+   // ACP
+   $lang['Adr_battle_monster_guild_exp_min'] = 'XP de guilde minimum après un combat';
+   $lang['Adr_battle_monster_guild_exp_max'] = 'XP de guilde maximum après un combat';
+}

@@ -84,11 +84,21 @@ if ( isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']) )
 		exit;
 MOD-*/
 //-- add
+		if (empty($userid) && $_userid = request_var(POST_USERS_URL, 0))
+		{
+			$userid = $_userid;
+		}
+
 		if ( !empty($userid) )
 		{
-			redirect($a = $get->url('userlist', array('mode' => 'viewprofile', POST_USERS_URL => intval($userid)), true));
+			redirect($get->url('userlist', array('mode' => 'viewprofile', POST_USERS_URL => intval($userid)), true));
 		}
 //-- fin mod : rank color system -----------------------------------------------
+	}
+	else if ( $mode == 'miniprofile' )
+	{
+		include($phpbb_root_path . 'miniprofile.'.$phpEx);
+		exit;
 	}
 	else if ( $mode == 'editprofile' || $mode == 'register' )
 	{

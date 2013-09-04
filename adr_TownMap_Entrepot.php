@@ -50,38 +50,15 @@ if ( !$userdata['session_logged_in'] )
 	$redirect .= ( isset($user_id) ) ? '&user_id=' . $user_id : '';
 	header('Location: ' . append_sid("login.$phpEx?redirect=$redirect", true));
 }
+adr_enable_check();
+adr_ban_check($user_id);
+adr_character_created_check($user_id);
 
 // Includes the tpl and the header and the choice for the season
 adr_template_file('adr_TownMap_Entrepot_body.tpl');
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
-$carte = '';
-
-$lsql = "select  townmap_map  from " . ADR_TOWNMAPMAP_TABLE ;
-if ( !($lresult = $db->sql_query($lsql)) ) message_die(GENERAL_ERROR, "Could not acces TownMapMAP table.", '', __LINE__, __FILE__, $sql);
-if ($alignments = $db->sql_fetchrow($lresult))
-{
-	$carte = $alignments['townmap_map'];
-}
-	if ( $carte == '1' ) 
-	{
-	$saison = 'Carte1';
-	}
-
-	if ( $carte == '2' ) 
-	{
-	$saison = 'Carte2';
-	}
-
-	if ( $carte == '3' ) 
-	{
-	$saison = 'Carte3';
-	}
-
-	if ( $carte == '4' ) 
-	{
-	$saison = 'Carte4';
-	}
+$saison = 'Carte' . $board_config['adr_seasons'];
 
 // Deny access if the user is into a battle
 $sql = " SELECT * FROM  " . ADR_BATTLE_LIST_TABLE . " 
@@ -137,7 +114,7 @@ else
 	      'L_COPYRIGHT' => $lang['Adr_copyright'],
 	      'L_TOWN_WAREHOUSE' => $lang['Adr_town_warehouse'],
 	      'U_COPYRIGHT' => append_sid("adr_copyright.$phpEx"),
-		'U_TOWNBOUTONRETOUR' => append_sid("adr_TownMap.$phpEx"),
+		'U_TOWNBOUTONRETOUR' => append_sid("adr_zones.$phpEx"),
 		'U_TOWNMAP_ENTREPOT' => append_sid("adr_TownMap_Entrepot.$phpEx"),
 		'U_TOWNMAPCOPYRIGHT' => append_sid("TownMap_Copyright.$phpEx"),
 		'U_TOWN_WAREHOUSE' => append_sid("adr_town.$phpEx?mode=warehouse"),

@@ -34,7 +34,7 @@ $sub_loc = 'adr_guilds';
 
 //
 // Start session management
-$userdata = session_pagestart($user_ip, PAGE_ADR); 
+$userdata = session_pagestart($user_ip, PAGE_INDEX); 
 init_userprefs($userdata); 
 // End session management
 //
@@ -824,7 +824,7 @@ if ( $mode != "" )
 							'L_YES' => $lang['Adr_guilds_yes'],
 							'L_NO' => $lang['Adr_guilds_no'],
 							'U_GUILDS_DELETE_YES' => append_sid("adr_guilds_leader.$phpEx?mode=guilds_leader_delete&amp;sub_mode=&amp;guild_id=$guild_id"),
-							'U_GUILDS_DELETE_NO' => append_sid("adr_guilds_leader.$phpEx?mode=guilds_leader_page&amp;sub_mode="),
+							'U_GUILDS_DELETE_NO' => append_sid("adr_guilds_leader.$phpEx?mode=guilds_leader_page&amp;sub_mode=&amp;guild_id=$guild_id"),
 						));
                                                 			
 					break;
@@ -1076,6 +1076,7 @@ if ( $mode != "" )
 					case 'guilds_leader_bio_update' :
 
 						$guild_id = intval($HTTP_GET_VARS['guild_id']);
+						$guilds_bio = $HTTP_POST_VARS['guilds_bio'];
 
 						// Reset all old Guild members to no guild status...
 						$sql = "UPDATE " . ADR_GUILDS_TABLE . "
@@ -1094,7 +1095,11 @@ if ( $mode != "" )
 
 else
 {
+	//Seteo-Bloke:
 	// Nothing
+	//--
+	//Ganondorf:
+	//Sure...XD
 }
 
 $template->assign_vars(array(

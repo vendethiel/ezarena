@@ -25,6 +25,7 @@ define('IN_TOWNMAP_MAISON', true);
 define('IN_TOWNMAP_COPYRIGHT', true);
 define('IN_ADR_BATTLE', true);
 define('IN_ADR_CHARACTER', true);
+define('IN_ADR_QUESTBOOK', true);
 $phpbb_root_path = './'; 
 include($phpbb_root_path . 'extension.inc'); 
 include($phpbb_root_path . 'common.'.$phpEx);
@@ -54,33 +55,11 @@ if ( !$userdata['session_logged_in'] )
 adr_template_file('adr_TownMap_Maison_body.tpl');
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
-$carte = '';
+adr_enable_check();
+adr_ban_check($user_id);
+adr_character_created_check($user_id);
 
-$lsql = "select  townmap_map  from " . ADR_TOWNMAPMAP_TABLE ;
-if ( !($lresult = $db->sql_query($lsql)) ) message_die(GENERAL_ERROR, "Could not acces TownMapMAP table.", '', __LINE__, __FILE__, $sql);
-if ($alignments = $db->sql_fetchrow($lresult))
-{
-	$carte = $alignments['townmap_map'];
-}
-	if ( $carte == '1' ) 
-	{
-	$saison = 'Carte1';
-	}
-
-	if ( $carte == '2' ) 
-	{
-	$saison = 'Carte2';
-	}
-
-	if ( $carte == '3' ) 
-	{
-	$saison = 'Carte3';
-	}
-
-	if ( $carte == '4' ) 
-	{
-	$saison = 'Carte4';
-	}
+$saison = 'Carte' . $board_config['adr_seasons'];
 
 // Deny access if the user is into a battle
 $sql = " SELECT * FROM  " . ADR_BATTLE_LIST_TABLE . " 
@@ -140,7 +119,7 @@ else
 		'L_MAISONPERSOLISTE' => $lang['TownMap_Maison_PersoListe'],
 		'L_TOWNMAPCOPYRIGHT' => $lang['TownMap_Copyright'],
 		'L_COPYRIGHT' => $lang['Adr_copyright'],
-		'U_TOWNBOUTONRETOUR' => append_sid("adr_TownMap.$phpEx"),
+		'U_TOWNBOUTONRETOUR' => append_sid("adr_zones.$phpEx"),
 		'U_MAISONFEUILLEPERSO' => append_sid("adr_character.$phpEx"),
 		'U_MAISONINVENTAIRE' => append_sid("adr_character_inventory.$phpEx"),
 		'U_MAISONCOMPETENCE' => append_sid("adr_character_skills.$phpEx"),
@@ -151,6 +130,10 @@ else
 		'U_COPYRIGHT' => append_sid("adr_copyright.$phpEx"),
 		'U_TOWNMAPCOPYRIGHT' => append_sid("TownMap_Copyright.$phpEx"),
 		'S_CHARACTER_ACTION' => append_sid("adr_TownMap_Maison.$phpEx"),
+
+		// V: let's merge QuestBook
+		'U_QUESTBOOK' => append_sid("adr_questbook.$phpEx"),
+		'L_QUESTBOOK' => $lang['Adr_questbook_link_townmap'],
 	));
 }
 

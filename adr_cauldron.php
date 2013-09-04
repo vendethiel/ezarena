@@ -76,7 +76,7 @@ $third_item 	= intval($HTTP_POST_VARS['item3']);
 
 // Show item1 list
 	$q = "SELECT * 
-		  FROM phpbb_adr_shops_items
+		  FROM " . ADR_SHOPS_ITEMS_TABLE . "
 		  WHERE item_owner_id = '". $user_id ."'";
 	if (!$r = $db->sql_query($q))
 		message_die(GENERAL_ERROR, 'Could not obtain inventory information', "", __LINE__, __FILE__, $q);
@@ -158,7 +158,7 @@ if ( $mode != "" )
 			
 			//Search the name of each item
 			$sql = "SELECT * 
-				FROM phpbb_adr_shops_items
+				FROM " . ADR_SHOPS_ITEMS_TABLE . "
 				WHERE item_owner_id = '$user_id'
 				AND item_id = '$first_item'";
 			$result = $db->sql_query($sql);
@@ -168,7 +168,7 @@ if ( $mode != "" )
 			$first_name = $itma['item_name'];
 
 			$sql2 = "SELECT * 
-				FROM phpbb_adr_shops_items 
+				FROM " . ADR_SHOPS_ITEMS_TABLE . " 
 				WHERE item_owner_id = '$user_id'
 				AND item_id = '$second_item'";
 			$result2 = $db->sql_query($sql2);
@@ -178,7 +178,7 @@ if ( $mode != "" )
 			$second_name = $itmb['item_name'];
 
 			$sql3 = "SELECT * 
-				FROM phpbb_adr_shops_items 
+				FROM " . ADR_SHOPS_ITEMS_TABLE . " 
 				WHERE item_id = '$third_item'
 				AND item_owner_id = '$user_id'";
 			$result3 = $db->sql_query($sql3);
@@ -188,19 +188,19 @@ if ( $mode != "" )
 			$third_name = $itmc['item_name'];
 
 			//Update user inventory
-			$asql = "DELETE FROM phpbb_adr_shops_items
+			$asql = "DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
 					WHERE item_owner_id = '$user_id'
 					AND item_id = '$first_item'";
 			if( !($aresult = $db->sql_query($asql)) )
 				message_die(GENERAL_ERROR, "Couldn't update inventory info", "", __LINE__, __FILE__, $asql);
 
-			$bsql = "DELETE FROM phpbb_adr_shops_items
+			$bsql = "DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
 					WHERE item_owner_id = '$user_id'
 					AND item_id = '$second_item'";
 			if( !($bresult = $db->sql_query($bsql)) )
 				message_die(GENERAL_ERROR, "Couldn't update inventory info", "", __LINE__, __FILE__, $bsql);
 
-			$csql = "DELETE FROM phpbb_adr_shops_items
+			$csql = "DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
 					WHERE item_owner_id = '$user_id'
 					AND item_id = '$third_item'";
 			if( !($cresult = $db->sql_query($csql)) )
@@ -208,7 +208,7 @@ if ( $mode != "" )
 
 			//Verify if the combination match to a pack
 			$sql = "SELECT * 
-				FROM phpbb_adr_cauldron_pack
+				FROM " . ADR_CAULDRON_TABLE . "
 				WHERE item1_name = '$first_name'
 				AND item2_name = '$second_name'
 				AND item3_name = '$third_name'";
@@ -227,7 +227,7 @@ if ( $mode != "" )
 			{
 				// Make the new id for the item
 				$sql = "SELECT item_id 
-					FROM phpbb_adr_shops_items
+					FROM " . ADR_SHOPS_ITEMS_TABLE . "
 					WHERE item_owner_id = '$user_id'
 					ORDER BY 'item_id' DESC 
 					LIMIT 1";
@@ -239,7 +239,7 @@ if ( $mode != "" )
 
 				// Make the new item
 				$sql = "SELECT * 
-					FROM phpbb_adr_shops_items
+					FROM " . ADR_SHOPS_ITEMS_TABLE . "
 					WHERE item_owner_id = '1'
 					AND item_name = '$pack_verify'";
 				$result = $db->sql_query($sql);
@@ -268,7 +268,7 @@ if ( $mode != "" )
 
 				if ( $item_duration_max < $item_duration ) $item_duration_max = $item_duration;
 
-				$sql = "INSERT INTO phpbb_adr_shops_items
+				$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . "
 					( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , item_duration , item_duration_max , item_power , item_add_power , item_mp_use , item_weight , item_auth , item_element , item_element_str_dmg , item_element_same_dmg , item_element_weak_dmg , item_max_skill , item_sell_back_percentage )
 					VALUES ( $new_item_id , $user_id , $item_type_use , '$item_name' , '$item_desc' , '" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max , $item_power , $item_add_power , $item_mp_use , $item_weight , 0 , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg , $item_max_skill , $item_sell_back_percentage )";
 				$result = $db->sql_query($sql);

@@ -49,38 +49,15 @@ if ( !$userdata['session_logged_in'] )
 	$redirect .= ( isset($user_id) ) ? '&user_id=' . $user_id : '';
 	header('Location: ' . append_sid("login.$phpEx?redirect=$redirect", true));
 }
+adr_enable_check();
+adr_ban_check($user_id);
+adr_character_created_check($user_id);
 
 // Includes the tpl and the header and the choice of the season
 adr_template_file('adr_TownMap_Entrainement_body.tpl');
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
-$carte = '';
-
-$lsql = "select  townmap_map  from " . ADR_TOWNMAPMAP_TABLE ;
-if ( !($lresult = $db->sql_query($lsql)) ) message_die(GENERAL_ERROR, "Could not acces TownMapMAP table.", '', __LINE__, __FILE__, $sql);
-if ($alignments = $db->sql_fetchrow($lresult))
-{
-	$carte = $alignments['townmap_map'];
-}
-	if ( $carte == '1' ) 
-	{
-	$saison = 'Carte1';
-	}
-
-	if ( $carte == '2' ) 
-	{
-	$saison = 'Carte2';
-	}
-
-	if ( $carte == '3' ) 
-	{
-	$saison = 'Carte3';
-	}
-
-	if ( $carte == '4' ) 
-	{
-	$saison = 'Carte4';
-	}
+$saison = 'Carte' . $board_config['adr_seasons'];
 
 // Get the general config and character infos
 $adr_general = adr_get_general_config();
@@ -583,7 +560,7 @@ $template->assign_vars(array(
 	'U_TOWN_TRAINING_CHANGE' => append_sid("adr_TownMap_Entrainement.$phpEx?mode=training&amp;sub_mode=change_class"),
 	'U_CHALLENGE' => append_sid("adr_character_pvp.$phpEx"),
 	'U_COPYRIGHT' => append_sid("adr_copyright.$phpEx"),
-	'U_TOWNBOUTONRETOUR' => append_sid("adr_TownMap.$phpEx"),
+	'U_TOWNBOUTONRETOUR' => append_sid("adr_zones.$phpEx"),
 	'U_TOWNMAP_ENTRAINEMENT' => append_sid("adr_TownMap_Entrainement.$phpEx"),
 	'U_TOWNMAPCOPYRIGHT' => append_sid("TownMap_Copyright.$phpEx"),
 	'U_TOWN_TRAINING' => append_sid("adr_TownMap_Entrainement.$phpEx?mode=training"),

@@ -22,6 +22,7 @@ define('IN_PHPBB', true);
 define('IN_ADR_CHARACTER', true); 
 define('IN_ADR_BATTLE', true); 
 define('IN_ADR_SHOPS', true);
+define('IN_ADR_ZONES', true);
 $phpbb_root_path = './'; 
 include($phpbb_root_path . 'extension.inc'); 
 include($phpbb_root_path . 'common.'.$phpEx);
@@ -1930,6 +1931,8 @@ if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		{
 			$exp = floor( ( ( $monster['monster_level'] - $challenger['character_level'] ) * $adr_general['battle_base_exp_modifier'] ) / 100 );
 		}
+		//Guild Experience
+		$guild_exp = rand($adr_general['battle_guild_exp_min'], $adr_general['battle_guild_exp_max']);
 
 		// Get the money earned
 		$reward = rand ( $adr_general['battle_base_reward_min'] , $adr_general['battle_base_reward_max'] );
@@ -1981,6 +1984,15 @@ if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		{
 			message_die(GENERAL_ERROR, 'Could not update stolen item status', '', __LINE__, __FILE__, $sql);
 		}
+		
+		//Update the Guilds Experience
+		$sql = " UPDATE  " . ADR_GUILDS_TABLE . " 
+			SET guild_exp = guild_exp + $guild_exp
+			WHERE guild_id = '".$challenger['character_guild_id']."' ";
+		if( !($result = $db->sql_query($sql)) )
+		{
+			message_die(GENERAL_ERROR, 'Could not update guild', '', __LINE__, __FILE__, $sql);
+		}
 
 		// Delete broken items from users inventory
 		$sql = " DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
@@ -2018,6 +2030,36 @@ if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
            	{
 			$message .= '<br />'.sprintf($lang['Adr_battle_pet_win'] , $pet_xp ) ;
 		}
+
+		########## QUESTBOOK MOD v1.0.2 - START
+		// Check if the character killed a monster that he needed for a killing quest !
+			$sql = " SELECT * FROM " . ADR_QUEST_LOG_TABLE . "
+		   		WHERE quest_kill_monster = '".$monster['monster_name']."'
+				AND quest_kill_monster_current_amount < quest_kill_monster_amount
+				AND user_id = '". $challenger['character_id'] ."'
+		   		";
+			$result = $db->sql_query($sql);
+			if( !$result )
+		   		message_die(GENERAL_ERROR, 'Could not obtain required quest information', "", __LINE__, __FILE__, $sql);
+			if ( $quest_log = $db->sql_fetchrow($result) )
+			{
+				//Now increase the current amount killed value by 1 for each killing quest 
+				//that requires still the monster the player just killed
+				for ( $i=0 ; $i<count($quest_log = $db->sql_fetchrow($result)) ; $i++ )
+				{
+					$sql = "UPDATE " . ADR_QUEST_LOG_TABLE . "
+						set quest_kill_monster_current_amount = quest_kill_monster_current_amount + 1 
+						WHERE quest_kill_monster = '".$monster['monster_name']."'
+						AND quest_kill_monster_current_amount < quest_kill_monster_amount
+						AND user_id = '". $challenger['character_id'] ."'
+						";
+					$result = $db->sql_query($sql);
+					if( !$result )
+						message_die(GENERAL_ERROR, "Couldn't update quest", "", __LINE__, __FILE__, $sql);
+				}
+			}
+			######### QUESTBOOK MOD v1.0.2 - END
+
 		if ( $stolen['item_name'] != '' )
 		{
 			$message .= '<br />'.sprintf($lang['Adr_battle_stolen_items'] , $monster['monster_name'] ) ;

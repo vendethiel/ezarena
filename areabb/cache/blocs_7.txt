@@ -1,1 +1,1 @@
-statistiques|welcome|sondage|qui_joue|news|recent_topics|whoisonline
+statistiques|liens|welcome|sondage|qui_joue|news|recent_topics|changestyle|whoisonline|classvictoire|calendrier

@@ -338,6 +338,11 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 		adr_use_item($boot , $user_id);
 	}
 
+	if ( $zone_check['zone_monsters_list'] == '' )
+		adr_previous( Adr_zone_no_monsters , adr_zones , '' );
+
+	$monster_area = ( $zone_check['zone_monsters_list'] == '0' ) ? "" : "AND monster_id IN (".$zone_check['zone_monsters_list'].")";
+
 	##=== START: new monster rand selection code as posted by Sederien ===##
 	# V: JK. That's zone mod's code :).
 	// Let's care about the opponent now
@@ -345,7 +350,7 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 	$actual_season = $board_config['adr_seasons'];
 	$sql = " SELECT * FROM " . ADR_BATTLE_MONSTERS_TABLE . "
 			WHERE monster_level <= $level 
-			AND ( monster_area = $actual_zone || monster_area = 0 )
+			$monster_area
 			AND ( monster_weather = $actual_weather || monster_weather = 0 )
 			AND ( monster_season = $actual_season || monster_season = 0 )";
 	if( !($result = $db->sql_query($sql)) )

@@ -260,7 +260,7 @@ if ( defined ('IN_ADR_SETTINGS'))
     $lang['Adr_guilds_title']='Configuration des guildes';
     $lang['Adr_guilds_overall_allow']='Activer les guildes OUI ou NON';
     $lang['Adr_guilds_create_allow']='Activer la création des guildes OUI ou NON';
-    $lang['Adr_guilds_join_allow']='Activer l\'accés aux guildes OUI ou NON';
+    $lang['Adr_guilds_join_allow']='Activer l\'accès aux guildes OUI ou NON';
     $lang['Adr_guilds_create_level']='Niveau minimum pour créer une guilde';
     $lang['Adr_guilds_create_money']='Coût de création d\'une guilde';
     $lang['On']='Oui';
@@ -732,3 +732,10 @@ $lang['Adr_item_type_successful_deleted']='Type d\'objet supprimé avec succès';
 $lang['Adr_item_type_add']='Ajoutez un type d\'objet';
 $lang['Adr_item_type_category']='Catégorie';
 $lang['Adr_item_type_category_explain']='Sélectionnez une catégorie dans la liste ou ajoutez-en une en remplissant le champ de texte';
+
+# Advanced NPC System Expansion
+$lang['Adr_races_all']='Toutes les races';
+$lang['Adr_classes_all']='Toutes les classes';
+$lang['Adr_elements_all']='Tous les éléments';
+$lang['Adr_alignments_all']='Tous les alignements';
+$lang['Adr_levels_all']='N\'importe quel niveau';
