@@ -253,34 +253,23 @@ function phpbb_rtrim($str, $charlist = false)
 * With thanks to Anthrax101 for the inspiration on this one
 * Added in phpBB 2.0.20
 *
-* Vende: pas sûr pourquoi il faut ABSOLUMENT save to DB
-* mais on va laisser comme ça ATM  ... TODO
+* NOTE: actually, I totally removed the function from phpBB 2.0.20
+*  because it was using SQL for no reason, so now we just using
+*  okay-entropy crap (md5 of microtime + random data, here online record date as salt)
+* so ... Added in ezArena 1.0.0.
 */
 function dss_rand()
 {
-	global $db, $board_config, $dss_seeded;
+	global $db, $board_config;
 
-	//$val = $board_config['rand_seed'] . microtime();
-	//$val = md5($val);
-	$board_config['rand_seed'] = md5(uniqid($board_config['rand_seed'] . '_a', true));
-   
-	if($dss_seeded !== true)
+	$seed = $board_config['rand_seed'];
+	if ($seed === null)
 	{
-		/*
-		$sql = "UPDATE " . CONFIG_TABLE . " SET
-			config_value = '" . $board_config['rand_seed'] . "'
-			WHERE config_name = 'rand_seed'";
-		
-		if( !$db->sql_query($sql) )
-		{
-			message_die(GENERAL_ERROR, "Unable to reseed PRNG", "", __LINE__, __FILE__, $sql);
-		}
-		*/
-
-		$dss_seeded = true;
+		$seed = md5(microtime() . '@foo:' . $board_config['record_online_date']);
 	}
+	$board_config['rand_seed'] = md5(uniqid($seed, true));
 
-	return substr($val, 4, 16);
+	return substr($board_config['rand_seed'], 4, 16);
 }
 
 //

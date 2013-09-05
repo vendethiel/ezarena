@@ -100,7 +100,6 @@ $zone_pointloss1 = $zone['zone_pointloss1'];
 $zone_pointloss2 = $zone['zone_pointloss2'];
 $zone_chance = $zone['zone_chance'];
 
-
 //prevent blank destination
 if ( $goto2_name == '' )
 {
@@ -158,7 +157,10 @@ $template->assign_var('HAS_MONSTERS', $has_monsters = !empty($zone['zone_monster
  * Let's integrate Town Env and Zones Mod together.
  */
 $template->assign_vars(array(
-	// Let's assign some switches to
+	// some special links
+	'U_SHAME' => append_sid("adr_cheat_log.$phpEx"),
+	'U_SHOUTBOX_BODY' => append_sid("adr_battle_community.$phpEx?only_body=1"),
+	// Let's assign some switches too
 	// show unoccupied ground if not av
 	'HAS_SHOPS' => $zone['zone_shops'],
 	'HAS_FORGE' => $zone['zone_forge'],
@@ -1609,8 +1611,6 @@ $template->assign_vars(array(
 	'U_ZONE_BATTLE' => append_sid("adr_battle.$phpEx"),
 	'U_ZONE_PVP_BATTLE' => append_sid("adr_battle_pvp.$phpEx"),
 	'S_ZONES_ACTION' => append_sid("adr_zones.$phpEx"),
-
-	'U_SHOUTBOX_BODY' =>  append_sid("adr_battle_community.$phpEx?only_body=1"),
 ));
 
 $template->pparse('body');

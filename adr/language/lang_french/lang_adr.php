@@ -1475,7 +1475,10 @@ if ( defined('IN_ADR_CHEAT'))
 }
 $lang['Adr_zone_no_monsters']='Tout est calme par ici ... Il n\'y a pas de monstre !';
 
+// that's how ezArena does it ...
 $lang['BUILDING_UNAV'] = 'Bâtiment indisponible';
+$lang['ADR_DUEL_LIST'] = 'Cliquez sur l\'image pour accéder à vos duels';
+// END ezArena
 
 if ( defined ('IN_ADR_QUESTBOOK'))
 {

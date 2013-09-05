@@ -69,7 +69,6 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('server_port', '80'
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('script_path', '/phpBB2/');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('version', '.0.23');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('ultimarena_version', '7.0.0 Happy New Year Edition');
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('rand_seed', '0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('cache_rcs', '0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('rcs_enable', '1');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('rcs_level_admin', '1');

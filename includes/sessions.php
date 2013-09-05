@@ -179,7 +179,7 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 			AND session_user_id = '$user_id'";
 	if ( !$db->sql_query($sql) || !$db->sql_affectedrows() )
 	{
-		$session_id = md5(dss_rand());
+		$session_id = dss_rand();
 
 		$sql = "INSERT INTO " . SESSIONS_TABLE . "
 			(session_id, session_user_id, session_start, session_time, session_ip, session_page, session_agent, session_logged_in, session_admin)

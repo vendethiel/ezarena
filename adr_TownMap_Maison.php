@@ -134,6 +134,8 @@ else
 		// V: let's merge QuestBook
 		'U_QUESTBOOK' => append_sid("adr_questbook.$phpEx"),
 		'L_QUESTBOOK' => $lang['Adr_questbook_link_townmap'],
+		// ... and duel list
+		'U_DUELS' => append_sid("adr_character_pvp.$phpEx"),
 	));
 }
 

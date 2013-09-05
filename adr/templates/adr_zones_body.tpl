@@ -113,9 +113,7 @@
 
         	<img src="adr/images/TownMap/{SAISON}/Tuile_Bas.gif"/><br />
 
-        	<img src="adr/images/TownMap/{SAISON}/Tuile_3_1.gif"/><!-- IF HAS_FORGE --><a href="{U_TOWNMAP_FORGE}"><img src="adr/images/TownMap/{SAISON}/Tuile_3_2.gif" border="0" alt="{L_TOWNMAP_FORGE}" title="Forge" /></a><!-- ELSE --><img src="adr/images/TownMap/{SAISON}/Tuile_3_2.gif" border="0" alt="{L_TOWNMAP_FORGE}" title="Forge ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_3_3.gif"/><!--
-        	V: commented out because just having a Tower should be enough since it links everywhere
-        	<a href="{U_TOWNMAP_ENTRAINEMENT}">--><img title="Tour de garde" src="adr/images/TownMap/{SAISON}/Tuile_3_4.gif" border="0" alt="{L_TOWNMAP_ENTRAINEMENT}" /><!--</a>--><img src="adr/images/TownMap/{SAISON}/Tuile_3_5.gif" border="0" alt="{L_TOWNMAP_COMBAT}" /><!--<a href="{U_TOWNMAP_ENTREPOT}"><img title="Entrepôt" src="adr/images/TownMap/{SAISON}/Tuile_3_6.gif" border="0" alt="{L_TOWNMAP_ENTREPOT}" /></a>--><a href="{U_ZONE_BARRACK}"><img title="Tour" src="adr/images/TownMap/{SAISON}/Tuile_3_6.gif" border="0" /></a><img src="adr/images/TownMap/{SAISON}/Tuile_3_7.gif"/><a href="{U_TOWNMAP_CLAN}"><img title="Taverne des guildes" src="adr/images/TownMap/{SAISON}/Tuile_3_8.gif" border="0" alt="{L_TOWNMAP_CLAN}" /></a><img src="adr/images/TownMap/{SAISON}/Tuile_3_9.gif"/><br />
+        	<img src="adr/images/TownMap/{SAISON}/Tuile_3_1.gif"/><!-- IF HAS_FORGE --><a href="{U_TOWNMAP_FORGE}"><img src="adr/images/TownMap/{SAISON}/Tuile_3_2.gif" border="0" alt="{L_TOWNMAP_FORGE}" title="Forge" /></a><!-- ELSE --><img src="adr/images/TownMap/{SAISON}/Tuile_3_2.gif" border="0" alt="{L_TOWNMAP_FORGE}" title="Forge ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_3_3.gif"/><a href="{U_SHAME}"><img title="Tour de garde" src="adr/images/TownMap/{SAISON}/Tuile_3_4.gif" border="0" alt="{L_TOWNMAP_ENTRAINEMENT}" /></a><img src="adr/images/TownMap/{SAISON}/Tuile_3_5.gif" border="0" alt="{L_TOWNMAP_COMBAT}" /><!--<a href="{U_TOWNMAP_ENTREPOT}"><img title="Entrepôt" src="adr/images/TownMap/{SAISON}/Tuile_3_6.gif" border="0" alt="{L_TOWNMAP_ENTREPOT}" /></a>--><a href="{U_ZONE_BARRACK}"><img title="Tour" src="adr/images/TownMap/{SAISON}/Tuile_3_6.gif" border="0" /></a><img src="adr/images/TownMap/{SAISON}/Tuile_3_7.gif"/><a href="{U_TOWNMAP_CLAN}"><img title="Taverne des guildes" src="adr/images/TownMap/{SAISON}/Tuile_3_8.gif" border="0" alt="{L_TOWNMAP_CLAN}" /></a><img src="adr/images/TownMap/{SAISON}/Tuile_3_9.gif"/><br />
         	<!-- IF HAS_MONSTERS -->
         	<a href="{U_TOWNMAP_COMBAT}"><img src="adr/images/TownMap/{SAISON}/Tuile_Monstre.gif" border="0" alt="{L_TOWNMAP_MONSTRE}" /></a>
         	<!-- ENDIF -->
@@ -142,8 +140,8 @@
 				<td><img src="adr/images/TownMap/{SAISON}/Icone_Clan.gif" /><br /><input type="submit" name="InfoClan" value="{L_TOWNBOUTONINFO12}" class="mainoption" /></td>
 			</tr>
 			<tr>
-				<td align="center" colspan="2"><img src="adr/images/TownMap/{SAISON}/Icone_Entrainement.gif" /><br /><input type="submit" name="InfoEntrainement" value="{L_TOWNBOUTONINFO7}" class="mainoption" /></td>
-				<!--<td><img src="adr/images/TownMap/{SAISON}/Icone_Entrepot.gif" /><br /><input type="submit" name="InfoEntrepot" value="{L_TOWNBOUTONINFO8}" class="mainoption" /></td>-->
+				<td align="center"><img src="adr/images/TownMap/{SAISON}/Icone_Entrainement.gif" /><br /><input type="submit" name="InfoEntrainement" value="{L_TOWNBOUTONINFO7}" class="mainoption" /></td>
+				<td><img src="adr/images/TownMap/{SAISON}/Icone_Entrepot.gif" /><br /><input type="submit" name="InfoEntrepot" value="de garde" class="mainoption" /></td>
 			</tr>
 			</table>
 			</form>

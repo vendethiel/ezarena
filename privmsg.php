@@ -1,5 +1,4 @@
 <?php
-//-- mod : pm threshold ----------------------------------------------------------------------------
 /***************************************************************************
  *                               privmsgs.php
  *                            -------------------
@@ -83,7 +82,7 @@ init_userprefs($userdata);
 //-- mod : pm threshold ----------------------------------------------------------------------------
 //-- add
 $pm_allow_threshold = isset($board_config['pm_allow_threshold']) ? $board_config['pm_allow_threshold'] : 15;
-if ( !$userdata['session_logged_in'] || ($userdata['user_posts'] < $pm_allow_threshold) )
+if ( !$userdata['session_logged_in'] || ($userdata['user_posts'] < $pm_allow_threshold) && $userdata['user_level'] != ADMIN )
 {
 	message_die(GENERAL_MESSAGE, 'Not_Authorised');
 }

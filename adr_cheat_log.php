@@ -60,7 +60,7 @@ $adr_moderators = explode( ',' , $board_config['zone_adr_moderators'] );
 if ( $cheat_id )
 {
 	if ( !in_array( $user_id , $adr_moderators ) &&  $userdata['user_level'] != ADMIN )
-		adr_previous( Adr_cell_not_authorized_view , adr_cheat_log , '' );
+		adr_previous( Adr_cell_not_authorized_view , "adr_zones" , '' );
 
 	if ( $public_type )
 	{
@@ -126,7 +126,7 @@ $pagination 	= generate_pagination("adr_cheat_log.$phpEx?u=$user_id", $total, $b
 $page_number 	= sprintf($lang['Page_of'], (floor($start / $board_config['posts_per_page']) + 1 ), ceil($total / $board_config['posts_per_page']));
 
 if (!$total)
-	adr_previous( Adr_Npc_character_no_cheat_message , adr_character_prefs , '' );
+	adr_previous( Adr_Npc_character_no_cheat_message , "adr_zones" , '' );
 
 for ($a = 0; $a < $cheat_count; $a++)
 {
