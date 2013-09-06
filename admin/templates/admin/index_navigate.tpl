@@ -184,15 +184,21 @@ window.onload = doOnLoadMenuACP;
 		<tr> 
 		  <td class="row1"><span class="genmed"><a href="{U_FORUM_INDEX}" target="main" class="genmed">{L_PREVIEW_FORUM}</a></span></td>
 		</tr>
-		<!-- +Reorder ACP Categories -->
-		<tr>
-			<td class="row1">
-				<span class="genmed">
-					<a href="{U_REORDER_CATS}" target="main" class="genmed">{L_REORDER_CATS}</a>
-				</span>
-			</td>
+		<!-- IF MODE == 'rpg' -->
+		<tr> 
+		  <td class="row2"><span class="genmed"><a href="{U_ADMIN_FORUM}" class="genmed">Admin Forum</a></span></td>
 		</tr>
-		<!-- -Reorder ACP Categories -->		
+		<tr> 
+		  <td class="row2"><span class="genmed">RPG :</span></td>
+		</tr>
+		<!-- ELSE -->
+		<tr> 
+		  <td class="row2"><span class="genmed"><a href="{U_ADMIN_RPG}" class="genmed">Admin RPG</a></span></td>
+		</tr>
+		<tr> 
+		  <td class="row2"><span class="genmed">Forum :</span></td>
+		</tr>
+		<!-- ENDIF -->
 		<!-- BEGIN catrow -->
 		<tr> 
 		  <td height="28" class="catSides" style="cursor:pointer;cursor:hand;" onclick="onMenuCatClick('{catrow.MENU_CAT_ID}');"><span class="cattitle">{catrow.ADMIN_CATEGORY}</span></td>

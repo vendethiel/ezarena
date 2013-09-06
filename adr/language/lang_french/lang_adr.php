@@ -125,7 +125,7 @@ $lang['Adr_set_wis_pen']='Charisme penalté:';
 if ( defined ( 'IN_ADR_CAULDRON' ))
 {
    $lang['Adr_cauldron_title']='Chaudron Magique';
-   $lang['Adr_cauldron_explain']='Ici vous pouvez combiner vos objets pour en obtenir un beaucoup plus puissant.<br \><br \>Attention !!! L\'ordre dans lequel vous mettez vos objets dans le chaudon magique compte !!!<br \><br \>PS: A vous de chercher et de trouver les bonnes combinaisons';
+   $lang['Adr_cauldron_explain']='Ici vous pouvez combiner vos objets pour en obtenir un beaucoup plus puissant.<br \><br \>Attention ! L\'ordre dans lequel vous mettez vos objets dans le chaudon magique compte !<br \><br \>PS: A vous de chercher et de trouver les bonnes combinaisons';
    $lang['Adr_cauldron_item1']='Choisissez le premier objet que vous voulez mettre dans le Chaudron Magique';
    $lang['Adr_cauldron_item2']='Choisissez le second objet que vous voulez mettre dans le Chaudron Magique';
    $lang['Adr_cauldron_item3']='Choisissez le troisième objet que vous voulez mettre dans le Chaudron Magique';
@@ -667,7 +667,7 @@ if ( defined ('IN_ADR_BATTLE'))
    $lang['Adr_battle_monster_win_item']='Vous fouillez la dépouille et découvrez : %s.';
    $lang['Adr_battle_scan_no_message']='Cette créature ne comporte aucunes informations';
    $lang['Adr_battle_scan_success']='Vous avez réussi à analyser la créature. Voici les informations obtenues';
-   $lang['Adr_battle_scan_fail']='Votre analyse a échouée !!!';
+   $lang['Adr_battle_scan_fail']='Votre analyse a échouée !';
    //ZONE end
    $lang['Adr_battle_equipment']='Equipement avant la bataille';
    $lang['Adr_battle_select_armor']='Sélectionnez une armure :';
@@ -1478,6 +1478,10 @@ $lang['Adr_zone_no_monsters']='Tout est calme par ici ... Il n\'y a pas de monst
 // that's how ezArena does it ...
 $lang['BUILDING_UNAV'] = 'Bâtiment indisponible';
 $lang['ADR_DUEL_LIST'] = 'Cliquez sur l\'image pour accéder à vos duels';
+$lang['NO_ZONE_AVAILABLE'] = 'Il n\'existe pas de zone, ou aucune pour votre niveau. Veuillez contacter l\'administrateur du forum';
+$lang['ADR_MOVED_BACK_TO_SAFE_ZONE'] = 'Suites à de mystérieuses circonstances, vous vous réveillez en zone sûre ...';
+$lang['ADR_CAULDRON_EXPLAIN'] = 'Bienvenue au Chaudron Magique.<br/>Ici, vous pouvez combiner des objets pour obtenir un autre objet encore plus puissant.<br/><br/>Attention ! Toutes les combinaisons ne marchent pas, et l\'ordre est important !';
+//'Welcome to the Alchemy Lab. Here you can combine some items to get another powerfull item. Warning ! The order of the items you put into the cauldron is important! You have to search and find good combinations.';
 // END ezArena
 
 if ( defined ('IN_ADR_QUESTBOOK'))

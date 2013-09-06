@@ -298,8 +298,6 @@ class phpbb_seo {
 	*/
 	function seo_redirect($url, $header = "301 Moved Permanently", $code = 301, $replace = TRUE) {
 		global $db;
-		//debug_print_backtrace();
-		//exit('mdr');
 		if ( !empty($db) ) {
 			$db->sql_close();
 		}

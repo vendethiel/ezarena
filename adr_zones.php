@@ -24,6 +24,7 @@ define('IN_ADR_SHOPS', true);
 define('IN_ADR_CHARACTER', true);
 define('IN_ADR_ZONES', true);
 define('IN_ADR_TOWNMAP', true); 
+define('IN_ADR_NPC_ADMIN', true); // V: lang keys and shit
 $phpbb_root_path = './';
 include_once($phpbb_root_path . 'extension.inc');
 include_once($phpbb_root_path . 'common.'.$phpEx);
@@ -59,25 +60,34 @@ $adr_user = adr_get_user_infos($user_id);
 // Get Zone infos
 $area_id = $adr_user['character_area'];
 
-$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
+$sql = "SELECT * FROM  " . ADR_ZONES_TABLE . "
        WHERE zone_id = '$area_id' ";
 if( !($result = $db->sql_query($sql)) )
         message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
 $zone = $db->sql_fetchrow($result);
+// V: let's make sure nothing bad happened for some reason
+//  i.e. somebody deleted the zone.
+//  of course, it's still gonna fail it race's start zone got ERASED
+if (!$zone)
+{
+	$sql = "SELECT race_zone_begin FROM " . ADR_RACES_TABLE . "
+		WHERE race_id = " . $adr_user['character_race'];
+	$result = $db->sql_query($sql);
+	if (!($race = $db->sql_fetchrow($result)))
+		message_die(GENERAL_MESSAGE, 'Could not query race data');
+
+	$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+		SET character_area = " . $race['race_zone_begin'];
+	$db->sql_query($sql);
+
+	adr_previous('ADR_MOVED_BACK_TO_SAFE_ZONE', 'adr_zones');
+}
+
 $zone_name = $zone['zone_name'];
 $zone_img = $zone['zone_img'];
 $zone_desc = $zone['zone_desc'];
 $zone_element = $zone['zone_element'];
-$cost_goto1 = $zone['cost_goto1'];
-$cost_goto2 = $zone['cost_goto2'];
-$cost_goto3 = $zone['cost_goto3'];
-$cost_goto4 = $zone['cost_goto4'];
-$cost_return = $zone['cost_return'];
-$goto1_name = $zone['goto1_name'];
-$goto2_name = $zone['goto2_name'];
-$goto3_name = $zone['goto3_name'];
-$goto4_name = $zone['goto4_name'];
 $return_name = $zone['return_name'];
 $zone_shops = $zone['zone_shops'];
 $zone_forge = $zone['zone_forge'];
@@ -99,6 +109,44 @@ $zone_pointwin2 = $zone['zone_pointwin2'];
 $zone_pointloss1 = $zone['zone_pointloss1'];
 $zone_pointloss2 = $zone['zone_pointloss2'];
 $zone_chance = $zone['zone_chance'];
+
+// Begin NSEW Nav
+$cost_goto1 = $zone['cost_goto1'];
+$cost_goto2 = $zone['cost_goto2'];
+$cost_goto3 = $zone['cost_goto3'];
+$cost_goto4 = $zone['cost_goto4'];
+$goto1_name = $zone['goto1_name'];
+$goto2_name = $zone['goto2_name'];
+$goto3_name = $zone['goto3_name'];
+$goto4_name = $zone['goto4_name'];
+$name_return = $zone['return_name'];
+$cost_return = $zone['cost_return'];
+
+// V: let's check for neighborhood level
+$sql = "SELECT zone_name, zone_level FROM " . ADR_ZONES_TABLE . "
+	WHERE " . $db->sql_in_set('zone_name', array($goto1_name, $goto2_name, $goto3_name, $goto4_name));
+if (!$result = $db->sql_query($sql))
+	message_die(GENERAL_ERROR, 'Unable to query neighborhood zones');
+$level_goto1 = $level_goto2 = $level_goto3 = $level_goto4 = $level_return = 0;
+while ($row = $db->sql_fetchrow($result))
+{
+	foreach (array(2, 3, 4, 'return') as $i)
+	{
+		if ($row['zone_name'] == ${'goto'.$i.'_name'})
+			${'level_goto'.$i} = $row['zone_level'];
+	}
+}
+$template->assign_vars(array(
+	// 'ZONE_LEVEL1' => $level_goto1,
+	'ZONE_LEVEL2' => $level_goto2,
+	'ZONE_LEVEL3' => $level_goto3,
+	'ZONE_LEVEL4' => $level_goto4,
+	'ZONE_LEVEL_RETURN' => $level_return,
+	'CHARACTER_LEVEL' => $adr_user['character_level'],
+
+	'L_REQ_LEVEL' => $lang['Adr_Npc_acp_npc_character_level'],
+));
+// End check for neighborhood level
 
 //prevent blank destination
 if ( $goto2_name == '' )
@@ -246,8 +294,25 @@ if ( $goto1 )
        	 message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
 	$zone_id = $db->sql_fetchrow($result);
+	if (!$zone_id)
+	{
+		adr_previous('Adr_zone_change_unavaible', 'adr_zones');
+	}
 	$destination_id = $zone_id['zone_id'];
 	$required_item = $zone_id['zone_item'];
+
+	$required_level = $zone_id['zone_level'];
+	
+        // Check if user meets the required level
+	$sql = " SELECT character_id, character_level
+        	FROM  " . ADR_CHARACTERS_TABLE . "
+                WHERE character_id = '$user_id' ";
+	if( !($result = $db->sql_query($sql)) )
+   	{ message_die(GENERAL_ERROR, 'Could not obtain character information', "", __LINE__, __FILE__, $sql); }
+	$char = $db->sql_fetchrow($result);
+
+	if( $char['character_level'] < $required_level )
+	{ adr_previous( Adr_zone_change_level , adr_zones , '' ); }
 
  	// Check if user has the required item
 	$sql = " SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . "
@@ -272,6 +337,7 @@ if ( $goto1 )
 		if( !($result = $db->sql_query($sql)) )
 			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
+		header('Location:'.append_sid("adr_zones.$phpEx"));
 		adr_previous( Adr_zone_change_success , adr_zones , '' );
 		break;
 	}
@@ -302,8 +368,24 @@ if ( $goto2 )
        	 message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
 	$zone_id = $db->sql_fetchrow($result);
+	if (!$zone_id)
+	{
+		adr_previous('Adr_zone_change_unavaible', 'adr_zones');
+	}
 	$destination_id = $zone_id['zone_id'];
 	$required_item = $zone_id['zone_item'];
+
+	$required_level = $zone_id['zone_level'];
+    // Check if user meets the required level
+	$sql = " SELECT character_id, character_level
+        	FROM  " . ADR_CHARACTERS_TABLE . "
+                WHERE character_id = '$user_id' ";
+	if( !($result = $db->sql_query($sql)) )
+   	{ message_die(GENERAL_ERROR, 'Could not obtain character information', "", __LINE__, __FILE__, $sql); }
+	$char = $db->sql_fetchrow($result);
+
+	if( $char['character_level'] < $required_level )
+	{ adr_previous( Adr_zone_change_level , adr_zones , '' ); }
 
  	// Check if user has the required item
 	$sql = " SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . "
@@ -328,6 +410,7 @@ if ( $goto2 )
 		if( !($result = $db->sql_query($sql)) )
 			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
+		header('Location:'.append_sid("adr_zones.$phpEx"));
 		adr_previous( Adr_zone_change_success , adr_zones , '' );
 		break;
 	}
@@ -358,8 +441,25 @@ if ( $goto3 )
        	 message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
 	$zone_id = $db->sql_fetchrow($result);
+	if (!$zone_id)
+	{
+		adr_previous('Adr_zone_change_unavaible', 'adr_zones');
+	}
 	$destination_id = $zone_id['zone_id'];
 	$required_item = $zone_id['zone_item'];
+
+	$required_level = $zone_id['zone_level'];
+	
+        // Check if user meets the required level
+	$sql = " SELECT character_id, character_level
+        	FROM  " . ADR_CHARACTERS_TABLE . "
+                WHERE character_id = '$user_id' ";
+	if( !($result = $db->sql_query($sql)) )
+   	{ message_die(GENERAL_ERROR, 'Could not obtain character information', "", __LINE__, __FILE__, $sql); }
+	$char = $db->sql_fetchrow($result);
+
+	if( $char['character_level'] < $required_level )
+	{ adr_previous( Adr_zone_change_level , adr_zones , '' ); }
 
  	// Check if user has the required item
 	$sql = " SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . "
@@ -384,6 +484,7 @@ if ( $goto3 )
 		if( !($result = $db->sql_query($sql)) )
 			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
+		header('Location:'.append_sid("adr_zones.$phpEx"));
 		adr_previous( Adr_zone_change_success , adr_zones , '' );
 		break;
 	}
@@ -414,8 +515,17 @@ if ( $goto4 )
        	 message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
 	$zone_id = $db->sql_fetchrow($result);
+	if (!$zone_id)
+	{
+		adr_previous('Adr_zone_change_unavaible', 'adr_zones');
+	}
 	$destination_id = $zone_id['zone_id'];
 	$required_item = $zone_id['zone_item'];
+
+	$required_level = $zone_id['zone_level'];
+
+	if( $adr_user['character_level'] < $required_level )
+	{ adr_previous( Adr_zone_change_level , adr_zones , '' ); }
 
  	// Check if user has the required item
 	$sql = " SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . "
@@ -440,7 +550,11 @@ if ( $goto4 )
 		if( !($result = $db->sql_query($sql)) )
 			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
+		header('Location:'.append_sid("adr_zones.$phpEx"));
 		adr_previous( Adr_zone_change_success , adr_zones , '' );
+				echo '<script>setTimeout(function () {
+					document.location = "' . append_sid('adr_zones.'.$phpEx) . '"
+				}, 200);</script>';
 		break;
 	}
 	else
@@ -470,8 +584,17 @@ if ( $return )
        	 message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
 	$zone_id = $db->sql_fetchrow($result);
+	if (!$zone_id)
+	{
+		adr_previous('Adr_zone_change_unavaible', 'adr_zones');
+	}
 	$destination_id = $zone_id['zone_id'];
 	$required_item = $zone_id['zone_item'];
+
+	$required_level = $zone_id['zone_level'];
+
+	if( $adr_user['character_level'] < $required_level )
+	{ adr_previous( Adr_zone_change_level , adr_zones , '' ); }
 
  	// Check if user has the required item
 	$sql = " SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . "
@@ -495,7 +618,8 @@ if ( $return )
 			WHERE character_id = '$user_id' ";
 		if( !($result = $db->sql_query($sql)) )
 			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
-	
+
+		header('Location:'.append_sid("adr_zones.$phpEx"));
 		adr_previous( Adr_zone_change_success , adr_zones , '' );
 		break;
 	}
@@ -1431,43 +1555,11 @@ if ( $actual_season == '4' )
 }
 
 //Begin weather
+// V: better that way
 $weather = $adr_user['character_weather'];
-
-if ( $weather == '1' ) 
-{
-	$weather_image = 'sun';
-	$weather_name = $lang['Adr_Zone_Weather_1'];
-}
-
-if ( $weather == '2' ) 
-{
-	$weather_image = 'night';
-	$weather_name = $lang['Adr_Zone_Weather_2'];
-}
-
-if ( $weather == '3' ) 
-{
-	$weather_image = 'cloud';
-	$weather_name = $lang['Adr_Zone_Weather_3'];
-}
-
-if ( $weather == '4' ) 
-{
-	$weather_image = 'rain';
-	$weather_name = $lang['Adr_Zone_Weather_4'];
-}
-
-if ( $weather == '5' ) 
-{
-	$weather_image = 'cloudsun';
-	$weather_name = $lang['Adr_Zone_Weather_5'];
-}
-
-if ( $weather == '6' ) 
-{
-	$weather_image = 'snow';
-	$weather_name = $lang['Adr_Zone_Weather_6'];
-}
+$weathers = array('sun', 'night', 'cloud', 'rain', 'cloudsun', 'snow');
+$weather_image = $weathers[$weather-1];
+$weather_name = $lang['Adr_zone_weather_'.$weather];
 
 //
 // END of zones seasons and weather
@@ -1498,24 +1590,12 @@ $users_connected_list = '<b><u>'. $lang['Adr_zone_connected']. '</u></b> : ' . $
 
 
 ( $zone_temple == '1' ) ? $temple = 'temple_enable' : $temple = 'temple_disable';
-
-
 ( $zone_prison == '1' ) ? $prison = 'prison_enable' : $prison = 'prison_disable';
-
-
 ( $zone_shops == '1' ) ? $shops = 'shops_enable' : $shops = 'shops_disable';
-
-
 ( $zone_forge == '1' ) ? $forge = 'forge_enable' : $forge = 'forge_disable';
 ( $zone_mine == '1' ) ? $mine = 'mine_enable' : $mine = 'mine_disable';
 ( $zone_enchant == '1' ) ? $enchant = 'enchant_enable' : $enchant = 'enchant_disable';
-
-
 ( $zone_bank == '1' ) ? $bank = 'bank_enable' : $bank = 'bank_disable';
-
-
-
-
 
 // Building links
 
@@ -1527,7 +1607,6 @@ $users_connected_list = '<b><u>'. $lang['Adr_zone_connected']. '</u></b> : ' . $
 ( $zone_mine == '1' ) ? $mine_link = '<a href="'.append_sid("adr_mine.$phpEx").'">'. $lang['Adr_zone_goto_mine'] .'</a>' : $mine_link = $lang['Adr_zone_building_disable'];
 ( $zone_enchant == '1' ) ? $enchant_link = '<a href="'.append_sid("adr_enchant.$phpEx").'">'. $lang['Adr_zone_goto_enchant'] .'</a>' : $enchant_link = $lang['Adr_zone_building_disable'];
 ( $zone_bank == '1' ) ? $bank_link = '<a href="'.append_sid("adr_vault.$phpEx").'">'. $lang['Adr_zone_goto_bank'] .'</a>' : $bank_link = $lang['Adr_zone_building_disable'];
-
 
 // Define user money
 $points = $userdata['user_points'] . ' ' . $board_config['points_name'];

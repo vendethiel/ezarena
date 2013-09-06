@@ -207,9 +207,6 @@ define('VOTE_USERS_TABLE', $table_prefix.'vote_voters');
 // Start add - Fully integrated shoutbox MOD
 define('SHOUTBOX_TABLE', $table_prefix.'shout');
 // End add - Fully integrated shoutbox MOD
-// +Reorder ACP Categories
-define('ADMIN_CATS_TABLE', $table_prefix.'admin_categories'); 
-// -Reorder ACP Categories
 define('QUICKLINKS_TABLE', $table_prefix.'quicklinks');
 // DEBUT MOD Logos aléatoires 
 define('LOGOS_TABLE', $table_prefix.'logos'); 
@@ -218,11 +215,6 @@ define('LOGOS_TABLE', $table_prefix.'logos');
 //-- add
 define('BBC_BOX_TABLE', $table_prefix.'bbc_box');
 //-- fin mod : bbcode box reloaded ---------------------------------------------
-
-// +Reorder ACP Categories
-define('DIR_UP', 1);
-define('DIR_DOWN', -1);
-// -Reorder ACP Categories
 
 // Default avatar MOD, By Manipe (Begin)
 define("DEFAULT_AVATAR_USERS", 1);

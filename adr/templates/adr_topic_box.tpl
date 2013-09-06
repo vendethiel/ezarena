@@ -1,8 +1,3 @@
-;u;u;u;ug;tfu;fyfjyrdj !!!
-
-jryjrj!!!
-
-
 <!-- BEGIN level -->
 <span class="gen">{L_LEVEL}{LEVEL}</span><br />
 <!-- END level -->

@@ -95,6 +95,7 @@ function createReducerFor(elId) {
 				</td>
 			</tr>
 		</table>
+		<br/>
 		<!-- BEGIN board_disable -->
 		<div class="forumline" style="padding: 10px; margin: 5px 2px; text-align: center">
 			<span class="gen">{board_disable.MSG}</span>

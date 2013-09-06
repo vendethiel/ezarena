@@ -6,19 +6,6 @@
 
 # --------------------------------------------------------
 #
-# Table structure for table 'phpbb_admin_categories'
-#
-CREATE TABLE phpbb_admin_categories (
-	id INT(11) NOT NULL AUTO_INCREMENT,
-	cat_identifier VARCHAR(255) NOT NULL,
-	cat_order INT(11) NOT NULL DEFAULT '0',
-	cat_display VARCHAR(255) DEFAULT NULL,
-	PRIMARY KEY  (id)
-);
-
-
-# --------------------------------------------------------
-#
 # Table structure for table 'phpbb_announcement_centre'
 #
 CREATE TABLE phpbb_announcement_centre (
@@ -2104,3 +2091,6 @@ CREATE TABLE `phpbb_adr_character_quest_log_history` (
   `npc_id` int(8) NOT NULL,
   PRIMARY KEY  (`quest_id`)
 );
+
+# ADR - Zones by level
+ALTER TABLE `phpbb_adr_zones` ADD `zone_level` INT(8) DEFAULT '0' NOT NULL;

@@ -48,10 +48,11 @@ $lang['Login_reset_time_explain'] = 'Nombre de minutes durant lesquelles l\'util
 // in the modules[][] arrays in each module file
 //
 $lang['General'] = 'Administration générale';
-$lang['Users'] = 'Administration des utilisateurs';
-$lang['Groups'] = 'Administration des groupes';
-$lang['Forums'] = 'Administration des forums';
-$lang['Styles'] = 'Administration des thèmes';
+$lang['Users'] = 'Utilisateurs';
+$lang['Groups'] = 'Groupes';
+$lang['Forums'] = 'Forums';
+// xs'd
+// $lang['Styles'] = 'Thèmes';
 
 $lang['Configuration'] = 'Configuration';
 $lang['Permissions'] = 'Permissions';
@@ -973,16 +974,6 @@ $lang['Default_avatar_choose_explain'] = 'Cette option permet aux membres de déc
 $lang['Default_avatar_override'] = 'Neutraliser l\'avatar du membre';
 $lang['Default_avatar_override_explain'] = 'Cela vous permet de montrer un avatar par défaut aux membres qui ont malgré tout sélectionné un avatar. Il est cependant conseillé de ne pas permettre aux membres de décider d\'avoir ou non un avatar par défaut.';
 // Default Avatar MOD, By Manipe (End)
-
-// +Reorder ACP Categories
-$lang['Reorder_ACP_categories'] = "Réordonner les catégories";
-$lang['ACP_cat_display'] = "Nom de la catégorie";
-$lang['ACP_cat_title'] = "Réordonner les catégories de l'ACP";
-$lang['ACP_cat_explain'] = "Les catégories de l'ACP sont listées à gauche de votre panneau d'administration. Utiliser cette forme pour changer l'ordre d'affichage des catégories. Les catégories qui ne sont pas explicitement ordonnées seront affichées par ordre alphabétique une fois les autres réordonnées.";
-$lang['ACP_cat_moved'] = "La catégorie a été déplacée avec succès.";
-$lang['Reorder'] = "Réordonner";
-$lang['Click_return_catadmin'] = 'Cliquez %sici%s pour revenir à l\'administration des catégories';
-// -Reorder ACP Categories
 
 // Replace Posts MOD
 $lang['Replace_title'] = 'Remplacer dans les posts';

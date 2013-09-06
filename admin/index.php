@@ -44,30 +44,6 @@ function inarray($needle, $haystack)
 	} 
 	return false; 
 }
-// +Reorder ACP Categories
-function number_first_sort($s, $t)
-{
-	$s = preg_replace('/Admin_cat_/', '', $s);
-	$t = preg_replace('/Admin_cat_/', '', $t);
-
-	if (is_numeric($s) && is_numeric($t))
-	{
-		return $t - $s;
-	}
-	elseif (is_numeric($s) && !is_numeric($t))
-	{
-		return -1;
-	}
-	elseif (is_numeric($t) && !is_numeric($s))
-	{
-		return 1;
-	}
-	else 
-	{
-		return strcmp($s, $t);
-	}
-}
-// -Reorder ACP Categories
 //
 // End functions
 // -------------
@@ -79,7 +55,7 @@ if( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'left' )
 {
 	$dir = @opendir(".");
 
-	$setmodules = 1;
+	$setmodules = true;
 	while( $file = @readdir($dir) )
 	{
 		if( preg_match("/^admin_.*?\." . $phpEx . "$/", $file) )
@@ -97,6 +73,14 @@ if( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'left' )
 	$template->set_filenames(array(
 		"body" => "admin/index_navigate.tpl")
 	);
+
+	$mode = request_var('mode', '');
+	$mode_cookie = $board_config['cookie_name'] . '_acp_mode';
+	if ($mode != 'rpg' && $mode != 'forum')
+	{
+		$mode = isset($_COOKIE[$mode_cookie]) ? $_COOKIE[$mode_cookie] : 'forum';
+	}
+	setcookie($mode_cookie, $mode, time() + 31536000, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
 
 	$template->assign_vars(array(
 		"U_FORUM_INDEX" => append_sid("../index.$phpEx"),
@@ -117,32 +101,14 @@ if( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'left' )
 		"L_PREVIEW_FORUM" => $lang['Preview_forum'])
 	);
 
-	// +Reorder ACP Categories
-	$sql = "SELECT cat_order, cat_display, cat_identifier
-		FROM " . ADMIN_CATS_TABLE;
-	
-	if (!$result = $db->sql_query($sql))
-	{
-		message_die(GENERAL_ERROR, "Couldn't obtain admin category information.", "", __LINE__, __FILE__, $sql);
-	}
+	// V: RPG & Forum ACP split
+	$template->assign_vars(array(
+		'MODE' => $mode,
+		'U_ADMIN_RPG' => append_sid("index.php?pane=left&mode=rpg"),
+		'U_ADMIN_FORUM' => append_sid("index.php?pane=left&mode=forum"),
+	));
+	// END : RPG & Forum ACP split
 
-	while ($row = $db->sql_fetchrow($result))
-	{
-		if (!isset($module[$row['cat_identifier']]))
-		{
-			continue;
-		}
-
-		$uid = "Admin_cat_{$row['cat_order']}";
-		$lang[$uid] = (!empty($row['cat_display'])) ? $row['cat_display']
-			: (isset($lang[$row['cat_identifier']]) ? $lang[$row['cat_identifier']]
-				: preg_replace('/_/', ' ', $row['cat_identifier']));
-		$module[$uid] = $module[$row['cat_identifier']];
-		unset($module[$row['cat_identifier']]);
-	}
-		
-	uksort($module, "number_first_sort");
-	// -Reorder ACP Categories
 //+MOD: DHTML Menu for ACP
 	$menu_cat_id = 0;
 //-MOD: DHTML Menu for ACP	
@@ -150,6 +116,12 @@ if( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'left' )
 	while( list($cat, $action_array) = each($module) )
 	{
 		$cat = ( !empty($lang[$cat]) ) ? $lang[$cat] : preg_replace("/_/", " ", $cat);
+
+		$is_rpg = false !== stripos($cat, 'ADR') || false !== stripos($cat, 'Rabbitoshi');
+		if ($is_rpg && $mode != 'rpg'
+		 || !$is_rpg && $mode == 'rpg')
+			continue;
+		$cat = str_replace('ADR-', '', $cat);
 
 		$template->assign_block_vars("catrow", array(
 //+MOD: DHTML Menu for ACP

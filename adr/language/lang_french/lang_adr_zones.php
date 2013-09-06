@@ -6,15 +6,15 @@ if ( defined ('IN_ADR_ZONES_ADMIN'))
    $lang['Adr_Zone_acp_title_explain']='Ici vous pouvez créer, editer et supprimer les zones';
    $lang['Adr_Zone_acp_settings_title']='Configurations de base';
    $lang['Adr_Zone_acp_name']='Nom de la zone';
-   $lang['Adr_Zone_acp_name_explain']='Mettez ici le nom de votre zone<br \>Attention les apostrophes causent des erreurs !!!';
+   $lang['Adr_Zone_acp_name_explain']='Mettez ici le nom de votre zone<br \>Attention les apostrophes causent des erreurs !';
    $lang['Adr_Zone_acp_desc']='Description de la zone';
    $lang['Adr_Zone_acp_desc_explain']='Ajoutez une description à votre zone qui renseignera les personnages du milieu dans lequel ils se trouvent.';
    $lang['Adr_Zone_acp_img']='Image de la zone';
-   $lang['Adr_Zone_acp_img_explain']='Mettez ici l\'image que vous souhaitez utiliser pour votre zone<br \>Attention !!! Uniquement les images en .jpg fonctionneront';
+   $lang['Adr_Zone_acp_img_explain']='Mettez ici l\'image que vous souhaitez utiliser pour votre zone<br \>Attention ! Uniquement les images en .jpg fonctionneront';
    $lang['Adr_Zone_acp_element']='Element de la zone';
    $lang['Adr_Zone_acp_element_explain']='Choisissez l\'élément prédominant de la zone';
-   $lang['Adr_Zone_acp_destination1']='Destination Special';
-   $lang['Adr_Zone_acp_destination1_explain']='Choisissez la destination spécial<br \>Attention !!! vous devez choisir une destination spécial';
+   $lang['Adr_Zone_acp_destination1']='Destination Spéciale';
+   $lang['Adr_Zone_acp_destination1_explain']='Choisissez la destination spéciale<br \>Attention ! Vous devez choisir une destination spéciale.';
    $lang['Adr_Zone_acp_destination2']='Sud';
    $lang['Adr_Zone_acp_destination2_explain']='Choisissez la destination du sud<br \>Cette destination est aussi facultative, vous pouvez la laisser vierge';
    $lang['Adr_Zone_acp_destination3']='Est';
@@ -23,7 +23,7 @@ if ( defined ('IN_ADR_ZONES_ADMIN'))
    $lang['Adr_Zone_acp_destination4_explain']='Choisissez la destination de l\'ouest<br \>Cette destination est aussi facultative, vous pouvez la laisser vierge';
    $lang['Adr_Zone_acp_return']='Nord';
    $lang['Adr_Zone_acp_return_explain']='Choisissez la destination du nord<br \>Cette destination est aussi facultative, vous pouvez la laisser vierge';
-   $lang['Adr_Zone_acp_destination1_cost']='prix de la destinantion spécial';
+   $lang['Adr_Zone_acp_destination1_cost']='Prix de la destination spéciale';
    $lang['Adr_Zone_acp_destination1_cost_explain']='Choisissez un prix pour la route spécial.<br \>Si vous ne voulez pas de restriction de prix laissé 0';
    $lang['Adr_Zone_acp_destination2_cost']='Prix de la route sud';
    $lang['Adr_Zone_acp_destination2_cost_explain']='Choisissez un prix pour la route sud.<br \>Si vous ne voulez pas de restriction de prix laissé 0';
@@ -31,7 +31,7 @@ if ( defined ('IN_ADR_ZONES_ADMIN'))
    $lang['Adr_Zone_acp_destination3_cost_explain']='Choisissez un prix pour la route est.<br \>Si vous ne voulez pas de restriction de prix laissé 0';
    $lang['Adr_Zone_acp_destination4_cost']='Prix de la route ouest';
    $lang['Adr_Zone_acp_destination4_cost_explain']='Choisissez un prix pour la route ouest.<br \>Si vous ne voulez pas de restriction de prix laissé 0';
-   $lang['Adr_Zone_acp_return_cost']='Prix de la route nord.';
+   $lang['Adr_Zone_acp_return_cost']='Prix de la route nord';
    $lang['Adr_Zone_acp_return_cost_explain']='Choisissez un prix pour la route nord.<br \>Si vous ne voulez pas de restriction de prix laissé 0';
    $lang['Adr_Zone_acp_temple']='Disponibilité du Temple';
    $lang['Adr_Zone_acp_temple_explain']='Cochez la case pour que le temple soit disponible dans cette zone';
@@ -102,7 +102,7 @@ if ( defined ('IN_ADR_ZONES_ADMIN'))
    $lang['Adr_zone_acp_race_zone_list']='Zone';
    $lang['Adr_Zone_acp_battle']='Combat';
    $lang['Adr_Zone_acp_monsters_list']='Quels monstres apparaîtront dans cette zone ?';
-   $lang['Adr_Zone_acp_monsters_list_explain']='Comme pour tous les sélections, gardez CTRL appuyé pour sélectionner plusieurs éléments ou MAJ pour sélectionner d\'un monstre A à B. Si vous ne voulez pas avoir de monstre dans cette zone, ne sélectionnez rien';
+   $lang['Adr_Zone_acp_monsters_list_explain']='Comme pour toutes les sélections, gardez CTRL appuyé pour sélectionner plusieurs éléments ou MAJ pour sélectionner d\'un monstre A à B. Si vous ne voulez pas avoir de monstre dans cette zone, ne sélectionnez rien';
    $lang['Adr_zones_all_monsters']='-Tous les monstres-';
    $lang['Adr_zones_monster_level']='Niv.';
 }
@@ -118,7 +118,7 @@ if ( defined ('IN_ADR_ZONES'))
    $lang['Adr_zone_season_title']='Saison';
    $lang['Adr_zone_weather_title']='Temps';
    $lang['Adr_zone_goto_title']='Destinations à partir de cette zone';
-   $lang['Adr_zone_goto1_title']='Destination spécial';
+   $lang['Adr_zone_goto1_title']='Destination spéciale';
    $lang['Adr_zone_goto2_title']='Sud';
    $lang['Adr_zone_goto3_title']='Est';
    $lang['Adr_zone_goto4_title']='Ouest';
@@ -136,7 +136,7 @@ if ( defined ('IN_ADR_ZONES'))
    $lang['Adr_zone_goto_enchant']='Autel d\'enchantement';
    $lang['Adr_zone_goto_prison']='Prison';
    $lang['Adr_zone_building_disable']='Indisponible';
-   $lang['Adr_zone_change_success']='Vous êtes arrivé à la nouvelle zone avec succès !!!';
+   $lang['Adr_zone_change_success']='Vous êtes arrivé à la nouvelle zone avec succès !';
    $lang['Adr_zone_change_failed']='Vous n\'avez pas assez d\'argent pour effectuer ce trajet';
    $lang['Adr_zone_points']='Vos possessions';
    $lang['Adr_zone_battle']='Monstres';
@@ -155,13 +155,13 @@ if ( defined ('IN_ADR_ZONES'))
    $lang['Adr_zone_event_battle']='Cliquez <a href="'.append_sid("adr_battle.$phpEx").'">ici</a> pour retrouver ces brigands et vous venger.';
    $lang['Adr_zone_event_return']='Cliquez <a href="'.append_sid("adr_zones.$phpEx").'">ici</a> pour retourner sur la page des zones.';
    $lang['Adr_zone_event_winpoint']='En vous promenant, vous apercevez un petit coffre caché dans un buisson. Il contient';
-   $lang['Adr_zone_event_losspoint']='Vous êtes très maladroit !!!! Vous venez de vous rendre compte que vous avez perdu votre bourse.... Elle contenait';
+   $lang['Adr_zone_event_losspoint']='Vous êtes très maladroit ! Vous venez de vous rendre compte que vous avez perdu votre bourse.... Elle contenait';
    $lang['Adr_zone_event_fountain_youth']='Cachée dans une grotte, vous découvrez la fontaine de jouvence.<br \>Vous buvez un peu de cette eau et vous sentez en pleine forme.<br \>Vous récupérez tous vos points de vie.';
    $lang['Adr_zone_event_fountain_mana']='Dans un coin sombre d\'un temple perdu, vous découvrez la fontaine de mana.<br \>Vous buvez un peu de cette eau et vous sentez envahi par une grande force.<br \>Vous récupérez tous vos points de mana.';
-   $lang['Adr_zone_event_poison']='Vous vous faites mordre par un serpent très vénimeux !!!<br \>Vous échappez de peu à la mort...vous avez eu de la chance cette fois.<br \>Il ne vous reste qu\'un seul point de vie';
+   $lang['Adr_zone_event_poison']='Vous vous faites mordre par un serpent très venimeux !<br \>Vous échappez de peu à la mort...vous avez eu de la chance cette fois.<br \>Il ne vous reste qu\'un seul point de vie';
    $lang['Adr_zone_event_weakness']='Vous vous sentez envahi par une très grande fatigue.<br \>Vous en faites peu être un peu trop ces derniers temps. vous devriez vous reposer.<br \>Vous perdez tous vos points de mana.';
-   $lang['Adr_zone_event_item']='Quelle chance !!! Dans des ruines, vous trouvez un objet derrière une grande statue.<br \>Voici sa description :';
-   $lang['Adr_zone_event_ambush']='Malheur !!! Une bande de brigands vous a tendu une embuscade et vous a détroussé de votre bourse. Elle contenait';
+   $lang['Adr_zone_event_item']='Quelle chance ! Dans des ruines, vous trouvez un objet derrière une grande statue.<br \>Voici sa description :';
+   $lang['Adr_zone_event_ambush']='Malheur ! Une bande de brigands vous a tendu une embuscade et vous a détroussé de votre bourse. Elle contenait';
    $lang['Adr_zone_npc_title']='Personnages Non Joueurs';
    $lang['Adr_zone_npc_event']='Selectionner';
    $lang['Adr_zone_change_unavaible']='Cette destination est désactivée. Veuillez en choisir une autre';
@@ -241,3 +241,7 @@ $lang['Adr_Npc_acp_quest_monsterkill_name']='Quels monstres doivent être tués ?'
 $lang['Adr_Npc_acp_quest_monsterkill_amount']='Combien doivent être tués ';
 $lang['Adr_Npc_acp_quest_monsterkill_explain']='Choisissez les monstres que le joueur doit tuer.';
 $lang['Adr_Npc_acp_quest_monsteramount_explain']='Combien de monstres doivent être tués ? Laissez blanc pour que le joueur n\'ait pas à tuer de monstre.';
+
+// Zones by level
+$lang['Adr_Zone_acp_level']='Niveau requis';
+$lang['Adr_zone_change_level']='Vous n\'avez pas le niveau requis pour accéder à cette zone.';

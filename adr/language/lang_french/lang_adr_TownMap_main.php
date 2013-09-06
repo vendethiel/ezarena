@@ -73,16 +73,16 @@ if ( defined ('IN_TOWNMAP_TEMPLE'))
    $lang['TownMap_Temple_PrixResurrection']='Coûts de la Résurrection';
    $lang['TownMap_Temple_Guerir']='Soigner';
    $lang['TownMap_Temple_Resussiter']='Réssuciter';
-   $lang['TownMap_Temple_Entree']='Bienvenue dans le Temple de la Foi, Noble Etranger(e). Que la lumière du Saint Royaume vous apporte grâce et prospérité !!!';
-   $lang['TownMap_Temple_Pretresse1']='Bienvenue dans le Temple de Meiisen, Prêtresse de la Guérison !!!';
-   $lang['TownMap_Temple_Pretresse2']='Bienvenue dans le Temple de Karla, Grande prêtresse de la Résurrection !!!';
-   $lang['TownMap_Temple_NomPretresse1']='Meiisen, Prêtresse de la Guerison !!!';
-   $lang['TownMap_Temple_NomPretresse2']='Karla, Grande prêtresse de la Résurrection !!!';
-   $lang['TownMap_Temple_BesoinResurrection']='<img src="adr/images/TownMap/pretresse1.gif " border="1" /><br /><br />Bonjour à vous aventurier(e)....Mais....Quel malheur !!! <br /><br />Il est impossible de vous soigner.... Votre esprit a déjà quitté votre corps.<br />Mais ne vous inquietez pas... Nous sommes encore en mesure de rattrapper cela. Nous pouvons encore tenter une résurrection !!!<br /><br />Je ne suis malheureusement pas qualifiée pour des interventions aussi difficiles...<br />Je vous prierais de bien vouloir vous rendre auprès de Karla, la grande Prêtresse de la Résurrection.<br />Merci de votre visite !';
-   $lang['TownMap_Temple_PasSoin']='<img src="adr/images/TownMap/pretresse1.gif " border="1" /><br /><br />Bonjour à vous aventurier(e)....Vous êtes venu pour vous faire soigner ???<br /><br />Je crains que ce ne soit pas nécessaire.<br />Vous êtes en pleine forme.<br /><br />Merci tout de même de votre visite!!!<br /><br />';
-   $lang['TownMap_Temple_Soin']='<img src="adr/images/TownMap/pretresse1.gif " border="1" /><br /><br />Bonjour à vous aventurier(e)....Vous me paressez un peu faible...<br /><br />Allongez vous sur cet autel que je vous prodigue quelques soins !!!<br /><br />*Que les saints pouvoirs qui me sont conférés apaisent ce corps et cet esprit !!!!*<br /><br />Voilà !!! Vous êtes de nouveau en pleine forme.<br /><br />Merci de votre visite !!!<br /><br />';
-   $lang['TownMap_Temple_PasResurrection']='<img src="adr/images/TownMap/pretresse2.gif " border="1" /><br /><br />Bonjour à vous aventurier(e)....Vous êtes venu pour vous réssuciter ???<br /><br />Je crains que ce ne soit pas necessaire.<br />Votre esprit est encore très vigoureux. Si vous avez besoin de quelques soins, adressez vous plutôt à Meiisen, la Prêtresse de la Guérison. Elle vous apportera son aide.<br /><br />Merci tout de même de votre visite !!!<br /><br />';
-   $lang['TownMap_Temple_Resurrection']='<img src="adr/images/TownMap/pretresse2.gif " border="1" /><br /><br />Bonjour à vous aventurier(e)....Je vois que votre esprit a déjà quitté votre corps...<br /><br />Je vais devoir procéder à la restauration de votre âme !!!<br /><br />*Que les saints pouvoirs qui me sont conférés animent ce corps et régénère cet esprit !!!!*<br /><br />Voila !!! Vous êtes de nouveau en pleine forme.<br /><br />Merci de votre visite !!!<br /><br />';
+   $lang['TownMap_Temple_Entree']='Bienvenue dans le Temple de la Foi, Noble Etranger(e). Que la lumière du Saint Royaume vous apporte grâce et prospérité !';
+   $lang['TownMap_Temple_Pretresse1']='Bienvenue dans le Temple de Meiisen, Prêtresse de la Guérison !';
+   $lang['TownMap_Temple_Pretresse2']='Bienvenue dans le Temple de Karla, Grande prêtresse de la Résurrection !';
+   $lang['TownMap_Temple_NomPretresse1']='Meiisen, Prêtresse de la Guerison !';
+   $lang['TownMap_Temple_NomPretresse2']='Karla, Grande prêtresse de la Résurrection !';
+   $lang['TownMap_Temple_BesoinResurrection']='<img src="adr/images/TownMap/pretresse1.gif " border="1" /><br /><br />Bonjour à vous aventurier(e)....Mais....Quel malheur ! <br /><br />Il est impossible de vous soigner.... Votre esprit a déjà quitté votre corps.<br />Mais ne vous inquietez pas... Nous sommes encore en mesure de rattrapper cela. Nous pouvons encore tenter une résurrection !<br /><br />Je ne suis malheureusement pas qualifiée pour des interventions aussi difficiles...<br />Je vous prierais de bien vouloir vous rendre auprès de Karla, la grande Prêtresse de la Résurrection.<br />Merci de votre visite !';
+   $lang['TownMap_Temple_PasSoin']='<img src="adr/images/TownMap/pretresse1.gif " border="1" /><br /><br />Bonjour à vous aventurier(e)....Vous êtes venu pour vous faire soigner ???<br /><br />Je crains que ce ne soit pas nécessaire.<br />Vous êtes en pleine forme.<br /><br />Merci tout de même de votre visite!<br /><br />';
+   $lang['TownMap_Temple_Soin']='<img src="adr/images/TownMap/pretresse1.gif " border="1" /><br /><br />Bonjour à vous aventurier(e)....Vous me paressez un peu faible...<br /><br />Allongez vous sur cet autel que je vous prodigue quelques soins !<br /><br />*Que les saints pouvoirs qui me sont conférés apaisent ce corps et cet esprit !<br /><br />Voilà ! Vous êtes de nouveau en pleine forme.<br /><br />Merci de votre visite !<br /><br />';
+   $lang['TownMap_Temple_PasResurrection']='<img src="adr/images/TownMap/pretresse2.gif " border="1" /><br /><br />Bonjour à vous aventurier(e)....Vous êtes venu pour vous réssuciter ???<br /><br />Je crains que ce ne soit pas necessaire.<br />Votre esprit est encore très vigoureux. Si vous avez besoin de quelques soins, adressez vous plutôt à Meiisen, la Prêtresse de la Guérison. Elle vous apportera son aide.<br /><br />Merci tout de même de votre visite !<br /><br />';
+   $lang['TownMap_Temple_Resurrection']='<img src="adr/images/TownMap/pretresse2.gif " border="1" /><br /><br />Bonjour à vous aventurier(e)....Je vois que votre esprit a déjà quitté votre corps...<br /><br />Je vais devoir procéder à la restauration de votre âme !<br /><br />*Que les saints pouvoirs qui me sont conférés animent ce corps et régénère cet esprit !*<br /><br />Voila ! Vous êtes de nouveau en pleine forme.<br /><br />Merci de votre visite !<br /><br />';
 }
 
 if ( defined ('IN_TOWNMAP_FORGE'))
@@ -132,14 +132,14 @@ if ( defined ('IN_TOWNMAP_MAISON'))
 if ( defined ('IN_TOWNMAP_ENTRAINEMENT'))
 {
    $lang['TownMap_Entrainement']='La Tour d entrainement';
-   $lang['TownMap_Entrainement_Entree']='Alors Aventurier(e) ! On vient s\'entraîner ?<br/>Voyons voir de quoi tu es capable...<br/><br/>En garde !!!';
+   $lang['TownMap_Entrainement_Entree']='Alors Aventurier(e) ! On vient s\'entraîner ?<br/>Voyons voir de quoi tu es capable...<br/><br/>En garde !';
    $lang['TownMap_Entrainement_Challenge']='Défier un autre joueur';
 }
 
 if ( defined ('IN_TOWNMAP_ENTREPOT'))
 {
    $lang['TownMap_Entrepot']='Entrepot de votre personnage';
-   $lang['TownMap_Entrepot_Entree']='Bienvenue dans votre entrepôt Aventurier(e) !!! Vous désirez peut être un peu d aide ?? N hesitez pas à me le demander si vous en avez besoin.';
+   $lang['TownMap_Entrepot_Entree']='Bienvenue dans votre entrepôt Aventurier(e) ! Vous désirez peut être un peu d aide ?? N hesitez pas à me le demander si vous en avez besoin.';
 }
 
 if ( defined ('IN_TOWNMAP_COMBAT'))
@@ -221,7 +221,7 @@ if ( defined ('IN_TOWNMAP_SEASONS'))
    $lang['TownMap_seasons_time'] ='Changer de saison tous les :';
    $lang['TownMap_seasons_days'] ='jours';
    $lang['TownMap_seasons_submit'] ='Envoyer';
-   $lang['TownMap_seasons_updated'] ='Durée des saisons éditées avec succès !!!';
+   $lang['TownMap_seasons_updated'] ='Durée des saisons éditées avec succès !';
    $lang['TownMap_seasons_return'] ='Cliquez %sici%s pour retourner à la configuration des saisons';
 }
 
@@ -236,7 +236,7 @@ if ( defined ('IN_TOWNMAP_MUSICS'))
    $lang['TownMap_music_automn'] ='Mettez ici le nom de votre musique d automne :';
    $lang['TownMap_music_winter'] ='Mettez ici le nom de votre musique d hiver :';
    $lang['TownMap_musics_submit'] ='Envoyer';
-   $lang['TownMap_musics_updated'] ='Choix des musiques édité avec succès !!!';
+   $lang['TownMap_musics_updated'] ='Choix des musiques édité avec succès !';
    $lang['TownMap_musics_return'] ='Cliquez %sici%s pour retourner à la configuration des musiques';
 }
 

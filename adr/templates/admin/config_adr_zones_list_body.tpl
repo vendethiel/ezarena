@@ -8,6 +8,7 @@
 	<tr>
 		<th class="thCornerL">{L_ZONE_NAME}</th>
 		<th class="thTop">{L_ZONE_ELEMENT}</th>
+		<th class="thTop">{L_ZONE_LEVEL}</th>
 		<th class="thTop">{L_ZONE_ITEM}</th>
 		<th class="thTop">{L_ZONE_RETURN}</th>
 		<th class="thTop">{L_ZONE_DESTINATION2}</th>
@@ -20,6 +21,7 @@
 	<tr>
 		<td class="{zones.ROW_CLASS}" align="center">{zones.NAME}</td>
 		<td class="{zones.ROW_CLASS}" align="center">{zones.ELEMENT}</td>
+		<td class="{zones.ROW_CLASS}" align="center">{zones.LEVEL}</td>
 		<td class="{zones.ROW_CLASS}" align="center">{zones.ITEM}</td>
 		<td class="{zones.ROW_CLASS}" align="center">{zones.RETURN}</td>
 		<td class="{zones.ROW_CLASS}" align="center">{zones.DESTINATION2}</td>

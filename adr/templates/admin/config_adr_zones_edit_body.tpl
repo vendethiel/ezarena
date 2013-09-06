@@ -29,6 +29,10 @@
 		<td class="row1" width="60%" ><b>{L_ZONE_ITEM} :</b><br \>{L_ZONE_ITEM_EXPLAIN}</td>
 		<td class="row1" align="center" ><span class="gen">{ZONE_ITEM}</span></td>
 	</tr>
+	<tr>
+		<td class="row1"><b>{L_ZONE_LEVEL}</b></td>
+		<td class="row1" align="center"><input type="text" class="post" name="zone_level" value="{ZONE_LEVEL}" size="6" maxlength="255" /></td>
+	</tr>
 </table>
 
 <br clear="all" />
@@ -69,6 +73,7 @@
 		<td class="row1" width="60%"><b>{L_ZONE_DESTINATION4_COST} :</b><br />{L_ZONE_DESTINATION4_COST_EXLAIN}</td>
 		<td class="row1" align="center" ><input type="text" name="zone_cost4" value="{ZONE_COSTDESTINATION4}" size="10" maxlength="255" /></td>
 	</tr>
+<!-- V: no idea what that's supposed to be, but it sucks so ... REMOVED
 	<tr>
 		<td class="row2" width="60%" ><b>{L_ZONE_DESTINATION1} :</b><br \>{L_ZONE_DESTINATION1_EXPLAIN}</td>
 		<td class="row2" align="center" ><span class="gen">{ZONE_DESTINATION1}</span></td>
@@ -77,6 +82,7 @@
 		<td class="row1" width="60%"><b>{L_ZONE_DESTINATION1_COST} :</b><br />{L_ZONE_DESTINATION1_COST_EXLAIN}</td>
 		<td class="row1" align="center" ><input type="text" name="zone_cost1" value="{ZONE_COSTDESTINATION1}" size="10" maxlength="255" /></td>
 	</tr>
+-->
 </table>
 
 <br clear="all" />

@@ -303,9 +303,6 @@ Affiche l'image du rang dans l'admin des rangs
 # Rank Tags 1.0.2a - eviL
 Permet de personnaliser vos rangs à l'aide de balises HTML.
 
-# Reorder ACP Categories 1.0.3 - dvandersluis
-Ce MOD permet de réorganiser l'affichage de vos catégories dans l'ACP.
-
 # Replace posts
 Ce MOD permet à l'administrateur de remplacer des bouts de texte dans les posts sans utiliser la censure. Cela se révèle très utile suite par exemple à un changement d'URL ou bien à un changement de pseudo. 
 
@@ -429,6 +426,11 @@ Ajoute un système de NPC (PNJ) avancé au Zone Mod, permettant de dépasser la 
 # ADR : Advanced NPC System Expansion 0.2.3-beta - Ozzie
 Ajoute de nombreuses fonctionnalités au mod "Advanced NPC System", comme la possibilité de reporter un tricheur (avec la possiblité pour un administrateur de mp/bannir/... le joueur), permet aux PNJs d'apparaître dans plusieurs zones, les PNJs peuvent demander plusieurs objets, et vous pouvez ajouter des restrictions de classe/race/niveau/élément/alignement/a parlé avec tel PNJ/a fini tel quête (aucune, une ou plusieurs).
 
+# ADR : Level Required Zones 1.0.0 - Insydius
+Permet de limiter l'accès à une zone pour les personnes d'un certain niveau
+Addons :
+ - Addon pour NSEW Navigation - Informpro
+
 # ADR : Monster in multiple zones 1.0-beta - Dedo
 Permet de mettre les monstres dans plusieurs zones.
 
@@ -442,14 +444,14 @@ Intègre aussi différents mods ensemble (comme le quest book) et fixe certaines
 # ADR : Zone shoutbox & Battle Community Integration 1.0.0 - Informpro
 Permet d'utiliser la chatbox communautaire plutôt que la chatbox du zone_mod.
 
+# ADR (ST) : Armor Sets 0.1.2 - Seteo-Bloke
+Permet de créer des panoplies d'armures à équiper.
+
 # ADR (ST) : Cauldron 2.0.0 - one_piece
 Ajoute un système de chaudron pour faire des recettes.
 
 # ADR (ST) : Donation Mod - Seteo-Bloke
 Ajoute un système de Temple et de Lac auxquels vous pouvez faire des offrandes.
-
-# ADR (ST) : Armor Sets 0.1.2 - Seteo-Bloke
-Permet de créer des panoplies d'armures à équiper.
 
 # ADR (ST) : Graphical Battles 0.1.5 - Seteo-Bloke
 Permet d'ajouter des meilleurs graphismes aux combats.
@@ -466,6 +468,11 @@ Ajoute des sorts élémentaires offensifs
 
 # ADR (ST) : Mine update - cedô l'immortel
 Des ajouts pour la mine.
+
+# ADR (ST) : NSEW Navigation - ShadowTek
+Ajoute nord/sud/est/ouest aux zones.
+Addons :
+ - Addon hide price if free - Informpro
 
 # ADR (ST) : Rabitoshi 2.0 - one_piece
 Ajoute un système d'animalerie complet, intégré à ADR.

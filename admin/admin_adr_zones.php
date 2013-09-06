@@ -66,11 +66,13 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 	
 	$zonelist = $db->sql_fetchrowset($result);
 
+/*
 	$destination1_list = '<select name="zone_goto1">';
 	$destination1_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_destination'] . '</option>';
 	for ( $i = 0 ; $i < count($zonelist) ; $i ++)
 	  	$destination1_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
 	$destination1_list .= '</select>';
+*/
 
 	$destination2_list = '<select name="zone_goto2">';
 	$destination2_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_destination'] . '</option>';
@@ -207,6 +209,7 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 		"L_ZONE_BUILDINGS" => $lang['Adr_Zone_acp_buildings'],
 		"L_ZONE_EVENTS" => $lang['Adr_Zone_acp_events'],
 		"L_ZONE_CHANCE" => $lang['Adr_Zone_acp_chance'],
+		"L_ZONE_LEVEL" => $lang['Adr_Zone_acp_level'],
 		"L_ZONE_CHANCE_EXPLAIN" => $lang['Adr_Zone_acp_chance_explain'],
 		"L_ZONE_POINTWIN1" => $lang['Adr_Zone_acp_pointwin1'],
 		"L_ZONE_POINTWIN1_EXPLAIN" => $lang['Adr_Zone_acp_pointwin1_explain'],
@@ -279,7 +282,7 @@ else if ( $mode != "" )
 			//BEGIN lists
 			//
 
-			$existing_destination1 = $zones['goto1_name'];
+			// $existing_destination1 = $zones['goto1_name'];
 			$existing_destination2 = $zones['goto2_name'];
 			$existing_destination3 = $zones['goto3_name'];
 			$existing_destination4 = $zones['goto4_name'];
@@ -301,34 +304,54 @@ else if ( $mode != "" )
 
 			$zonelist = $db->sql_fetchrowset($result);
 
-			$destination1_list = '<select name="zone_goto1">';
+/*			$destination1_list = '<select name="zone_goto1">';
 			$destination1_list .= '<option value = "' . $existing_destination1 . '" >' . $existing_destination1 . '</option>';
 			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
+			{
+				if ($zonelist[$i]['zone_name'] == $existing_destination1 || $zonelist[$i]['zone_name'] == $zones['zone_name'])
+					continue;
 			  	$destination1_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+			}
 			$destination1_list .= '</select>';
-
+*/
 			$destination2_list = '<select name="zone_goto2">';
 			$destination2_list .= '<option value = "' . $existing_destination2 . '" >' . $existing_destination2_name . '</option><option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
 			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
+			{
+				if ($zonelist[$i]['zone_name'] == $existing_destination2 || $zonelist[$i]['zone_name'] == $zones['zone_name'])
+					continue;
 			  	$destination2_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+			}
 			$destination2_list .= '</select>';
 
 			$destination3_list = '<select name="zone_goto3">';
 			$destination3_list .= '<option value = "' . $existing_destination3 . '" >' . $existing_destination3_name . '</option><option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
 			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
+			{
+				if ($zonelist[$i]['zone_name'] == $existing_destination3 || $zonelist[$i]['zone_name'] == $zones['zone_name'])
+					continue;
 			  	$destination3_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+			}
 			$destination3_list .= '</select>';
 
 			$destination4_list = '<select name="zone_goto4">';
 			$destination4_list .= '<option value = "' . $existing_destination4 . '" >' . $existing_destination4_name . '</option><option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
 			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
+			{
+				if ($zonelist[$i]['zone_name'] == $existing_destination4 || $zonelist[$i]['zone_name'] == $zones['zone_name'])
+					continue;
 			  	$destination4_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+			}
 			$destination4_list .= '</select>';
 
 			$return_list = '<select name="zone_return">';
 			$return_list .= '<option value = "' . $existing_return . '" >' . $existing_return_name . '</option><option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
 			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
+			{
+				if ($zonelist[$i]['zone_name'] == $existing_return_name || $zonelist[$i]['zone_name'] == $zones['zone_name'])
+					continue;
 			  	$return_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+			}
 			$return_list .= '</select>';
 
 			//elements list
@@ -389,6 +412,8 @@ else if ( $mode != "" )
 			//
 
 			$template->assign_vars(array(
+				"ZONE_LEVEL" => $zones['zone_level'],
+
 				"ZONE_NAME" => $zones['zone_name'],
 				"ZONE_DESC" => $zones['zone_desc'],
 				"ZONE_IMG" => $zones['zone_img'],
@@ -400,7 +425,7 @@ else if ( $mode != "" )
 				"ZONE_DESTINATION3" => $destination3_list,
 				"ZONE_DESTINATION4" => $destination4_list,
 				"ZONE_RETURN" => $return_list,
-				"ZONE_COSTDESTINATION1" => $zones['cost_goto1'],
+				// "ZONE_COSTDESTINATION1" => $zones['cost_goto1'],
 				"ZONE_COSTDESTINATION2" => $zones['cost_goto2'],
 				"ZONE_COSTDESTINATION3" => $zones['cost_goto3'],
 				"ZONE_COSTDESTINATION4" => $zones['cost_goto4'],
@@ -479,6 +504,7 @@ else if ( $mode != "" )
 				"L_ZONE_BUILDINGS" => $lang['Adr_Zone_acp_buildings'],
 				"L_ZONE_EVENTS" => $lang['Adr_Zone_acp_events'],
 				"L_ZONE_CHANCE" => $lang['Adr_Zone_acp_chance'],
+				"L_ZONE_LEVEL" => $lang['Adr_Zone_acp_level'],
 				"L_ZONE_CHANCE_EXPLAIN" => $lang['Adr_Zone_acp_chance_explain'],
 				"L_ZONE_POINTWIN1" => $lang['Adr_Zone_acp_pointwin1'],
 				"L_ZONE_POINTWIN1_EXPLAIN" => $lang['Adr_Zone_acp_pointwin1_explain'],
@@ -520,12 +546,12 @@ else if ( $mode != "" )
 			$image = ( isset($HTTP_POST_VARS['zone_img']) ) ? trim($HTTP_POST_VARS['zone_img']) : trim($HTTP_GET_VARS['zone_img']);
 			$element = ( isset($HTTP_POST_VARS['zone_element']) ) ? trim($HTTP_POST_VARS['zone_element']) : trim($HTTP_GET_VARS['zone_element']);
 			$item = ( isset($HTTP_POST_VARS['zone_item']) ) ? trim($HTTP_POST_VARS['zone_item']) : trim($HTTP_GET_VARS['zone_item']);
-			$goto1 = ( isset($HTTP_POST_VARS['zone_goto1']) ) ? trim($HTTP_POST_VARS['zone_goto1']) : trim($HTTP_GET_VARS['zone_goto1']);
+			// $goto1 = ( isset($HTTP_POST_VARS['zone_goto1']) ) ? trim($HTTP_POST_VARS['zone_goto1']) : trim($HTTP_GET_VARS['zone_goto1']);
 			$goto2 = ( isset($HTTP_POST_VARS['zone_goto2']) ) ? trim($HTTP_POST_VARS['zone_goto2']) : trim($HTTP_GET_VARS['zone_goto2']);
 			$goto3 = ( isset($HTTP_POST_VARS['zone_goto3']) ) ? trim($HTTP_POST_VARS['zone_goto3']) : trim($HTTP_GET_VARS['zone_goto3']);
 			$goto4 = ( isset($HTTP_POST_VARS['zone_goto4']) ) ? trim($HTTP_POST_VARS['zone_goto4']) : trim($HTTP_GET_VARS['zone_goto4']);
 			$return = ( isset($HTTP_POST_VARS['zone_return']) ) ? trim($HTTP_POST_VARS['zone_return']) : trim($HTTP_GET_VARS['zone_return']);
-			$cost1 = $HTTP_POST_VARS['zone_cost1'];
+			// $cost1 = $HTTP_POST_VARS['zone_cost1'];
 			$cost2 = $HTTP_POST_VARS['zone_cost2'];
 			$cost3 = $HTTP_POST_VARS['zone_cost3'];
 			$cost4 = $HTTP_POST_VARS['zone_cost4'];
@@ -549,7 +575,8 @@ else if ( $mode != "" )
 			$pointwin2 = $HTTP_POST_VARS['zone_pointwin2'];
 			$pointloss1 = $HTTP_POST_VARS['zone_pointloss1'];
 			$pointloss2 = $HTTP_POST_VARS['zone_pointloss2'];
-			$chance = $HTTP_POST_VARS['zone_chance'];
+			$chance = intval($HTTP_POST_VARS['zone_chance']);
+			$level = intval($HTTP_POST_VARS['zone_level']);
 
 			$monsters = array();
 			$monsters = $HTTP_POST_VARS['monsters'];
@@ -567,21 +594,22 @@ else if ( $mode != "" )
 					$monsters_list .= ( $monsters_list == '' ) ? $monsters[$a] : ", ".$monsters[$a];
 			}
 
-			if ( $name == '' || $description == '' || $image == '' || $element == '' || $goto1 == '' || $cost1 == '' || $cost2 == '' || $cost3 == '' || $cost4 == '' || $costreturn == '' || $pointwin1 == '' || $pointwin2 == '' || $pointloss1 == '' || $pointloss2 == '' || $chance == '' )
+			// || $goto1 == ''  || $cost1 == ''
+			if ( $name == '' || $description == '' || $image == '' || $element == '' || $cost2 == '' || $cost3 == '' || $cost4 == '' || $costreturn == '' || $pointwin1 == '' || $pointwin2 == '' || $pointloss1 == '' || $pointloss2 == '' || $chance == '' )
 				adr_previous( Fields_empty , admin_adr_zones , '' );
 
+			// goto1_name = '" . str_replace("\'", "''", $goto1) . "',
+			// cost_goto1 = '$cost1',
 			$sql = "UPDATE " . ADR_ZONES_TABLE . "
 				SET zone_name = '" . str_replace("\'", "''", $name) . "', 
 				zone_desc = '" . str_replace("\'", "''", $description) . "', 
 				zone_img = '" . str_replace("\'", "''", $image) . "',
 				zone_element = '" . str_replace("\'", "''", $element) . "',
 				zone_item = '" . str_replace("\'", "''", $item) . "',
-				cost_goto1 = '$cost1',
 				cost_goto2 = '$cost2',
 				cost_goto3 = '$cost3',
 				cost_goto4 = '$cost4',
 				cost_return = '$costreturn',
-				goto1_name = '" . str_replace("\'", "''", $goto1) . "',
 				goto2_name = '" . str_replace("\'", "''", $goto2) . "',
 				goto3_name = '" . str_replace("\'", "''", $goto3) . "',
 				goto4_name = '" . str_replace("\'", "''", $goto4) . "',
@@ -606,7 +634,8 @@ else if ( $mode != "" )
 				zone_pointwin2 = '$pointwin2',
 				zone_pointloss1 = '$pointloss1',
 				zone_pointloss2 = '$pointloss2',
-				zone_chance = '$chance'
+				zone_chance = '$chance',
+				zone_level = '$level'
 				WHERE zone_id = '$zone_id'";
 			if( !($result = $db->sql_query($sql)) )
 				message_die(GENERAL_ERROR, "Couldn't update zones info", "", __LINE__, __FILE__, $sql);
@@ -630,12 +659,12 @@ else if ( $mode != "" )
 			$image = ( isset($HTTP_POST_VARS['zone_img']) ) ? trim($HTTP_POST_VARS['zone_img']) : trim($HTTP_GET_VARS['zone_img']);
 			$element = ( isset($HTTP_POST_VARS['zone_element']) ) ? trim($HTTP_POST_VARS['zone_element']) : trim($HTTP_GET_VARS['zone_element']);
 			$item = ( isset($HTTP_POST_VARS['zone_item']) ) ? trim($HTTP_POST_VARS['zone_item']) : trim($HTTP_GET_VARS['zone_item']);
-			$goto1 = ( isset($HTTP_POST_VARS['zone_goto1']) ) ? trim($HTTP_POST_VARS['zone_goto1']) : trim($HTTP_GET_VARS['zone_goto1']);
+			// $goto1 = ( isset($HTTP_POST_VARS['zone_goto1']) ) ? trim($HTTP_POST_VARS['zone_goto1']) : trim($HTTP_GET_VARS['zone_goto1']);
 			$goto2 = ( isset($HTTP_POST_VARS['zone_goto2']) ) ? trim($HTTP_POST_VARS['zone_goto2']) : trim($HTTP_GET_VARS['zone_goto2']);
 			$goto3 = ( isset($HTTP_POST_VARS['zone_goto3']) ) ? trim($HTTP_POST_VARS['zone_goto3']) : trim($HTTP_GET_VARS['zone_goto3']);
 			$goto4 = ( isset($HTTP_POST_VARS['zone_goto4']) ) ? trim($HTTP_POST_VARS['zone_goto4']) : trim($HTTP_GET_VARS['zone_goto4']);
 			$return = ( isset($HTTP_POST_VARS['zone_return']) ) ? trim($HTTP_POST_VARS['zone_return']) : trim($HTTP_GET_VARS['zone_return']);
-			$cost1 = $HTTP_POST_VARS['zone_cost1'];
+			// $cost1 = $HTTP_POST_VARS['zone_cost1'];
 			$cost2 = $HTTP_POST_VARS['zone_cost2'];
 			$cost3 = $HTTP_POST_VARS['zone_cost3'];
 			$cost4 = $HTTP_POST_VARS['zone_cost4'];
@@ -659,7 +688,8 @@ else if ( $mode != "" )
 			$pointwin2 = $HTTP_POST_VARS['zone_pointwin2'];
 			$pointloss1 = $HTTP_POST_VARS['zone_pointloss1'];
 			$pointloss2 = $HTTP_POST_VARS['zone_pointloss2'];
-			$chance = $HTTP_POST_VARS['zone_chance'];
+			$chance = intval($HTTP_POST_VARS['zone_chance']);
+			$level = intval($HTTP_POST_VARS['zone_level']);
 
 			$monsters = array();
 			$monsters = $HTTP_POST_VARS['monsters'];
@@ -681,8 +711,8 @@ else if ( $mode != "" )
 				adr_previous( Fields_empty , admin_adr_zones , '' );
 
 			$sql = "INSERT INTO " . ADR_ZONES_TABLE . " 
-				( zone_id , zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto1, cost_goto2, cost_goto3, cost_goto4, cost_return, goto1_name, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, zone_mine, zone_enchant, zone_monsters_list )
-				VALUES ( '$zone_id' ,'" . str_replace("\'", "''", $name) . "','" . str_replace("\'", "''", $description) . "', '" . str_replace("\'", "''", $image) . "' , '" . str_replace("\'", "''", $element) . "', '" . str_replace("\'", "''", $item) . "' , '$cost1' , '$cost2' , '$cost3' , '$cost4' , '$costreturn' , '" . str_replace("\'", "''", $goto1) . "' , '" . str_replace("\'", "''", $goto2) . "' , '" . str_replace("\'", "''", $goto3) . "' , '" . str_replace("\'", "''", $goto4) . "' , '" . str_replace("\'", "''", $return) . "', '$shops' , '$forge' , '$prison' , '$temple' , '$bank' , '$event1' , '$event2' , '$event3' , '$event4' , '$event5' , '$event6' , '$event7' , '$event8' , '$pointwin1' , '$pointwin2' , '$pointloss1' , '$pointloss2' , '$chance' , '$mine' , '$enchant', '" . $monsters_list . "' )";
+				( zone_id , zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto2, cost_goto3, cost_goto4, cost_return, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, zone_mine, zone_enchant, zone_monsters_list , zone_chance )
+				VALUES ( '$zone_id' ,'" . str_replace("\'", "''", $name) . "','" . str_replace("\'", "''", $description) . "', '" . str_replace("\'", "''", $image) . "' , '" . str_replace("\'", "''", $element) . "', '" . str_replace("\'", "''", $item) . "' , '$cost2' , '$cost3' , '$cost4' , '$costreturn' , '" . str_replace("\'", "''", $goto2) . "' , '" . str_replace("\'", "''", $goto3) . "' , '" . str_replace("\'", "''", $goto4) . "' , '" . str_replace("\'", "''", $return) . "', '$shops' , '$forge' , '$prison' , '$temple' , '$bank' , '$event1' , '$event2' , '$event3' , '$event4' , '$event5' , '$event6' , '$event7' , '$event8' , '$pointwin1' , '$pointwin2' , '$pointloss1' , '$pointloss2' , '$chance' , '$mine' , '$enchant', '" . $monsters_list . "' , '$level' )";
 			$result = $db->sql_query($sql);
 			if( !$result )
 				message_die(GENERAL_ERROR, "Couldn't insert new zones", "", __LINE__, __FILE__, $sql);
@@ -723,8 +753,9 @@ else
 			"ROW_CLASS" => $row_class,
 			"NAME" => $zones[$i]['zone_name'],
 			"ELEMENT" => $zones[$i]['zone_element'],
+			"LEVEL" => $zones[$i]['zone_level'],
 			"ITEM" => $required_item,
-			"DESTINATION1" => $zones[$i]['goto1_name'] ,
+			// "DESTINATION1" => $zones[$i]['goto1_name'] ,
 			"DESTINATION2" => $zone2_value,
 			"DESTINATION3" => $zone3_value,
 			"DESTINATION4" => $zone4_value,
@@ -735,6 +766,7 @@ else
 	}
 
 	$template->assign_vars(array(
+		"L_ZONE_LEVEL" => $lang['Adr_Zone_acp_level'],
 		"L_ZONE_TITLE" => $lang['Adr_Zone_acp_title'],
 		"L_ZONE_EXPLAIN" => $lang['Adr_Zone_acp_title_explain'],
 		"L_ZONE_NAME" => $lang['Adr_Zone_acp_name'],
