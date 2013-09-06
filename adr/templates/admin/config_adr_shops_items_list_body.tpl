@@ -14,7 +14,7 @@
 	<tr>
 		<th align="center">{L_ITEM_NAME}</th>
 		<th align="center">{L_ITEM_DESC}</th>
-		<th align="center" colspan="2">&nbsp;</th>
+		<th align="center" colspan="3">&nbsp;</th>
 		<th align="center">{L_ITEM_TYPE}</th>
 		<th align="center">{L_ACTION}</a></th>
 	</tr>
@@ -31,7 +31,7 @@
 			<b>{L_ITEM_QUALITY}</b>: {items.ITEM_QUALITY}<br />
 			<b>{L_ITEM_POWER}</b>: {items.ITEM_POWER}<br />
 			<b>{L_ITEM_WEIGHT}</b>: {items.ITEM_WEIGHT}<br />
-			<b>{L_ITEM_ZONE</b>: {items.ITEM_ZONE}</td>
+			<b>{L_ITEM_ZONE}</b>: {items.ITEM_ZONE}<br/>
 			<b>{L_ITEM_DURATION}</b>: {items.ITEM_DURATION}/{items.ITEM_MAX_DURATION}<br />
 		</span></td>
 		<td class="{items.ROW_CLASS}" align="left" width="25%" valign="top"><span class="gensmall">

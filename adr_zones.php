@@ -552,9 +552,6 @@ if ( $goto4 )
 
 		header('Location:'.append_sid("adr_zones.$phpEx"));
 		adr_previous( Adr_zone_change_success , adr_zones , '' );
-				echo '<script>setTimeout(function () {
-					document.location = "' . append_sid('adr_zones.'.$phpEx) . '"
-				}, 200);</script>';
 		break;
 	}
 	else

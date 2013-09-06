@@ -15,6 +15,7 @@
 		<th align="center">{L_ITEM_IMG}</th>
 		<th align="center">{L_ITEM_NAME}</th>
 		<th align="center">{L_ITEM_DESC}</th>
+		<th align="center">{L_ITEM_ZONE}</th>
 		<th align="center" colspan="2">{L_ACTION}</a></th>
 	</tr>
 
@@ -23,6 +24,7 @@
 		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_IMG}</td>
 		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_NAME}</td>
 		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_DESC}</td>
+		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_ZONE}</td>
 		<td class="{items.ROW_CLASS}" align="center"><a href="{items.U_ITEM_EDIT}">{L_EDIT}</a></td>
 		<td class="{items.ROW_CLASS}" align="center"><a href="{items.U_ITEM_DELETE}">{L_DELETE}</a></td>
 	</tr>

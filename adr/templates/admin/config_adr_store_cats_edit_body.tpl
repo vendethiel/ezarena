@@ -31,6 +31,10 @@
 		<td class="row2" align="center" ><input type="text" name="item_img" value="{ITEM_IMG}" size="30" maxlength="255" /><br /><img src="../adr/images/store/{ITEM_IMG}" alt="{ITEM_NAME}" /></td>
 	<!-- END edit -->
 	</tr>
+	<tr> 
+      <td class="row2" width="60%" ><b>{L_STORE_ZONE} :</b><br \>{L_STORE_ZONE_EXPLAIN}</td> 
+      <td class="row2" align="center" ><span class="gen">{STORE_ZONE}</span></td> 
+   </tr>
 </table>
 
 <br clear="all" />

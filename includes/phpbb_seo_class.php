@@ -400,9 +400,9 @@ class phpbb_seo {
 			'meta_keywords' => '',
 			// Here you can hard code a static default title, description and keywords
 			// As is, the mod will return information based on the phpbb config
-			'meta_title_def' => "forum ultimarena", 
-			'meta_desc_def' => "premod ultimarena jeux videos fun",  
-			'meta_keywords_def' => "premod videos pps jeux arcade fun freewares",
+			'meta_title_def' => "", 
+			'meta_desc_def' => "fun rpg",  
+			'meta_keywords_def' => "",
 			'meta_lang' => 'fr',
 			'meta_cat' => 'general',
 			'meta_robots' => 'index,follow',

@@ -125,18 +125,43 @@
 			</tr>
 		</table>
 		</form>
-
 		</td>
-        <td align="center" valign="top" class="row1"><img src="adr/images/TownMap/{SAISON}/Tuile_Haut.gif "/><br />
-        	<img src="adr/images/TownMap/{SAISON}/Tuile_1_1.gif" /><!-- IF HAS_PRISON --><a href="{U_TOWNMAP_PRISON}"><img src="adr/images/TownMap/{SAISON}/Tuile_1_2.gif" border="0" alt="{L_TOWNMAP_PRISON}" title="Prison" /></a><!-- ELSE --><img class="greyed" src="adr/images/TownMap/{SAISON}/Tuile_empty_downwalled.png" style="width: 84px; height: 103px" title="Prison ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_1_3.gif"/><!-- IF HAS_BANK --><a href="{U_TOWNMAP_BANQUE}"><img src="adr/images/TownMap/{SAISON}/Tuile_1_4.gif" border="0" alt="{L_TOWNMAP_BANQUE}" title="Banque" /></a><!-- ELSE --><img src="adr/images/TownMap/{SAISON}/Tuile_empty.png" style="width: 107px; height: 103px" border="0" alt="{L_TOWNMAP_BANQUE}" title="Banque ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_1_5.gif"/><!-- IF HAS_MINE --><a href="{U_TOWNMAP_MINE}"><img src="adr/images/TownMap/{SAISON}/Tuile_1_6.gif" border="0" alt="{L_TOWNMAP_MINE}" title="Mine" /></a><!-- ELSE --><img class="greyed" src="adr/images/TownMap/{SAISON}/Tuile_empty.png" style="width: 92px; height: 103px" border="0" title="Mine ({L_BUILDING_UNAV})" alt="{L_TOWNMAP_MINE}" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_1_7.gif"/><br />
 
-        	<img src="adr/images/TownMap/{SAISON}/Tuile_Milieu.gif"/><br />
+		<!-- some settings are done because Carte4 (winter) sucks :( -->
+		<style>
+		.tile_Carte4_Haut {
+			width: 818px;
+		}
+		.tile_Carte4_27 {
+			width: 129px !important;
+		}
+		.tile_Carte4_35 {
+			width: 133px;
+			height: 121px;
+		}
+		.tile_Carte4_Milieu {
+			width: 818px;
+		}
+		.tile_Carte4_Bas {
+			width: 818px;
+		}
+		.tile_Carte4_39 {
+			width: 63px;
+			height: 121px;
+		}
+		</style>
+        <td align="center" valign="top" class="row1">
+        	<img src="adr/images/TownMap/{SAISON}/Tuile_Haut.gif" class="tile_{SAISON}_Haut" /><br />
 
-        	<img src="adr/images/TownMap/{SAISON}/Tuile_2_1.gif"/><!-- IF HAS_ENCHANT --><a href="{U_TOWNMAP_ENCHANTEMENT}"><img src="adr/images/TownMap/{SAISON}/Tuile_2_2.gif" border="0" alt="{L_TOWNMAP_ENCHANTEMENT}" title="Pierre Runique" /></a><!-- ELSE --><img src="adr/images/TownMap/{SAISON}/Tuile_empty.png" style="width: 55px; height: 89px;" border="0" alt="{L_TOWNMAP_ENCHANTEMENT}" title="Pierre Runique ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_2_3.gif"/><!-- IF HAS_TEMPLE --><a href="{U_TOWNMAP_TEMPLE}"><img title="Temple" src="adr/images/TownMap/{SAISON}/Tuile_2_4.gif" border="0" alt="{L_TOWNMAP_TEMPLE}" /></a><!-- ELSE --><img src="adr/images/TownMap/{SAISON}/Tuile_empty.png" style="width: 87px; height: 89px;" border="0" title="Temple ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_2_5.gif"/><!-- IF HAS_SHOPS --><a href="{U_TOWNMAP_BOUTIQUE}"><img src="adr/images/TownMap/{SAISON}/Tuile_2_6.gif" border="0" title="Magasins" alt="{L_TOWNMAP_BOUTIQUE}" /></a><!-- ELSE --><img src="adr/images/TownMap/{SAISON}/Tuile_empty.png" style="width: 89px; height: 89px;" border="0" title="Magasins ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_2_7.gif"/><a href="{U_TOWNMAP_MAISON}"><img title="Maison" src="adr/images/TownMap/{SAISON}/Tuile_2_8.gif" border="0" alt="{L_TOWNMAP_MAISON}" /></a><img src="adr/images/TownMap/{SAISON}/Tuile_2_9.gif"/><br />
+        	<img src="adr/images/TownMap/{SAISON}/Tuile_1_1.gif" style="height: 103px;" /><!-- IF HAS_PRISON --><a href="{U_TOWNMAP_PRISON}"><img src="adr/images/TownMap/{SAISON}/Tuile_1_2.gif" border="0" alt="{L_TOWNMAP_PRISON}" title="Prison" /></a><!-- ELSE --><img class="greyed" src="adr/images/TownMap/{SAISON}/Tuile_empty_downwalled.png" style="width: 84px; height: 103px" title="Prison ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_1_3.gif" style="height: 103px; max-width: 242px;" /><!-- IF HAS_BANK --><a href="{U_TOWNMAP_BANQUE}"><img src="adr/images/TownMap/{SAISON}/Tuile_1_4.gif" border="0" alt="{L_TOWNMAP_BANQUE}" title="Banque" /></a><!-- ELSE --><img src="adr/images/TownMap/{SAISON}/Tuile_empty.png" style="width: 107px; height: 103px" border="0" alt="{L_TOWNMAP_BANQUE}" title="Banque ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_1_5.gif" style="height: 103px;" /><!-- IF HAS_MINE --><a href="{U_TOWNMAP_MINE}"><img src="adr/images/TownMap/{SAISON}/Tuile_1_6.gif" border="0" alt="{L_TOWNMAP_MINE}" title="Mine" /></a><!-- ELSE --><img class="greyed" src="adr/images/TownMap/{SAISON}/Tuile_empty.png" style="width: 92px; height: 103px" border="0" title="Mine ({L_BUILDING_UNAV})" alt="{L_TOWNMAP_MINE}" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_1_7.gif" style="height: 103px;" /><br />
 
-        	<img src="adr/images/TownMap/{SAISON}/Tuile_Bas.gif"/><br />
+        	<img src="adr/images/TownMap/{SAISON}/Tuile_Milieu.gif" class="tile_{SAISON}_milieu" /><br />
 
-        	<img src="adr/images/TownMap/{SAISON}/Tuile_3_1.gif"/><!-- IF HAS_FORGE --><a href="{U_TOWNMAP_FORGE}"><img src="adr/images/TownMap/{SAISON}/Tuile_3_2.gif" border="0" alt="{L_TOWNMAP_FORGE}" title="Forge" /></a><!-- ELSE --><img src="adr/images/TownMap/{SAISON}/Tuile_forge_empty.gif" border="0" alt="{L_TOWNMAP_FORGE}" title="Forge ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_3_3.gif"/><a href="{U_SHAME}"><img title="Tour de garde" src="adr/images/TownMap/{SAISON}/Tuile_3_4.gif" border="0" alt="{L_TOWNMAP_ENTRAINEMENT}" /></a><img src="adr/images/TownMap/{SAISON}/Tuile_3_5.gif" border="0" alt="{L_TOWNMAP_COMBAT}" /><!--<a href="{U_TOWNMAP_ENTREPOT}"><img title="Entrepôt" src="adr/images/TownMap/{SAISON}/Tuile_3_6.gif" border="0" alt="{L_TOWNMAP_ENTREPOT}" /></a>--><a href="{U_ZONE_BARRACK}"><img title="Tour" src="adr/images/TownMap/{SAISON}/Tuile_3_6.gif" border="0" /></a><img src="adr/images/TownMap/{SAISON}/Tuile_3_7.gif"/><a href="{U_TOWNMAP_CLAN}"><img title="Taverne des guildes" src="adr/images/TownMap/{SAISON}/Tuile_3_8.gif" border="0" alt="{L_TOWNMAP_CLAN}" /></a><img src="adr/images/TownMap/{SAISON}/Tuile_3_9.gif"/><br />
+        	<img src="adr/images/TownMap/{SAISON}/Tuile_2_1.gif" style="height: 89px;" /><!-- IF HAS_ENCHANT --><a href="{U_TOWNMAP_ENCHANTEMENT}"><img src="adr/images/TownMap/{SAISON}/Tuile_2_2.gif" border="0" alt="{L_TOWNMAP_ENCHANTEMENT}" title="Pierre Runique" /></a><!-- ELSE --><img src="adr/images/TownMap/{SAISON}/Tuile_empty.png" style="width: 55px; height: 89px;" border="0" alt="{L_TOWNMAP_ENCHANTEMENT}" title="Pierre Runique ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_2_3.gif" style="height: 89px;" /><!-- IF HAS_TEMPLE --><a href="{U_TOWNMAP_TEMPLE}"><img title="Temple" src="adr/images/TownMap/{SAISON}/Tuile_2_4.gif" border="0" alt="{L_TOWNMAP_TEMPLE}" /></a><!-- ELSE --><img src="adr/images/TownMap/{SAISON}/Tuile_empty.png" style="width: 87px; height: 89px;" border="0" title="Temple ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_2_5.gif" style="height: 89px;" /><!-- IF HAS_SHOPS --><a href="{U_TOWNMAP_BOUTIQUE}"><img src="adr/images/TownMap/{SAISON}/Tuile_2_6.gif" border="0" title="Magasins" alt="{L_TOWNMAP_BOUTIQUE}" /></a><!-- ELSE --><img src="adr/images/TownMap/{SAISON}/Tuile_empty.png" style="width: 89px; height: 89px;" border="0" title="Magasins ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_2_7.gif" class="tile_{SAISON}_27" style="height: 89px;" /><a href="{U_TOWNMAP_MAISON}"><img title="Maison" src="adr/images/TownMap/{SAISON}/Tuile_2_8.gif" style="height: 89px;" border="0" alt="{L_TOWNMAP_MAISON}" /></a><img src="adr/images/TownMap/{SAISON}/Tuile_2_9.gif" style="height: 89px;" /><br />
+
+        	<img src="adr/images/TownMap/{SAISON}/Tuile_Bas.gif" class="tile_{SAISON}_Bas" /><br />
+
+        	<img src="adr/images/TownMap/{SAISON}/Tuile_3_1.gif"/><!-- IF HAS_FORGE --><a href="{U_TOWNMAP_FORGE}"><img src="adr/images/TownMap/{SAISON}/Tuile_3_2.gif" border="0" alt="{L_TOWNMAP_FORGE}" title="Forge" /></a><!-- ELSE --><img src="adr/images/TownMap/{SAISON}/Tuile_forge_empty.gif" border="0" alt="{L_TOWNMAP_FORGE}" title="Forge ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_3_3.gif"/><a href="{U_SHAME}"><img title="Tour de garde" src="adr/images/TownMap/{SAISON}/Tuile_3_4.gif" border="0" alt="{L_TOWNMAP_ENTRAINEMENT}" /></a><img src="adr/images/TownMap/{SAISON}/Tuile_3_5.gif" class="tile_{SAISON}_35" border="0" alt="{L_TOWNMAP_COMBAT}" /><!--<a href="{U_TOWNMAP_ENTREPOT}"><img title="Entrepôt" src="adr/images/TownMap/{SAISON}/Tuile_3_6.gif" border="0" alt="{L_TOWNMAP_ENTREPOT}" /></a>--><a href="{U_ZONE_BARRACK}"><img title="Tour" src="adr/images/TownMap/{SAISON}/Tuile_3_6.gif" border="0" /></a><img src="adr/images/TownMap/{SAISON}/Tuile_3_7.gif" /><a href="{U_TOWNMAP_CLAN}"><img title="Taverne des guildes" src="adr/images/TownMap/{SAISON}/Tuile_3_8.gif" border="0" alt="{L_TOWNMAP_CLAN}" /></a><img src="adr/images/TownMap/{SAISON}/Tuile_3_9.gif" class="tile_{SAISON}_39" /><br />
         	<!-- IF HAS_MONSTERS -->
         	<a href="{U_TOWNMAP_COMBAT}"><img src="adr/images/TownMap/{SAISON}/Tuile_Monstre.gif" border="0" alt="{L_TOWNMAP_MONSTRE}" /></a>
         	<!-- ENDIF -->

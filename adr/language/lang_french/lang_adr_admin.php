@@ -739,3 +739,8 @@ $lang['Adr_classes_all']='Toutes les classes';
 $lang['Adr_elements_all']='Tous les éléments';
 $lang['Adr_alignments_all']='Tous les alignements';
 $lang['Adr_levels_all']='N\'importe quel niveau';
+
+# Zone specific shops
+$lang['Adr_store_zone_nothing']= 'Pas de zone spécifique'; 
+$lang['Adr_store_zone_explain']= 'Choisissez la zone où le magasin se situera '; 
+$lang['Adr_store_zone'] = 'Nom de la zone'; 

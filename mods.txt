@@ -1,19 +1,24 @@
 EzArena (Ullti modifiée)
 
 Templates :
- - subSilver
  - acid
  - aqua
  - chronicles
  - dark ages
+ - elektro
  - jasidog
  - jedi knights 2
  - macintosh
- - WorkStation[Fusion]
+ - maxiblue
+ - subSilver
+ - subLinux
+ - workStation[Fusion]
+ - xboxXtreme
 
  - pussycatblue
  - subsilverplus
  - phpbbeos
+ - creamygreen
  - creamywhite
  - odysseygrey
  - christmas
@@ -443,6 +448,9 @@ Intègre aussi différents mods ensemble (comme le quest book) et fixe certaines
 
 # ADR : Zone shoutbox & Battle Community Integration 1.0.0 - Informpro
 Permet d'utiliser la chatbox communautaire plutôt que la chatbox du zone_mod.
+
+# ADR : Zone Specific Shops 0.0.3-beta - cêdo 
+Permet de mettre des magasins dans certaines zones seulement.
 
 # ADR (ST) : Armor Sets 0.1.2 - Seteo-Bloke
 Permet de créer des panoplies d'armures à équiper.

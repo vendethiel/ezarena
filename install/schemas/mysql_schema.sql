@@ -2094,3 +2094,7 @@ CREATE TABLE `phpbb_adr_character_quest_log_history` (
 
 # ADR - Zones by level
 ALTER TABLE `phpbb_adr_zones` ADD `zone_level` INT(8) DEFAULT '0' NOT NULL;
+
+# ADR - Zones specific shops
+ALTER TABLE `phpbb_adr_stores` ADD `store_zone` int(8) NOT NULL default '0'; 
+ALTER TABLE `phpbb_adr_shops` ADD `shop_zone` int(8) NOT NULL default '0'; 

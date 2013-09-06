@@ -167,7 +167,9 @@ window.onload = doOnLoadMenuACP;
 </script> 
 <table width="100%" cellpadding="4" cellspacing="0" border="0" align="center">
   <tr> 
-	<td align="center" ><a href="{U_FORUM_INDEX}" target="_parent"><img src="../templates/_shared/ultima.gif" border="0" /></a></td>
+	<td align="center" ><a href="{U_FORUM_INDEX}" target="_parent">
+		<!--<img src="../templates/_shared/ultima.gif" border="0" />-->
+	</a></td>
   </tr>
   <tr> 
 	<td align="center" > 
