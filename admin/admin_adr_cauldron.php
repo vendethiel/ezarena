@@ -25,7 +25,7 @@ include_once('./pagestart.' . $phpEx);
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);
-	$module['Adr']['Adr_Cauldron'] = $filename;
+	$module['ADR-Recipes']['Adr_Cauldron'] = $filename;
 
 	return;
 }

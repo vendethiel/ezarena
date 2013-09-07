@@ -2153,3 +2153,29 @@ ALTER TABLE `phpbb_adr_characters` ADD `character_skill_blacksmithing_uses` INT(
 ALTER TABLE `phpbb_adr_characters` ADD `character_skill_blacksmithing` INT( 8 ) UNSIGNED DEFAULT '1' NOT NULL ;
 ALTER TABLE `phpbb_adr_elements` ADD `element_skill_blacksmithing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
 ALTER TABLE `phpbb_adr_races` ADD `race_skill_blacksmithing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
+
+# ADR - Skills
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_alchemy_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_alchemy` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_elements` ADD `element_skill_alchemy_bonus` INT( 8 ) DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_races` ADD `race_skill_alchemy_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_fishing_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_fishing` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_elements` ADD `element_skill_fishing_bonus` INT( 8 ) DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_races` ADD `race_skill_fishing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_herbalism_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_herbalism` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_elements` ADD `element_skill_herbalism_bonus` INT( 8 ) DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_races` ADD `race_skill_herbalism_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_lumberjack_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_lumberjack` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_elements` ADD `element_skill_lumberjack_bonus` INT( 8 ) DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_races` ADD `race_skill_lumberjack_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_tailoring_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_tailoring` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_elements` ADD `element_skill_tailoring_bonus` INT( 8 ) DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_races` ADD `race_skill_tailoring_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_hunting_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_hunting` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_elements` ADD `element_skill_hunting_bonus` INT( 8 ) DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_races` ADD `race_skill_hunting_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;

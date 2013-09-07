@@ -1,0 +1,8 @@
+MODS swaps :
+(item types)
+29->36 animals
+30->37 tools wood working
+
+(skills)
+12->14 alchemy
+7->15 fishing

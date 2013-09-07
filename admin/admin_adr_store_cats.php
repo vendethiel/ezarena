@@ -25,7 +25,7 @@ define('IN_ADR_CHARACTER', 1);
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);
-	$module['Adr']['Adr_store_cats'] = $filename;
+	$module['Adr_Items']['Adr_store_cats'] = $filename;
 
 	return;
 }

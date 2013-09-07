@@ -189,6 +189,30 @@ function setCheckboxes(theForm, elementName, isChecked)
 		<td align="center" class="row1"><span class="gensmall">{L_BLACKSMITHING} : <input type="post" name="character_skill_blacksmithing_uses" value="{BLACKSMITHING_MIN}" size="5"> / {BLACKSMITHING_MAX}</td>
 		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" name="character_skill_blacksmithing" value="{BLACKSMITHING}" size="5"></td>
 	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_FISHING} : <input type="post" name="character_skill_fishing_uses" value="{FISHING_MIN}" size="5"> / {FISHING_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" name="character_skill_fishing" value="{FISHING}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_HERBALISM} : <input type="post" name="character_skill_herbalism_uses" value="{HERBALISM_MIN}" size="5"> / {HERBALISM_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" name="character_skill_herbalism" value="{HERBALISM}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_LUMBERJACK} : <input type="post" name="character_skill_lumberjack_uses" value="{LUMBERJACK_MIN}" size="5"> / {LUMBERJACK_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" name="character_skill_lumberjack" value="{LUMBERJACK}" size="5"></td>
+	</tr>	
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_HUNTING} : <input type="post" name="character_skill_hunting_uses" value="{HUNTING_MIN}" size="5"> / {HUNTING_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" name="character_skill_hunting" value="{HUNTING}" size="5"></td>
+	</tr>	
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_TAILORING} : <input type="post" name="character_skill_tailoring_uses" value="{TAILORING_MIN}" size="5"> / {TAILORING_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" name="character_skill_tailoring" value="{TAILORING}" size="5"></td>
+	</tr>	
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_ALCHEMY} : <input type="post" name="character_skill_alchemy_uses" value="{ALCHEMY_MIN}" size="5"> / {ALCHEMY_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" name="character_skill_alchemy" value="{ALCHEMY}" size="5"></td>
+	</tr>
 </table>
 
 <br clear="all" />

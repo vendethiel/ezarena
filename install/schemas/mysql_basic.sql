@@ -996,3 +996,26 @@ INSERT INTO phpbb_adr_skills (skill_id, skill_name, skill_desc, skill_img, skill
 # ADR - Blacksmithing
 INSERT INTO phpbb_adr_skills (skill_id, skill_name, skill_desc, skill_img, skill_req, skill_chance) VALUES (13, 'Adr_blacksmithing', 'Adr_skill_blacksmithing_desc', 'skill_blacksmithing.gif', 50, 5);
 INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (95, 100, 'Adr_items_type_tools_blacksmithing');
+
+# ADR - Skills
+INSERT INTO phpbb_adr_skills (skill_id, skill_name, skill_desc, skill_img, skill_req, skill_chance) VALUES (8, 'Adr_lumberjack', 'Adr_skill_lumberjack_desc', 'skill_lumberjack.gif', 100, 5);
+INSERT INTO phpbb_adr_skills (skill_id, skill_name, skill_desc, skill_img, skill_req, skill_chance) VALUES (9, 'Adr_tailoring', 'Adr_skill_tailoring_desc', 'skill_tailoring.gif', 100, 5);
+INSERT INTO phpbb_adr_skills (skill_id, skill_name, skill_desc, skill_img, skill_req, skill_chance) VALUES (10, 'Adr_herbalism', 'Adr_skill_herbalism_desc', 'skill_herbalism.gif', 100, 5);
+INSERT INTO phpbb_adr_skills (skill_id, skill_name, skill_desc, skill_img, skill_req, skill_chance) VALUES (11, 'Adr_hunting', 'Adr_skill_hunting_desc', 'skill_hunting.gif', 100, 50);
+INSERT INTO phpbb_adr_skills (skill_id, skill_name, skill_desc, skill_img, skill_req, skill_chance) VALUES (14, 'Adr_alchemy', 'Adr_skill_alchemy_desc', 'skill_alchemy.gif', 100, 5);
+INSERT INTO phpbb_adr_skills (skill_id, skill_name, skill_desc, skill_img, skill_req, skill_chance) VALUES (15, 'Adr_fishing', 'Adr_skill_fishing_desc', 'skill_fishing.gif', 100, 5);
+
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (22, 50, 'Adr_items_type_tools_needle');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (23, 50, 'Adr_items_type_clothes');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (24, 50, 'Adr_items_type_thread');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (25, 50, 'Adr_items_type_tools_seed');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (26, 50, 'Adr_items_type_plants');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (27, 50, 'Adr_items_type_water');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (28, 50, 'Adr_items_type_tools_hunting');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (31, 50, 'Adr_items_type_wood');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (32, 50, 'Adr_items_type_tools_pole');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (33, 50, 'Adr_items_type_fish');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (34, 17, 'Adr_items_type_tools_alchemy');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (35, 517, 'Adr_items_type_alchemy');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (36, 150, 'Adr_items_type_animals');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (37, 50, 'Adr_items_type_tools_woodworking');

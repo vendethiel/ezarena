@@ -1128,9 +1128,11 @@ function adr_update_general_config()
 
 function adr_get_item_type_categories($category = 'none'){
 	global $categories_text, $categories, $categories_cat, $db, $phpbb_root_path, $phpEx, $lang, $adr_item_type;
-	@require_once( $phpbb_root_path . './adr/cache/cache_item_type.' . $phpEx );
+	adr_get_item_type(0, '');
+	require_once( $phpbb_root_path . './adr/cache/cache_item_type.' . $phpEx );
 	
-	if ( !isset($adr_item_type) ){
+	if ( !isset($adr_item_type) )
+	{
 		if ( $category != 'none') 
 		{
 			$category = explode(",",$category);
@@ -1155,7 +1157,8 @@ function adr_get_item_type_categories($category = 'none'){
 			array_push($categories_cat, $items_type[$t]['item_type_category']);
 		}
 	}
-	else{
+	else
+	{
 		if($category != 'none') $category = explode(',',$category);
 		for ( $t = 0 ; $t < count($adr_item_type) ; $t ++ )
 		{
@@ -1175,5 +1178,3 @@ function adr_get_item_type_categories($category = 'none'){
 		}
 	}
 }
-
-?>

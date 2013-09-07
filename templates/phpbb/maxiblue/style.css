@@ -1,0 +1,146 @@
+/* Based on the original Style Sheet for the maxiblue summer v1 Theme for phpBB version 2+
+Edited by Nemesis  - http://www.zemaxidelirium.org - last updated 10-08-04 */
+
+/* The content of the posts (body of text) */
+body{background:#586ca6;color:#000000;font:12px Verdana,Arial,Helvetica,sans-serif;margin:6px;padding:0;
+scrollbar-3dlight-color:#d1d7dc;
+scrollbar-arrow-color:#006699;
+scrollbar-darkshadow-color:#98aab1;
+scrollbar-face-color:#dee3e7;
+scrollbar-highlight-color:#ffffff;
+scrollbar-shadow-color:#dee3e7;
+scrollbar-track-color:#efefef}
+
+/* General font families for common tags */
+font, th, td, p{font:12px Verdana,Arial,Helvetica,sans-serif}
+
+/* General text */
+.gen { font-size : 12px; }
+.gensmall{font-size:10px}
+td.genmed, .genmed{font-size:11px}
+.explaintitle{font-size:11px;font-weight:bold;color:#5c81b1}
+
+/* General page style */
+a:link, a:active, a:visited, a.postlink{color:#32475f;text-decoration:none}
+a:hover{color:#839fbc;text-decoration:underline}
+
+/* titles for the topics:could specify viewed link colour too */
+.topictitle{font-size:11px;font-weight:bold}
+a.topictitle:visited{color:#496687}
+a.topictitle:hover{color:#839fbc}
+
+/* Name of poster in viewmsg.php and viewtopic.php and other places */
+.name{font-size:11px;font-weight: bold}
+
+hr{border: 0px solid #ffffff;border-top-width:1px;height:0px}
+
+/* Category gradients*/
+td.cat{font-weight:bold;letter-spacing:1px;color:#516a88;background:#d9e2ec url('images/cellpic3.gif');
+height:29px;text-indent:4px}
+
+/* Main table cell colours and backgrounds */
+.row1{background:#F7F9FB}
+.row2, .helpline{background:#EAF3FB}
+.row3{background:#F7F9FB}
+td.spacerow{background:#E2EFF9}
+
+/* Set Image style */
+img, .forumline img {
+	border: 0;
+}
+
+/* Meteo */ 
+.contentleft 
+{font-family: arial; 
+font-size: 10pt; 
+background-color : #FFFFFF; 
+color: #000000; 
+border: #000000; 
+border-style: dashed; 
+border-top-width: 1pt; 
+border-right-width: 1pt; 
+border-bottom-width: 1pt; 
+border-left-width: 1pt ; 
+padding-left : 3pt; 
+padding-right : 3pt; 
+padding-top : 2pt; 
+padding-bottom :2pt; 
+padding : 2pt; 
+} 
+
+/* This is for the table cell above the Topics,Post & Last posts on the index.php */
+td.rowpic{background:#ffffff url('images/cellpic3.gif') repeat-x; }
+
+/* Table Header cells */
+th{background:#c6d3e4 url('images/cellpic1.gif');color:#516a88;font-size:11px;
+font-weight:bold;height:27px;white-space:nowrap;text-align:center;padding-left:8px;padding-right:8px}
+
+/* This is the border line & background colour round the entire page */
+.bodyline{background:#F1FAFE;border:1px solid #98aab1}
+
+/* This is the outline round the main forum tables */
+.forumline{background:#00000;border:1px solid #486386}
+
+/* The largest text used in the index page title and toptic title etc. */
+.maintitle, h1{
+font:bold 20px/120% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;text-decoration:none;color:#839fbc}
+
+.subtitle, h2{font:bold 18px/180% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;
+text-decoration:none}
+
+/* Used for the navigation text,(Page 1,2,3 etc) and the navigation bar when in a forum */
+.nav{font-size:11px;font-weight:bold}
+.postbody{font-size:12px;line-height:125%}
+
+/* Location,number of posts,post date etc */
+.postdetails{font-size:10px;color:#00396a}
+
+/* Quote blocks */
+.quote{background:#fafafa;border:1px solid #d1d7dc;color:#444444;
+font-size:11px;line-height:125%}
+
+/* Code blocks */
+.code{background:#fafafa;border:1px solid #d1d7dc;color:#006600;
+font:12px Courier,"Courier New",sans-serif;padding:5px}
+
+/* This is for the error messages that pop up */
+.errorline{background:#add8e6;border:1px solid #000000}
+
+/* Form elements */
+form{display:inline}
+
+input{font:11px Verdana,Arial,Helvetica,sans-serif}
+
+select{background:#ffffff;font:11px Verdana,Arial,Helvetica,sans-serif}
+
+input.post, textarea.post{background:#ffffff;border:1px solid #000000;
+font:11px Verdana,Arial,Helvetica,sans-serif;padding-bottom:2px;padding-left:2px}
+
+input.button, input.liteoption, .fakebut{border:1px solid #000000;background:#fafafa;font-size:11px}
+input.catbutton{border:1px solid #000000;background:#fafafa;font-size:10px}
+input.mainoption{border:1px solid #000000;background:#fafafa;font-size:11px;font-weight:bold}
+
+a.but, a.but:hover, a.but:visited{color:#000000;text-decoration:none}
+
+/* This is the line in the posting page which shows the rollover
+help line. Colour value in row2 */
+.helpline{border:0px solid;font-size:10px}
+
+/* This is the gradient background at the top of the page */
+.topbkg{background: #dbe3ee url('images/cellpic_bkg.gif') repeat-x; }
+.topnav{border-left:0px solid #91a0ae; border-right:0px solid #91a0ae; border-top:1px solid #91a0ae; border-bottom:1px solid #91a0ae; font-size:10px;background: #b0c4d8 url('images/cellpic_nav.gif') repeat-x;
+height:21px;white-space:nowrap;}
+
+/* Admin & Moderator Colours MODification */
+.admin, .mod{font-size:11px;font-weight:bold}
+.admin, a.admin, a.admin:visited{color:#ff0000}
+.mod, a.mod, a.mod:visited{color:#006600}
+a.admin:hover, a.mod:hover{color:#839fbc}
+
+/* Specify the space around images */
+.imgtopic, .imgicon{margin-left:3px}
+.imgspace{margin-left:1px;margin-right:2px}
+.imgfolder{margin:1px 4px 1px 4px}
+
+/* Gets rid of the need for border="0" on hyperlinked images */
+img{border:0px solid; }

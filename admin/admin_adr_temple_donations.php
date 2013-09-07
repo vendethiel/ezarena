@@ -27,7 +27,7 @@ define('IN_ADR_TEMPLE', 1);
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);
-	$module['Adr']['Adr_temple_donations'] = $filename;
+	$module['ADR-Recipes']['Adr_temple_donations'] = $filename;
 
 	return;
 }

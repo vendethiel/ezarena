@@ -59,6 +59,7 @@ $template->assign_vars(array(
 	'L_ZONE_CHARACTER_INVENTORY' => $lang['Adr_zone_character_inventory'],
 	'U_ZONE_CHARACTER_SHEET' => append_sid("adr_character.$phpEx"),
 	'U_ZONE_CHARACTER_INVENTORY' => append_sid("adr_character_inventory.$phpEx"),
+	'U_ZONE_CHARACTER_SKILLS' => append_sid("adr_character_skills.$phpEx"),
 	'S_ZONES_ACTION' => append_sid("adr_house.$phpEx"),
 	'U_GUILD' => append_sid("adr_guilds.$phpEx"),
 ));

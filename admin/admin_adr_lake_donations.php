@@ -27,7 +27,7 @@ define('IN_ADR_LAKE', 1);
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);
-	$module['Adr']['Adr_lake_donations'] = $filename;
+	$module['ADR-Recipes']['Adr_lake_donations'] = $filename;
 
 	return;
 }

@@ -111,6 +111,12 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 		"L_FORGE_BONUS" => $lang['Adr_races_bonus_forge'],
 		"L_ENCHANT_BONUS" => $lang['Adr_races_bonus_enchant'],
 		"L_TRADING_BONUS" => $lang['Adr_races_bonus_trading'],
+		"L_FISHING_BONUS" => $lang['Adr_races_bonus_fishing'],		
+		"L_LUMBERJACK_BONUS" => $lang['Adr_races_bonus_lumberjack'],
+		"L_TAILORING_BONUS" => $lang['Adr_races_bonus_tailoring'],
+		"L_HERBALISM_BONUS" => $lang['Adr_races_bonus_herbalism'],
+		"L_HUNTING_BONUS" => $lang['Adr_races_bonus_hunting'],
+		"L_ALCHEMY_BONUS" => $lang['Adr_races_bonus_alchemy'],
 		"L_THIEF_BONUS" => $lang['Adr_races_bonus_thief'],
 		"L_OPPOSE_STRONG" => $lang['Adr_element_oppose_str'],
 		"L_OPPOSE_STRONG_DMG" => $lang['Adr_element_oppose_str_dmg'],
@@ -240,6 +246,12 @@ else if ( $mode != "" )
 				"TRADING_BONUS" => $elements['element_skill_trading_bonus'],
 				"THIEF_BONUS" => $elements['element_skill_thief_bonus'],
 				"LEVEL_LIST" => $level_list,
+				"FISHING_BONUS" => $elements['element_skill_fishing_bonus'],
+				"TAILORING_BONUS" => $elements['element_skill_tailoring_bonus'],
+				"LUMBERJACK_BONUS" => $elements['element_skill_lumberjack_bonus'],
+				"HERBALISM_BONUS" => $elements['element_skill_herbalism_bonus'],
+				"HUNTING_BONUS" => $elements['element_skill_hunting_bonus'],
+				"ALCHEMY_BONUS" => $elements['element_skill_alchemy_bonus'],
 				"L_ELEMENTS_TITLE" => $lang['Adr_elements_add_edit'],
 				"L_ELEMENTS_EXPLAIN" => $lang['Adr_elements_add_edit_explain'],
 				"L_ELEMENT_COLOUR" => $lang['Adr_elements_colour'],
@@ -260,6 +272,12 @@ else if ( $mode != "" )
 				"L_BREWING_BONUS" => $lang['Adr_races_bonus_brewing'],
 				"L_BLACKSMITHING_BONUS" => $lang['Adr_races_bonus_blacksmithing'],
 				"L_THIEF_BONUS" => $lang['Adr_races_bonus_thief'],
+				"L_FISHING_BONUS" => $lang['Adr_races_bonus_fishing'],	
+				"L_LUMBERJACK_BONUS" => $lang['Adr_races_bonus_lumberjack'],
+				"L_TAILORING_BONUS" => $lang['Adr_races_bonus_tailoring'],
+				"L_HERBALISM_BONUS" => $lang['Adr_races_bonus_herbalism'],
+				"L_HUNTING_BONUS" => $lang['Adr_races_bonus_hunting'],
+				"L_ALCHEMY_BONUS" => $lang['Adr_races_bonus_alchemy'],
 				"L_OPPOSE_STRONG" => $lang['Adr_element_oppose_str'],
 				"L_OPPOSE_STRONG_DMG" => $lang['Adr_element_oppose_str_dmg'],
 				"L_OPPOSE_SAME" => $lang['Adr_element_oppose_same'],
@@ -295,6 +313,12 @@ else if ( $mode != "" )
 			$b_enchant = intval($HTTP_POST_VARS['enchant_bonus']);
 			$b_trading = intval($HTTP_POST_VARS['trading_bonus']);
 			$b_thief = intval($HTTP_POST_VARS['thief_bonus']);
+			$b_fishing = intval($HTTP_POST_VARS['fishing_bonus']);		
+			$b_herbalism = intval($HTTP_POST_VARS['herbalism_bonus']);
+			$b_lumberjack = intval($HTTP_POST_VARS['lumberjack_bonus']);
+			$b_hunting = intval($HTTP_POST_VARS['hunting_bonus']);
+			$b_tailoring = intval($HTTP_POST_VARS['tailoring_bonus']);
+			$b_alchemy = intval($HTTP_POST_VARS['alchemy_bonus']);
 			$oppose_str_dmg = intval($HTTP_POST_VARS['oppose_str_dmg']);
 			$oppose_same_dmg = intval($HTTP_POST_VARS['oppose_same_dmg']); 
 			$oppose_weak_dmg = intval($HTTP_POST_VARS['oppose_weak_dmg']); 
@@ -320,7 +344,13 @@ else if ( $mode != "" )
 					element_skill_forge_bonus = $b_forge ,
 					element_skill_enchantment_bonus = $b_enchant ,
 					element_skill_trading_bonus = $b_trading , 
-					element_skill_thief_bonus = $b_thief , 
+					element_skill_thief_bonus = $b_thief ,
+					element_skill_fishing_bonus = $b_fishing ,
+					element_skill_herbalism_bonus = $b_herbalism ,
+					element_skill_lumberjack_bonus = $b_lumberjack ,
+					element_skill_hunting_bonus = $b_hunting ,
+					element_skill_tailoring_bonus = $b_tailoring ,
+					element_skill_alchemy_bonus = $b_alchemy ,
 					element_oppose_strong_dmg = $oppose_str_dmg ,
 					element_oppose_same_dmg = $oppose_same_dmg ,
 					element_oppose_weak_dmg = $oppose_weak_dmg ,
@@ -364,6 +394,12 @@ else if ( $mode != "" )
 			$b_enchant = intval($HTTP_POST_VARS['enchant_bonus']);
 			$b_trading = intval($HTTP_POST_VARS['trading_bonus']);
 			$b_thief = intval($HTTP_POST_VARS['thief_bonus']);
+			$b_fishing = intval($HTTP_POST_VARS['fishing_bonus']);
+			$b_herbalism = intval($HTTP_POST_VARS['herbalism_bonus']);
+			$b_lumberjack = intval($HTTP_POST_VARS['lumberjack_bonus']);
+			$b_hunting = intval($HTTP_POST_VARS['hunting_bonus']);
+			$b_tailoring = intval($HTTP_POST_VARS['tailoring_bonus']);
+			$b_alchemy = intval($HTTP_POST_VARS['alchemy_bonus']);
 			$oppose_str_dmg = intval($HTTP_POST_VARS['oppose_str_dmg']);
 			$oppose_same_dmg = intval($HTTP_POST_VARS['oppose_same_dmg']); 
 			$oppose_weak_dmg = intval($HTTP_POST_VARS['oppose_weak_dmg']); 
@@ -379,8 +415,8 @@ else if ( $mode != "" )
 			}
 
 			$sql = "INSERT INTO " . ADR_ELEMENTS_TABLE . "
-				( element_id , element_name , element_desc ,  element_level , element_img , element_skill_mining_bonus , element_skill_stone_bonus , element_skill_forge_bonus , element_skill_enchantment_bonus , element_skill_trading_bonus , element_skill_thief_bonus , element_oppose_strong , element_oppose_strong_dmg , element_oppose_weak , element_oppose_weak_dmg , element_oppose_same_dmg, element_colour, element_skill_brewing_bonus, element_skill_cooking_bonus, element_skill_blacksmithing_bonus )
-				VALUES ( $element_id,'" . str_replace("\'", "''", $element_name) . "', '" . str_replace("\'", "''", $element_desc) . "' , $level , '" . str_replace("\'", "''", $element_img) . "' , $b_mining , $b_stone , $b_forge ,$b_enchant , $b_trading ,$b_thief , $element_oppose_str , $oppose_str_dmg , $element_oppose_weak , $oppose_weak_dmg , $oppose_same_dmg, '" . str_replace("\'", "''", $element_colour) . "', $b_brewing, $b_cooking, $b_blacksmithing )";
+				( element_id , element_name , element_desc ,  element_level , element_img , element_skill_mining_bonus , element_skill_stone_bonus , element_skill_forge_bonus , element_skill_enchantment_bonus , element_skill_trading_bonus , element_skill_thief_bonus , element_oppose_strong , element_oppose_strong_dmg , element_oppose_weak , element_oppose_weak_dmg , element_oppose_same_dmg, element_colour, element_skill_brewing_bonus, element_skill_cooking_bonus, element_skill_blacksmithing_bonus, element_skill_herbalism_bonus , element_skill_lumberjack_bonus , element_skill_hunting_bonus , element_skill_tailoring_bonus , element_skill_fishing_bonus , element_skill_alchemy_bonus )
+				VALUES ( $element_id,'" . str_replace("\'", "''", $element_name) . "', '" . str_replace("\'", "''", $element_desc) . "' , $level , '" . str_replace("\'", "''", $element_img) . "' , $b_mining , $b_stone , $b_forge ,$b_enchant , $b_trading ,$b_thief , $element_oppose_str , $oppose_str_dmg , $element_oppose_weak , $oppose_weak_dmg , $oppose_same_dmg, '" . str_replace("\'", "''", $element_colour) . "', $b_brewing, $b_cooking, $b_blacksmithing, , $b_herbalism , $b_lumberjack , $b_hunting , $b_tailoring , $b_fishing , $b_alchemy )";
 			$result = $db->sql_query($sql);
 			if( !$result )
 			{

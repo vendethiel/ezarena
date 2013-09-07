@@ -27,7 +27,7 @@ define('IN_ADR_BEGGAR', 1);
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);
-	$module['Adr']['Adr_beggar_donations'] = $filename;
+	$module['ADR-Recipes']['Adr_beggar_donations'] = $filename;
 
 	return;
 }

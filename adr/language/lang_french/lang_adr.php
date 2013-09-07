@@ -1707,3 +1707,139 @@ if ( defined ('IN_ADR_BLACKSMITHING'))
    $lang['product_effects']='Product Effects:';
    $lang['product_stats']='Product Stats';
 }
+
+# Skills
+$lang['Adr_skill_fishing_desc']='Fishing Skill';
+$lang['Adr_skill_lumberjack_desc']='Lumberjack Skill';
+$lang['Adr_skill_herbalism_desc']='Herbalism Skill';
+$lang['Adr_skill_hunting_desc']='Hunting Skill';
+$lang['Adr_skill_tailoring_desc']='Tailoring Skill';
+$lang['Adr_skill_alchemy_desc']='Alchemy Skill';
+$lang['Adr_races_bonus_fishing']='Bonus to the Fishing Skill';
+$lang['Adr_races_bonus_herbalism']='Bonus to the Herbalism Skill';
+$lang['Adr_races_bonus_hunting']='Bonus to the Hunting Skill';
+$lang['Adr_races_bonus_lumberjack']='Bonus to the Lumberjack Skill';
+$lang['Adr_races_bonus_tailoring']='Bonus to the Tailoring Skill';
+$lang['Adr_races_bonus_alchemy']='Bonus to the Alchemy Skill';
+$lang['Adr_fishing']='Fishing';
+$lang['Adr_hunting']='Hunting';
+$lang['Adr_tailoring']='Tailoring';
+$lang['Adr_herbalism']='Herbalism';
+$lang['Adr_lumberjack']='Lumberjack';
+$lang['Adr_alchemy']='Alchemy';
+$lang['Adr_items_type_alchemy']='Alchemy';
+$lang['Adr_items_type_tools_alchemy']='Tools: Alchemy';
+$lang['Adr_items_type_tools_hunting']='Tools: Hunting';
+$lang['Adr_items_type_tools_pole']='Tools: Fishing Pole';
+$lang['Adr_items_type_tools_woodworking']='Tools: Woodworking';
+$lang['Adr_items_type_animals']='Animal Corpse';
+$lang['Adr_items_type_tools_needle']='Tools: Needle';
+$lang['Adr_items_type_clothes']='Clothes';   
+$lang['Adr_items_type_thread']='Thread';
+$lang['Adr_items_type_tools_seed']='Plants: Seed';
+$lang['Adr_items_type_plants']='Plants';  
+$lang['Adr_items_type_water']='Water'; 
+$lang['Adr_items_type_wood']='Wood';   
+$lang['Adr_items_type_fish']='Fish';
+$lang['Adr_items_fisher_desc']='Required for Fishing';
+$lang['Adr_items_hunting_desc']='Required for Hunting';
+$lang['Adr_items_herbal_desc']='Required for Herbalism';
+$lang['Adr_items_tailor_desc']='Required for Sewing';
+$lang['Adr_items_lumberjacker_desc']='Required for Lumberjacking';
+$lang['Adr_items_alchemy_desc']='Required to do Alchemy';
+
+if ( defined ('IN_ADR_TAILOR'))
+ {
+   $lang['Adr_forge_tailoring']='Let\'s Sew';
+   $lang['Adr_forge_tailoring_explain']='Needles allow you to sew together material';
+   $lang['Adr_forge_tailoring_select_tool']='Select a needle';
+   $lang['Adr_forge_tailoring_no_tool']='No needle';
+   $lang['Adr_forge_tailoring_go']='Go tailoring';
+   $lang['Adr_forge_tailoring_tool_needed']='You can\'t tailor with your hands!';
+   $lang['Adr_forge_tailoring_failure']='You ruined your stich and had to stop!';
+   $lang['Adr_forge_tailoring_success']='You sewed a(some) %s with a value of %s %s !';
+   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
+   $lang['Adr_tailoring_go_to']="Go to Character Page";
+   $lang['Adr_tailoring_create']='Go Tailoring';
+   $lang['Adr_tailoring_explain']='Welcome to the Talioring House. <br /><br />Here you can sew together thread and cloth to create many things. <br /><br />These things can be used to sell or combined to create other items. <br /><br />Good luck young one.';
+
+ }
+if ( defined ('IN_ADR_HUNTING'))
+ {
+    $lang['Adr_forge_hunting']='Let\'s hunt';
+    $lang['Adr_forge_hunting_explain']='Hunting tools allow you to capture, skin, or de-horn wild beasts!';
+    $lang['Adr_forge_hunting_select_tool']='Select a tool';
+    $lang['Adr_forge_hunting_no_tool']='No tool';
+    $lang['Adr_forge_hunting_go']='Go hunting';
+    $lang['Adr_forge_hunting_tool_needed']='You can\'t slay wild beasts with your hands!';
+    $lang['Adr_forge_hunting_failure']='You killed nothing';
+    $lang['Adr_forge_hunting_success']='You slayed a %s with a value of %s %s caught from inside the woods!';
+    $lang['Adr_skill_limit']='You have used up your skill use quota for today';
+   $lang['Adr_hunting_go_to']="Go to Character Page";
+    $lang['Adr_hunting_create']='Go Hunting';
+   $lang['Adr_hunting_explain']='This is the Hunting Area. <br /><br />Here you can catch, kill, and skin many animals. <br /><br />You can use these hides and corpse to sell or combined to create other items. <br /><br />Good luck young one.';
+
+ }
+if ( defined ('IN_ADR_LUMBERJACK'))
+ {
+   $lang['Adr_forge_lumberjack']='Let\'s chop trees';
+   $lang['Adr_forge_lumberjack_explain']='Woodworking tools allow you to chop on trees';
+   $lang['Adr_forge_lumberjack_select_tool']='Select a tool';
+   $lang['Adr_forge_lumberjack_no_tool']='No tool';
+   $lang['Adr_forge_lumberjack_go']='Go lumberjacking';
+   $lang['Adr_forge_lumberjack_tool_needed']='You can\'t chop on trees with your hands!';
+   $lang['Adr_forge_lumberjack_failure']='You chopped nothing';
+   $lang['Adr_forge_lumberjack_success']='You chopped a %s with a value of %s %s out of the trees!';
+   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
+   $lang['Adr_lumberjack_go_to']="Go to Character Page";
+   $lang['Adr_lumberjack_create']='Go Lumberjacking';
+   $lang['Adr_lumberjack_explain']='Welcome to the Forest. <br /><br />Here you can use might to chop down trees to collect lumber. <br /><br />This lumber can be used to sell or combined to create other items. <br /><br />Good luck young one.';
+
+ }
+if ( defined ('IN_ADR_HERBAL'))
+ {
+   $lang['Adr_forge_herbalism']='Let\'s plant';
+   $lang['Adr_forge_herbalism_explain']='Seeds allow you to plant new flora';
+   $lang['Adr_forge_herbalism_select_tool']='Select a seed';
+   $lang['Adr_forge_herbalism_no_tool']='No Seeds';
+   $lang['Adr_forge_herbalism_go']='Go herbalisming';
+   $lang['Adr_forge_herbalism_tool_needed']='You can\'t grow with your hands!';
+   $lang['Adr_forge_herbalism_failure']='Your plant could not handle with its growing conditions and died!';
+   $lang['Adr_forge_herbalism_success']='You grew a %s with a value of %s %s !';
+   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
+   $lang['Adr_herbalism_go_to']="Go to Character Page";
+   $lang['Adr_herbalism_create']='Go Herbalisming';
+   $lang['Adr_herbalism_explain']='Welcome to the Herbal Area. <br /><br />Here you grow different types of flora to create many things. <br /><br />These things can be used to sell or combined to create other items. <br /><br />Good luck young one.';
+
+ }
+if ( defined ('IN_ADR_FISH'))
+ {
+   $lang['Adr_forge_fishing']='Let\'s fish';
+   $lang['Adr_forge_fishing_explain']='Fishing Poles allow you to catch fish';
+   $lang['Adr_forge_fishing_select_tool']='Select a fishing pole';
+   $lang['Adr_forge_fishing_no_tool']='No fishing pole';
+   $lang['Adr_forge_fishing_go']='Go fishing';
+   $lang['Adr_forge_fishing_tool_needed']='You can\'t fish with your hands!';
+   $lang['Adr_forge_fishing_failure']='You caught nothing';
+   $lang['Adr_forge_fishing_success']='You caught a %s with a value of %s %s !';
+   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
+   $lang['Adr_fishing_go_to']="Go to Character Page";
+   $lang['Adr_fishing_create']='Go Fishing';
+   $lang['Adr_fishing_explain']='Welcome to the Lake. <br /><br />Here you fish for many types of fish. <br /><br />Use these fish to sell, or combined them to create other items. <br /><br />Good luck young one.';
+
+ }
+if ( defined ('IN_ADR_ALCHEMY'))
+{
+   $lang['Adr_forge_alchemy']='Let\'s do some alchemy';
+   $lang['Adr_forge_alchemy_explain']='Alchemy tool allows you to do alchemy';
+   $lang['Adr_forge_alchemy_select_tool']='Select an alchemy tool';
+   $lang['Adr_forge_alchemy_no_tool']='No alchemy tool';
+   $lang['Adr_forge_alchemy_go']='Let\'s do some alchemy';
+   $lang['Adr_forge_alchemy_tool_needed']='You can\'t do alchemy with your hands!';
+   $lang['Adr_forge_alchemy_failure']='You didn\'t make anything';
+   $lang['Adr_forge_alchemy_success']='You made a %s with a value of %s %s !';
+   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
+   $lang['Adr_alchemy_go_to']="Go to Character Page";
+   $lang['Adr_alchemy_create']='Do Alchemy';
+   $lang['Adr_alchemy_explain']='Welcome to the Alchemic Lab. <br /><br />Here you can use the art of alchemy to create many things. <br /><br />These things can be used to sell or combined to create other items. <br /><br />Good luck young one.';
+}

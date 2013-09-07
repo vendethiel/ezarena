@@ -26,7 +26,7 @@ define('IN_ADR_SHOPS', 1);
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);
-	$module['Adr_settings']['Adr_items_settings_advanced'] = "$filename";
+	$module['Adr_Items']['Adr_items_settings_advanced'] = "$filename";
 
 	return;
 }

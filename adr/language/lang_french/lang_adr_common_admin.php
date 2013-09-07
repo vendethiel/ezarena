@@ -6,10 +6,12 @@
 *                                         	Translation : Thos
 *                                            http://www.thosforum.com
 *
+*
+*									+ Informpro
 ****************************************************************************/
 
 
-$lang['Adr']='ADR-Général';
+$lang['Adr']='ADR-&Eacute;léments du RPG';
 $lang['Adr_temple_donations']='Donation au Temple';
 $lang['Adr_beggar_donations']='Donation au Mendiant';
 $lang['Adr_lake_donations']='Donation au Lac';
@@ -60,5 +62,7 @@ $lang['Zone General'] = 'Réglages des zones';
 $lang['NPC'] = 'PNJs';
 $lang['Seasons'] = 'Saisons';
 $lang['Check ADR Version'] = 'Vérification de version';
+$lang['Adr_Items'] = 'ADR-Objets';
+$lang['ADR-Recipes'] = 'ADR-Recettes /<br/>Donations';
 
 $lang['Loottable_Categories'] = 'Tables de butin';

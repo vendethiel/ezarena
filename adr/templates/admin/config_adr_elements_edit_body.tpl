@@ -80,6 +80,30 @@
 		<td class="row1">{L_BLACKSMITHING_BONUS}</td>
 		<td class="row2" align="center" ><input type="text" name="blacksmithing_bonus" value="{BLACKSMITHING_BONUS}" size="8" maxlength="8" /></td>
 	</tr>
+	<tr>
+		<td class="row1">{L_FISHING_BONUS}</td>
+		<td class="row2" align="center"  ><input type="text" name="fishing_bonus" value="{FISHING_BONUS}" size="8" maxlength="8" /></td>
+	</tr>
+	<tr>
+		<td class="row1">{L_HERBALISM_BONUS}</td>
+		<td class="row2" align="center"  ><input type="text" name="herbalism_bonus" value="{HERBALISM_BONUS}" size="8" maxlength="8" /></td>
+	</tr>
+	<tr>
+		<td class="row1">{L_LUMBERJACK_BONUS}</td>
+		<td class="row2" align="center"  ><input type="text" name="lumberjack_bonus" value="{LUMBERJACK_BONUS}" size="8" maxlength="8" /></td>
+	</tr>
+	<tr>
+		<td class="row1">{L_HUNTING_BONUS}</td>
+		<td class="row2" align="center"  ><input type="text" name="hunting_bonus" value="{HUNTING_BONUS}" size="8" maxlength="8" /></td>
+	</tr>
+	<tr>
+		<td class="row1">{L_TAILORING_BONUS}</td>
+		<td class="row2" align="center"  ><input type="text" name="tailoring_bonus" value="{TAILORING_BONUS}" size="8" maxlength="8" /></td>
+	</tr>
+	<tr>
+		<td class="row1">{L_ALCHEMY_BONUS}</td>
+		<td class="row2" align="center"  ><input type="text" name="alchemy_bonus" value="{ALCHEMY_BONUS}" size="8" maxlength="8" /></td>
+	</tr>
 </table>
 
 <br clear="all" />

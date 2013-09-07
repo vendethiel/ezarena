@@ -197,6 +197,26 @@
 	</tr>
 </table>
 
+<br clear="all" />
+
+<table width="100%" align="center" border="1">
+	<tr>
+		<th align="center" colspan="10">Actions</td>
+	</tr>
+	<tr>
+	    <td width="10%" class="row1"><a href="adr_alchemy.php">Atelier d'alchimie</a></td>
+        <td width="10%" class="row2"><a href="adr_blacksmithing.php">Forge</a></td>
+        <td width="10%" class="row1"><a href="adr_brewing.php">Brassage</a></td>
+        <td width="10%" class="row2"><a href="adr_cooking.php">Cuisine</a></td>
+        <td width="10%" class="row1"><a href="adr_fish.php">Pêche</a></td>
+        <td width="10%" class="row2"><a href="adr_forge.php">Forge</a></td>
+        <td width="10%" class="row1"><a href="adr_herbal.php">Herborisme</a></td>
+        <td width="10%" class="row2"><a href="adr_hunting.php">Chasse</a></td>
+        <td width="10%" class="row1"><a href="adr_lumberjack.php">Bûcheron</a></td>
+        <td width="10%" class="row2"><a href="adr_tailor.php">Tailleur</a></td>
+    </tr>
+</table>
+
 <!-- BEGIN npc_display_enable -->
 <br clear="all" />
 <table width="100%" align="center" border="1">
