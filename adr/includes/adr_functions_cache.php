@@ -39,8 +39,6 @@ function adr_update_all_cache_infos()
 	$sql= "UPDATE ". ADR_GENERAL_TABLE . " SET config_value = ".time()." WHERE config_name = 'Adr_cache_last_updated' ";
 	if(!($result = $db->sql_query($sql)))
 		adr_previous(Adr_character_general_update_error, admin_adr_general, '');
-
-return;
 }
 
 function adr_get_poster_infos($poster_id)
@@ -222,7 +220,7 @@ function adr_get_skill_data($target_skill)
 		$adr_skills = $db->sql_fetchrowset($skill_result);
 		for($s = 0; $s < count($adr_skills); $s++)
 		{
-			$cached_adr_skills[$s+1] = $adr_skills[$s];
+			$cached_adr_skills[$row['skill_id']] = $adr_skills[$s];
 		}
 	}
 
@@ -258,7 +256,9 @@ function adr_update_skills()
 	$x = 1;
 	while ( $row = $db->sql_fetchrow($result) )
 	{
-		$id = $x;
+		// $id = $x;
+		// V: let's use skill ID instead of incremental id
+		$id = $row['skill_id'];
 		$cells = array();
 		@reset($row);
 		while ( list($key, $value) = @each($row) )
@@ -275,7 +275,7 @@ function adr_update_skills()
 			'ID'		=> sprintf("'%s'", str_replace("'", "\'", $id)),
 			'CELLS'		=> $s_cells,
 		));
-		$x = ($x + 1);
+		// $x = ($x + 1);
 	}
 
 	$template->assign_var_from_handle('cache', 'cache');

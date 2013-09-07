@@ -723,4 +723,380 @@ function adr_lake_tracker($user_id, $item_name, $donated)
 		message_die(GENERAL_ERROR, "Couldn't insert new item", "", __LINE__, __FILE__, $sql);
 	}
 }
-?>
+
+function drop_loot($monster_id,$user_id,$dropped_loot_list) 
+{
+	global $db , $lang, $adr_general;
+	$user_id = intval($user_id);
+	$monster_id = intval($monster_id);
+
+	$sql = "SELECT * FROM " . ADR_BATTLE_MONSTERS_TABLE ."
+		WHERE monster_id = $monster_id
+		";
+	$result = $db->sql_query($sql);
+	if( !$result )
+	{
+		message_die(GENERAL_ERROR, 'Could not obtain monsters information', "", __LINE__, __FILE__, $sql);
+	}
+	$monster = $db->sql_fetchrow($result);
+
+	$possible_items = $monster['monster_possible_drop'];
+	$guranteened_items = $monster['monster_guranteened_drop'];
+	$specific_items = explode(':',$monster['monster_specific_drop']);
+	$monster_loottables = explode(':',$monster['monster_loottables']);
+
+	$message .= "<br><br><table align=\"center\" border=\"0\" cellpadding=\"0\" class=\"gen\"><tr>";
+	
+	if ($possible_items != 0)
+	{
+		for ( $i = 0 ; $i < $possible_items ; $i++)
+		{
+			$rolled_loottable = "";
+			$timer = 0;
+			do
+			{
+				$timer++;
+				//roll the loottable
+				$rnd_loottable = rand ( 0 , ( count($monster_loottables) - 1 ));
+				//sort out deactivated loottables
+				$sql = "SELECT * FROM " . ADR_LOOTTABLES_TABLE."
+						WHERE loottable_status = 1
+						AND loottable_id = '".$monster_loottables[$rnd_loottable]."'
+						";
+				$result = $db->sql_query($sql); 
+				if( !$result ) 
+				{ 
+					message_die(GENERAL_ERROR, 'Could not obtain loottable information', "", __LINE__, __FILE__, $sql); 
+				} 
+				//incase all monsters loottables are deactivated for some reason
+				if ($timer > 10000){break;}
+			}
+			while(!$rolled_loottable = $db->sql_fetchrow($result)) ;
+			
+			//incase all monsters loottables are deactivated for some reason
+			if ($timer > 10000){break;}
+			
+			//now roll to see if we actually get an item
+			$dicer = rand ( 1, 10000);
+			
+			if ($dicer >= $rolled_loottable['loottable_dropchance'])
+			{
+				$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE."
+				WHERE item_owner_id = 1
+					AND (item_loottables like '".$rolled_loottable['loottable_id'].":"."%'
+					OR item_loottables like '".$rolled_loottable['loottable_id']."'
+					OR item_loottables like '%".":".$rolled_loottable['loottable_id'].":"."%'
+					OR item_loottables like '%".":".$rolled_loottable['loottable_id']."')
+				";
+				if( !($result = $db->sql_query($sql)) ) 
+				{
+					message_die(GENERAL_ERROR, 'Could not query items list', '', __LINE__, __FILE__, $sql); 
+				}
+				$possible_items_db = $db->sql_fetchrowset($result); 
+				
+				//now roll for the item
+				$rnd_item = rand ( 0 , ( count($possible_items_db) - 1 ));
+				
+				//get the rolled item info
+				$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE."
+				WHERE item_owner_id = 1
+					AND item_id = '".$possible_items_db[$rnd_item]['item_id']."'
+				";
+				if( !($result = $db->sql_query($sql)) ) 
+				{
+					message_die(GENERAL_ERROR, 'Could not query items list', '', __LINE__, __FILE__, $sql); 
+				}
+				$rolled_item = $db->sql_fetchrow($result);
+				
+				//new id for the item
+				$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
+				   WHERE item_owner_id = $user_id
+				   ORDER BY item_id
+				   DESC LIMIT 1";
+				$result = $db->sql_query($sql);
+				if( !$result )
+				{
+					message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+				}
+				$item_data = $db->sql_fetchrow($result); 
+				
+				$item_id_new = $item_data['item_id'] + 1 ; 
+				$item_type = $rolled_item['item_type_use'] ; 
+				$item_picture = $rolled_item['item_icon'] ; 
+				$item_name = $rolled_item['item_name']; 
+				$item_desc = $rolled_item['item_desc']; 
+				$item_icon = $rolled_item['item_icon'] ; 
+				$item_quality = $rolled_item['item_quality']; 
+				$item_duration = $rolled_item['item_duration']; 
+				$item_duration_max = $rolled_item['item_duration_max']; 
+				$item_add_power = $rolled_item['item_add_power']; 
+				$item_power = $rolled_item['item_power']; 
+				$item_price = $rolled_item['item_price']; 
+				$item_mp_use = $rolled_item['item_mp_use']; 
+				$item_element = $rolled_item['item_element']; 
+				$item_element_str_dmg = $rolled_item['item_element_str_dmg']; 
+				$item_element_same_dmg = $rolled_item['item_element_same_dmg']; 
+				$item_element_weak_dmg = $rolled_item['item_element_weak_dmg']; 
+				$item_max_skill = $rolled_item['item_max_skill']; 
+				$item_weight = $rolled_item['item_weight']; 
+				
+				// Give item to user
+				$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . " ( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , 
+						item_duration , item_duration_max , item_power , item_add_power , item_mp_use , item_element , item_element_str_dmg , 
+						item_element_same_dmg , item_element_weak_dmg , item_max_skill  , item_weight ) 
+						VALUES ( $item_id_new , $user_id , $item_type , '" . str_replace("\'", "''", $item_name) . "', '" . str_replace("\'", "''", $item_desc) . "' , 
+						'" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max , $item_power ,  
+						$item_add_power , $item_mp_use , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg , $item_max_skill , $item_weight)"; 
+				$result = $db->sql_query($sql);
+				if( !$result )
+				{
+					message_die(GENERAL_ERROR, "Item doesn't exist !", "", __LINE__, __FILE__, $sql); 
+				}
+				$dropped_loot_list .= ( $dropped_loot_list == '' ) ? $rolled_item['item_id'] : ":".$rolled_item['item_id'];
+				
+				$message .= "<tr><td align=\"center\"  valign=\"top\">You found a ".adr_get_lang($rolled_item['item_name'])."<br><img src=\"./adr/images/items/".$rolled_item['item_icon']."\"</td></tr>";
+			}
+		}
+	}
+	if ($guranteened_items != 0)
+	{
+		for ( $i = 0 ; $i < $guranteened_items ; $i++)
+		{
+			$rolled_loottable = "";
+			$timer = 0;
+			do
+			{
+				$timer++;
+				//roll the loottable
+				$rnd_loottable = rand ( 0 , ( count($monster_loottables) - 1 ));
+				//sort out deactivated loottables
+				$sql = "SELECT * FROM " . ADR_LOOTTABLES_TABLE."
+						WHERE loottable_status = 1
+						AND loottable_id = '".$monster_loottables[$rnd_loottable]."'
+						";
+				$result = $db->sql_query($sql); 
+				if( !$result ) 
+				{ 
+					message_die(GENERAL_ERROR, 'Could not obtain loottable information', "", __LINE__, __FILE__, $sql); 
+				} 
+				//incase all monsters loottables are deactivated for some reason
+				if ($timer > 10000){break;}
+			}
+			while(!$rolled_loottable = $db->sql_fetchrow($result)) ;
+			
+			//incase all monsters loottables are deactivated for some reason
+			if ($timer > 10000){break;}
+			
+			$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE."
+			WHERE item_owner_id = 1
+				AND (item_loottables like '".$rolled_loottable['loottable_id'].":"."%'
+				OR item_loottables like '".$rolled_loottable['loottable_id']."'
+				OR item_loottables like '%".":".$rolled_loottable['loottable_id'].":"."%'
+				OR item_loottables like '%".":".$rolled_loottable['loottable_id']."')
+			";
+			if( !($result = $db->sql_query($sql)) ) 
+			{
+				message_die(GENERAL_ERROR, 'Could not query items list', '', __LINE__, __FILE__, $sql); 
+			}
+			$guranteened_items_db = $db->sql_fetchrowset($result); 
+			
+			//now roll for the item
+			$rnd_item = rand ( 0 , ( count($guranteened_items_db) - 1 ));
+			
+			//get the rolled item info
+			$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE."
+			WHERE item_owner_id = 1
+				AND item_id = '".$guranteened_items_db[$rnd_item]['item_id']."'
+			";
+			if( !($result = $db->sql_query($sql)) ) 
+			{
+				message_die(GENERAL_ERROR, 'Could not query items list', '', __LINE__, __FILE__, $sql); 
+			}
+			$rolled_item = $db->sql_fetchrow($result);
+			
+			//new id for the item
+			$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
+			   WHERE item_owner_id = $user_id
+			   ORDER BY item_id
+			   DESC LIMIT 1";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+			}
+			$item_data = $db->sql_fetchrow($result); 
+
+			$item_id_new = $item_data['item_id'] + 1 ; 
+			$item_type = $rolled_item['item_type_use'] ; 
+			$item_picture = $rolled_item['item_icon'] ; 
+			$item_name = $rolled_item['item_name']; 
+			$item_desc = $rolled_item['item_desc']; 
+			$item_icon = $rolled_item['item_icon'] ; 
+			$item_quality = $rolled_item['item_quality']; 
+			$item_duration = $rolled_item['item_duration']; 
+			$item_duration_max = $rolled_item['item_duration_max']; 
+			$item_add_power = $rolled_item['item_add_power']; 
+			$item_power = $rolled_item['item_power']; 
+			$item_price = $rolled_item['item_price']; 
+			$item_mp_use = $rolled_item['item_mp_use']; 
+			$item_element = $rolled_item['item_element']; 
+			$item_element_str_dmg = $rolled_item['item_element_str_dmg']; 
+			$item_element_same_dmg = $rolled_item['item_element_same_dmg']; 
+			$item_element_weak_dmg = $rolled_item['item_element_weak_dmg']; 
+			$item_max_skill = $rolled_item['item_max_skill']; 
+			$item_weight = $rolled_item['item_weight']; 
+			
+			// Give item to user
+			$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . " ( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , 
+					item_duration , item_duration_max , item_power , item_add_power , item_mp_use , item_element , item_element_str_dmg , 
+					item_element_same_dmg , item_element_weak_dmg , item_max_skill  , item_weight ) 
+					VALUES ( $item_id_new , $user_id , $item_type , '" . str_replace("\'", "''", $item_name) . "', '" . str_replace("\'", "''", $item_desc) . "' , 
+					'" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max , $item_power ,  
+					$item_add_power , $item_mp_use , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg , $item_max_skill , $item_weight)"; 
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, "Item doesn't exist !", "", __LINE__, __FILE__, $sql); 
+			}
+			$dropped_loot_list .= ( $dropped_loot_list == '' ) ? $rolled_item['item_id'] : ":".$rolled_item['item_id'];
+			
+			$message .= "<tr><td align=\"center\"  valign=\"top\">You found a ".adr_get_lang($rolled_item['item_name'])."<br><img src=\"./adr/images/items/".$rolled_item['item_icon']."\"</td></tr>";
+		}
+	}
+	if ($monster['monster_specific_drop'] != "" && $monster['monster_specific_drop'] != 0)
+	{
+		foreach ($specific_items as $value) 
+		{
+			$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE."
+			WHERE item_owner_id = 1
+				AND item_id = $value
+			";
+			if( !($result = $db->sql_query($sql)) ) 
+			{
+				message_die(GENERAL_ERROR, 'Could not query items list', '', __LINE__, __FILE__, $sql); 
+			}
+			$specific_items_db = $db->sql_fetchrow($result);
+			
+			//new id for the item
+			$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
+			   WHERE item_owner_id = $user_id
+			   ORDER BY item_id
+			   DESC LIMIT 1";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+			}
+			$item_data = $db->sql_fetchrow($result); 
+
+			$item_id_new = $item_data['item_id'] + 1 ; 
+			$item_type = $specific_items_db['item_type_use'] ; 
+			$item_picture = $specific_items_db['item_icon'] ; 
+			$item_name = $specific_items_db['item_name']; 
+			$item_desc = $specific_items_db['item_desc']; 
+			$item_icon = $specific_items_db['item_icon'] ; 
+			$item_quality = $specific_items_db['item_quality']; 
+			$item_duration = $specific_items_db['item_duration']; 
+			$item_duration_max = $specific_items_db['item_duration_max']; 
+			$item_add_power = $specific_items_db['item_add_power']; 
+			$item_power = $specific_items_db['item_power']; 
+			$item_price = $specific_items_db['item_price']; 
+			$item_mp_use = $specific_items_db['item_mp_use']; 
+			$item_element = $specific_items_db['item_element']; 
+			$item_element_str_dmg = $specific_items_db['item_element_str_dmg']; 
+			$item_element_same_dmg = $specific_items_db['item_element_same_dmg']; 
+			$item_element_weak_dmg = $specific_items_db['item_element_weak_dmg']; 
+			$item_max_skill = $specific_items_db['item_max_skill']; 
+			$item_weight = $specific_items_db['item_weight']; 
+			
+			// Give item to user
+			$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . " ( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , 
+					item_duration , item_duration_max , item_power , item_add_power , item_mp_use , item_element , item_element_str_dmg , 
+					item_element_same_dmg , item_element_weak_dmg , item_max_skill  , item_weight ) 
+					VALUES ( $item_id_new , $user_id , $item_type , '" . str_replace("\'", "''", $item_name) . "', '" . str_replace("\'", "''", $item_desc) . "' , 
+					'" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max , $item_power ,  
+					$item_add_power , $item_mp_use , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg , $item_max_skill , $item_weight)"; 
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, "Item doesn't exist !", "", __LINE__, __FILE__, $sql); 
+			}
+			$dropped_loot_list .= ( $dropped_loot_list == '' ) ? $specific_items_db['item_id'] : ":".$specific_items_db['item_id'];
+
+			$message .= "<tr><td align=\"center\"  valign=\"top\">You found a ".adr_get_lang($specific_items_db['item_name'])."<br><img src=\"./adr/images/items/".$specific_items_db['item_icon']."\"</td></tr>";
+		}
+	}
+
+	$message .= "</table>";
+
+	$array_dropped_loot = explode(':',$dropped_loot_list);
+	//////////////////////////////////////// ADVANCED NPC ADDON - START ////////////////////////////////////////
+	foreach($array_dropped_loot as $item_drop)
+	{
+		//get item name
+		$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE ."
+		   WHERE item_owner_id = 1
+		   AND item_id = '".$item_drop."'
+			";
+		$result = $db->sql_query($sql);
+		if( !$result )
+		{
+			message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+		}
+		$item_data = $db->sql_fetchrow($result);
+			
+		// Check if the dropped item was needed for a quest
+		$sql = " SELECT * FROM " . ADR_QUEST_LOG_TABLE . "
+	   		WHERE quest_item_need = '".adr_get_lang($item_data['item_name'])."' 
+			AND user_id = '". $user_id ."'
+	   		";
+		$result = $db->sql_query($sql);
+		if( !$result )
+	   		message_die(GENERAL_ERROR, 'Could not obtain required quest information', "", __LINE__, __FILE__, $sql);
+		if ( $quest_log = $db->sql_fetchrow($result) )
+		{
+			//Update the Item Quest of the player
+			do
+			{
+				$sql = "UPDATE " . ADR_QUEST_LOG_TABLE . "
+					set quest_item_have = quest_item_need 
+					WHERE quest_item_need = '".adr_get_lang($item_data['item_name'])."' 
+					AND user_id = '". $user_id ."'
+					";
+				$result = $db->sql_query($sql);
+				if( !$result )
+					message_die(GENERAL_ERROR, "Couldn't update quest", "", __LINE__, __FILE__, $sql);
+			}
+			while($quest_log = $db->sql_fetchrow($result)) ;
+		}
+	}
+	// Check if the character killed a monster that he needed for a killing quest !
+	$sql = " SELECT * FROM " . ADR_QUEST_LOG_TABLE . "
+   		WHERE quest_kill_monster = '".$monster['monster_name']."'
+		AND quest_kill_monster_current_amount < quest_kill_monster_amount
+		AND user_id = '". $user_id ."'
+   		";
+	$result = $db->sql_query($sql);
+	if( !$result )
+   		message_die(GENERAL_ERROR, 'Could not obtain required quest information', "", __LINE__, __FILE__, $sql);
+	if ( $quest_log = $db->sql_fetchrow($result) )
+	{
+		//Now increase the current amount killed value by 1 for each killing quest 
+		//that requires still the monster the player just killed
+		for ( $i=0 ; $i<count($quest_log = $db->sql_fetchrow($result)) ; $i++ )
+		{
+			$sql = "UPDATE " . ADR_QUEST_LOG_TABLE . "
+				set quest_kill_monster_current_amount = quest_kill_monster_current_amount + 1 
+				WHERE quest_kill_monster = '".$monster['monster_name']."'
+				AND quest_kill_monster_current_amount < quest_kill_monster_amount
+				AND user_id = '". $user_id ."'
+				";
+			$result = $db->sql_query($sql);
+			if( !$result )
+				message_die(GENERAL_ERROR, "Couldn't update quest", "", __LINE__, __FILE__, $sql);
+		}
+	}
+	//////////////////////////////////////// ADVANCED NPC ADDON - END ////////////////////////////////////////
+
+	return $message;
+}

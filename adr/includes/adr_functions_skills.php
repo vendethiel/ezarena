@@ -874,3 +874,236 @@ function adr_skill_limit($user_id)
          message_die(GENERAL_ERROR, 'Could not update skill skill ', "", __LINE__, __FILE__, $sql);}
    }
 }
+
+
+function adr_use_skill($user_id , $tool, $recipe_item_id, $skill_id, $type)
+{
+	global $db;
+
+	$user_id = intval($user_id);
+	$item_id=intval($item_id);
+	$tool = intval($tool);
+	$recipe_item_id = intval($recipe_item_id);
+	$new_item_id = 0;
+	$adr_general = adr_get_general_config();
+	$adr_user = adr_get_user_infos($user_id);
+	$skill_data = adr_get_skill_data($skill_id);
+	$current_file = 'adr_'.$type;
+	$character_skill = 'character_skill_'.$type;
+	$character_skill_uses = 'character_skill_'.$type.'_uses';
+
+	// START skill limit check
+
+	if ( $adr_general['Adr_character_limit_enable'] != 0 && $adr_user['character_skill_limit'] < 1 )
+		adr_previous( Adr_skill_limit , $current_file , "mode=view&known_recipes=$recipe_item_id" );
+	// END skill limit check
+
+	$sql = " SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
+		WHERE item_in_shop = 0 
+		AND item_owner_id = $user_id 
+		AND item_id = $tool ";
+	if( !($result = $db->sql_query($sql)) )
+		message_die(GENERAL_ERROR, 'Could not query tool informations', '', __LINE__, __FILE__, $sql);
+	$item = $db->sql_fetchrow($result);
+
+	// get the information of the item that will be crafted
+	//get original recipe information
+	$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
+		WHERE item_owner_id = 1
+		AND item_original_recipe_id = $recipe_item_id
+		";
+	$result = $db->sql_query($sql);
+	if( !$result )
+	       message_die(GENERAL_ERROR, 'Could not obtain owners recipes information', "", __LINE__, __FILE__, $sql);
+	$original_recipe = $db->sql_fetchrow($result);
+
+	//get original (up-to-date) recipe info now
+	$sql_recipe = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
+		WHERE item_id = " . $original_recipe['item_recipe_linked_item'] . "
+		AND item_owner_id = 1
+		";
+	$result_recipe = $db->sql_query($sql_recipe);
+	if( !$result_recipe )
+		message_die(GENERAL_ERROR, "Couldn't select recipe info", "", __LINE__, __FILE__, $sql_recipe);
+	$crafted_item = $db->sql_fetchrow($result_recipe);
+
+	if ( $item['item_duration'] < 0 )
+		adr_previous( Adr_forge_broken , $current_file , "mode=view&known_recipes=$recipe_item_id" );
+
+	// Alter the tool
+	adr_use_item($tool , $user_id);
+
+	//roll
+	$difference = intval($adr_user['character_skill_'.$type.''] - $original_recipe['item_power']);
+	$impossible_loose_bonus = 0;
+	switch(TRUE)
+	{
+		case ($difference < -9):$modifier = '-100%';$lose_roll = 100;$impossible_loose_bonus = 1;break; //Impossible
+		case ($difference >= -9 && $difference < -6):$modifier = '-80%';$lose_roll = 80;$item_quality = rand(1,2);break; //Very Hard
+		case ($difference >= -6 && $difference < -4):$modifier =  '-60%';$lose_roll = 60;$item_quality = rand(1,3);break; //Hard
+		case ($difference >= -4 && $difference < -2):$modifier =  '-40%';$lose_roll = 40;$item_quality = rand(1,4);break; //Normal
+		case ($difference >= -2 && $difference < 0):$modifier = '-20%';$lose_roll = 20;$item_quality = rand(1,5);break; //Easy
+		case ($difference >= 0):$modifier = '-1%';$lose_roll = 5;$item_quality = rand(1,6);break; //Very Easy
+	}
+	$user_chance =	rand(0,($adr_user['character_skill_'.$type.''] * 100));
+	$user_chance = $user_chance + floor( ( $user_chance * $modifier ) / 100 );
+	$loose_chance = rand($impossible_loose_bonus,($adr_user['character_skill_'.$type.''] * $lose_roll));
+
+	/*
+	echo $modifier." : modifier<br>";
+	echo $difference." : difference<br>";
+	echo $user_chance." : user chance<br>";
+	echo $loose_chance." : loose_chance<br>";
+	*/
+
+
+	// loose a needed item if the rolled dice is bad
+	$items_req = explode(':',$crafted_item['item_brewing_items_req']);
+	if ( $user_chance < $loose_chance )
+	{
+		for ($i = 0; $i < count($items_req); $i++)
+		{
+			$switch = ( !($i % 2) ) ? $get_info=1 : $get_info=0;
+			if ($get_info == 1)
+				$req_list .= ( $req_list == '' ) ? $items_req[$i] : ':'.$items_req[$i];
+		}
+		$req_list = explode(':',$req_list);
+		$random = rand(0,count($req_list)-1);
+
+		$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE ."
+				WHERE item_id = '".$req_list[$random]."'
+				AND item_owner_id = 1
+				";
+		$result = $db->sql_query($sql); 
+		if( !$result ) 
+			message_die(GENERAL_ERROR, 'Could not obtain items information', "", __LINE__, __FILE__, $sql); 
+		$req_item = $db->sql_fetchrow($result);
+			
+        $req_item_name = str_replace("'","\'",$req_item['item_name']); 
+		
+		//delete item from inventory
+		$sql = " DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
+			WHERE item_in_shop = 0
+			AND item_in_warehouse = 0
+			AND item_owner_id = $user_id
+			AND item_name = '". $req_item_name ."'
+			LIMIT 1
+			";
+		$result = $db->sql_query($sql);
+		if( !$result )
+			message_die(GENERAL_ERROR, 'Could not delete item',"", __LINE__, __FILE__, $sql);
+			
+		$new_item_id  = 'You lost a <br><br><center>'.adr_get_lang($req_item['item_name']).'<br><img src="./adr/images/items/'.$req_item['item_icon'].'"></center><br>during your attempt to cook this food!';
+	}
+	elseif ( $user_chance > $loose_chance )
+	{
+		$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+			SET character_xp = character_xp + 3 
+			WHERE character_id = $user_id ";
+		$result = $db->sql_query($sql);
+		if( !$result )
+			message_die(GENERAL_ERROR, 'Could not update characters xp', "", __LINE__, __FILE__, $sql);
+
+		for ($i = 0; $i < count($items_req); $i++)
+		{
+			$switch = ( !($i % 2) ) ? $check_item=0 : $check_item=1;
+			if ($check_item == 1) 
+			{
+				//get item info
+				$sql_info = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
+					where item_id = ".$items_req[$i-1];
+				$result_info = $db->sql_query($sql_info);
+				if( !$result_info )
+					message_die(GENERAL_ERROR, 'Could not obtain items information', "", __LINE__, __FILE__, $sql_info);
+				$item_info = $db->sql_fetchrow($result_info);
+				
+				$req_item_name = str_replace("'","\'",$item_info['item_name']);
+				echo $rew_item_name."<br>";
+
+				//delete item from inventory
+				$sql = " DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
+					WHERE item_in_shop = 0
+					AND item_in_warehouse = 0
+					AND item_owner_id = $user_id
+					AND item_name = '". $req_item_name ."'
+					LIMIT ".$items_req[$i]."
+					";
+				$result = $db->sql_query($sql);
+				if( !$result )
+					message_die(GENERAL_ERROR, 'Could not delete item',"", __LINE__, __FILE__, $sql);
+			}
+		}
+		
+		// Make the new id for the item
+		$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
+			WHERE item_owner_id = $user_id
+			ORDER BY item_id 
+			DESC LIMIT 1";
+		$result = $db->sql_query($sql);
+		if( !$result )
+			message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+		$data = $db->sql_fetchrow($result);
+
+		$new_item_id = $data['item_id'] + 1 ;
+		$item_name = $crafted_item['item_name'];
+		$item_type = $crafted_item['item_type_use'] ; 
+		$item_desc = 'Crafted by '.$adr_user['character_name'].''; 
+		$item_icon = $crafted_item['item_icon'];
+		$item_duration = $crafted_item['item_duration']; 
+		$item_duration_max = $crafted_item['item_duration_max']; 
+		$item_power = $crafted_item['item_power'];
+		$item_add_power = $crafted_item['item_add_power'];
+		$item_mp_use = $crafted_item['item_mp_use']; 
+		$item_element = $crafted_item['item_element']; 
+		$item_element_str_dmg = $crafted_item['item_element_str_dmg']; 
+		$item_element_same_dmg = $crafted_item['item_element_same_dmg']; 
+		$item_element_weak_dmg = $crafted_item['item_element_weak_dmg']; 
+		$item_max_skill = $crafted_item['item_max_skill']; 
+		$item_weight = $crafted_item['item_weight']; 
+		$item_brewing_items_req = $crafted_item['item_brewing_items_req'];
+		$item_effect = $crafted_item['item_effect']; 
+		
+		adr_skill_limit( $user_id );
+		
+		// Generate the item price 
+		$adr_quality_price = adr_get_item_quality( $item_quality , price ); 
+		$adr_type_price = adr_get_item_type( $item_type , price ); 
+		$item_price = $adr_type_price; 
+		$item_price = $item_price * ( ( $adr_quality_price / 100 )); 
+		$item_price = ( $item_power > 1 ) ? ( $item_price + ( $item_price * ( ( $item_power - 1 ) * ( $adr_general['item_modifier_power'] - 100 ) / 100 ))) : $item_price ; 
+		$item_price = ceil($item_price); 
+		 
+		$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . " ( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , 
+				item_duration , item_duration_max , item_power ,  item_add_power , item_mp_use , item_element , item_element_str_dmg , 
+				item_element_same_dmg , item_element_weak_dmg , item_max_skill  , item_weight, item_brewing_items_req, item_effect ) 
+				VALUES ( $new_item_id , $user_id , $item_type , '" . str_replace("\'", "''", $item_name) . "', '" . str_replace("\'", "''", $item_desc) . "' , 
+				'" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max , $item_power , 
+				$item_add_power , $item_mp_use , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg , $item_max_skill , $item_weight, '".$item_brewing_items_req."', '".$item_effect."')";
+		$result = $db->sql_query($sql); 
+		if( !$result ) 
+		   message_die(GENERAL_ERROR, "Couldn't insert new item", "", __LINE__, __FILE__, $sql); 
+		
+		// Increases the success uses of this skill and increase level if needed 
+		if ( ( $adr_user['character_skill_'.$type.'_uses'] +1 ) >= $skill_data['skill_req'] ) 
+		{ 
+		   $sql = "UPDATE " . ADR_CHARACTERS_TABLE . " 
+		      SET $character_skill_uses = 0 , 
+		          $character_skill = $character_skill + 1 
+		      WHERE character_id = $user_id "; 
+		   $result = $db->sql_query($sql); 
+		   if( !$result ) 
+		      message_die(GENERAL_ERROR, 'Could not update skill information', "", __LINE__, __FILE__, $sql); 
+		} 
+		else 
+		{ 
+		   $sql = "UPDATE " . ADR_CHARACTERS_TABLE . " 
+		      SET $character_skill_uses = $character_skill_uses + 1 
+		      WHERE character_id = $user_id "; 
+		   $result = $db->sql_query($sql); 
+		   if( !$result ) 
+		      message_die(GENERAL_ERROR, 'Could not update item information', "", __LINE__, __FILE__, $sql); 
+		} 
+	}
+	
+	return $new_item_id; 
+} 

@@ -68,6 +68,18 @@
 		<td class="row1">{L_THIEF_BONUS}</td>
 		<td class="row2" align="center" ><input type="text" name="thief_bonus" value="{THIEF_BONUS}" size="8" maxlength="8" /></td>
 	</tr>
+	<tr>
+		<td class="row1">{L_BREWING_BONUS}</td>
+		<td class="row2" align="center" ><input type="text" name="brewing_bonus" value="{BREWING_BONUS}" size="8" maxlength="8" /></td>
+	</tr>
+	<tr>
+		<td class="row1">{L_COOKING_BONUS}</td>
+		<td class="row2" align="center" ><input type="text" name="cooking_bonus" value="{COOKING_BONUS}" size="8" maxlength="8" /></td>
+	</tr>
+	<tr>
+		<td class="row1">{L_BLACKSMITHING_BONUS}</td>
+		<td class="row2" align="center" ><input type="text" name="blacksmithing_bonus" value="{BLACKSMITHING_BONUS}" size="8" maxlength="8" /></td>
+	</tr>
 </table>
 
 <br clear="all" />

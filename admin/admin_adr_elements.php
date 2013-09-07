@@ -104,6 +104,9 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 		"L_LEVEL" => $lang['Adr_races_level'],
 		"L_LEVEL_EXPLAIN" => $lang['Adr_elements_level_explain'],
 		"L_MINING_BONUS" => $lang['Adr_races_bonus_mining'],
+		"L_BLACKSMITHING_BONUS" => $lang['Adr_races_bonus_blacksmithing'],
+		"L_COOKING_BONUS" => $lang['Adr_races_bonus_cooking'],
+		"L_BREWING_BONUS" => $lang['Adr_races_bonus_brewing'],
 		"L_STONE_BONUS" => $lang['Adr_races_bonus_stone'],
 		"L_FORGE_BONUS" => $lang['Adr_races_bonus_forge'],
 		"L_ENCHANT_BONUS" => $lang['Adr_races_bonus_enchant'],
@@ -228,6 +231,9 @@ else if ( $mode != "" )
 				"ELEMENT_IMG_EX" => $pic ,
 				"ELEMENT_COLOUR" => $elements['element_colour'],
 				"MINING_BONUS" => $elements['element_skill_mining_bonus'],
+				"BLACKSMITHING_BONUS" => $elements['element_skill_blacksmithing_bonus'],
+				"BREWING_BONUS" => $elements['element_skill_brewing_bonus'],
+				"COOKING_BONUS" => $elements['element_skill_cooking_bonus'],
 				"STONE_BONUS" => $elements['element_skill_stone_bonus'],
 				"FORGE_BONUS" => $elements['element_skill_forge_bonus'],
 				"ENCHANT_BONUS" => $elements['element_skill_enchantment_bonus'],
@@ -246,10 +252,13 @@ else if ( $mode != "" )
 				"L_LEVEL" => $lang['Adr_races_level'],
 				"L_LEVEL_EXPLAIN" => $lang['Adr_elements_level_explain'],
 				"L_MINING_BONUS" => $lang['Adr_races_bonus_mining'],
+				"L_COOKING_BONUS" => $lang['Adr_races_bonus_cooking'],
 				"L_STONE_BONUS" => $lang['Adr_races_bonus_stone'],
 				"L_FORGE_BONUS" => $lang['Adr_races_bonus_forge'],
 				"L_ENCHANT_BONUS" => $lang['Adr_races_bonus_enchant'],
 				"L_TRADING_BONUS" => $lang['Adr_races_bonus_trading'],
+				"L_BREWING_BONUS" => $lang['Adr_races_bonus_brewing'],
+				"L_BLACKSMITHING_BONUS" => $lang['Adr_races_bonus_blacksmithing'],
 				"L_THIEF_BONUS" => $lang['Adr_races_bonus_thief'],
 				"L_OPPOSE_STRONG" => $lang['Adr_element_oppose_str'],
 				"L_OPPOSE_STRONG_DMG" => $lang['Adr_element_oppose_str_dmg'],
@@ -278,6 +287,9 @@ else if ( $mode != "" )
 			$element_desc = ( isset($HTTP_POST_VARS['element_desc']) ) ? trim($HTTP_POST_VARS['element_desc']) : trim($HTTP_GET_VARS['element_desc']);
 			$level = intval($HTTP_POST_VARS['level']);
 			$b_mining = intval($HTTP_POST_VARS['mining_bonus']);
+			$b_cooking = intval($HTTP_POST_VARS['cooking_bonus']);
+			$b_brewing = intval($HTTP_POST_VARS['brewing_bonus']);
+			$b_blacksmithing = intval($HTTP_POST_VARS['blacksmithing_bonus']);
 			$b_stone = intval($HTTP_POST_VARS['stone_bonus']);
 			$b_forge = intval($HTTP_POST_VARS['forge_bonus']);
 			$b_enchant = intval($HTTP_POST_VARS['enchant_bonus']);
@@ -301,7 +313,10 @@ else if ( $mode != "" )
 					element_img = '" . str_replace("\'", "''", $element_img) . "',
 					element_level = $level ,
 					element_skill_mining_bonus = $b_mining ,
+					element_skill_brewing_bonus = $b_brewing ,
 					element_skill_stone_bonus = $b_stone , 
+					element_skill_cooking_bonus = $b_cooking ,
+					element_skill_blacksmithing_bonus = $b_blacksmithing ,
 					element_skill_forge_bonus = $b_forge ,
 					element_skill_enchantment_bonus = $b_enchant ,
 					element_skill_trading_bonus = $b_trading , 
@@ -341,6 +356,9 @@ else if ( $mode != "" )
 			$element_desc = ( isset($HTTP_POST_VARS['element_desc']) ) ? trim($HTTP_POST_VARS['element_desc']) : trim($HTTP_GET_VARS['element_desc']);
 			$level = intval($HTTP_POST_VARS['level']);
 			$b_mining = intval($HTTP_POST_VARS['mining_bonus']);
+			$b_blacksmithing = intval($HTTP_POST_VARS['blacksmithing_bonus']);
+			$b_brewing = intval($HTTP_POST_VARS['brewing_bonus']);
+			$b_cooking = intval($HTTP_POST_VARS['cooking_bonus']);
 			$b_stone = intval($HTTP_POST_VARS['stone_bonus']);
 			$b_forge = intval($HTTP_POST_VARS['forge_bonus']);
 			$b_enchant = intval($HTTP_POST_VARS['enchant_bonus']);
@@ -360,9 +378,9 @@ else if ( $mode != "" )
 				message_die(MESSAGE, $lang['Fields_empty']);
 			}
 
-			$sql = "INSERT INTO " . ADR_ELEMENTS_TABLE . " 
-				( element_id , element_name , element_desc ,  element_level , element_img , element_skill_mining_bonus , element_skill_stone_bonus , element_skill_forge_bonus , element_skill_enchantment_bonus , element_skill_trading_bonus , element_skill_thief_bonus , element_oppose_strong , element_oppose_strong_dmg , element_oppose_weak , element_oppose_weak_dmg , element_oppose_same_dmg, element_colour )
-				VALUES ( $element_id,'" . str_replace("\'", "''", $element_name) . "', '" . str_replace("\'", "''", $element_desc) . "' , $level , '" . str_replace("\'", "''", $element_img) . "' , $b_mining , $b_stone , $b_forge ,$b_enchant , $b_trading ,$b_thief , $element_oppose_str , $oppose_str_dmg , $element_oppose_weak , $oppose_weak_dmg , $oppose_same_dmg, '" . str_replace("\'", "''", $element_colour) . "' )";
+			$sql = "INSERT INTO " . ADR_ELEMENTS_TABLE . "
+				( element_id , element_name , element_desc ,  element_level , element_img , element_skill_mining_bonus , element_skill_stone_bonus , element_skill_forge_bonus , element_skill_enchantment_bonus , element_skill_trading_bonus , element_skill_thief_bonus , element_oppose_strong , element_oppose_strong_dmg , element_oppose_weak , element_oppose_weak_dmg , element_oppose_same_dmg, element_colour, element_skill_brewing_bonus, element_skill_cooking_bonus, element_skill_blacksmithing_bonus )
+				VALUES ( $element_id,'" . str_replace("\'", "''", $element_name) . "', '" . str_replace("\'", "''", $element_desc) . "' , $level , '" . str_replace("\'", "''", $element_img) . "' , $b_mining , $b_stone , $b_forge ,$b_enchant , $b_trading ,$b_thief , $element_oppose_str , $oppose_str_dmg , $element_oppose_weak , $oppose_weak_dmg , $oppose_same_dmg, '" . str_replace("\'", "''", $element_colour) . "', $b_brewing, $b_cooking, $b_blacksmithing )";
 			$result = $db->sql_query($sql);
 			if( !$result )
 			{

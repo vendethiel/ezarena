@@ -150,7 +150,17 @@ function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, 
 	$item_weight = $item_data['item_weight'];
 	$item_max_skill = $item_data['item_max_skill'];
 	$item_sell_back_percentage = $item_data['item_sell_back_percentage'];
+	$item_brewing_recipe = $item_data['item_brewing_recipe'];
+	$item_brewing_items_req = $item_data['item_brewing_items_req'];
+	$item_effect = $item_data['item_effect'];
+	$item_recipe_linked_item = $item_data['item_recipe_linked_item'];
+	$item_original_recipe_id = $item_data['item_original_recipe_id'];
 	$item_bought_timestamp = $item_data['item_bought_timestamp'];
+	$item_brewing_recipe = $item_data['item_brewing_recipe'];
+	$item_brewing_items_req = $item_data['item_brewing_items_req'];
+	$item_effect = $item_data['item_effect'];
+	$item_recipe_linked_item = $item_data['item_recipe_linked_item'];
+	$item_original_recipe_id = $item_data['item_original_recipe_id'];
 	$align_enable = $item_data['item_restrict_align_enable'];
 	$align_type = $item_data['item_restrict_align'];
 	$class_enable = $item_data['item_restrict_class_enable'];
@@ -185,8 +195,8 @@ function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, 
 	if($item_duration_max < $item_duration) $item_duration_max = $item_duration;
 
 	$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . "
-		(item_id, item_owner_id, item_type_use, item_name, item_desc, item_icon, item_price, item_quality, item_duration, item_duration_max, item_power, item_add_power, item_mp_use, item_weight, item_auth, item_element, item_element_str_dmg, item_element_same_dmg, item_element_weak_dmg, item_max_skill, item_sell_back_percentage, item_bought_timestamp, item_restrict_align_enable, item_restrict_align, item_restrict_class_enable, item_restrict_class, item_restrict_element_enable, item_restrict_element, item_restrict_race_enable, item_restrict_race, item_restrict_level, item_restrict_str, item_restrict_dex, item_restrict_con, item_restrict_int, item_restrict_wis, item_restrict_cha, item_crit_hit, item_crit_hit_mod, item_stolen_id, item_stolen_by, item_stolen_timestamp)
-		VALUES($new_item_id, $user_id, $item_type_use, '$item_name', '$item_desc', '" . str_replace("\'", "''", $item_icon) . "', $item_price, $item_quality, $item_duration, $item_duration_max, $item_power, $item_add_power, $item_mp_use, $item_weight, 0, $item_element, $item_element_str_dmg, $item_element_same_dmg, $item_element_weak_dmg, $item_max_skill, $item_sell_back_percentage, ".time().", $align_enable, '$align_type', $class_enable, '$class_type', $element_enable, '$element_type', $race_enable, '$race_type', $restrict_level, $restrict_str, $restrict_dex, $restrict_con, $restrict_int, $restrict_wis, $restrict_cha, $item_crit, $item_crit_mod, $stolen_id, '$stolen_by', $stolen_timestamp)";
+		(item_id, item_owner_id, item_type_use, item_name, item_desc, item_icon, item_price, item_quality, item_duration, item_duration_max, item_power, item_add_power, item_mp_use, item_weight, item_auth, item_element, item_element_str_dmg, item_element_same_dmg, item_element_weak_dmg, item_max_skill, item_sell_back_percentage, item_bought_timestamp, item_restrict_align_enable, item_restrict_align, item_restrict_class_enable, item_restrict_class, item_restrict_element_enable, item_restrict_element, item_restrict_race_enable, item_restrict_race, item_restrict_level, item_restrict_str, item_restrict_dex, item_restrict_con, item_restrict_int, item_restrict_wis, item_restrict_cha, item_crit_hit, item_crit_hit_mod, item_stolen_id, item_stolen_by, item_stolen_timestamp, item_brewing_recipe , item_brewing_items_req , item_effect , item_recipe_linked_item , item_original_recipe_id)
+		VALUES($new_item_id, $user_id, $item_type_use, '$item_name', '$item_desc', '" . str_replace("\'", "''", $item_icon) . "', $item_price, $item_quality, $item_duration, $item_duration_max, $item_power, $item_add_power, $item_mp_use, $item_weight, 0, $item_element, $item_element_str_dmg, $item_element_same_dmg, $item_element_weak_dmg, $item_max_skill, $item_sell_back_percentage, ".time().", $align_enable, '$align_type', $class_enable, '$class_type', $element_enable, '$element_type', $race_enable, '$race_type', $restrict_level, $restrict_str, $restrict_dex, $restrict_con, $restrict_int, $restrict_wis, $restrict_cha, $item_crit, $item_crit_mod, $stolen_id, '$stolen_by', $stolen_timestamp, $item_brewing_recipe , '".$item_brewing_items_req."' , '".$item_effect."' , $item_recipe_linked_item , $item_original_recipe_id)";
 	$result = $db->sql_query($sql);
 	if(!$result){
 		message_die(GENERAL_ERROR, "Couldn't insert new item", "", __LINE__, __FILE__, $sql);}
@@ -279,40 +289,6 @@ function adr_buy_item($user_id , $item_id , $shop_owner_id , $shop_id , $direct 
 	}
 	else
 	{
-		// Commenting out instead of deleting in order to preserve additional MOD changes
-		/*
-		$item_type_use = $item_data['item_type_use'];
-		$item_name = addslashes($item_data['item_name']);
-		$item_desc = addslashes($item_data['item_desc']);
-		$item_icon = trim($item_data['item_icon']);
-		$item_price = $item_data['item_price'];
-		$item_quality = $item_data['item_quality'];
-		$item_duration = $item_data['item_duration'];
-		$item_duration_max = $item_data['item_duration_max'];
-		$item_power = $item_data['item_power'];
-		$item_add_power = $item_data['item_add_power'];
-		$item_mp_use = $item_data['item_mp_use'];
-		$item_element = $item_data['item_element'];
-		$item_element_str_dmg = $item_data['item_element_str_dmg'];
-		$item_element_same_dmg = $item_data['item_element_same_dmg'];
-		$item_element_weak_dmg = $item_data['item_element_weak_dmg'];
-		$item_weight = $item_data['item_weight'];
-		$item_max_skill = $item_data['item_max_skill'];
-		$item_sell_back_percentage = $item_data['item_sell_back_percentage'];
-		$item_bought_timestamp = $item_data['item_bought_timestamp'];
-
-		if ( $item_duration_max < $item_duration ) $item_duration_max = $item_duration;
-
-		$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . " 
-			( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , item_duration , item_duration_max , item_power , item_add_power , item_mp_use , item_weight , item_auth , item_element , item_element_str_dmg , item_element_same_dmg , item_element_weak_dmg , item_max_skill , item_sell_back_percentage, item_bought_timestamp )
-			VALUES ( $new_item_id , $user_id , $item_type_use , '$item_name' , '$item_desc' , '" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max , $item_power , $item_add_power , $item_mp_use , $item_weight , 0 , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg , $item_max_skill , $item_sell_back_percentage, , ".time()." )";
-		$result = $db->sql_query($sql);
-		if( !$result )
-		{
-			message_die(GENERAL_ERROR, "Couldn't insert new item", "", __LINE__, __FILE__, $sql);
-		}
-		*/
-		// Insert item details
 		adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id);
 	}
 
@@ -877,4 +853,332 @@ function adr_trading_limit($user_id)
       if(!$result){
          message_die(GENERAL_ERROR, 'Could not update trading skill ', "", __LINE__, __FILE__, $sql);}
    }
+}
+
+
+function adr_use_recipe($recipe_id,$user_id)
+{
+	global $db;
+
+	// Fix the values
+	$recipe_id = intval($recipe_id);
+	$user_id = intval($user_id);
+
+	//get info of the owners recipe
+  	$sql_owner = "SELECT * FROM ". ADR_SHOPS_ITEMS_TABLE ."
+		WHERE item_owner_id = $user_id
+		AND item_id = $recipe_id";
+	$result_owner = $db->sql_query($sql_owner);
+	if( !$result_owner )
+		message_die(GENERAL_ERROR, 'Could not obtain owners recipes information', "", __LINE__, __FILE__, $sql_owner);
+	$owner_recipe = $db->sql_fetchrow($result_owner);
+
+	//get now all info of the up-to-date recipe in the forums shop (id 1) (Admin might have changed or deleted it)
+  	$sql_admin = "SELECT * FROM ". ADR_SHOPS_ITEMS_TABLE ."
+		WHERE item_owner_id = 1
+		AND item_id = ".$owner_recipe['item_original_recipe_id'];
+		$result_admin = $db->sql_query($sql_admin);
+	if( !($admin_recipe = $db->sql_fetchrow($result_admin)) ) {
+		//recipe deleted
+		return 2;
+	}
+	else {
+		//check if the user already has written the recipe into the recipebook
+	  	$sql_check_book = "SELECT * FROM ". ADR_RECIPEBOOK_TABLE ."
+			WHERE recipe_original_id = ".$admin_recipe['item_id']."
+			AND recipe_owner_id = $user_id
+			AND recipe_skill_id = ".$admin_recipe['item_recipe_skill_id']."
+			";
+		$result_check_book = $db->sql_query($sql_check_book);
+		if( $check_book = $db->sql_fetchrow($result_check_book) ) {
+			//recipe already known
+			return 0;
+		}
+		else if (!($check_book = $db->sql_fetchrow($result_check_book))) {
+			//get new recipe_id
+			$sql = "SELECT recipe_id FROM " . ADR_RECIPEBOOK_TABLE ."
+				WHERE recipe_skill_id = ".$admin_recipe['item_recipe_skill_id']."
+				ORDER BY recipe_id
+				DESC LIMIT 1";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, 'Could not obtain recipes total entrys', "", __LINE__, __FILE__, $sql);
+			}
+			$recipebook_data = $db->sql_fetchrow($result);
+			$new_recipe_id = $recipebook_data['recipe_id'] + 1;
+
+			//write recipe into the owners recipebook
+			$sql = "INSERT INTO " . ADR_RECIPEBOOK_TABLE . " 
+				( recipe_id , recipe_owner_id , recipe_level , recipe_linked_item , recipe_items_req , recipe_effect , recipe_original_id, recipe_skill_id)
+				VALUES ( $new_recipe_id , $user_id , '".$admin_recipe['item_power']."' , '".$admin_recipe['item_recipe_linked_item']."' , '".$admin_recipe['item_brewing_items_req']."', '".$admin_recipe['item_effect']."', '".$admin_recipe['item_original_recipe_id']."', '".$admin_recipe['item_recipe_skill_id']."')";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, "Couldn't insert new recipe into the recipebook", "", __LINE__, __FILE__, $sql);
+			}
+
+			//delete the just used recipe
+			$sql = "DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
+				WHERE item_id = " . $recipe_id . "
+				AND item_owner_id = $user_id";
+			$result = $db->sql_query($sql);
+			if( !$result )
+				message_die(GENERAL_ERROR, "Couldn't delete owners recipe", "", __LINE__, __FILE__, $sql);
+
+			return 1;
+		}
+	}
+}
+
+
+function adr_consume($consumable_id,$user_id)
+{
+	global $db;
+
+	// Fix the values
+	$consumable_id = intval($consumable_id);
+	$user_id = intval($user_id);
+	$user = adr_get_user_infos($user_id);
+
+	//get effects of the consumable
+  	$sql_consumable = "SELECT * FROM ". ADR_SHOPS_ITEMS_TABLE ."
+		WHERE item_owner_id = $user_id
+		AND item_id = $consumable_id ";
+	$result_consumable = $db->sql_query($sql_consumable);
+	if( !$result_consumable )
+		message_die(GENERAL_ERROR, "Couldn't get owners consumable effects", "", __LINE__, __FILE__, $sql_consumable);
+	$consumable = $db->sql_fetchrow($result_consumable);
+
+	//check if user has a battle in progress with already a temp effect consumable used
+	$sql = " SELECT * FROM  " . ADR_BATTLE_LIST_TABLE . " 
+		WHERE battle_challenger_id = $user_id
+		AND battle_result = 0
+		AND battle_type = 1 
+		AND battle_effects != ''
+		";
+	$result = $db->sql_query($sql);
+	if( !($check_battle = $db->sql_fetchrow($result)) )
+	{
+		//check if user has already used a temp effect consumable before entering a battle
+		if ($user['character_pre_effects'] != '' && $user['character_pre_effects'] != NULL && (substr_count($consumable['item_effect'],'M:1:PERM:0') || substr_count($consumable['item_effect'],'M:0:PERM:0')))
+		{
+			//already ate consumable with temp effects
+			$message = "You already have temporary effects added to your character !"; 
+			return array(0,$message);
+		}
+		else
+		{
+			$effects = array();
+			$effects = explode(':',$consumable['item_effect']);
+		
+			for ($i = 0; $i < count($effects);$i++)
+			{
+				switch(TRUE)
+				{
+					case ($effects[$i] == 'HP' || $effects[$i] == 'MP'):
+						if (substr_count($effects[$i+1], '%'))
+							$value = floor( ( $user['character_'.strtolower($effects[$i]).''] * $effects[$i+1] ) / 100 );
+						else
+							$value = $effects[$i+1];
+						if (substr_count($effects[$i+1], '-'))
+							$pre_message = 'Your character is losing '.$value.' '.$effects[$i].' !<br />';
+						else
+							$pre_message = 'Your character refreshed '.$value.' '.$effects[$i].' !<br />';
+						
+						if($effects[$i+3] == 1)	{
+							//effect hits the monster
+							//nothing happens, only possible in battle
+							$pre_message = 'You can\'t use the '.$effects[$i].' effect of this consumable cause it\'s meant to hit an opponent<br />';
+						}
+						else {
+							//effect hits the user
+							if($user['character_'.strtolower($effects[$i]).''] + $value > $user['character_'.strtolower($effects[$i]).'_max'])
+								$value_sql = 'character_'.strtolower($effects[$i]).' = '.$user['character_'.strtolower($effects[$i]).'_max'];
+							else if ($user['character_'.strtolower($effects[$i]).''] + $value < 0)
+								$value_sql = 'character_'.strtolower($effects[$i]).' = 0';
+							else
+								$value_sql = 'character_'.strtolower($effects[$i]).' = character_'.strtolower($effects[$i]).' + '.$value;
+							$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+								SET $value_sql
+								WHERE character_id = $user_id ";
+							if (!$db->sql_query($sql))
+								message_die(GENERAL_ERROR, 'Couldn\'t update characters '.$effects[$i].'', '', __LINE__, __FILE__, $sql);
+							$use_the_consumable = 1;
+						}
+						$message .= $pre_message;
+					break;
+
+					case ($effects[$i] == 'AC' || $effects[$i] == 'STR' || $effects[$i] == 'DEX' || $effects[$i] == 'CON' || $effects[$i] == 'INT' || $effects[$i] == 'WIS' || $effects[$i] == 'CHA' || $effects[$i] == 'MA' || $effects[$i] == 'MD' || $effects[$i] == 'EXP' || $effects[$i] == 'SP'):
+						$effects[$i] = ( $effects[$i] == 'STR' ) ? 'might':$effects[$i];
+						$effects[$i] = ( $effects[$i] == 'DEX' ) ? 'dexterity':$effects[$i];
+						$effects[$i] = ( $effects[$i] == 'CON' ) ? 'constitution':$effects[$i];
+						$effects[$i] = ( $effects[$i] == 'INT' ) ? 'intelligence':$effects[$i];
+						$effects[$i] = ( $effects[$i] == 'WIS' ) ? 'wisdom':$effects[$i];
+						$effects[$i] = ( $effects[$i] == 'CHA' ) ? 'charisma':$effects[$i];
+						$effects[$i] = ( $effects[$i] == 'MA' ) ? 'magic_attack':$effects[$i];
+						$effects[$i] = ( $effects[$i] == 'MD' ) ? 'magic_resistance':$effects[$i];
+						$effects[$i] = ( $effects[$i] == 'EXP' ) ? 'xp':$effects[$i];
+						
+						if (substr_count($effects[$i+1], '%'))
+							$value = floor( ( $user['character_'.strtolower($effects[$i]).''] * $effects[$i+1] ) / 100 );
+						else
+							$value = $effects[$i+1];
+						if (substr_count($effects[$i+1], '-')) {
+							if ($effects[$i+5] == 1) // if perm effect
+								$pre_message = 'Your character is losing '.$value.' '.$effects[$i].' !<br />';
+							else if ($effects[$i+3] == 1) // hits monster
+								$pre_message = 'For the next battle, your opponent is losing '.$value.' '.$effects[$i].' !<br />';
+							else
+								$pre_message = 'For the next battle your character is losing '.$value.' '.$effects[$i].' !<br />';
+						}
+						else {
+							if ($effects[$i+5] == 1) // if perm effect
+								$pre_message = 'Your character gains '.$value.' '.$effects[$i].' !<br />';
+							else if ($effects[$i+3] == 1) // hits monster
+								$pre_message = 'For the next battle, your opponent gets +'.$value.' '.$effects[$i].' !<br />';
+							else
+								$pre_message = 'For the next battle your character gets +'.$value.' '.$effects[$i].' !<br />';
+						}
+						
+						if($effects[$i+3] == 1 || ($effects[$i+3] == 0 && $effects[$i+5] == 0))	{
+							//effect hits the monster
+							//update character_pre_effects field for the next battle
+							$effects[$i] = ( $effects[$i] == 'magic_attack' ) ? 'MA':$effects[$i];
+							$effects[$i] = ( $effects[$i] == 'magic_resistance' ) ? 'MD':$effects[$i];
+							$pre_effects .= ( $pre_effects == '' ) ? $effects[$i].':'.$effects[$i+1].':M:'.$effects[$i+3] : ':'.$effects[$i].':'.$effects[$i+1].':M:'.$effects[$i+3];
+							$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+								SET character_pre_effects = '".$pre_effects."'
+								WHERE character_id = $user_id ";
+							if (!$db->sql_query($sql))
+								message_die(GENERAL_ERROR, 'Couldn\'t update characters pre effects for battle', '', __LINE__, __FILE__, $sql);
+							$use_the_consumable = 1;
+						}
+						else {
+							//effect hits the user
+							if ($user['character_'.strtolower($effects[$i]).''] + $value < 0)
+								$value_sql = 'character_'.strtolower($effects[$i]).' = 0';
+							else
+								$value_sql = 'character_'.strtolower($effects[$i]).' = character_'.strtolower($effects[$i]).' + '.$value;
+							$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+								SET $value_sql
+								WHERE character_id = $user_id ";
+							if (!$db->sql_query($sql))
+								message_die(GENERAL_ERROR, 'Couldn\'t update characters '.$effects[$i].'', '', __LINE__, __FILE__, $sql);
+							$use_the_consumable = 1;
+						}
+						$message .= $pre_message;
+					break;
+
+					case ($effects[$i] == 'BATTLES_REM' || $effects[$i] == 'SKILLUSE_REM' || $effects[$i] == 'TRADINGSKILL_REM' || $effects[$i] == 'THEFTSKILL_REM'):
+						$effects[$i] = ( $effects[$i] == 'BATTLES_REM' ) ? 'battle_limit':$effects[$i];
+						$effects[$i] = ( $effects[$i] == 'SKILLUSE_REM' ) ? 'skill_limit':$effects[$i];
+						$effects[$i] = ( $effects[$i] == 'TRADINGSKILL_REM' ) ? 'trading_limit':$effects[$i];
+						$effects[$i] = ( $effects[$i] == 'THEFTSKILL_REM' ) ? 'thief_limit':$effects[$i];
+						
+						if (substr_count($effects[$i+1], '%'))
+							$value = floor( ( $user['character_'.strtolower($effects[$i]).''] * $effects[$i+1] ) / 100 );
+						else
+							$value = $effects[$i+1];
+						if (substr_count($effects[$i+1], '-'))
+							$pre_message = 'Your character is losing '.$value.' '.$effects[$i].' !<br />';
+						else
+							$pre_message = 'Your character gains '.$value.' '.$effects[$i].' !<br />';
+						
+						$sql = "SELECT config_value FROM " . ADR_GENERAL_TABLE . " 
+							WHERE config_name = 'Adr_character_$effects[$i]'";
+						if( !($result = $db->sql_query($sql)) ) 
+							message_die(GENERAL_ERROR, 'Could not query general config', '', __LINE__, __FILE__, $sql); 
+						$general = $db->sql_fetchrow($result);
+						
+						//effect hits the user
+						if($user['character_'.strtolower($effects[$i]).''] + $value > $general['config_value'])
+							$value_sql = 'character_'.strtolower($effects[$i]).' = '.$general['config_value'];
+						else if ($user['character_'.strtolower($effects[$i]).''] + $value < 0)
+							$value_sql = 'character_'.strtolower($effects[$i]).' = 0';
+						else
+							$value_sql = 'character_'.strtolower($effects[$i]).' = character_'.strtolower($effects[$i]).' + '.$value;
+						$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+							SET $value_sql
+							WHERE character_id = $user_id ";
+						if (!$db->sql_query($sql))
+							message_die(GENERAL_ERROR, 'Couldn\'t update characters '.$effects[$i].'', '', __LINE__, __FILE__, $sql);
+						$use_the_consumable = 1;
+						$message .= $pre_message;
+					break;
+
+					case ($effects[$i] == 'ATT' || $effects[$i] == 'DEF'):
+						
+						$value = $effects[$i+1];
+						
+						if (substr_count($effects[$i+1], '-')) {
+							if ($effects[$i+3] == 1) // hits monster
+								$pre_message = 'For the next battle, your opponent is losing '.$value.' '.$effects[$i].' !<br />';
+							else
+								$pre_message = 'For the next battle your character is losing '.$value.' '.$effects[$i].' !<br />';
+						}
+						else {
+							if ($effects[$i+3] == 1) // hits monster
+								$pre_message = 'For the next battle, your opponent gets +'.$value.' '.$effects[$i].' !<br />';
+							else
+								$pre_message = 'For the next battle your character gets +'.$value.' '.$effects[$i].' !<br />';
+						}
+						
+						//update character_pre_effects field for the next battle
+						$pre_effects .= ( $pre_effects == '' ) ? $effects[$i].':'.$effects[$i+1].':M:'.$effects[$i+3] : ':'.$effects[$i].':'.$effects[$i+1].':M:'.$effects[$i+3];
+						$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+							SET character_pre_effects = '".$pre_effects."'
+							WHERE character_id = $user_id ";
+						if (!$db->sql_query($sql))
+							message_die(GENERAL_ERROR, 'Couldn\'t update characters pre effects for battle', '', __LINE__, __FILE__, $sql);
+						
+						$use_the_consumable = 1;
+						$message .= $pre_message;
+					break;
+
+					case ($effects[$i] == 'GOLD'):
+						$effects[$i] = ( $effects[$i] == 'GOLD' ) ? 'points':$effects[$i];
+						
+						$sql = "SELECT * FROM " . USERS_TABLE . " 
+							WHERE user_id = $user_id";
+						if( !($result = $db->sql_query($sql)) ) 
+							message_die(GENERAL_ERROR, 'Could not query general config', '', __LINE__, __FILE__, $sql); 
+						$phpbb_user = $db->sql_fetchrow($result);
+						
+						if (substr_count($effects[$i+1], '%'))
+							$value = floor( ( $phpbb_user['user_'.strtolower($effects[$i]).''] * $effects[$i+1] ) / 100 );
+						else
+							$value = $effects[$i+1];
+						if (substr_count($effects[$i+1], '-'))
+							$pre_message = 'Your character is losing '.$value.' '.$effects[$i].' !<br />';
+						else
+							$pre_message = 'Your character gains '.$value.' '.$effects[$i].' !<br />';
+						
+						//effect hits the user
+						if ($phpbb_user['user_'.strtolower($effects[$i]).''] + $value < 0)
+							$value_sql = 'user_'.strtolower($effects[$i]).' = 0';
+						else
+							$value_sql = 'user_'.strtolower($effects[$i]).' = user_'.strtolower($effects[$i]).' + '.$value;
+						$sql = "UPDATE " . USERS_TABLE . "
+							SET $value_sql
+							WHERE user_id = $user_id ";
+						if (!$db->sql_query($sql))
+							message_die(GENERAL_ERROR, 'Couldn\'t update users '.$effects[$i].'', '', __LINE__, __FILE__, $sql);
+						$use_the_consumable = 1;
+						$message .= $pre_message;
+					break;
+
+				}
+			}
+			if ($use_the_consumable == 1)
+				adr_use_item($consumable_id , $user_id);
+			return array(1,$message);
+		}
+	}
+	else
+	{
+		//already ate consumable with temp effects
+		$message = "Vous êtes déjà sous l'emprises d'effets temoraires !";
+		return array(0,$message);
+	}
 }

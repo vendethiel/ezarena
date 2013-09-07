@@ -5,7 +5,8 @@
 *
 *                   		Translation : Okinawa
 *                		 http://www.kingdom-evolution.fr.vu
-*                     + Informpro
+*                     
+*                      + Informpro
 *
 ****************************************************************************/
 
@@ -71,6 +72,8 @@ $lang['Dispose']='Disposer';
 
 // Skills
 $lang['Adr_skill_mining_desc']='Compétence minage';
+$lang['Adr_skill_brewing_desc']='Compétence brassage';
+$lang['Adr_skill_cooking_desc']='Compétence cuisine';
 $lang['Adr_skill_stone_desc']='Compétence taille des pierres';
 $lang['Adr_skill_forge_desc']='Compétence forge';
 $lang['Adr_skill_enchantment_desc']='Compétence enchantement';
@@ -268,6 +271,7 @@ if ( defined ( 'IN_ADR_CHARACTER' ))
    $lang['Adr_races_malus_wis']='Malus de volonté';
    $lang['Adr_races_malus_cha']='Malus de charme';
    $lang['Adr_races_bonus_mining']='Bonus à la compétence minage';
+   $lang['Adr_races_bonus_cooking']='Bonus à la compétence cuisine';
    $lang['Adr_races_bonus_stone']='Bonus à la compétence taille des pierres';
    $lang['Adr_races_bonus_forge']='Bonus à la compétence forge';
    $lang['Adr_races_bonus_enchant']='Bonus à la compétence enchantement';
@@ -279,6 +283,8 @@ if ( defined ( 'IN_ADR_CHARACTER' ))
    $lang['Adr_classes_update_hp']='Points de vie gagnés à chaque montée de niveau';
    $lang['Adr_classes_update_mp']='Points de magie gagnés à chaque montée de niveau';
    $lang['Adr_classes_update_ac']='Points de classe d\'armure gagnés à chaque montée de niveau';
+
+   $lang['Adr_cooking']='Cuisine';
 
    // Main character page
    $lang['Adr_character_of']='Le personnage de %s';
@@ -481,6 +487,10 @@ if ( defined ( 'IN_ADR_SHOPS' ))
    $lang['Adr_items_type_health_potion']='Potion de soins';
    $lang['Adr_items_type_mana_potion']='Potion de mana';
    $lang['Adr_items_type_misc']='Divers';
+   $lang['Adr_items_type_tools_cooking']='Outils : cuisine';
+   $lang['Adr_items_type_food']='Nourriture';
+
+   $lang['Adr_items_cooking_desc']='Indispensable à la cuisine';
 
    //Shops
    $lang['Adr_items_quality']='Qualité';
@@ -1481,6 +1491,7 @@ $lang['ADR_DUEL_LIST'] = 'Cliquez sur l\'image pour accéder à vos duels';
 $lang['NO_ZONE_AVAILABLE'] = 'Il n\'existe pas de zone, ou aucune pour votre niveau. Veuillez contacter l\'administrateur du forum';
 $lang['ADR_MOVED_BACK_TO_SAFE_ZONE'] = 'Suites à de mystérieuses circonstances, vous vous réveillez en zone sûre ...';
 $lang['ADR_CAULDRON_EXPLAIN'] = 'Bienvenue au Chaudron Magique.<br/>Ici, vous pouvez combiner des objets pour obtenir un autre objet encore plus puissant.<br/><br/>Attention ! Toutes les combinaisons ne marchent pas, et l\'ordre est important !';
+$lang['ADR_RECIPES_LIST'] = 'Cliquez sur l\'image pour accéder à la liste des recettes que vous connaissez';
 //'Welcome to the Alchemy Lab. Here you can combine some items to get another powerfull item. Warning ! The order of the items you put into the cauldron is important! You have to search and find good combinations.';
 // END ezArena
 
@@ -1503,4 +1514,196 @@ if ( defined ('IN_ADR_QUESTBOOK'))
    $lang['Adr_questbook_quest_typ_kill_done']='<font color="green">Partie de quête complétée ! Vous avez tué %s %s !</font><br>';
    $lang['Adr_questbook_quest_typ_item_need']='Vous devez encore trouver un <font color="red">%s</font> pour compléter cette quête !<br>';
    $lang['Adr_questbook_quest_typ_item_have']='<font color="green">Partie de quête complétée ! Vous avez trouvé un %s !</font><br>';
+}
+
+$lang['Adr_no_loottable']='Aucun';
+
+// Brewing
+$lang['Adr_races_bonus_brewing']='Bonus au brassage';
+$lang['Adr_brewing']='Brassage';
+$lang['Adr_items_type_tools_brewing']='Outils : brassage';
+$lang['Adr_items_type_potion']='Potion';
+$lang['Adr_items_type_recipe']='Recette';
+$lang['Adr_items_brewing_desc']='Indispensable pour brasser';
+if ( defined ('IN_ADR_BREWING'))
+{
+   $lang['Adr_recipes_title']='Liste des recettes';
+   $lang['Adr_recipes_title_explain']='Créez et éditez des recettes de brassage :';
+   $lang['Adr_recipes_name']='Nom :';
+   $lang['Adr_recipes_level']='Niveau :';   
+   $lang['Adr_recipes_desc']='Description:';
+   $lang['Adr_recipes_add']='Ajouter une recette :';
+   $lang['Adr_recipes_effect']='Effet';
+   $lang['Adr_recipes_items_req']='Objets requis :';
+   $lang['Adr_recipes_admin_only']='Administrateurs seulement ?';
+   $lang['Adr_recipes_add_title']='Ajouter ou supprimer les recettes';
+   $lang['Adr_recipes_add_title_explain']='';
+   $lang['Adr_recipes_img']='Image';
+   $lang['recipe_name']='Nom de la recette :';
+   $lang['recipe_name_desc']='';
+   $lang['recipe_desc']='Description :';
+   $lang['recipe_desc_desc']='Description courte de al recette';
+   $lang['recipe_level']='Niveau (puissance)';
+   $lang['recipe_level_desc']='Niveai requis pour écrire cette recette dans son livre des recettes';
+   $lang['recipe_effect']='Effets';
+   $lang['recipe_effect_desc']='Choisissez les effets de la potion.<br/>Pourcentage ou nombre fixe, les deux sont possibles, les nombres négatifs aussi.<br/>Laissez blanc ou mettez 0 pour ne pas avoir d\'effet.<br/>Si "Toucher un monstre" est sélectionné, la cible sera le monstre et la case "effets permanents" sera ignorée.';
+   $lang['recipe_items_req']='La recette';
+   $lang['recipe_items_req_desc']='Choisissez les objets qui sont requis pour préparer cette potion';
+   $lang['recipe_items_amount']='Combien de chaque objets faut-il (séparé par ":") ?';
+   $lang['recipe_items_amount_desc']='Example : si vous avez sélectionné 3 objets, que vous voulez 2 fois le premier, 1 fois le second et 5 fois le troisième, entrez <b>2:1:5</b><br/>Le premier objet est le plus haut.<br/><br/>Laissez blanc pour ne demander qu\'un de chaque';
+   $lang['recipe_admin_only']='Recette pour administrateurs seulement ?';
+   $lang['recipe_admin_only_desc']='';
+   $lang['Adr_recipe_successful_deleted']='Recette et produit final supprimés';
+   $lang['Adr_recipe_successful_edited']='Recette et produit final mis à jour.';
+   $lang['Adr_recipe_attention']='<font color="#FF0000">ATTENTION ! Supprimer une recette supprimera aussi le produit final !<br/>La recette sera aussi supprimée des livres de recette des utilisateurs.<br/>Les joueurs ayant des restes dans leur inventaire ne seront pas capables d\'apprendre la recette</font>';
+   $lang['Adr_forums_shop_recipe_items']='Cet objet fait partie d\'une recette de brassage, veuillez utiliser l\'administration des recettes pour l\'éditer';
+   $lang['Adr_temp_and_perm_effects']='Effets permanents ou temporaires';
+   $lang['Adr_perm_only_effects']='Seulement des effets permanents';
+   $lang['Adr_perm_effect']='effet permanent ?';
+   $lang['Adr_hit_monster']='Touche les monstres ?';
+   $lang['Adr_recipe_successful_added']='Recette et potion ajoutées avec succès';
+   $lang['adr_brewing_potion_link']='Utiliser la potion';
+   $lang['adr_brewing_recipe_link']='Apprendre la recette';
+   $lang['Adr_recipe_successful_added']='Recipe successfully written into your recipebook !';
+   $lang['Adr_recipe_already_known']='You already have written that recipe into your recipebook !';
+   $lang['Adr_recipe_was_delted']='This recipe is not anymore valid (Admin may have deleted it)';
+   $lang['Adr_recipebook_brewing']='Brewing Recipes';
+   $lang['Adr_potion_used']='You already used a potion with temp effects for battle !';
+   $lang['brewing_very_easy']='Very Easy';
+   $lang['brewing_easy']='Easy';
+   $lang['brewing_normal']='Normal';
+   $lang['brewing_hard']='Hard';
+   $lang['brewing_very_hard']='Very Hard';
+   $lang['brewing_impossible']='Impossible';
+   $lang['brewing_select_recipe']='Select Recipe:';
+   $lang['brewing_no_recipe']='No recipe';
+   $lang['brewing_tool_explain']='Brewing tools allow you to brew potions';
+   $lang['brewing_tool_needed']='You can\'t brew a potion with only your hands!';
+   $lang['brewing_failure']='You brewed nothing';
+   $lang['brewing_success']='You brewed a %s with a value of %s %s !';
+   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
+   $lang['brewing_no_tool']='No tool';
+   $lang['brewing_create']='Brew this Potion';
+   $lang['brewing_select_tool']='Select a tool';
+   $lang['recipe_info']='Recipe Info';
+   $lang['recipe_items_needed']='Items needed for this recipe';
+   $lang['brewing_missing_item']='You don\'t have the required items to brew this potion !';
+   $lang['recipe_stats']='Recipe Stats:';
+   $lang['potion_effects']='Potion Effects:';
+   $lang['potion_stats']='Potion Stats:';
+}
+
+if ( defined ('IN_ADR_CRAFTING'))
+{
+   $lang['Adr_recipes_title']='Crafting Patterns List';
+   $lang['Adr_recipes_title_explain']='Create & edit crafting patterns:';
+   $lang['Adr_recipes_name']='Name:';
+   $lang['Adr_recipes_level']='Level:';   
+   $lang['Adr_recipes_desc']='Description:';
+   $lang['Adr_recipes_add']='Add pattern:';
+   $lang['Adr_recipes_effect']='Effect';
+   $lang['Adr_recipes_items_req']='Items required:';
+   $lang['Adr_recipes_admin_only']='Admin only ?';
+   $lang['Adr_recipes_add_title']='Add or edit patterns';
+   $lang['Adr_recipes_add_title_explain']='Here you can add and edit the patterns';
+   $lang['Adr_recipes_img']='Image';
+   $lang['recipe_name']='Pattern name:';
+   $lang['recipe_name_desc']='Enter the name of the pattern';
+   $lang['recipe_desc']='Description:';
+   $lang['recipe_desc_desc']='Just a short description about the pattern';
+   $lang['recipe_level']='The level of the pattern. (power)';
+   $lang['recipe_level_desc']='Level that is needed to write the pattern into the recipebook';
+   $lang['recipe_effect']='Effects';
+   $lang['recipe_items_req']='The Pattern';
+   $lang['recipe_items_req_desc']='Select items that are required to make this item';
+   $lang['recipe_items_amount']='Amount of each selected item that is needed to make the finished product';
+   $lang['recipe_items_amount_desc']='Example: If selected 3 items and I want for the first one 2, second one 1 and the third one 5, then this field should look like <b>2:1:5</b><br>First item is the one that is selected and on top of all selected items !<br><br>Leave blank if not more than 1 of each item is needed to cook this food (default 1 for each selected item)';
+   $lang['recipe_admin_only']='Admin only pattern ?';
+   $lang['recipe_admin_only_desc']='Is this pattern an admin only item ?';
+   $lang['Adr_recipe_successful_deleted']='Pattern and it\'s final product deleted !';
+   $lang['Adr_recipe_successful_edited']='Pattern and it\'s final product updated.';
+   $lang['Adr_recipe_attention']='<font color="#FF0000">ATTENTION !!! Deleting a Pattern also will delete it\'s final product !!!<br>The pattern also will get removed of the recipebooks of the players<br>Players with leftovers in their inventory won\'t be able to learn the pattern you just deleted</font>';
+   $lang['Adr_forums_shop_recipe_items']='This item is a part of a Crafting Pattern, please use the Crafting ACP to edit it !';
+   $lang['Adr_temp_and_perm_effects']='Temp and/or permanent effects';
+   $lang['Adr_perm_only_effects']='Permanent effects only';
+   $lang['Adr_perm_effect']='permanent effect ?';
+   $lang['Adr_hit_monster']='Hits Monster ?'; 
+   $lang['Adr_recipe_successful_added']='Pattern & Product successfully added';
+   $lang['Adr_recipe_skill']='Skill';
+   $lang['Adr_recipe_skill_explain']='This is the skill used to make the product';
+}
+if ( defined ('IN_ADR_COOKING'))
+{
+   $lang['Adr_recipes_level']='Level:';   
+   $lang['Adr_recipes_desc']='Description:';
+   $lang['Adr_recipes_add']='Add recipe:';
+   $lang['Adr_recipes_effect']='Effect';
+   $lang['Adr_recipes_items_req']='Items required:';
+   $lang['adr_cooking_food_link']='Eat Food';
+   $lang['adr_cooking_recipe_link']='Learn Recipe';
+   $lang['Adr_recipe_successful_added']='Recipe successfully written into your recipebook !';
+   $lang['Adr_recipe_already_known']='You already have written that recipe into your recipebook !';
+   $lang['Adr_recipe_was_delted']='This recipe is not anymore valid (Admin may have deleted it)';
+   $lang['Adr_recipebook_cooking']='Cooking Recipes';
+   $lang['Adr_food_used']='You already ate food with temp effects for battle !';
+   $lang['cooking_very_easy']='Very Easy';
+   $lang['cooking_easy']='Easy';
+   $lang['cooking_normal']='Normal';
+   $lang['cooking_hard']='Hard';
+   $lang['cooking_very_hard']='Very Hard';
+   $lang['cooking_impossible']='Impossible';
+   $lang['cooking_select_recipe']='Select Recipe:';
+   $lang['cooking_no_recipe']='No recipe';
+   $lang['cooking_tool_explain']='Cooking tools allow you to cook food';
+   $lang['cooking_tool_needed']='You can\'t cook food with only your hands!';
+   $lang['cooking_failure']='You cooked nothing';
+   $lang['cooking_success']='You cooked a %s with a value of %s %s !';
+   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
+   $lang['cooking_no_tool']='No tool';
+   $lang['cooking_create']='Cook this Food';
+   $lang['cooking_select_tool']='Select a tool';
+   $lang['recipe_info']='Recipe Info';
+   $lang['recipe_items_needed']='Items needed for this recipe';
+   $lang['cooking_missing_item']='You don\'t have the required items to cook this food !';
+   $lang['recipe_stats']='Recipe Stats:';
+   $lang['food_effects']='Food Effects:';
+   $lang['food_stats']='Food Stats';
+}
+
+$lang['Adr_skill_blacksmithing_desc']='Compétence Forge';
+$lang['Adr_races_bonus_blacksmithing']='Bonus à la compétence forge';
+$lang['Adr_blacksmithing']='Forge';
+$lang['Adr_items_type_tools_blacksmithing']='Outils : Forge';
+$lang['Adr_items_blacksmithing_desc']='Indispensable à la forge';
+
+if ( defined ('IN_ADR_BLACKSMITHING'))
+{
+   $lang['Adr_recipes_level']='Niveau :';
+   $lang['Adr_recipes_desc']='Description:';
+   $lang['Adr_recipe_successful_added']='Modèle inscrite dans votre livre des recettes !';
+   $lang['Adr_recipe_already_known']='Vous connaissez déjà ce modèle !';
+   $lang['Adr_recipe_was_delted']='Ce modèle n\'existe plus (un administrateur l\'a peut-être supprimé)';
+   $lang['Adr_recipebook_blacksmithing']='Modèles pour la forge';
+   $lang['blacksmithing_very_easy']='Très facile';
+   $lang['blacksmithing_easy']='Facile';
+   $lang['blacksmithing_normal']='Normal';
+   $lang['blacksmithing_hard']='Dur';
+   $lang['blacksmithing_very_hard']='Très dur';
+   $lang['blacksmithing_impossible']='Impossible';
+   $lang['blacksmithing_select_recipe']='Choisissez un modèle :';
+   $lang['blacksmithing_no_recipe']='No Pattern';
+   $lang['blacksmithing_tool_explain']='Blacksmithing tools allow you to craft items';
+   $lang['blacksmithing_tool_needed']='You can\'t craft items with only your hands!';
+   $lang['blacksmithing_failure']='You crafted nothing';
+   $lang['blacksmithing_success']='You crafted a %s with a value of %s %s !';
+   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
+   $lang['blacksmithing_no_tool']='No tool';
+   $lang['blacksmithing_create']='Craft this Item';
+   $lang['blacksmithing_select_tool']='Select a tool';
+   $lang['recipe_info']='Pattern Info';
+   $lang['recipe_items_needed']='Items needed for this pattern';
+   $lang['blacksmithing_missing_item']='You don\'t have the required items to craft this product !';
+   $lang['pattern_stats']='Pattern Stats:';
+   $lang['product_effects']='Product Effects:';
+   $lang['product_stats']='Product Stats';
 }

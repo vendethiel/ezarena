@@ -60,3 +60,5 @@ $lang['Zone General'] = 'Réglages des zones';
 $lang['NPC'] = 'PNJs';
 $lang['Seasons'] = 'Saisons';
 $lang['Check ADR Version'] = 'Vérification de version';
+
+$lang['Loottable_Categories'] = 'Tables de butin';

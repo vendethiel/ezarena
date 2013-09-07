@@ -282,6 +282,9 @@ if ( !empty($custom_taunt) || !empty($taunt) )
 	}
 }
 
+include_once($phpbb_root_path . '/adr/includes/adr_functions_battle_setup.'.$phpEx);
+adr_battle_effects_initialise($user_id,0,'',1);
+
 ##=== START: battle code ===##
 // First we need to stop a user from backing up in their browser and repeat hitting
 if((($user_id === $battle_pvp['battle_challenger_id']) && ($battle_pvp['battle_turn'] === $user_id)) || (($user_id === $battle_pvp['battle_opponent_id']) && ($battle_pvp['battle_turn'] === $user_id)))
@@ -552,6 +555,24 @@ if ( $turn_check && ( $attack || ( $spell && intval($HTTP_POST_VARS['item_spell'
   			if(!($result = $db->sql_query($sql))){
   				message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);}
   		} // end use 16
+        else if ( $item['item_type_use'] == 19 )
+        {
+            include_once($phpbb_root_path . '/adr/includes/adr_functions_battle_setup.'.$phpEx);
+
+            $e_message = adr_battle_effects_initialise($user_id,$item_potion,$opponent_infos['character_name'],1);
+            
+            // Use item
+            adr_use_item($item_potion, $user_id);
+
+            $battle_message .= $e_message;
+
+            // Check for low dura
+            if($item['item_duration'] < '2'){
+                $battle_message .= '<span class="gensmall">'; // set new span class
+                $battle_message .= '&nbsp;&nbsp;>&nbsp;'.sprintf($lang['Adr_pvp_potion_hp_dura'], $current_name, adr_get_lang($item['item_name'])).'<br />';
+                $battle_message .= '</span>'; // reset span class to default
+            }
+        } // end us 19
     } // end if potion
     else if ( $attack )
     {
@@ -1131,7 +1152,7 @@ for ( $i = 0, $i_count = count($items) ; $i < $i_count ; $i ++ )
                 $spell_selected = ( $HTTP_POST_VARS['item_spell'] == $items[$i]['item_id'] ) ? 'selected' : '';
                 $spell_list .= '<option value = "'.$items[$i]['item_id'].'" '.$spell_selected.' >' . adr_get_lang($items[$i]['item_name']) . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )'.'</option>';
         }
-        else if ( $items[$i]['item_type_use'] == 15 || $items[$i]['item_type_use'] == 16 )
+        else if ( $items[$i]['item_type_use'] == 15 || $items[$i]['item_type_use'] == 16 || $items[$i]['item_type_use'] == 19 )
         {
                 $potion_selected = ( $HTTP_POST_VARS['item_potion'] == $items[$i]['item_id'] ) ? 'selected' : '';
                 $potion_list .= '<option value = "'.$items[$i]['item_id'].'" '.$potion_selected.' >' . adr_get_lang($items[$i]['item_name']) . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )'.'</option>';

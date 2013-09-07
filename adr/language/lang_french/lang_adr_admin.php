@@ -744,3 +744,37 @@ $lang['Adr_levels_all']='N\'importe quel niveau';
 $lang['Adr_store_zone_nothing']= 'Pas de zone spécifique'; 
 $lang['Adr_store_zone_explain']= 'Choisissez la zone où le magasin se situera '; 
 $lang['Adr_store_zone'] = 'Nom de la zone'; 
+
+# Loots
+if ( defined ('IN_ADR_LOOTTABLES'))
+{
+    $lang['Adr_items_loottables_title']='Table de butin';   
+    $lang['Adr_items_loottables']='Tables de butin';
+    $lang['Adr_items_loottables_explain']='Choisissez les tables de butin auxquelles vous voulez ajouter l\'objet';
+    $lang['Adr_loottable_title']='Catégories de table';
+    $lang['Adr_loottable_title_explain']='Créez et éditez les catégories de tables de butin :';
+    $lang['Adr_loottable_name']='Nom de la table de butin :';
+    $lang['Adr_loottable_items']='Objets :';
+    $lang['Adr_loottable_name_explain']='Choisissez un nom pour la table :';
+    $lang['Adr_loottable_desc']='Description :';
+    $lang['Adr_loottable_desc_explain']='Description courte :';
+    $lang['Adr_loottable_status_deactivated']='Off';
+    $lang['Adr_loottable_status_activated']='On';
+    $lang['Adr_loottable_dropchance_explain']='Choisissez la chance d\'obtention (1 à 10000)';
+    $lang['Adr_loottable_dropchance_title']='Chance d\'obtention :';
+    $lang['Adr_loottable_status']='Statut :';
+    $lang['Adr_loottable_cat_add']='Ajouter une table de butin';
+    $lang['Adr_loottable_cats_successful_new']='Table de butin créée avec succès';
+    $lang['Adr_loottable_cats_successful_deleted']='Table de butin supprimée avec succès';
+    $lang['Adr_loottable_cats_successful_edit']='Table de butin mise à jour avec succès';
+    $lang['Adr_loottable_cats_successful_item_deleted']='L\'objet a été retiré de la table de butin';
+    $lang['Adr_monster_loottables_title']='Choisissez les tables de butin que le monstre utilisera pour déterminer les objets que le joueur obtiendra';
+    $lang['Adr_monster_loottables_explain']='Choisissez autant de tables de butin que vous voulez';
+    $lang['Adr_monster_possible_drop_title']='Nombre d\'objets maximum à obtenir';
+    $lang['Adr_monster_possible_drop_explain']='Choisissez le nombre d\'objets un joueur peut obtenir AU MAXIMUM, ce n\'est pas garanti';
+    $lang['Adr_monster_guranteened_drop_title']='Nombre d\'objets minimum à obtenir';
+    $lang['Adr_monster_guranteened_drop_explain']='Choisissez le nombre d\'objets un joueur sera sûr d\'obtenir !';
+    $lang['Adr_monster_specific_drop_title']='Quels objets spécifiques ce monstre devrait faire tomber ?';
+    $lang['Adr_monster_specific_drop_explain']='Choisissez quels objets doivent toukours tomber !';
+    $lang['Adr_no_items']='Pas d\'objets';
+}

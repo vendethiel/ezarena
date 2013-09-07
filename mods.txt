@@ -425,11 +425,26 @@ D'autres mods ont été rajoutés, et le mod ADR en lui-même a été mis à jou
 Addons :
  - Addon pour RCS - Informpro
 
+# ADR : Advanced Loot System 1.0.3 - Himmelweiss
+Ajoute un système super-complet de butin pour les monstres, avec des catégories de butin, chance de drop, combien d'items il est possible de drop, etc ... à découvrir en jeu et dans l'admin !
+
 # ADR : Advanced NPC System 2.2.0-beta - Dedo
 Ajoute un système de NPC (PNJ) avancé au Zone Mod, permettant de dépasser la limite des 6 PNJs par zone, et de créer un système de quête simple où le PNJ peut demander à un joueur de lui rapporter un objet contre une expérience/des points/SP/objet
 
 # ADR : Advanced NPC System Expansion 0.2.3-beta - Ozzie
 Ajoute de nombreuses fonctionnalités au mod "Advanced NPC System", comme la possibilité de reporter un tricheur (avec la possiblité pour un administrateur de mp/bannir/... le joueur), permet aux PNJs d'apparaître dans plusieurs zones, les PNJs peuvent demander plusieurs objets, et vous pouvez ajouter des restrictions de classe/race/niveau/élément/alignement/a parlé avec tel PNJ/a fini tel quête (aucune, une ou plusieurs).
+
+# ADR : Blacksmithing 0.3.0 - Himmelweiss
+Ajoute un système avancé de forge au mod Crafting.
+
+# ADR : Brewing 0.5.3 - Himmelweiss
+Ajoute un système de fabrication de brevages à ADR. (ressemble à l'alchimie, mais est bien plus évolué)
+
+# ADR : Crafting 0.5.3 - Himmelweiss
+Transforme le Mod Brewing en système de crafting avancé, permet de créer des objets de tout type.
+
+# ADR : Cooking 0.3.5 - Himmelweiss
+Ajoute un système de cuisine au mod Crafting.
 
 # ADR : Level Required Zones 1.0.0 - Insydius
 Permet de limiter l'accès à une zone pour les personnes d'un certain niveau

@@ -136,6 +136,8 @@ else
 		'L_QUESTBOOK' => $lang['Adr_questbook_link_townmap'],
 		// ... and duel list
 		'U_DUELS' => append_sid("adr_character_pvp.$phpEx"),
+		// ... and recipe book
+		'U_RECIPES' => append_sid("adr_recipebook.$phpEx"),
 	));
 }
 

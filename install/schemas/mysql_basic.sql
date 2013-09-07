@@ -980,3 +980,19 @@ INSERT INTO `phpbb_adr_general` VALUES ('npc_button_link', 1);
 # upgrade guild alliances
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('battle_guild_exp_min', 1);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('battle_guild_exp_max', 100);
+
+# ADR - Brewing
+INSERT INTO phpbb_adr_skills (skill_id, skill_name, skill_desc, skill_img, skill_req, skill_chance) VALUES (7, 'Adr_brewing', 'Adr_skill_brewing_desc', 'skill_brewing.gif', 50, 5);
+
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (18, 50, 'Adr_items_type_tools_brewing');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (19, 50, 'Adr_items_type_potion');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (20, 50, 'Adr_items_type_recipe');
+
+# ADR - Cooking
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (55, 50, 'Adr_items_type_tools_cooking');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (94, 50, 'Adr_items_type_food');
+INSERT INTO phpbb_adr_skills (skill_id, skill_name, skill_desc, skill_img, skill_req, skill_chance) VALUES (12, 'Adr_cooking', 'Adr_skill_cooking_desc', 'skill_cooking.gif', 50, 5);
+
+# ADR - Blacksmithing
+INSERT INTO phpbb_adr_skills (skill_id, skill_name, skill_desc, skill_img, skill_req, skill_chance) VALUES (13, 'Adr_blacksmithing', 'Adr_skill_blacksmithing_desc', 'skill_blacksmithing.gif', 50, 5);
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (95, 100, 'Adr_items_type_tools_blacksmithing');

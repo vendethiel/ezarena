@@ -16,6 +16,7 @@
 		<th align="center">{L_ITEM_DESC}</th>
 		<th align="center" colspan="3">&nbsp;</th>
 		<th align="center">{L_ITEM_TYPE}</th>
+		<th align="center">{L_ITEM_LOOTTABLES}</th>
 		<th align="center">{L_ACTION}</a></th>
 	</tr>
 
@@ -46,6 +47,7 @@
 			<b>{L_LVL}</b>: [{items.ITEM_LVL}]<br />
 		</span></td>
 		<td class="{items.ROW_CLASS}" align="center" width="15%" rowspan="2"><span class="gensmall">{items.ITEM_TYPE}</span></td>
+		<td class="{items.ROW_CLASS}" align="center" rowspan="2">{items.ITEM_LOOTTABLES}</td>
 		<td class="{items.ROW_CLASS}" align="center" width="5%" rowspan="2"><a href="{items.U_ITEM_DELETE}">{L_DELETE}</a></td>
 	</tr>
 	<tr>
@@ -68,7 +70,7 @@
 	</form>
 	<form method="post" action="{S_SHOPS_ACTION}">
 	<tr>
-		<td class="catBottom" colspan="13" align="center">{S_HIDDEN_FIELDS}<input type="submit" value="{L_ADD_ITEM}" class="mainoption" /></td>
+		<td class="catBottom" colspan="14" align="center">{S_HIDDEN_FIELDS}<input type="submit" value="{L_ADD_ITEM}" class="mainoption" /></td>
 	</tr>
 </table>
 

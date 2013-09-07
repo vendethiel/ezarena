@@ -151,7 +151,7 @@ function adr_battle_equip_screen($user_id)
 return;
 }
 
-function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves, $amulet, $ring)
+function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves, $amulet, $ring, $greave, $boot)
 {
 	global $db, $lang, $adr_general, $template, $board_config;
 
@@ -420,4 +420,256 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 	// Do armour set check
 	adr_armour_set_check($user_id, $armour_name, $buckler_name, $gloves_name, $helm_name, $greave_name, $boot_name);
 
+}
+
+
+function adr_battle_effects_initialise($user_id,$potion_id,$monster_name,$pvp)
+{
+	global $db;
+	$user_id = intval($user_id);
+	$potion_id = intval($potion_id);
+	$pvp = intval($pvp);
+	$user = adr_get_user_infos($user_id);
+
+	if ($potion_id != 0)
+	{
+		//get potion info
+		$sql_potion = " SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
+			WHERE item_id = $potion_id
+			AND item_owner_id = $user_id ";
+		if( !($result_potion = $db->sql_query($sql_potion)) )
+			message_die(GENERAL_ERROR, 'Could not get potion info', '', __LINE__, __FILE__, $sql_potion);
+		$potion = $db->sql_fetchrow($result_potion);
+	}
+
+	if ($pvp == 0)
+	{
+		//get all battle stats
+		$sql = "SELECT * FROM " . ADR_BATTLE_LIST_TABLE . "
+			WHERE battle_challenger_id = $user_id
+			AND battle_result = 0 
+			AND battle_type = 1 
+		";
+		$result = $db->sql_query($sql);
+		if(!$result){
+			message_die(GENERAL_ERROR, "Couldn't get current opponent stats", "", __LINE__, __FILE__, $sql);}
+		$battle_stats = $db->sql_fetchrow($result);
+	}
+	else if ($pvp == 1)
+	{
+		//get all pvp battle stats
+		$sql = "SELECT * FROM " . ADR_BATTLE_PVP_TABLE . "
+			WHERE battle_challenger_id = $user_id
+			AND (battle_result = 0 OR battle_result = 3)
+		";
+		$result = $db->sql_query($sql);
+		if(!$result){
+			message_die(GENERAL_ERROR, "Couldn't get current opponent stats", "", __LINE__, __FILE__, $sql);}
+		$battle_stats = $db->sql_fetchrow($result);
+	}
+		
+	//check if user used a potion with temp effects before entering a battle
+	if ((substr_count($potion['item_effect'], 'HP') || substr_count($potion['item_effect'], 'MP')) || ($user['character_pre_effects'] != '' && $user['character_pre_effects'] != NULL) || ($battle_stats['battle_effects'] == '' && $battle_stats['battle_effects'] == NULL))
+	{
+		if ($potion_id != 0)
+			$update_battle_effects = $potion['item_effect'];
+		else
+			$update_battle_effects = $user['character_pre_effects'];
+
+		if ($pvp == 0)
+		{
+			//update battle_list with effects and clear character_pre_effects
+			$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+				SET battle_effects = '".$update_battle_effects."'
+				WHERE battle_challenger_id = $user_id
+				AND battle_result = 0
+				AND battle_type = 1 
+			";
+			$result = $db->sql_query($sql);
+			if(!$result){
+				message_die(GENERAL_ERROR, "Couldn't update battle list with effects", "", __LINE__, __FILE__, $sql);}
+		}
+		else if ($pvp == 1)
+		{
+			//update battle_list with effects and clear character_pre_effects
+			$sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
+				SET battle_effects = '".$update_battle_effects."'
+				WHERE battle_challenger_id = $user_id
+				AND (battle_result = 0 OR battle_result = 3)
+			";
+			$result = $db->sql_query($sql);
+			if(!$result){
+				message_die(GENERAL_ERROR, "Couldn't update battle list with effects", "", __LINE__, __FILE__, $sql);}
+		}
+
+		$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+			SET character_pre_effects = ''
+			WHERE character_id = $user_id ";
+		if (!$db->sql_query($sql))
+			message_die(GENERAL_ERROR, 'Couldn\'t update characters pre effects for battle', '', __LINE__, __FILE__, $sql);
+
+		$effects = explode(':',$update_battle_effects);
+		for ($i = 0; $i < count($effects);$i++)
+		{
+			switch(TRUE)
+			{
+				case (($effects[$i] == 'ATT' || $effects[$i] == 'DEF' || $effects[$i] == 'MA' || 
+					  $effects[$i] == 'MD') && $battle_stats['battle_effects'] == ''):
+
+					$effects[$i] = ( $effects[$i] == 'MA' ) ? 'magic_attack':$effects[$i];
+					$effects[$i] = ( $effects[$i] == 'MD' ) ? 'magic_resistance':$effects[$i];
+					
+					if (substr_count($effects[$i+1], '%'))
+						$value = floor( ( $battle_stats['battle_opponent_'.strtolower($effects[$i]).''] * $effects[$i+1] ) / 100 );
+					else
+						$value = $effects[$i+1];
+
+								
+					//execute effects now
+					if($effects[$i+3] == 1) //hits monster
+					{
+						$value_sql = 'battle_opponent_'.strtolower($effects[$i]).' = battle_opponent_'.strtolower($effects[$i]).' + '.$value;
+						
+						if ($pvp == 0)
+						{
+							// Update battle with effect on monster
+							$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+								SET $value_sql
+								WHERE battle_challenger_id = $user_id
+								AND battle_result = 0
+								AND battle_type = 1 ";
+							$result = $db->sql_query($sql);
+							if(!$result){
+								message_die(GENERAL_ERROR, "Couldn't update battle list with effects", "", __LINE__, __FILE__, $sql);}
+						}
+						else if ($pvp == 1)
+						{
+							// Update battle with effect on opponent player
+							$sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
+								SET $value_sql
+								WHERE battle_challenger_id = $user_id
+								AND (battle_result = 0 OR battle_result = 3) ";
+							$result = $db->sql_query($sql);
+							if(!$result){
+								message_die(GENERAL_ERROR, "Couldn't update battle list with effects", "", __LINE__, __FILE__, $sql);}
+						}
+						if ($potion_id != 0)
+						{
+							if (substr_count($effects[$i+1], '-'))
+									$battle_message .= $user['character_name'].' throws a '.$potion['item_name'].' at '.$monster_name.' losing '.$value.' '.$effects[$i].'<br>';
+							else
+									$battle_message .= $user['character_name'].' throws a '.$potion['item_name'].' at '.$monster_name.' gaining '.$value.' '.$effects[$i].'<br>';
+						}
+					}
+					else if($effects[$i+3] == 0) //hits player
+					{
+						$value_sql = 'battle_challenger_'.strtolower($effects[$i]).' = battle_challenger_'.strtolower($effects[$i]).' + '.$value;
+						if ($pvp == 0)
+						{
+							// Update battle with effect on monster
+							$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+								SET $value_sql
+								WHERE battle_challenger_id = $user_id
+								AND battle_result = 0
+								AND battle_type = 1 ";
+							$result = $db->sql_query($sql);
+							if(!$result){
+								message_die(GENERAL_ERROR, "Couldn't update battle list with effects", "", __LINE__, __FILE__, $sql);}
+						}
+						else if ($pvp == 1)
+						{
+							// Update battle with effect on opponent player
+							$sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
+								SET $value_sql
+								WHERE battle_challenger_id = $user_id
+								AND (battle_result = 0 OR battle_result = 3) ";
+							$result = $db->sql_query($sql);
+							if(!$result){
+								message_die(GENERAL_ERROR, "Couldn't update battle list with effects", "", __LINE__, __FILE__, $sql);}
+						}
+						if ($potion_id != 0)
+						{
+							if (substr_count($effects[$i+1], '-'))
+									$battle_message .= $user['character_name'].' consumes a '.$potion['item_name'].' losing '.$value.' '.$effects[$i].'<br>';
+							else
+									$battle_message .= $user['character_name'].' consumes a '.$potion['item_name'].' gaining '.$value.' '.$effects[$i].'<br>';
+						}
+					}
+				break;
+
+				case ($effects[$i] == 'HP' || $effects[$i] == 'MP'):
+					
+					//execute effects now
+					if($effects[$i+3] == 1) //hits monster
+					{
+						if (substr_count($effects[$i+1], '%'))
+							$value = floor( ( $battle_stats['battle_opponent_'.strtolower($effects[$i]).''] * $effects[$i+1] ) / 100 );
+						else
+							$value = $effects[$i+1];
+						
+						$value_sql = 'battle_opponent_'.strtolower($effects[$i]).' = battle_opponent_'.strtolower($effects[$i]).' + '.$value;
+						
+						if ($pvp == 0)
+						{
+							// Update battle with effect on monster
+							$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+								SET $value_sql
+								WHERE battle_challenger_id = $user_id
+								AND battle_result = 0
+								AND battle_type = 1 ";
+							$result = $db->sql_query($sql);
+							if(!$result){
+								message_die(GENERAL_ERROR, "Couldn't update battle list with effects", "", __LINE__, __FILE__, $sql);}
+						}
+						else if ($pvp == 1)
+						{
+							// Update battle with effect on opponent player
+							$sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
+								SET $value_sql
+								WHERE battle_challenger_id = $user_id
+								AND (battle_result = 0 OR battle_result = 3) ";
+							$result = $db->sql_query($sql);
+							if(!$result){
+								message_die(GENERAL_ERROR, "Couldn't update battle list with effects", "", __LINE__, __FILE__, $sql);}
+						}
+						if ($potion_id != 0)
+						{
+							if (substr_count($effects[$i+1], '-'))
+									$battle_message .= $user['character_name'].' throws a '.$potion['item_name'].' at '.$monster_name.' losing '.$value.' '.$effects[$i].'<br>';
+							else
+									$battle_message .= $user['character_name'].' throws a '.$potion['item_name'].' at '.$monster_name.' restoring '.$value.' '.$effects[$i].'<br>';
+						}
+					}
+					else if($effects[$i+3] == 0) //hits player
+					{
+						if (substr_count($effects[$i+1], '%'))
+							$value = floor( ( $user['character_'.strtolower($effects[$i]).''] * $effects[$i+1] ) / 100 );
+						else
+							$value = $effects[$i+1];
+							
+						if($user['character_'.strtolower($effects[$i]).''] + $value > $user['character_'.strtolower($effects[$i]).'_max'])
+							$value_sql = 'character_'.strtolower($effects[$i]).' = '.$user['character_'.strtolower($effects[$i]).'_max'];
+						else if ($user['character_'.strtolower($effects[$i]).''] + $value < 0)
+							$value_sql = 'character_'.strtolower($effects[$i]).' = 0';
+						else
+							$value_sql = 'character_'.strtolower($effects[$i]).' = character_'.strtolower($effects[$i]).' + '.$value;
+						$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+							SET $value_sql
+							WHERE character_id = $user_id ";
+						if (!$db->sql_query($sql))
+							message_die(GENERAL_ERROR, 'Couldn\'t update characters '.$effects[$i].'', '', __LINE__, __FILE__, $sql);
+						if ($potion_id != 0)
+						{
+							if (substr_count($effects[$i+1], '-'))
+									$battle_message .= $user['character_name'].' consumes a '.$potion['item_name'].' losing '.$value.' '.$effects[$i].'<br>';
+							else
+									$battle_message .= $user['character_name'].' consumes a '.$potion['item_name'].' restoring '.$value.' '.$effects[$i].'<br>';
+						}
+					}
+				break;
+			}
+		}
+		if ($potion_id != 0)
+			return $battle_message;
+	}
 }

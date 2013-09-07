@@ -177,6 +177,18 @@ function setCheckboxes(theForm, elementName, isChecked)
 		<td align="center" class="row1"><span class="gensmall">{L_THIEF} : <input type="post" name="character_skill_thief_uses" value="{THIEF_MIN}" size="5"> / {THIEF_MAX}</td>
 		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" name="character_skill_thief" value="{THIEF}" size="5"></td>
 	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_BREWING} : <input type="post" name="character_skill_brewing_uses" value="{BREWING_MIN}" size="5"> / {BREWING_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" name="character_skill_brewing" value="{BREWING}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_COOKING} : <input type="post" name="character_skill_cooking_uses" value="{COOKING_MIN}" size="5"> / {COOKING_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" name="character_skill_cooking" value="{COOKING}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_BLACKSMITHING} : <input type="post" name="character_skill_blacksmithing_uses" value="{BLACKSMITHING_MIN}" size="5"> / {BLACKSMITHING_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" name="character_skill_blacksmithing" value="{BLACKSMITHING}" size="5"></td>
+	</tr>
 </table>
 
 <br clear="all" />

@@ -1208,7 +1208,6 @@ CREATE TABLE phpbb_adr_battle_monsters (
   monster_area int(8) NOT NULL default '0',
   monster_season int(8) NOT NULL default '0',
   monster_weather int(8) NOT NULL default '0',
-  monster_item varchar(255) NOT NULL default '0',
   monster_message_enable int(1) NOT NULL default '0',
   monster_message varchar(255) NOT NULL default '',
   monster_area_name varchar(255) NOT NULL default '0',
@@ -2097,4 +2096,60 @@ ALTER TABLE `phpbb_adr_zones` ADD `zone_level` INT(8) DEFAULT '0' NOT NULL;
 
 # ADR - Zones specific shops
 ALTER TABLE `phpbb_adr_stores` ADD `store_zone` int(8) NOT NULL default '0'; 
-ALTER TABLE `phpbb_adr_shops` ADD `shop_zone` int(8) NOT NULL default '0'; 
+ALTER TABLE `phpbb_adr_shops` ADD `shop_zone` int(8) NOT NULL default '0';
+
+# ADR - Advanced Loot System
+ALTER TABLE `phpbb_adr_shops_items` ADD `item_loottables` TEXT NULL AFTER `item_store_id`;
+
+ALTER TABLE `phpbb_adr_battle_monsters` ADD `monster_loottables` TEXT NOT NULL AFTER `monster_base_element`;
+ALTER TABLE `phpbb_adr_battle_monsters` ADD `monster_possible_drop` int(8) NOT NULL AFTER `monster_loottables`;
+ALTER TABLE `phpbb_adr_battle_monsters` ADD `monster_guranteened_drop` int(8) NOT NULL AFTER `monster_possible_drop`;
+ALTER TABLE `phpbb_adr_battle_monsters` ADD `monster_specific_drop` TEXT NOT NULL AFTER `monster_guranteened_drop`;
+
+CREATE TABLE `phpbb_adr_loottables` (
+  `loottable_id` int(8) NOT NULL auto_increment,
+  `loottable_name` varchar(255) NOT NULL default '',
+  `loottable_desc` varchar(255) NOT NULL default '',
+  `loottable_dropchance` int(8) NOT NULL default '1',
+  `loottable_status` tinyint(1) NOT NULL default '1',
+  KEY `loottable_id` (`loottable_id`)
+);
+
+# ADR - Brewing
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_brewing_uses` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_brewing` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_pre_effects` TEXT DEFAULT '' NULL;
+ALTER TABLE `phpbb_adr_battle_list` ADD `battle_effects` TEXT DEFAULT '' NULL;
+ALTER TABLE `phpbb_adr_battle_pvp` ADD `battle_effects` TEXT DEFAULT '' NULL;
+ALTER TABLE `phpbb_adr_elements` ADD `element_skill_brewing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_races` ADD `race_skill_brewing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_shops_items` ADD `item_brewing_recipe` INT( 1 ) DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_shops_items` ADD `item_recipe_linked_item` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_shops_items` ADD `item_brewing_items_req` TEXT DEFAULT '' NOT NULL ;
+ALTER TABLE `phpbb_adr_shops_items` ADD `item_effect` TEXT DEFAULT '' NOT NULL ;
+ALTER TABLE `phpbb_adr_shops_items` ADD `item_original_recipe_id` INT( 8 ) DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_shops_items` ADD `item_recipe_skill_id` INT( 8 ) DEFAULT '0' NOT NULL ;
+
+CREATE TABLE `phpbb_adr_recipebook` (
+  `recipe_id` int(8) NOT NULL auto_increment,
+  `recipe_owner_id` int(8) DEFAULT '0' NOT NULL,
+  `recipe_level` int(8) DEFAULT '0' NOT NULL,
+  `recipe_linked_item` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL,
+  `recipe_items_req` TEXT DEFAULT '' NOT NULL,
+  `recipe_effect` TEXT DEFAULT '' NOT NULL,
+  `recipe_original_id` int(8) DEFAULT '0' NOT NULL,
+  `recipe_skill_id` int(8) DEFAULT '0' NOT NULL,
+  KEY `recipe_id` (`recipe_id`)
+);
+
+# ADR - Cooking
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_cooking_uses` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_cooking` INT( 8 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_elements` ADD `element_skill_cooking_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_races` ADD `race_skill_cooking_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
+
+# ADR - Blacksmithing
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_blacksmithing_uses` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_characters` ADD `character_skill_blacksmithing` INT( 8 ) UNSIGNED DEFAULT '1' NOT NULL ;
+ALTER TABLE `phpbb_adr_elements` ADD `element_skill_blacksmithing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
+ALTER TABLE `phpbb_adr_races` ADD `race_skill_blacksmithing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;

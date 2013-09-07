@@ -483,14 +483,18 @@ else
    }
    $cat_sql = ( $cat ) ? 'AND i.item_type_use = '.$cat : '';
 
-   $categories_text = array( Adr_items_type_all , Adr_items_type_raw_materials , Adr_items_type_rare_raw_materials , Adr_items_type_tools_pickaxe , Adr_items_type_tools_magictome , Adr_items_type_weapon , Adr_items_type_enchanted_weapon , Adr_items_type_armor , Adr_items_type_buckler , Adr_items_type_helm , Adr_items_type_greave , Adr_items_type_boot , Adr_items_type_gloves , Adr_items_type_magic_attack , Adr_items_type_magic_defend , Adr_items_type_amulet , Adr_items_type_ring , Adr_items_type_health_potion , Adr_items_type_mana_potion , Adr_items_type_misc );
-   $categories = array( 0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 29 , 30 , 10 , 11 , 12 , 13 , 14 , 15 , 16 , 17);
+   $categories_text = array();
+   $categories = array();
+   $categories_cat = array();
+   adr_get_item_type_categories();
 
    $select_category = '<select name="cat">';
    for($i = 0; $i < count($categories_text); $i++)
    {
-      $selected = ( $cat == $categories[$i] ) ? ' selected="selected"' : '';
-      $select_category .= '<option value="' . $categories[$i] . '"' . $selected . '>' .$lang[$categories_text[$i]] . '</option>';
+   	if($prev_cat != $categories_cat[$i]) $select_category .= '<option style="font-weight:bold;color:black" disabled>' . adr_get_lang($categories_cat[$i]) . '</option>';
+   	$selected = ( $cat == $categories[$i] ) ? ' selected="selected"' : '';
+   	$select_category .= '<option value="' . $categories[$i] . '"' . $selected . '>' . adr_get_lang($categories_text[$i]) . '</option>';
+   	$prev_cat = $categories_cat[$i];
    }
    $select_category .= '</select>';
 
