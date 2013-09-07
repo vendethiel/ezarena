@@ -166,7 +166,7 @@ if ( $InfoAlchemy ){
 
 $template->assign_vars(array(
 	'L_CREATE_ITEM' => $lang['Adr_alchemy_create'],
-	'L_ALCHEMY' => $lang['Adr_forge_alchemy'],
+	'L_GO_ALCHEMY' => $lang['Adr_forge_alchemy'],
 	'L_GO_TO_ALCH' => $lang['Adr_alchemy_go_to'],
 	'L_ALCHEMY_EXPLAIN_AREA' => $lang['Adr_alchemy_explain'],
 	'U_CREATE_ITEM' => append_sid("adr_alchemy.$phpEx?mode=create"),

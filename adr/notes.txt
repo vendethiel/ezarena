@@ -6,3 +6,9 @@ MODS swaps :
 (skills)
 12->14 alchemy
 7->15 fishing
+
+(unlinked pages)
+some pages are not linked because they don't matter.
+files to be removed :
+ - adr_library
+   TownMap_Env already gives us links to char list / prefs in _townmap_maison.php

@@ -99,6 +99,7 @@ while( $row = $db->sql_fetchrow($result) )
 $equip = isset($HTTP_POST_VARS['equip']);
 $attack = isset($HTTP_POST_VARS['attack']);
 $spell = isset($HTTP_POST_VARS['spell']);
+$spell2 = isset($HTTP_POST_VARS['spell2']);
 $potion = isset($HTTP_POST_VARS['potion']);
 $defend = isset($HTTP_POST_VARS['defend']);
 $flee = isset($HTTP_POST_VARS['flee']);
@@ -209,7 +210,7 @@ $opponent_message_enable = $bat['battle_opponent_message_enable'];
 $opponent_message = $bat['battle_opponent_message'];
 
 if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
-	&& (($attack) || ($spell) || ($potion) || ($defend) || ($flee) || ($equip)) )
+	&& ($attack || $spell || $potion || $defend || $flee || $equip || $spell2) )
 {
 	// Prefix challenger battle message
 	$battle_message .= '<font color="blue">['.$lang['Adr_battle_msg_check'].htmlspecialchars($challenger['character_name']).']: </font>';
@@ -600,7 +601,175 @@ if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		$attackwith_overlay = ((file_exists("adr/images/battle/spells/".$attack_img.".gif"))) ? '<img src="adr/images/battle/spells/'.$attack_img.'.gif" width="256" height="96" border="0">' : '';
 		}
 	}
+	else if ( $spell2 && $bat['battle_turn'] == 1 )
+	{
+		// Define the weapon quality and power
+		$item_spell2 = intval($HTTP_POST_VARS['item_spell2']);
+		$power = 0;
+		$damage = 0;
 
+		if ( $item_spell2 )
+		{
+
+			$sql = " SELECT spell_name , spell_power , item_type_use , spell_add_power , spell_mp_use , spell_element , spell_element_str_dmg, spell_element_weak_dmg , spell_element_same_dmg FROM " . ADR_SHOPS_SPELLS_TABLE . "
+				WHERE spell_owner_id = $user_id 
+				AND spell_id = $item_spell2 ";
+			if( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
+			}
+			$spell = $db->sql_fetchrow($result);
+
+			if ( $challenger['character_mp'] < ($spell['spell_mp_use'] + $spell['spell_power']) || $challenger['character_mp'] < 0 ) 
+			{	
+				adr_previous ( Adr_battle_check_two , 'adr_battle' , '' );
+			}
+
+			$power = (($spell['spell_power'] * 1.2) + $spell['spell_add_power']);
+			$mp_usage = $spell['spell_mp_use'];
+			if ( $mp_usage == '' )
+			{
+      				adr_previous ( Adr_battle_check , 'adr_battle' , '' );				
+			}
+
+			adr_use_item($item_spell2 , $user_id);
+			
+			// Substract the magic points
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+				SET character_mp = character_mp - $mp_usage
+				WHERE character_id = $user_id ";
+			if( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+			}
+		}
+
+		if ( $spell['item_type_use'] == 11 )
+		{
+			// Sort out magic check & opponents saving throw
+			$dice = rand(1,20);
+			$monster['monster_wisdom'] = (10 + (rand(1, $monster['monster_level']) *2)); //temp calc
+			$magic_check = ceil($dice + $item['item_power'] + adr_modifier_calc($challenger['character_intelligence']));
+			$fort_save = (11 + adr_modifier_calc($monster['monster_wisdom']));
+			$diff = ((($magic_check >= $fort_save) && ($dice != '1')) || ($dice == '20')) ? TRUE : FALSE;
+			$power = ($power + adr_modifier_calc($challenger['character_intelligence']));
+
+			// Grab details for Elemental infos
+			$elemental = adr_get_element_infos($opponent_element);
+			$element_name = ($spell['spell_name'] != '') ? adr_get_element_infos($spell['spell_element']) : '';
+
+			// Here we apply text colour if set
+			if($element_name['element_colour'] != ''){
+				$spell['spell_name'] = '<font color="'.$element_name['element_colour'].'">'.adr_get_lang($spell['spell_name']).'</font>';}
+			else{
+				$spell['spell_name'] = adr_get_lang($spell['spell_name']);}
+
+			if((($diff === TRUE) && ($dice != '1')) || ($dice == '20')){
+				$damage = 1;
+
+				// Work out attack type
+				if(($spell['spell_element']) && ($spell['spell_element'] === $elemental['element_oppose_strong']) && (!empty($spell['spell_name']))){
+					$damage = ceil(($power *($spell['spell_element_weak_dmg'] /100)));
+				}
+				elseif(($spell['spell_element']) && (!empty($spell['spell_name'])) && ($spell['spell_element'] === $opponent_element)){
+					$damage = ceil(($power *($spell['spell_element_same_dmg'] /100)));
+				}
+				elseif(($spell['spell_element']) && (!empty($spell['spell_name'])) && ($spell['spell_element'] === $elemental['element_oppose_weak'])){
+					$damage = ceil(($power *($spell['spell_element_str_dmg'] /100)));
+				}
+				else{
+					$damage = ceil($power);
+				}
+
+
+				// Fix dmg value
+				$damage = ($damage < '1') ? rand(1,3) : $damage;
+				$damage = ($damage > $bat['battle_opponent_hp']) ? $bat['battle_opponent_hp'] : $damage;
+
+				// Fix attack msg type
+				if(($spell['spell_element'] > '0') && ($element_name['element_name'] != '')){
+					$battle_message .= sprintf($lang['Adr_battle_spell_success'], $challenger['character_name'], $spell['spell_name'], adr_get_lang($element_name['element_name']), $damage, $monster['monster_name']).'<br>';}
+				else{
+					$battle_message .= sprintf($lang['Adr_battle_spell_success_norm'], $challenger['character_name'], $spell['spell_name'], $damage, $monster['monster_name']).'<br>';}
+			}
+			else{
+				$damage = 0;
+				$battle_message .= sprintf( $lang['Adr_battle_spell_failure'], $challenger['character_name'], $spell['spell_name'], $monster['monster_name']).'<br />';
+			}
+
+			// Update the database
+			$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+				SET battle_opponent_hp = battle_opponent_hp - $damage ,
+					battle_challenger_dmg = $damage , 
+					battle_turn = 2 ,
+					battle_round = (battle_round + 1)
+				WHERE battle_challenger_id = $user_id
+				AND battle_result = 0
+				AND battle_type = 1 ";
+			if( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+			}
+		}	
+
+		if ( $spell['item_type_use'] == 108 )
+		{
+			// New HP check required after regeneration
+			$sql = "SELECT character_hp, character_hp_max FROM " . ADR_CHARACTERS_TABLE . "
+				WHERE character_id = $user_id ";
+			if( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, 'Could not query user', '', __LINE__, __FILE__, $sql);
+			}
+			$hp_check = $db->sql_fetchrow($result);
+
+			$power = ( $power > ( $hp_check['character_hp_max'] - $hp_check['character_hp'] ) ) ? ( $hp_check['character_hp_max'] - $hp_check['character_hp'] ) : $power ;
+
+			$battle_message .= sprintf($lang['Adr_battle_healing_success'] ,$challenger['character_name'], adr_get_lang($spell['spell_name']) , $power ).'<br />' ; 
+
+			// Update the database
+			$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+				SET battle_turn = 2,
+					battle_round = (battle_round + 1)
+				WHERE battle_challenger_id = $user_id
+				AND battle_result = 0
+				AND battle_type = 1 ";
+			if( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+			}
+
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+				SET character_hp = character_hp + $power
+				WHERE character_id = $user_id ";
+			if( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+			}
+		}
+	
+		else if ( $spell['item_type_use'] == 12 )
+		{
+
+				$battle_message .= sprintf($lang['Adr_battle_spell_defensive_success'], $challenger['character_name'], $spell['spell_name'], $power).'<br>';
+
+
+			// Update the database
+			$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+				SET battle_challenger_att = battle_challenger_att + $power ,
+					battle_challenger_def = battle_challenger_def + $power ,
+					battle_turn = 2,
+					battle_round = (battle_round + 1)
+				WHERE battle_challenger_id = $user_id
+				AND battle_result = 0
+				AND battle_type = 1 ";
+			if( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+			}
+
+		}
+	}
 	else if ( $potion && $bat['battle_turn'] == 1 )
 	{
 		// Define the weapon quality and power
@@ -847,14 +1016,14 @@ if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 	}
 	else if ( $pet_specialattack && $bat['battle_turn'] == 1 )
 	{
-	if ( ($rabbit_user['creature_attack'] > 0) && ($rabbit_user['creature_health'] > 0) )
-	{
-	$poison = '0';
-	$pet_regen = '0';
-	$mp_consumned = '0';
-	$pet_damage = '0';
-	$health_give = '0';
-	$mana_give = '0';
+		if ( ($rabbit_user['creature_attack'] > 0) && ($rabbit_user['creature_health'] > 0) )
+		{
+		$poison = '0';
+		$pet_regen = '0';
+		$mp_consumned = '0';
+		$pet_damage = '0';
+		$health_give = '0';
+		$mana_give = '0';
 
 		if ( $rabbit_user['creature_ability'] == '0' ) //pet have no special ability
 		{
@@ -1568,7 +1737,8 @@ if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 	$challenger = adr_get_user_infos($user_id);
 
 	##=== START: additional status checks on user ===##
-	if(($bat['battle_turn'] == '1') && (($attack) || ($item_spell) || ($item_potion) || ($defend) || ($flee) || ($equip))){
+	if(($bat['battle_turn'] == '1') &&
+		($attack || $item_spell || $item_potion || $defend || $flee || $equip || $item_spell2)) {
 		$hp_regen = adr_hp_regen_check($user_id, $bat['battle_challenger_hp']);
 		$challenger['character_hp'] += $hp_regen;
 		$mp_regen = adr_mp_regen_check($user_id, $bat['battle_challenger_mp']);
@@ -1620,9 +1790,159 @@ if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 
 	$who_opponent = rand(0,20);
 
-	if ( ($rabbit_user['creature_invoc']=='1') && ($who_opponent > 15) && ($rabbit_user['creature_health'] > 0) )
-	{
-		$power = rand(0,20);
+		if(($monster['monster_regeneration'] !='0') && ($bat['battle_opponent_hp'] < $bat['battle_opponent_hp_max']) )
+		{
+			$monster_regen = $monster['monster_regeneration'];
+			$monster_new_hp = $bat['battle_opponent_hp'] + $monster_regen;
+
+			if($monster_new_hp > $bat['battle_opponent_hp_max'])
+			{
+				$monster_new_hp = $bat['battle_opponent_hp_max'];
+			}
+
+			$battle_message .= sprintf($lang['Adr_battle_monster_regen'], $monster['monster_name'], intval($monster_regen)).'<br />' ;
+			$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+				SET battle_opponent_hp = $monster_new_hp
+				WHERE battle_challenger_id = $user_id
+				AND battle_result = 0
+				AND battle_type = 1 ";
+			if (!$result = $db->sql_query($sql)) {
+				message_die(GENERAL_ERROR, 'Could not update monster info', '', __LINE__, __FILE__, $sql);
+			}
+		}
+
+		if(($monster['monster_mp_regeneration'] !='0') && ($bat['battle_opponent_mp'] < $bat['battle_opponent_mp_max']) )
+		{
+			$monster_mp_regen = $monster['monster_mp_regeneration'];
+			$monster_new_mp = $bat['battle_opponent_mp'] + $monster_mp_regen;
+
+			if($monster_new_mp > $bat['battle_opponent_mp_max'])
+			{
+				$monster_new_mp = $bat['battle_opponent_mp_max'];
+			}
+
+			$battle_message .= sprintf($lang['Adr_battle_monster_mp_regen'], $monster['monster_name'], intval($monster_mp_regen)).'<br />' ;
+			$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+				SET battle_opponent_mp = $monster_new_mp
+				WHERE battle_challenger_id = $user_id
+				AND battle_result = 0
+				AND battle_type = 1 ";
+			if (!$result = $db->sql_query($sql)) {
+				message_die(GENERAL_ERROR, 'Could not update monster info', '', __LINE__, __FILE__, $sql);
+			}
+		}
+
+		if(($monster['monster_base_mp_drain'] !='0') && ($challenger['character_mp'] > '0' ) )
+		{
+			$monster_mp_drain = $monster['monster_base_mp_drain'];
+			$challenger_new_mp = $challenger['character_mp'] - $monster_mp_drain;
+
+			if($challenger_new_mp < '0')
+			{
+				$challenger_new_mp = '0';
+			}
+
+			$battle_message .= sprintf($lang['Adr_battle_monster_mp_drain'], $monster['monster_name'], intval($monster_mp_drain)).'<br />' ;
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+				SET character_mp = $challenger_new_mp
+				WHERE character_id = $user_id";
+			if (!$result = $db->sql_query($sql)) {
+				message_die(GENERAL_ERROR, 'Could not update player info', '', __LINE__, __FILE__, $sql);
+			}
+		}
+
+		if(($monster['monster_base_hp_drain'] !='0') && ($challenger['character_hp'] > '0' ) )
+		{
+			$monster_hp_drain = $monster['monster_base_hp_drain'];
+			$challenger_new_hp = $challenger['character_hp'] - $monster_hp_drain;
+
+			if($challenger_new_hp < '0')
+			{
+				$challenger_new_hp = '0';
+			}
+
+			$battle_message .= sprintf($lang['Adr_battle_monster_hp_drain'], $monster['monster_name'], intval($monster_hp_drain)).'<br />' ;
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+				SET character_hp = $challenger_new_hp
+				WHERE character_id = $user_id";
+			if (!$result = $db->sql_query($sql)) {
+				message_die(GENERAL_ERROR, 'Could not update player info', '', __LINE__, __FILE__, $sql);
+			}
+		}
+
+		if(($monster['monster_base_mp_transfer'] !='0') && ($challenger['character_mp'] > '0' ) )
+		{
+			$monster_mp_drain = $monster['monster_base_mp_transfer'];
+			$challenger_new_mp = $challenger['character_mp'] - $monster_mp_drain;
+
+			if($challenger_new_mp < '0')
+			{
+				$challenger_new_mp = '0';
+			}
+
+			$monster_mp_transfer = $monster['monster_base_mp_transfer'];
+			$monster_new_mp = $bat['battle_opponent_mp'] + $monster_mp_transfer;
+
+			if($monster_new_mp > $bat['battle_opponent_mp_max'])
+			{
+				$monster_new_mp = $bat['battle_opponent_mp_max'];
+			}
+
+			$battle_message .= sprintf($lang['Adr_battle_monster_mp_transfer'], $monster['monster_name'], intval($monster_mp_drain)).'<br />' ;
+			$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+				SET battle_opponent_mp = $monster_new_mp
+				WHERE battle_challenger_id = $user_id
+				AND battle_result = 0
+				AND battle_type = 1 ";
+			if (!$result = $db->sql_query($sql)) {
+				message_die(GENERAL_ERROR, 'Could not update monster info', '', __LINE__, __FILE__, $sql);
+			}
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+				SET character_mp = $challenger_new_mp
+				WHERE character_id = $user_id";
+			if (!$result = $db->sql_query($sql)) {
+				message_die(GENERAL_ERROR, 'Could not update player info', '', __LINE__, __FILE__, $sql);
+			}
+		}
+
+		if(($monster['monster_base_hp_transfer'] !='0') && ($challenger['character_hp'] > '0' ) )
+		{
+			$monster_hp_drain = $monster['monster_base_hp_transfer'];
+			$challenger_new_hp = $challenger['character_hp'] - $monster_hp_drain;
+
+			if($challenger_new_hp < '0')
+			{
+				$challenger_new_hp = '0';
+			}
+
+			$monster_hp_transfer = $monster['monster_base_hp_transfer'];
+			$monster_new_hp = $bat['battle_opponent_hp'] + $monster_hp_transfer;
+
+			if($monster_new_hp > $bat['battle_opponent_hp_max'])
+			{
+				$monster_new_hp = $bat['battle_opponent_hp_max'];
+			}
+
+			$battle_message .= sprintf($lang['Adr_battle_monster_hp_transfer'], $monster['monster_name'], intval($monster_hp_drain)).'<br />' ;
+			$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+				SET battle_opponent_hp = $monster_new_hp
+				WHERE battle_challenger_id = $user_id
+				AND battle_result = 0
+				AND battle_type = 1 ";
+			if (!$result = $db->sql_query($sql)) {
+				message_die(GENERAL_ERROR, 'Could not update monster info', '', __LINE__, __FILE__, $sql);
+			}
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+				SET character_hp = $challenger_new_hp
+				WHERE character_id = $user_id";
+			if (!$result = $db->sql_query($sql)) {
+				message_die(GENERAL_ERROR, 'Could not update player info', '', __LINE__, __FILE__, $sql);
+			}
+		}
+
+		if ( ($rabbit_user['creature_invoc']=='1') && ($who_opponent > 15) && ($rabbit_user['creature_health'] > 0) )
+		{
+			$power = rand(0,20);
 			if ( $power == '20' ) //define critical hit
 			{
 				$monster_damage = ( ((rand(1,10) * $rabbit_user['creature_level'] )- $rabbit_user['creature_armor']) + rand(1,10) );
@@ -1963,6 +2283,14 @@ if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		//Guild Experience
 		$guild_exp = rand($adr_general['battle_guild_exp_min'], $adr_general['battle_guild_exp_max']);
 
+		// Share EXP
+		$exp2 = round($exp / 10);
+		$exp = $exp + $count_members;
+		$exp = round($exp);
+		if($exp < 0) {
+			$exp = 0;
+		}
+
 		// Get the money earned
 		$reward = rand ( $adr_general['battle_base_reward_min'] , $adr_general['battle_base_reward_max'] );
 		if (( $monster['monster_level'] - $challenger['character_level'] ) > 1 )
@@ -1994,15 +2322,29 @@ if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 			message_die(GENERAL_ERROR, 'Could not update character', '', __LINE__, __FILE__, $sql);
 		}
 
-		$sql = " UPDATE  " . ADR_CHARACTERS_TABLE . " 
-			SET character_xp = character_xp + $exp ,
-				character_victories = character_victories + 1 , 
-				$sql_update_hp
-				character_sp = character_sp + '" . $bat['battle_opponent_sp'] . "'
-			WHERE character_id = $user_id ";
+		$sql = 'SELECT character_party FROM '.ADR_CHARACTERS_TABLE.' WHERE character_id = '.$user_id;
+		$re = $db->sql_query($sql);
+		$char = $db->sql_fetchrow($re); 
+
+		$sql = "UPDATE  " . ADR_CHARACTERS_TABLE . "
+		        SET     character_victories = character_victories + 1 ,
+		                character_sp = character_sp + '" . $bat['battle_opponent_sp'] . "',
+						character_xp = character_xp + $exp
+		        WHERE character_id = $user_id ";
 		if( !($result = $db->sql_query($sql)) )
 		{
-			message_die(GENERAL_ERROR, 'Could not update character', '', __LINE__, __FILE__, $sql);
+		    message_die(GENERAL_ERROR, 'Could not update character', '', __LINE__, __FILE__, $sql);
+		}
+		if($char['character_party'] != 0)
+		{
+			$sql = "UPDATE  " . ADR_CHARACTERS_TABLE . "
+			        SET     character_xp = character_xp + $exp2
+			        WHERE character_party = ".$char['character_party']."
+			AND character_id != ".$userdata['user_id']."						";
+			if( !($result = $db->sql_query($sql)) )
+			{
+			    message_die(GENERAL_ERROR, 'Could not update character', '', __LINE__, __FILE__, $sql);
+			}
 		}
 
 		// Remove item stolen status
@@ -2232,10 +2574,20 @@ if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 	$potion_list = '<select name="item_potion">';
 	$potion_list .= '<option value = "0" >' . $lang['Adr_battle_no_potion'] . '</option>';
 
+	$sql = " SELECT * FROM " . ADR_SHOPS_SPELLS_TABLE . "
+		WHERE spell_owner_id = $user_id ";
+	if( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
+	}
+	$spells = $db->sql_fetchrowset($result);
+	$spell2_list = '<select name="item_spell2">';
+	$spell2_list .= '<option value = "0" >' . $lang['Adr_battle_no_spell_learned'] . '</option>';
+
 
 	// V: moved below that end-of-if
 	// I don't know who's making ADR changelogs, but
-	// he's being a damn pig so many times
+	// he's being a damn pig sometimes
 	for ( $i = 0, $count_items = count($items) ; $i < $count_items ; $i ++ )
 	{
  		$item_name = adr_get_lang($items[$i]['item_name']);
@@ -2258,8 +2610,19 @@ if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 			$potion_list .= '<option value = "'.$items[$i]['item_id'].'" '.$potion_selected.' >' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )'.'</option>';
 		}
 	}
+	for ( $s = 0 ; $s < count($spells) ; $s ++ )
+	{
+ 		$spells_power = $spells[$s]['spell_power'] + $spells[$s]['spell_add_power'];
+
+		if ( ( $spells[$s]['item_type_use'] ==  11 || $spells[$s]['item_type_use'] ==  108 || $spells[$s]['item_type_use'] ) && ( $spells[$s]['spell_mp_use'] <= $challenger['character_mp'] ) )
+		{
+			$spell2_selected = ( $HTTP_POST_VARS['item_spell2'] == $spells[$s]['spell_id'] ) ? 'selected' : '';
+     			$spell2_list .= '<option value = "'.$spells[$s]['spell_id'].'" '.$spell2_selected.'>' . adr_get_lang($spells[$s]['spell_name']) . ' ( ' . $lang['Adr_items_power'] . ' : ' . $spells_power . ' )'.'</option>'; 
+		}
+	}
 	$weapon_list .= '</select>';
 	$spell_list .= '</select>';
+	$spell2_list .= '</select>';
 	$potion_list .= '</select>';
 
 	##=== START: Create bar widths ===##
@@ -2457,6 +2820,7 @@ if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		'PET_TABLE' => $pet_table,
 		'INVOC_TABLE' => $invoc_table,
 		'SPELL' => $spell_list,
+		'SPELL2' => $spell2_list,
 		'POTION' => $potion_list,
 		'NAME' => $challenger['character_name'],
 		'AVATAR_IMG' => $avatar_img, 
@@ -2501,6 +2865,7 @@ if (( is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		'L_DEFEND' => $lang['Adr_defend_opponent'],
 		'L_FLEE' => $lang['Adr_flee_opponent'],
 		'L_SPELL' => $lang['Adr_spell_opponent'],
+		'L_SPELL2' => $lang['Adr_spell_learned'],
 		'L_ACTIONS' => $lang['Adr_actions_opponent'],
 		'L_ATTRIBUTES' => $lang['Adr_battle_attributes'],
 		'L_PHY_ATT' => $lang['Adr_battle_phy_att'],

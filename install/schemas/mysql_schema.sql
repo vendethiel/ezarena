@@ -1701,28 +1701,6 @@ CREATE TABLE phpbb_adr_temple_tracker (
   KEY track_id (track_id)
 ) ;
 
-CREATE TABLE phpbb_adr_townmap (
-  townmap_id smallint(8) NOT NULL default '0',
-  townmap_num tinyint(1) NOT NULL default '0',
-  townmap_name varchar(255) NOT NULL default '',
-  townmap_desc text NOT NULL,
-  townmap_img varchar(255) NOT NULL default '',
-  PRIMARY KEY  (townmap_id)
-) ;
-
-CREATE TABLE phpbb_adr_townmap_map (
-  townmap_map tinyint(1) NOT NULL default '0',
-  PRIMARY KEY  (townmap_map)
-) ;
-
-CREATE TABLE phpbb_adr_townmap_music (
-  music_spring varchar(255) NOT NULL default '',
-  music_summer varchar(255) NOT NULL default '',
-  music_automn varchar(255) NOT NULL default '',
-  music_winter varchar(255) NOT NULL default '',
-  PRIMARY KEY  (music_spring)
-) ;
-
 CREATE TABLE phpbb_adr_vault_blacklist (
   user_id int(8) NOT NULL default '0',
   user_due int(8) NOT NULL default '0',
@@ -2179,3 +2157,39 @@ ALTER TABLE `phpbb_adr_characters` ADD `character_skill_hunting_uses` INT( 3 ) U
 ALTER TABLE `phpbb_adr_characters` ADD `character_skill_hunting` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
 ALTER TABLE `phpbb_adr_elements` ADD `element_skill_hunting_bonus` INT( 8 ) DEFAULT '1' NOT NULL ;
 ALTER TABLE `phpbb_adr_races` ADD `race_skill_hunting_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
+
+# ADR - Monster Abilities
+ALTER TABLE phpbb_adr_battle_monsters ADD monster_base_mp_drain int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_battle_monsters ADD monster_base_mp_transfer int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_battle_monsters ADD monster_base_hp_drain int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_battle_monsters ADD monster_base_hp_transfer int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_battle_monsters ADD monster_regeneration int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_battle_monsters ADD monster_mp_regeneration int(8) UNSIGNED NOT NULL default '0';
+
+# ADR - Advanced Spells
+CREATE TABLE phpbb_adr_shops_spells (
+  spell_id int(8) NOT NULL auto_increment,
+  spell_owner_id int(8) NOT NULL default '0',
+  spell_level int(8) NOT NULL default '0',
+  spell_power int(8) NOT NULL default '0',
+  spell_class varchar(500) NOT NULL default '0',
+  spell_icon varchar(255) NOT NULL default '',
+  spell_name varchar(255) NOT NULL default '',
+  spell_desc varchar(255) NOT NULL default '',
+  item_type_use int(8) NOT NULL default '16',
+  spell_max_skill int(8) NOT NULL default '25',
+  spell_add_power int(8) NOT NULL default '0',
+  spell_mp_use int(8) NOT NULL default '0',
+  spell_element int(4) NOT NULL default '0',
+  spell_element_str_dmg int(4) NOT NULL default '100',
+  spell_element_same_dmg int(4) NOT NULL default '100',
+  spell_element_weak_dmg int(4) NOT NULL default '100',
+  spell_original_id int(8) NOT NULL default '0',
+  KEY spell_id (spell_id),
+  KEY spell_owner_id (spell_owner_id)
+) ;
+
+# ADR - Party
+ALTER TABLE phpbb_adr_characters ADD character_party int(8) NOT NULL default'0';
+ALTER TABLE phpbb_adr_characters ADD character_leader int(1) NOT NULL default'0';
+ALTER TABLE phpbb_adr_characters ADD character_invites VARCHAR(255) NOT NULL;

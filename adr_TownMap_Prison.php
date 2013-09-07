@@ -56,6 +56,7 @@ adr_character_created_check($user_id);
 // Includes the tpl and the header
 adr_template_file('adr_TownMap_Prison_body.tpl');
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
+include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
 
 // Deny access if the user is into a battle
 $sql = " SELECT * FROM  " . ADR_BATTLE_LIST_TABLE . " 

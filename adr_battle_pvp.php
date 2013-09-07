@@ -74,6 +74,7 @@ $battle_id = intval($HTTP_GET_VARS['battle_id']);
 // Define the available actions
 $attack = isset($HTTP_POST_VARS['attack']);
 $spell = isset($HTTP_POST_VARS['spell']);
+$spell2 = isset($HTTP_POST_VARS['spell2']);
 $potion = isset($HTTP_POST_VARS['potion']);
 $defend = isset($HTTP_POST_VARS['defend']);
 $flee = isset($HTTP_POST_VARS['flee']);
@@ -292,7 +293,7 @@ if((($user_id === $battle_pvp['battle_challenger_id']) && ($battle_pvp['battle_t
 else
 	$turn_check = FALSE;
 
-if ( $turn_check && ( $attack || ( $spell && intval($HTTP_POST_VARS['item_spell']) ) || ( $potion && intval($HTTP_POST_VARS['item_potion']) ) || $flee ))
+if ( $turn_check && ( $attack || ($spell2 && intval($HTTP_POST_VARS['item_spell2'])) || ( $spell && intval($HTTP_POST_VARS['item_spell']) ) || ( $potion && intval($HTTP_POST_VARS['item_potion']) ) || $flee ))
 {
     if($flee)
     {
@@ -484,6 +485,175 @@ if ( $turn_check && ( $attack || ( $spell && intval($HTTP_POST_VARS['item_spell'
 				message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);}
         } // end if item use 12
 	} 
+    else if ( $spell2 )
+    {
+        // Define the weapon quality and power
+        $item_spell2 = intval($HTTP_POST_VARS['item_spell2']);
+        $power = 0;
+        $damage = 0;
+
+        if ( $item_spell2 )
+        {
+
+            $sql = " SELECT spell_name , spell_power , item_type_use , spell_add_power , spell_mp_use , spell_element , spell_element_str_dmg, spell_element_weak_dmg , spell_element_same_dmg FROM " . ADR_SHOPS_SPELLS_TABLE . "
+                WHERE spell_owner_id = $user_id 
+                AND spell_id = $item_spell2 ";
+            if( !($result = $db->sql_query($sql)) )
+            {
+                message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
+            }
+            $spell = $db->sql_fetchrow($result);
+
+            if ( $challenger['character_mp'] < ($spell['spell_mp_use'] + $spell['spell_power']) || $challenger['character_mp'] < 0 ) 
+            {   
+                adr_previous ( Adr_battle_check_two , 'adr_battle' , '' );
+            }
+
+            $power = (($spell['spell_power'] * 1.2) + $spell['spell_add_power']);
+            $mp_usage = $spell['spell_mp_use'];
+            if ( $mp_usage == '' )
+            {
+                    adr_previous ( Adr_battle_check , 'adr_battle' , '' );              
+            }
+
+            adr_use_item($item_spell2 , $user_id);
+            
+            // Substract the magic points
+            $sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+                SET character_mp = character_mp - $mp_usage
+                WHERE character_id = $user_id ";
+            if( !($result = $db->sql_query($sql)) )
+            {
+                message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+            }
+        }
+
+        if ( $spell['item_type_use'] == 11 )
+        {
+            // Sort out magic check & opponents saving throw
+            $dice = rand(1,20);
+            $monster['monster_wisdom'] = (10 + (rand(1, $monster['monster_level']) *2)); //temp calc
+            $magic_check = ceil($dice + $item['item_power'] + adr_modifier_calc($challenger['character_intelligence']));
+            $fort_save = (11 + adr_modifier_calc($monster['monster_wisdom']));
+            $diff = ((($magic_check >= $fort_save) && ($dice != '1')) || ($dice == '20')) ? TRUE : FALSE;
+            $power = ($power + adr_modifier_calc($challenger['character_intelligence']));
+
+            // Grab details for Elemental infos
+            $elemental = adr_get_element_infos($opponent_element);
+            $element_name = ($spell['spell_name'] != '') ? adr_get_element_infos($spell['spell_element']) : '';
+
+            // Here we apply text colour if set
+            if($element_name['element_colour'] != ''){
+                $spell['spell_name'] = '<font color="'.$element_name['element_colour'].'">'.adr_get_lang($spell['spell_name']).'</font>';}
+            else{
+                $spell['spell_name'] = adr_get_lang($spell['spell_name']);}
+
+            if((($diff === TRUE) && ($dice != '1')) || ($dice == '20')){
+                $damage = 1;
+
+                // Work out attack type
+                if(($spell['spell_element']) && ($spell['spell_element'] === $elemental['element_oppose_strong']) && (!empty($spell['spell_name']))){
+                    $damage = ceil(($power *($spell['spell_element_weak_dmg'] /100)));
+                }
+                elseif(($spell['spell_element']) && (!empty($spell['spell_name'])) && ($spell['spell_element'] === $opponent_element)){
+                    $damage = ceil(($power *($spell['spell_element_same_dmg'] /100)));
+                }
+                elseif(($spell['spell_element']) && (!empty($spell['spell_name'])) && ($spell['spell_element'] === $elemental['element_oppose_weak'])){
+                    $damage = ceil(($power *($spell['spell_element_str_dmg'] /100)));
+                }
+                else{
+                    $damage = ceil($power);
+                }
+
+
+                // Fix dmg value
+                $damage = ($damage < '1') ? rand(1,3) : $damage;
+                $damage = ($damage > $bat['battle_opponent_hp']) ? $bat['battle_opponent_hp'] : $damage;
+
+                // Fix attack msg type
+                if(($spell['spell_element'] > '0') && ($element_name['element_name'] != '')){
+                    $battle_message .= sprintf($lang['Adr_battle_spell_success'], $challenger['character_name'], $spell['spell_name'], adr_get_lang($element_name['element_name']), $damage, $monster['monster_name']).'<br>';}
+                else{
+                    $battle_message .= sprintf($lang['Adr_battle_spell_success_norm'], $challenger['character_name'], $spell['spell_name'], $damage, $monster['monster_name']).'<br>';}
+            }
+            else{
+                $damage = 0;
+                $battle_message .= sprintf( $lang['Adr_battle_spell_failure'], $challenger['character_name'], $spell['spell_name'], $monster['monster_name']).'<br />';
+            }
+
+            // Update the database
+            $sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+                SET battle_opponent_hp = battle_opponent_hp - $damage ,
+                    battle_challenger_dmg = $damage , 
+                    battle_turn = 2 ,
+                    battle_round = (battle_round + 1)
+                WHERE battle_challenger_id = $user_id
+                AND battle_result = 0
+                AND battle_type = 1 ";
+            if( !($result = $db->sql_query($sql)) )
+            {
+                message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+            }
+        }   
+
+        if ( $spell['item_type_use'] == 108 )
+        {
+            // New HP check required after regeneration
+            $sql = "SELECT character_hp, character_hp_max FROM " . ADR_CHARACTERS_TABLE . "
+                WHERE character_id = $user_id ";
+            if( !($result = $db->sql_query($sql)) )
+            {
+                message_die(GENERAL_ERROR, 'Could not query user', '', __LINE__, __FILE__, $sql);
+            }
+            $hp_check = $db->sql_fetchrow($result);
+
+            $power = ( $power > ( $hp_check['character_hp_max'] - $hp_check['character_hp'] ) ) ? ( $hp_check['character_hp_max'] - $hp_check['character_hp'] ) : $power ;
+
+            $battle_message .= sprintf($lang['Adr_battle_healing_success'] ,$challenger['character_name'], adr_get_lang($spell['spell_name']) , $power ).'<br />' ; 
+
+            // Update the database
+            $sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+                SET battle_turn = 2,
+                    battle_round = (battle_round + 1)
+                WHERE battle_challenger_id = $user_id
+                AND battle_result = 0
+                AND battle_type = 1 ";
+            if( !($result = $db->sql_query($sql)) )
+            {
+                message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+            }
+
+            $sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+                SET character_hp = character_hp + $power
+                WHERE character_id = $user_id ";
+            if( !($result = $db->sql_query($sql)) )
+            {
+                message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+            }
+        }
+    
+        else if ( $spell['item_type_use'] == 12 )
+        {
+
+                $battle_message .= sprintf($lang['Adr_battle_spell_defensive_success'], $challenger['character_name'], $spell['spell_name'], $power).'<br>';
+
+
+            // Update the database
+            $sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+                SET battle_challenger_att = battle_challenger_att + $power ,
+                    battle_challenger_def = battle_challenger_def + $power ,
+                    battle_turn = 2,
+                    battle_round = (battle_round + 1)
+                WHERE battle_challenger_id = $user_id
+                AND battle_result = 0
+                AND battle_type = 1 ";
+            if( !($result = $db->sql_query($sql)) )
+            {
+                message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+            }
+
+        }
+    }
     else if ( $potion )
     {
         // Define the weapon quality and power
@@ -1062,85 +1232,95 @@ $battle = $db->sql_fetchrow($result);
 
 if ( $battle['battle_turn'] == $user_id )
 {
-$template->assign_block_vars('pvp',array());
+    $template->assign_block_vars('pvp',array());
 
-// Get the users infos
-$sql = "SELECT user_avatar , user_avatar_type, user_allowavatar FROM " . USERS_TABLE . "
-        WHERE user_id = $dest ";
-if( !($result = $db->sql_query($sql)) )
-{
-        message_die(GENERAL_ERROR, 'Could not query user', '', __LINE__, __FILE__, $sql);
-}
-$challenger = $db->sql_fetchrow($result);
+    // Get the users infos
+    $sql = "SELECT user_avatar , user_avatar_type, user_allowavatar FROM " . USERS_TABLE . "
+            WHERE user_id = $dest ";
+    if( !($result = $db->sql_query($sql)) )
+    {
+            message_die(GENERAL_ERROR, 'Could not query user', '', __LINE__, __FILE__, $sql);
+    }
+    $challenger = $db->sql_fetchrow($result);
 
-$opponent_avatar_img = '';
-if ( $challenger['user_avatar_type'] && $challenger['user_allowavatar'] )
-{
-        switch( $challenger['user_avatar_type'] )
-        {
-                case USER_AVATAR_UPLOAD:
-                        $opponent_avatar_img = ( $board_config['allow_avatar_upload'] ) ? '<img src="' . $board_config['avatar_path'] . '/' . $challenger['user_avatar'] . '" alt="" border="0" />' : '';
-                        break;
-                case USER_AVATAR_REMOTE:
-                        $opponent_avatar_img = ( $board_config['allow_avatar_remote'] ) ? '<img src="' . $challenger['user_avatar'] . '" alt="" border="0" />' : '';
-                        break;
-                case USER_AVATAR_GALLERY:
-                        $opponent_avatar_img = ( $board_config['allow_avatar_local'] ) ? '<img src="' . $board_config['avatar_gallery_path'] . '/' . $challenger['user_avatar'] . '" alt="" border="0" />' : '';
-                        break;
-        }
-}
+    $opponent_avatar_img = '';
+    if ( $challenger['user_avatar_type'] && $challenger['user_allowavatar'] )
+    {
+            switch( $challenger['user_avatar_type'] )
+            {
+                    case USER_AVATAR_UPLOAD:
+                            $opponent_avatar_img = ( $board_config['allow_avatar_upload'] ) ? '<img src="' . $board_config['avatar_path'] . '/' . $challenger['user_avatar'] . '" alt="" border="0" />' : '';
+                            break;
+                    case USER_AVATAR_REMOTE:
+                            $opponent_avatar_img = ( $board_config['allow_avatar_remote'] ) ? '<img src="' . $challenger['user_avatar'] . '" alt="" border="0" />' : '';
+                            break;
+                    case USER_AVATAR_GALLERY:
+                            $opponent_avatar_img = ( $board_config['allow_avatar_local'] ) ? '<img src="' . $board_config['avatar_gallery_path'] . '/' . $challenger['user_avatar'] . '" alt="" border="0" />' : '';
+                            break;
+            }
+    }
 
-$sql = "SELECT c.character_level , u.user_avatar , u.user_avatar_type, u.user_allowavatar FROM " . USERS_TABLE . " u , " . ADR_CHARACTERS_TABLE . " c
-        WHERE u.user_id = $user_id
-        AND c.character_id = u.user_id ";
-if( !($result = $db->sql_query($sql)) )
-{
-        message_die(GENERAL_ERROR, 'Could not query user', '', __LINE__, __FILE__, $sql);
-}
-$challenger = $db->sql_fetchrow($result);
+    $sql = "SELECT c.character_level , u.user_avatar , u.user_avatar_type, u.user_allowavatar FROM " . USERS_TABLE . " u , " . ADR_CHARACTERS_TABLE . " c
+            WHERE u.user_id = $user_id
+            AND c.character_id = u.user_id ";
+    if( !($result = $db->sql_query($sql)) )
+    {
+            message_die(GENERAL_ERROR, 'Could not query user', '', __LINE__, __FILE__, $sql);
+    }
+    $challenger = $db->sql_fetchrow($result);
 
-$current_avatar_img = '';
-if ( $challenger['user_avatar_type'] && $challenger['user_allowavatar'] )
-{
-        switch( $challenger['user_avatar_type'] )
-        {
-                case USER_AVATAR_UPLOAD:
-                        $current_avatar_img = ( $board_config['allow_avatar_upload'] ) ? '<img src="' . $board_config['avatar_path'] . '/' . $challenger['user_avatar'] . '" alt="" border="0" />' : '';
-                        break;
-                case USER_AVATAR_REMOTE:
-                        $current_avatar_img = ( $board_config['allow_avatar_remote'] ) ? '<img src="' . $challenger['user_avatar'] . '" alt="" border="0" />' : '';
-                        break;
-                case USER_AVATAR_GALLERY:
-                        $current_avatar_img = ( $board_config['allow_avatar_local'] ) ? '<img src="' . $board_config['avatar_gallery_path'] . '/' . $challenger['user_avatar'] . '" alt="" border="0" />' : '';
-                        break;
-        }
-}
+    $current_avatar_img = '';
+    if ( $challenger['user_avatar_type'] && $challenger['user_allowavatar'] )
+    {
+            switch( $challenger['user_avatar_type'] )
+            {
+                    case USER_AVATAR_UPLOAD:
+                            $current_avatar_img = ( $board_config['allow_avatar_upload'] ) ? '<img src="' . $board_config['avatar_path'] . '/' . $challenger['user_avatar'] . '" alt="" border="0" />' : '';
+                            break;
+                    case USER_AVATAR_REMOTE:
+                            $current_avatar_img = ( $board_config['allow_avatar_remote'] ) ? '<img src="' . $challenger['user_avatar'] . '" alt="" border="0" />' : '';
+                            break;
+                    case USER_AVATAR_GALLERY:
+                            $current_avatar_img = ( $board_config['allow_avatar_local'] ) ? '<img src="' . $board_config['avatar_gallery_path'] . '/' . $challenger['user_avatar'] . '" alt="" border="0" />' : '';
+                            break;
+            }
+    }
 
 
-// First select the available items
-$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-		WHERE item_in_shop = '0'
-		$item_sql
-		AND item_duration > '0'
-		AND item_in_warehouse = '0'
-		AND item_monster_thief = '0'
-		AND (item_bought_timestamp < '".$battle_pvp['battle_start']."' OR item_bought_timestamp = '0')
-        AND item_owner_id = '$user_id'";
-if(!($result = $db->sql_query($sql))){
-	message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);}
-$items = $db->sql_fetchrowset($result);
+    // First select the available items
+    $sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
+    		WHERE item_in_shop = '0'
+    		$item_sql
+    		AND item_duration > '0'
+    		AND item_in_warehouse = '0'
+    		AND item_monster_thief = '0'
+    		AND (item_bought_timestamp < '".$battle_pvp['battle_start']."' OR item_bought_timestamp = '0')
+            AND item_owner_id = '$user_id'";
+    if(!($result = $db->sql_query($sql))){
+    	message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);}
+    $items = $db->sql_fetchrowset($result);
 
-// Prepare the items list
-$weapon_list = '<select name="item_weapon">';
-$weapon_list .= '<option value = "0" >' . $lang['Adr_battle_no_weapon'] . '</option>';
-$spell_list = '<select name="item_spell">';
-$spell_list .= '<option value = "0" >' . $lang['Adr_battle_no_spell'] . '</option>';
-$potion_list = '<select name="item_potion">';
-$potion_list .= '<option value = "0" >' . $lang['Adr_battle_no_potion'] . '</option>'; 
+    // Prepare the items list
+    $weapon_list = '<select name="item_weapon">';
+    $weapon_list .= '<option value = "0" >' . $lang['Adr_battle_no_weapon'] . '</option>';
+    $spell_list = '<select name="item_spell">';
+    $spell_list .= '<option value = "0" >' . $lang['Adr_battle_no_spell'] . '</option>';
+    $potion_list = '<select name="item_potion">';
+    $potion_list .= '<option value = "0" >' . $lang['Adr_battle_no_potion'] . '</option>'; 
 
-for ( $i = 0, $i_count = count($items) ; $i < $i_count ; $i ++ )  
-{
-	$item_power = $items[$i]['item_power'] + $items[$i]['item_add_power']; 
+    $sql = " SELECT * FROM " . ADR_SHOPS_SPELLS_TABLE . "
+        WHERE spell_owner_id = $user_id ";
+    if( !($result = $db->sql_query($sql)) )
+    {
+        message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
+    }
+    $spells = $db->sql_fetchrowset($result);
+    $spell2_list = '<select name="item_spell2">';
+    $spell2_list .= '<option value = "0" >' . $lang['Adr_battle_no_spell_learned'] . '</option>';
+
+    for ( $i = 0, $i_count = count($items) ; $i < $i_count ; $i ++ )  
+    {
+	   $item_power = $items[$i]['item_power'] + $items[$i]['item_add_power']; 
 
 	  if ( ( $items[$i]['item_type_use'] ==  5 || $items[$i]['item_type_use'] ==  6 ) && ( $items[$i]['item_mp_use'] <= $current_mp ) )
         {
@@ -1157,11 +1337,22 @@ for ( $i = 0, $i_count = count($items) ; $i < $i_count ; $i ++ )
                 $potion_selected = ( $HTTP_POST_VARS['item_potion'] == $items[$i]['item_id'] ) ? 'selected' : '';
                 $potion_list .= '<option value = "'.$items[$i]['item_id'].'" '.$potion_selected.' >' . adr_get_lang($items[$i]['item_name']) . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )'.'</option>';
         }
-}
+    }
+    for ( $s = 0 ; $s < count($spells) ; $s ++ )
+    {
+        $spells_power = $spells[$s]['spell_power'] + $spells[$s]['spell_add_power'];
 
-$weapon_list .= '</select>';
-$spell_list .= '</select>';
-$potion_list .= '</select>';
+        if ( ( $spells[$s]['item_type_use'] ==  107 || $spells[$s]['item_type_use'] ==  108 || $spells[$s]['item_type_use'] ) && ( $spells[$s]['spell_mp_use'] <= $challenger['character_mp'] ) )
+        {
+            $spell2_selected = ( $HTTP_POST_VARS['item_spell2'] == $spells[$s]['spell_id'] ) ? 'selected' : '';
+                $spell2_list .= '<option value = "'.$spells[$s]['spell_id'].'" '.$spell2_selected.'>' . adr_get_lang($spells[$s]['spell_name']) . ' ( ' . $lang['Adr_items_power'] . ' : ' . $spells_power . ' )'.'</option>'; 
+        }
+    }
+
+    $weapon_list .= '</select>';
+    $spell_list .= '</select>';
+    $spell2_list .= '</select>';
+    $potion_list .= '</select>';
 }
 
 ##=== START: custom taunt list ===##
@@ -1389,69 +1580,70 @@ if ( !$bck_grnd_name && !$battle_pvp['battle_bkg'] )
 }
 
 $template->assign_vars(array(
-        'L_ATTRIBUTES' => $lang['Adr_battle_attributes'],
-        'L_PHY_ATT' => $lang['Adr_battle_phy_att'],
-        'L_PHY_DEF' => $lang['Adr_battle_phy_def'],
-        'L_MAG_ATT' => $lang['Adr_battle_mag_att'],
-        'L_MAG_DEF' => $lang['Adr_battle_mag_def'],
-        'L_ALIGNMENT' => $lang['Adr_battle_alignment'],
-        'L_ELEMENT' => $lang['Adr_battle_element'],
-        'L_CLASS' => $lang['Adr_battle_class'],
-        'ALIGNMENT' => adr_get_lang($current_alignment_infos['alignment_name']),
-        'ELEMENT' => adr_get_lang($current_element_infos['element_name']),
-        'CHALLENGER_CLASS' => adr_get_lang($current_class_infos['class_name']),
-        'M_ATT' => $current_ma,
-        'M_DEF' => $current_md,
-        'OPPONENT_ALIGNMENT' => adr_get_lang($opponent_alignment_infos['alignment_name']),
-        'OPPONENT_ELEMENT' => adr_get_lang($opponent_element_infos['element_name']),
-        'OPPONENT_CLASS' => adr_get_lang($opponent_class_infos['class_name']),
-        'OPPONENT_M_ATT' => $opponent_ma,
-        'OPPONENT_M_DEF' => $opponent_md,
-        'HP_EMPTY' => $challenger_hp_empty,
-        'MP_EMPTY' => $challenger_mp_empty,
-        'OPPONENT_HP_EMPTY' => $opponent_hp_empty,
-        'OPPONENT_MP_EMPTY' => $opponent_mp_empty,
-        'TAUNT_LIST' => $level_list,
-        'L_COMMS' => $lang['Adr_pvp_comms'],
-        'L_TYPE_HERE' => $lang['Adr_pvp_custom_taunt'],
-        'L_CUSTOM_SENTANCE' => $lang['Adr_pvp_taunt'],
-        'S_CHATBOX' => append_sid("adr_battle_pvp_chatbox.$phpEx?battle_id=".$battle_id),
-        'ATTACK' => $weapon_list,
-        'SPELL' => $spell_list,
-        'POTION' => $potion_list,
-        'NAME' => $current_name,
-        'AVATAR_IMG' => $current_avatar_img,
-        'OPPONENT_NAME' => $opponent_name,
-        'OPPONENT_IMG' => $opponent_avatar_img,
-        'BATTLE_TEXT' => $battle_text,
-        'BATTLE_CHAT' => $battle_text_chat,
-        'HP' => $current_hp,
-        'MP' => $current_mp,
-        'HP_MAX' => $current_hp_max,
-        'MP_MAX' => $current_mp_max,
-        'HP_WIDTH' => $challenger_hp_width,
-        'MP_WIDTH' => $challenger_mp_width,
-        'ATT' => $current_att,
-        'DEF' => $current_def,
-        'OPPONENT_HP' => $opponent_hp,
-        'OPPONENT_MP' => $opponent_mp,
-        'OPPONENT_HP_MAX' => $opponent_hp_max,
-        'OPPONENT_MP_MAX' => $opponent_mp_max,
-        'OPPONENT_HP_WIDTH' => $opponent_hp_width,
-        'OPPONENT_MP_WIDTH' => $opponent_mp_width,
-        'OPPONENT_ATT' => $opponent_att,
-        'OPPONENT_DEF' => $opponent_def,
-		// START Graphical sequences
-        'M_ATT' => $current_ma,
-        'M_DEF' => $current_md,
-        'ALIGNMENT' => adr_get_lang($challenger_details['alignment_name']),
-        'ELEMENT' => adr_get_lang($challenger_details['element_name']),
-        'ARMOUR_SET' => adr_get_lang($armour_set),
-        'OPPONENT_M_ATT' => $opponent_ma,
-        'OPPONENT_M_DEF' => $opponent_md,
-        'OPPONENT_ALIGNMENT' => adr_get_lang($opponent_details['alignment_name']),
-        'OPPONENT_ELEMENT' => adr_get_lang($opponent_details['element_name']),
-        'OPPONENT_ARMOUR_SET' => adr_get_lang($opponent_armour_set),
+    'L_ATTRIBUTES' => $lang['Adr_battle_attributes'],
+    'L_PHY_ATT' => $lang['Adr_battle_phy_att'],
+    'L_PHY_DEF' => $lang['Adr_battle_phy_def'],
+    'L_MAG_ATT' => $lang['Adr_battle_mag_att'],
+    'L_MAG_DEF' => $lang['Adr_battle_mag_def'],
+    'L_ALIGNMENT' => $lang['Adr_battle_alignment'],
+    'L_ELEMENT' => $lang['Adr_battle_element'],
+    'L_CLASS' => $lang['Adr_battle_class'],
+    'ALIGNMENT' => adr_get_lang($current_alignment_infos['alignment_name']),
+    'ELEMENT' => adr_get_lang($current_element_infos['element_name']),
+    'CHALLENGER_CLASS' => adr_get_lang($current_class_infos['class_name']),
+    'M_ATT' => $current_ma,
+    'M_DEF' => $current_md,
+    'OPPONENT_ALIGNMENT' => adr_get_lang($opponent_alignment_infos['alignment_name']),
+    'OPPONENT_ELEMENT' => adr_get_lang($opponent_element_infos['element_name']),
+    'OPPONENT_CLASS' => adr_get_lang($opponent_class_infos['class_name']),
+    'OPPONENT_M_ATT' => $opponent_ma,
+    'OPPONENT_M_DEF' => $opponent_md,
+    'HP_EMPTY' => $challenger_hp_empty,
+    'MP_EMPTY' => $challenger_mp_empty,
+    'OPPONENT_HP_EMPTY' => $opponent_hp_empty,
+    'OPPONENT_MP_EMPTY' => $opponent_mp_empty,
+    'TAUNT_LIST' => $level_list,
+    'L_COMMS' => $lang['Adr_pvp_comms'],
+    'L_TYPE_HERE' => $lang['Adr_pvp_custom_taunt'],
+    'L_CUSTOM_SENTANCE' => $lang['Adr_pvp_taunt'],
+    'S_CHATBOX' => append_sid("adr_battle_pvp_chatbox.$phpEx?battle_id=".$battle_id),
+    'ATTACK' => $weapon_list,
+    'SPELL' => $spell_list,
+    'SPELL2' => $spell2_list,
+    'POTION' => $potion_list,
+    'NAME' => $current_name,
+    'AVATAR_IMG' => $current_avatar_img,
+    'OPPONENT_NAME' => $opponent_name,
+    'OPPONENT_IMG' => $opponent_avatar_img,
+    'BATTLE_TEXT' => $battle_text,
+    'BATTLE_CHAT' => $battle_text_chat,
+    'HP' => $current_hp,
+    'MP' => $current_mp,
+    'HP_MAX' => $current_hp_max,
+    'MP_MAX' => $current_mp_max,
+    'HP_WIDTH' => $challenger_hp_width,
+    'MP_WIDTH' => $challenger_mp_width,
+    'ATT' => $current_att,
+    'DEF' => $current_def,
+    'OPPONENT_HP' => $opponent_hp,
+    'OPPONENT_MP' => $opponent_mp,
+    'OPPONENT_HP_MAX' => $opponent_hp_max,
+    'OPPONENT_MP_MAX' => $opponent_mp_max,
+    'OPPONENT_HP_WIDTH' => $opponent_hp_width,
+    'OPPONENT_MP_WIDTH' => $opponent_mp_width,
+    'OPPONENT_ATT' => $opponent_att,
+    'OPPONENT_DEF' => $opponent_def,
+	// START Graphical sequences
+    'M_ATT' => $current_ma,
+    'M_DEF' => $current_md,
+    'ALIGNMENT' => adr_get_lang($challenger_details['alignment_name']),
+    'ELEMENT' => adr_get_lang($challenger_details['element_name']),
+    'ARMOUR_SET' => adr_get_lang($armour_set),
+    'OPPONENT_M_ATT' => $opponent_ma,
+    'OPPONENT_M_DEF' => $opponent_md,
+    'OPPONENT_ALIGNMENT' => adr_get_lang($opponent_details['alignment_name']),
+    'OPPONENT_ELEMENT' => adr_get_lang($opponent_details['element_name']),
+    'OPPONENT_ARMOUR_SET' => adr_get_lang($opponent_armour_set),
 	'L_TYPE_HERE' => $lang['Adr_pvp_custom_taunt'],
 	'LOG' => $formatted,
 	'L_CUSTOM_SENTANCE' => $lang['Adr_pvp_taunt'],
@@ -1476,6 +1668,7 @@ $template->assign_vars(array(
 	'L_TAUNT_9' => $lang['Adr_pvp_taunt_9'],
 	'L_TAUNT_10' => $lang['Adr_pvp_taunt_10'],
 		// END Graphical sequences
+    'L_SPELL2' => $lang['Adr_spell_learned'],
     'L_HP'=> $lang['Adr_character_health'],
     'L_MP' => $lang['Adr_character_magic'],
     'L_ATT' => $lang['Adr_attack'],

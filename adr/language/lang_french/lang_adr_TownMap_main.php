@@ -121,10 +121,10 @@ if ( defined ('IN_TOWNMAP_MAISON'))
 {
    $lang['TownMap_Maison']='La Maison de votre personnage';
    $lang['TownMap_Maison_Entree']='Bienvenue dans votre Maison.';
-   $lang['TownMap_Maison_FeuillePerso']='Cliquez sur l\'image pour accéder à la feuille des caractéristiques de votre personnage';
-   $lang['TownMap_Maison_Inventaire']='Cliquez sur l\'image pour accéder à l\'inventaire complet de votre personnage';
+   $lang['TownMap_Maison_FeuillePerso']='Cliquez sur l\'image pour accéder à votre feuille de personnage';
+   $lang['TownMap_Maison_Inventaire']='Cliquez sur l\'image pour accéder à l\'inventaire de votre personnage';
    $lang['TownMap_Maison_Competence']='Cliquez sur l\'image pour accéder aux compétences de votre personnage';
-   $lang['TownMap_Maison_Equipement']='Cliquez sur l\'image pour accéder à l\'équipement de votre personnage';
+   $lang['TownMap_Maison_Equipement']='Cliquez sur l\'image pour accéder à l\'équipement de base de votre personnage';
    $lang['TownMap_Maison_Preference']='Cliquez sur l\'image pour accéder aux préférences de votre personnage';
    $lang['TownMap_Maison_PersoListe']='Cliquez sur l\'image pour accéder à la liste de tous les personnages';
 }

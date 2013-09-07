@@ -28,7 +28,7 @@ if ( !defined('IN_PHPBB') )
 $adr_config = array(
 		'Adr_allow_retire_character' => '1',
 		'Adr_cache_interval' => '60',
-		'Adr_cache_last_updated' => '1378555179',
+		'Adr_cache_last_updated' => '1378573032',
 		'Adr_character_battle_limit' => '30',
 		'Adr_character_event_limit' => '40',
 		'Adr_character_limit_enable' => '0',

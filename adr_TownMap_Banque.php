@@ -52,6 +52,7 @@ if ( !$userdata['session_logged_in'] )
 // Includes the tpl and the header and season choice
 adr_template_file('adr_TownMap_Banque_body.tpl');
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
+include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
 
 $user_id = $userdata['user_id'];
 $points = $userdata['user_points'];

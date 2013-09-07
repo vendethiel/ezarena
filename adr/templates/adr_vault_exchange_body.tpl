@@ -1,54 +1,1 @@
-<form action="{S_VAULT_ACTION}" method="post">
-<br />
-<table cellspacing="1" cellpadding="4" border="0" align="center" class="forumline" width="100%">
-
-	<tr>
-		<td class="row3" colspan="9" align="center"><span class="gen"><b>{L_STOCK_EXCHANGE_ACTIONS}</b></span><br /><img src="adr/images/TownMap_Environment/Banque_bourse.gif "/><br /><span class="gensmall">{L_OWNER_POINTS} : {POINTS} {L_POINTS}</span> </td>
-	</tr>
-
-	<tr>
-		<th class="thCornerL">{L_STOCK_NAME}</th>
-		<th class="thTop">{L_STOCK_AMOUNT}</th>
-		<th class="thTop">{L_STOCK_PREVIOUS}</th>
-		<th class="thTop">{L_STOCK_WORST}</th>
-		<th class="thTop">{L_STOCK_BEST}</th>
-		<th class="thTop">{L_STOCK_OWNED}</th>
-		<th class="thTop">{L_STOCK_BUY}</th>
-		<th class="thCornerR">{L_STOCK_SELL}</th>
-	</tr>
-	<!-- BEGIN exchange -->
-	<tr>
-		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_NAME}</span><br /><span class="gensmall">{exchange.STOCK_DESC}</span></td>
-		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen"><b>{exchange.STOCK_AMOUNT}</b></span></td>
-		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_PREVIOUS}</span></td>
-		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_WORST}</span></td>
-		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_BEST}</span></td>
-		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_OWNED}</span></td>
-		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_BUY}</span></td>
-		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_SELL}</span></td>
-	</tr>
-	<!-- END exchange -->
-	<tr>
-		<td class="catBottom" colspan="9" align="center">{S_HIDDEN_FIELDS}<input type="submit" name="exchange_submit" value="{L_SUBMIT}" class="mainoption" /></td>
-	</tr>
-</table>
-</form>
-
-<br />
-<br />
-<table width="100%">
-	<tr>
-		<td align="center"><span class="gen"><a href="{U_TOWNMAPCOPYRIGHT}">{L_TOWNMAPCOPYRIGHT}</a></span></td>
-	</tr>
-</table>
-<table width="100%">
-	<tr>
-		<td align="center"><span class="gen"><a href="{U_COPYRIGHT}">{L_COPYRIGHT}</a></span></td>
-	</tr>
-</table>
-
-
-
-<br clear="all" />
-
-
+<form action="{S_VAULT_ACTION}" method="post"><br /><table cellspacing="1" cellpadding="4" border="0" align="center" class="forumline" width="100%">	<tr>		<td class="row3" colspan="9" align="center"><span class="gen"><b>{L_STOCK_EXCHANGE_ACTIONS}</b></span><br /><img src="adr/images/TownMap_Environment/Banque_bourse.gif "/><br /><span class="gensmall">{L_OWNER_POINTS} : {POINTS} {L_POINTS}</span> </td>	</tr>	<tr>		<th class="thCornerL">{L_STOCK_NAME}</th>		<th class="thTop">{L_STOCK_AMOUNT}</th>		<th class="thTop">{L_STOCK_PREVIOUS}</th>		<th class="thTop">{L_STOCK_WORST}</th>		<th class="thTop">{L_STOCK_BEST}</th>		<th class="thTop">{L_STOCK_OWNED}</th>		<th class="thTop">{L_STOCK_BUY}</th>		<th class="thCornerR">{L_STOCK_SELL}</th>	</tr>	<!-- BEGIN exchange -->	<tr>		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_NAME}</span><br /><span class="gensmall">{exchange.STOCK_DESC}</span></td>		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen"><b>{exchange.STOCK_AMOUNT}</b></span></td>		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_PREVIOUS}</span></td>		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_WORST}</span></td>		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_BEST}</span></td>		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_OWNED}</span></td>		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_BUY}</span></td>		<td class="{exchange.ROW_CLASS}" align="center"><span class="gen">{exchange.STOCK_SELL}</span></td>	</tr>	<!-- END exchange -->	<tr>		<td class="catBottom" colspan="9" align="center">{S_HIDDEN_FIELDS}<input type="submit" name="exchange_submit" value="{L_SUBMIT}" class="mainoption" /></td>	</tr></table></form><br /><br /><table width="100%">	<tr>		<td align="center"><span class="gen"><a href="{U_TOWNMAPCOPYRIGHT}">{L_TOWNMAPCOPYRIGHT}</a></span></td>	</tr></table><table width="100%">	<tr>		<td align="center"><span class="gen"><a href="{U_COPYRIGHT}">{L_COPYRIGHT}</a></span></td>	</tr></table><br clear="all" />

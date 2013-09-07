@@ -131,7 +131,11 @@
    </tr> 
       <td align="right" class="row1" width="50%" >{SPELL}&nbsp;&nbsp;&nbsp;</td> 
       <td align="left" class="row1" width="50%" >&nbsp;&nbsp;&nbsp;<input type="submit" style="width: 125" value="{L_SPELL}" name="spell" class="mainoption" /></td> 
-   </tr> 
+   </tr>
+	</tr>
+		<td align="right" class="row1" width="50%" >{SPELL2}&nbsp;&nbsp;&nbsp;</td>
+		<td align="left" class="row1" width="50%" >&nbsp;&nbsp;&nbsp;<input type="submit" style="width: 125" value="{L_SPELL2}" onClick="return checksubmit(this)" name="spell2" class="mainoption" /></td>
+	</tr>
    </tr> 
       <td align="right" class="row2" width="50%" >{POTION}&nbsp;&nbsp;&nbsp;</td> 
       <td align="left" class="row2" width="50%" >&nbsp;&nbsp;&nbsp;<input type="submit" style="width: 125" value="{L_POTION}" name="potion" class="mainoption" /></td> 

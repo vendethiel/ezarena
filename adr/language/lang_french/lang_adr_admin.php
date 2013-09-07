@@ -778,3 +778,11 @@ if ( defined ('IN_ADR_LOOTTABLES'))
     $lang['Adr_monster_specific_drop_explain']='Choisissez quels objets doivent toukours tomber !';
     $lang['Adr_no_items']='Pas d\'objets';
 }
+
+# Monster Abilities
+$lang['Adr_admin_monsters_base_regeneration']='Regénération de vie par tour';
+$lang['Adr_admin_monsters_base_mp_regeneration']='Regénération de mana par tour';
+$lang['Adr_admin_monsters_base_mp_drain']='Drain de mana par round';
+$lang['Adr_admin_monsters_base_mp_transfer']='Drain/transfert de mana par round';
+$lang['Adr_admin_monsters_base_hp_drain']='Drain de vie par round';
+$lang['Adr_admin_monsters_base_hp_transfer']='Drain/transfert de vie round';

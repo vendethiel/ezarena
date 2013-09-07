@@ -26,13 +26,14 @@ $phpbb_root_path = './';
 include($phpbb_root_path . 'extension.inc'); 
 include($phpbb_root_path . 'common.'.$phpEx);
 include($phpbb_root_path . 'adr/includes/adr_global.'.$phpEx);
+include_once($phpbb_root_path . 'adr/includes/adr_functions_armour_sets.'.$phpEx);
 
 $loc = 'character';
 $sub_loc = 'adr_character_armour_sets';
 
 //
 // Start session management
-$userdata = session_pagestart($user_ip, PAGE_ADR); 
+$userdata = session_pagestart($user_ip, PAGE_INDEX); 
 init_userprefs($userdata); 
 // End session management
 //
@@ -146,8 +147,6 @@ if ( $sets = $db->sql_fetchrow($result) )
 			"SET_NAME"                => $sets['set_name'],
 			"SET_DESC"                => $sets['set_desc'],
 			"SET_HELM"                => adr_get_lang($sets['set_helm']),
-			"SET_GREAVE"                => adr_get_lang($sets['set_greave']),
-			"SET_BOOT"                => adr_get_lang($sets['set_boot']),
 			"SET_ARMOUR"        => adr_get_lang($sets['set_armour']),
 			"SET_GLOVES"        => adr_get_lang($sets['set_gloves']),
 			"SET_SHIELD"        => adr_get_lang($sets['set_shield']),
@@ -185,8 +184,6 @@ if ( $total = $db->sql_fetchrow($result) )
 $template->assign_vars(array(	
 	'POINTS' => get_reward_name(),
 	'L_SET_HELM' 		=> $lang['Adr_set_helm'],
-	'L_SET_GREAVE' 		=> $lang['Adr_set_greave'],
-	'L_SET_BOOT' 		=> $lang['Adr_set_boot'],
 	'L_SET_ARMOUR'                 => $lang['Adr_set_armour'],
 	'L_SET_GLOVES'                 => $lang['Adr_set_gloves'],
 	'L_SET_SHIELD'                 => $lang['Adr_set_shield'],

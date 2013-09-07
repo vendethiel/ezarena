@@ -1,7 +1,6 @@
 <!-- IF ADMIN_ALERT -->{L_ADR_ADMIN_ALERT}<br/><br/><!-- ENDIF -->
 <form method="post" action="{S_CHARACTER_ACTION}">
 <br />
-<bgsound src="adr/images/TownMap/Musiques/{MUSIQUE}.mid ">
 <table width="100%" align="center" border="1">
 	<tr>
 		<th align="center" colspan="2">{L_TOWNMAP}</td>

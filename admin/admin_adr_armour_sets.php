@@ -34,7 +34,7 @@ $phpbb_root_path = "./../";
 require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);
 include($phpbb_root_path . 'adr/includes/adr_global.'.$phpEx);
-
+include_once($phpbb_root_path . 'adr/includes/adr_functions_armour_sets.'.$phpEx);
 
 if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
 {
@@ -54,9 +54,7 @@ if ( $mode != "" )
                 case 'add_armour_set':
 
                         adr_template_file('admin/config_adr_armour_set_edit_body.tpl');
-
                         $template->assign_block_vars('add',array());
-
                         $s_hidden_fields = '<input type="hidden" name="mode" value="savenew_armour_set" /><input type="hidden" name="item_type" value="' . $item_type . '" />';
 
                         // Grab Helms types
@@ -64,10 +62,8 @@ if ( $mode != "" )
                                         WHERE item_owner_id = 1
                                         AND item_type_use = 9 ";
                         $result = $db->sql_query($sql);
-                        if( !$result )
-                        {
-                                message_die(GENERAL_ERROR, 'Could not obtain elements information', "", __LINE__, __FILE__, $sql);
-                        }
+                        if( !$result ){
+                                message_die(GENERAL_ERROR, 'Could not obtain elements information', "", __LINE__, __FILE__, $sql);}
                         $helm = $db->sql_fetchrowset($result);
 
                         // Helm list
@@ -80,50 +76,6 @@ if ( $mode != "" )
                                 $helm_list .= '<option value = "'.$helm[$i]['item_name'].'" '.$helm_selected.' >' . $helm[$i]['item_name'] . '</option>';
                         }
                         $helm_list .= '</select>';
-
-                        // Grab Greaves types
-                        $sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-                                        WHERE item_owner_id = 1
-                                        AND item_type_use = 29 ";
-                        $result = $db->sql_query($sql);
-                        if( !$result )
-                        {
-                                message_die(GENERAL_ERROR, 'Could not obtain elements information', "", __LINE__, __FILE__, $sql);
-                        }
-                        $greave = $db->sql_fetchrowset($result);
-
-                        // Greave list
-                        $greave_list = '<select name="greave_list">';
-                        $greave_list .= '<option value = "0" >' . $lang['Adr_admin_set_no_item'] . '</option>';
-                        for($i = 0; $i < count($greave); $i++)
-                        {
-                                $greave[$i]['item_name'] = adr_get_lang($greave[$i]['item_name']);
-                                $greave_selected = ( $items['item_id'] == $greave[$i]['item_name'] ) ? 'selected' : '';
-                                $greave_list .= '<option value = "'.$greave[$i]['item_name'].'" '.$greave_selected.' >' . $greave[$i]['item_name'] . '</option>';
-                        }
-                        $greave_list .= '</select>';
-
-                        // Grab boots types
-                        $sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-                                        WHERE item_owner_id = 1
-                                        AND item_type_use = 30 ";
-                        $result = $db->sql_query($sql);
-                        if( !$result )
-                        {
-                                message_die(GENERAL_ERROR, 'Could not obtain elements information', "", __LINE__, __FILE__, $sql);
-                        }
-                        $boot = $db->sql_fetchrowset($result);
-
-                        // boot list
-                        $boot_list = '<select name="boot_list">';
-                        $boot_list .= '<option value = "0" >' . $lang['Adr_admin_set_no_item'] . '</option>';
-                        for($i = 0; $i < count($boot); $i++)
-                        {
-                                $boot[$i]['item_name'] = adr_get_lang($boot[$i]['item_name']);
-                                $boot_selected = ( $items['item_id'] == $boot[$i]['item_name'] ) ? 'selected' : '';
-                                $boot_list .= '<option value = "'.$boot[$i]['item_name'].'" '.$boot_selected.' >' . $boot[$i]['item_name'] . '</option>';
-                        }
-                        $boot_list .= '</select>';
 
                         // Grab Armour types
                         $sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
@@ -194,8 +146,6 @@ if ( $mode != "" )
 
                         $template->assign_vars(array(
                                 "HELM_LIST"                 => $helm_list,
-                                "GREAVE_LIST"                 => $greave_list,
-                                "BOOT_LIST"                 => $boot_list,
                                 "ARMOUR_LIST"                 => $armour_list,
                                 "GLOVES_LIST"                 => $gloves_list,
                                 "SHIELD_LIST"                 => $shield_list,
@@ -203,8 +153,6 @@ if ( $mode != "" )
                                 "L_SET_DESC"                 => $lang['Adr_admin_set_desc'],
                                 "L_SET_IMG"                 => $lang['Adr_admin_set_img'],
                                 "L_SET_HELM"                 => $lang['Adr_admin_set_helm'],
-                                "L_SET_GREAVE"                 => $lang['Adr_admin_set_greave'],
-                                "L_SET_BOOT"                 => $lang['Adr_admin_set_boot'],
                                 "L_SET_ARMOUR"                 => $lang['Adr_admin_set_armour'],
                                 "L_SET_GLOVES"                 => $lang['Adr_admin_set_gloves'],
                                 "L_SET_SHIELD"                 => $lang['Adr_admin_set_shield'],
@@ -288,50 +236,6 @@ if ( $mode != "" )
                         }
                         $helm_list .= '</select>';
 
-                        // Grab Greaves types
-                        $sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-                                        WHERE item_owner_id = 1
-                                        AND item_type_use = 29 ";
-                        $result = $db->sql_query($sql);
-                        if( !$result )
-                        {
-                                message_die(GENERAL_ERROR, 'Could not obtain elements information', "", __LINE__, __FILE__, $sql);
-                        }
-                        $greave = $db->sql_fetchrowset($result);
-
-                        // Greave list
-                        $greave_list = '<select name="greave_list">';
-                        $greave_list .= '<option value = "0" >' . $lang['Adr_admin_set_no_item'] . '</option>';
-                        for($i = 0; $i < count($greave); $i++)
-                        {
-                                $greave[$i]['item_name'] = adr_get_lang($greave[$i]['item_name']);
-                                $greave_selected = ( $items['set_greave'] == $greave[$i]['item_name'] ) ? 'selected' : '';
-                                $greave_list .= '<option value = "'.$greave[$i]['item_name'].'" '.$greave_selected.' >' . $greave[$i]['item_name'] . '</option>';
-                        }
-                        $greave_list .= '</select>';
-
-                        // Grab Boots types
-                        $sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-                                        WHERE item_owner_id = 1
-                                        AND item_type_use = 30 ";
-                        $result = $db->sql_query($sql);
-                        if( !$result )
-                        {
-                                message_die(GENERAL_ERROR, 'Could not obtain elements information', "", __LINE__, __FILE__, $sql);
-                        }
-                        $boot = $db->sql_fetchrowset($result);
-
-                        // Boot list
-                        $boot_list = '<select name="boot_list">';
-                        $boot_list .= '<option value = "0" >' . $lang['Adr_admin_set_no_item'] . '</option>';
-                        for($i = 0; $i < count($boot); $i++)
-                        {
-                                $boot[$i]['item_name'] = adr_get_lang($boot[$i]['item_name']);
-                                $boot_selected = ( $items['set_boot'] == $boot[$i]['item_name'] ) ? 'selected' : '';
-                                $boot_list .= '<option value = "'.$boot[$i]['item_name'].'" '.$boot_selected.' >' . $boot[$i]['item_name'] . '</option>';
-                        }
-                        $boot_list .= '</select>';
-
                         // Grab Armour types
                         $sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
                                         WHERE item_owner_id = 1
@@ -400,8 +304,6 @@ if ( $mode != "" )
 
                         $template->assign_vars(array(
                                 "HELM_LIST"                 => $helm_list,
-                                "GREAVE_LIST"                 => $greave_list,
-                                "BOOT_LIST"                 => $boot_list,
                                 "ARMOUR_LIST"                 => $armour_list,
                                 "GLOVES_LIST"                 => $gloves_list,
                                 "SHIELD_LIST"                 => $shield_list,
@@ -424,8 +326,6 @@ if ( $mode != "" )
                 			"L_SET_DESC"                => $lang['Adr_admin_set_desc'],
                 			"L_SET_IMG"                => $lang['Adr_admin_set_img'],
                 			"L_SET_HELM"                 => $lang['Adr_admin_set_helm'],
-                			"L_SET_GREAVE"                 => $lang['Adr_admin_set_greave'],
-                			"L_SET_BOOT"                 => $lang['Adr_admin_set_boot'],
                 			"L_SET_ARMOUR"                 => $lang['Adr_admin_set_armour'],
                 			"L_SET_GLOVES"                 => $lang['Adr_admin_set_gloves'],
                 			"L_SET_SHIELD"                 => $lang['Adr_admin_set_shield'],
@@ -457,13 +357,10 @@ if ( $mode != "" )
                 case "save_armour_set":
 
                         $set_id = ( !empty($HTTP_POST_VARS['set_id']) ) ? intval($HTTP_POST_VARS['set_id']) : intval($HTTP_GET_VARS['set_id']);
-
                         $set_name = ( isset($HTTP_POST_VARS['set_name']) ) ? trim($HTTP_POST_VARS['set_name']) : trim($HTTP_GET_VARS['set_name']);
                         $set_desc = ( isset($HTTP_POST_VARS['set_desc']) ) ? trim($HTTP_POST_VARS['set_desc']) : trim($HTTP_GET_VARS['set_desc']);
                         $set_img = ( isset($HTTP_POST_VARS['set_img']) ) ? trim($HTTP_POST_VARS['set_img']) : trim($HTTP_GET_VARS['set_img']);
                         $set_helm = ( isset($HTTP_POST_VARS['helm_list']) ) ? trim($HTTP_POST_VARS['helm_list']) : trim($HTTP_GET_VARS['helm_list']);
-                        $set_greave = ( isset($HTTP_POST_VARS['greave_list']) ) ? trim($HTTP_POST_VARS['greave_list']) : trim($HTTP_GET_VARS['greave_list']);
-                        $set_boot = ( isset($HTTP_POST_VARS['boot_list']) ) ? trim($HTTP_POST_VARS['boot_list']) : trim($HTTP_GET_VARS['boot_list']);
                         $set_armour = ( isset($HTTP_POST_VARS['armour_list']) ) ? trim($HTTP_POST_VARS['armour_list']) : trim($HTTP_GET_VARS['armour_list']);
                         $set_gloves = ( isset($HTTP_POST_VARS['gloves_list']) ) ? trim($HTTP_POST_VARS['gloves_list']) : trim($HTTP_GET_VARS['gloves_list']);
                         $set_shield = ( isset($HTTP_POST_VARS['shield_list']) ) ? trim($HTTP_POST_VARS['shield_list']) : trim($HTTP_GET_VARS['shield_list']);
@@ -480,18 +377,18 @@ if ( $mode != "" )
                         $set_intelligence_penalty = intval($HTTP_POST_VARS['set_int_penalty']);
                         $set_wisdom_penalty = intval($HTTP_POST_VARS['set_wis_penalty']);
 
-                        if ($set_name == '' )
-                        {
-                                message_die(MESSAGE, $lang['Fields_empty']);
-                        }
+                        if ($set_name == '' ){
+							message_die(MESSAGE, $lang['Fields_empty']);}
+
+						// Do not allow partial sets in this release!
+						if(($set_helm == '') || ($set_armour == '') || ($set_gloves == '') || ($set_shield == ''))
+							message_die(MESSAGE, "You have not selected a complete set. You cannot have partial sets in this release.");
 
                         $sql = "UPDATE " . ADR_ARMOUR_SET_TABLE . "
                                 SET		set_name = '" . str_replace("\'", "''", $set_name) . "', 
                                         set_desc = '" . str_replace("\'", "''", $set_desc) . "', 
                                         set_img = '" . str_replace("\'", "''", $set_img) . "', 
-                                        set_helm = '" . str_replace("\'", "''", $set_helm) . "',
-                                        set_greave = '" . str_replace("\'", "''", $set_greave) . "',
-                                        set_boot = '" . str_replace("\'", "''", $set_boot) . "', 
+                                        set_helm = '" . str_replace("\'", "''", $set_helm) . "', 
                                         set_armour = '" . str_replace("\'", "''", $set_armour) . "',
                                         set_gloves = '" . str_replace("\'", "''", $set_gloves) . "',
                                         set_shield = '" . str_replace("\'", "''", $set_shield) . "',
@@ -520,13 +417,10 @@ if ( $mode != "" )
                 case "savenew_armour_set":
 
                         $set_id = ( !empty($HTTP_POST_VARS['set_id']) ) ? intval($HTTP_POST_VARS['set_id']) : intval($HTTP_GET_VARS['set_id']);
-
                         $set_name = ( isset($HTTP_POST_VARS['set_name']) ) ? trim($HTTP_POST_VARS['set_name']) : trim($HTTP_GET_VARS['set_name']);
                         $set_desc = ( isset($HTTP_POST_VARS['set_desc']) ) ? trim($HTTP_POST_VARS['set_desc']) : trim($HTTP_GET_VARS['set_desc']);
                         $set_img = ( isset($HTTP_POST_VARS['set_img']) ) ? trim($HTTP_POST_VARS['set_img']) : trim($HTTP_GET_VARS['set_img']);
                         $set_helm = ( isset($HTTP_POST_VARS['helm_list']) ) ? trim($HTTP_POST_VARS['helm_list']) : trim($HTTP_GET_VARS['helm_list']);
-                        $set_greave = ( isset($HTTP_POST_VARS['greave_list']) ) ? trim($HTTP_POST_VARS['greave_list']) : trim($HTTP_GET_VARS['greave_list']);
-                        $set_boot = ( isset($HTTP_POST_VARS['boot_list']) ) ? trim($HTTP_POST_VARS['boot_list']) : trim($HTTP_GET_VARS['boot_list']);
                         $set_armour = ( isset($HTTP_POST_VARS['armour_list']) ) ? trim($HTTP_POST_VARS['armour_list']) : trim($HTTP_GET_VARS['armour_list']);
                         $set_gloves = ( isset($HTTP_POST_VARS['gloves_list']) ) ? trim($HTTP_POST_VARS['gloves_list']) : trim($HTTP_GET_VARS['gloves_list']);
                         $set_shield = ( isset($HTTP_POST_VARS['shield_list']) ) ? trim($HTTP_POST_VARS['shield_list']) : trim($HTTP_GET_VARS['shield_list']);
@@ -543,14 +437,16 @@ if ( $mode != "" )
                         $set_intelligence_penalty = intval($HTTP_POST_VARS['set_int_penalty']);
                         $set_wisdom_penalty = intval($HTTP_POST_VARS['set_wis_penalty']);
 
-				if ($set_name == '' )
-				{
-					message_die(MESSAGE, $lang['Fields_empty']);
-				}
+						if ($set_name == '' ){
+							message_die(MESSAGE, $lang['Fields_empty']);}
+
+						// Do not allow partial sets in this release!
+						if(($set_helm == '') || ($set_armour == '') || ($set_gloves == '') || ($set_shield == ''))
+							message_die(MESSAGE, "You have not selected a complete set. You cannot have partial sets in this release.");
 
                         $sql = "INSERT INTO " . ADR_ARMOUR_SET_TABLE . " 
-                                ( set_name , set_desc , set_img , set_helm , set_greave , set_boot , set_armour , set_gloves , set_shield , set_might_bonus , set_constitution_bonus , set_ac_bonus , set_dexterity_bonus , set_intelligence_bonus , set_wisdom_bonus , set_might_penalty , set_constitution_penalty , set_ac_penalty , set_dexterity_penalty , set_intelligence_penalty , set_wisdom_penalty )
-                                VALUES ( '" . str_replace("\'", "''", $set_name) . "' , '" . str_replace("\'", "''", $set_desc) . "' , '" . str_replace("\'", "''", $set_img) . "' , '" . str_replace("\'", "''", $set_helm) . "' , '" . str_replace("\'", "''", $set_greave) . "' , '" . str_replace("\'", "''", $set_boot) . "' , '" . str_replace("\'", "''", $set_armour) . "' , '" . str_replace("\'", "''", $set_gloves) . "' , '" . str_replace("\'", "''", $set_shield) . "' , $set_might_bonus , $set_constitution_bonus , $set_ac_bonus , $set_dexterity_bonus , $set_intelligence_bonus , $set_wisdom_bonus , $set_might_penalty , $set_constitution_penalty , $set_ac_penalty , $set_dexterity_penalty , $set_intelligence_penalty , $set_wisdom_penalty )";
+                                ( set_name , set_desc , set_img , set_helm , set_armour , set_gloves , set_shield , set_might_bonus , set_constitution_bonus , set_ac_bonus , set_dexterity_bonus , set_intelligence_bonus , set_wisdom_bonus , set_might_penalty , set_constitution_penalty , set_ac_penalty , set_dexterity_penalty , set_intelligence_penalty , set_wisdom_penalty )
+                                VALUES ( '" . str_replace("\'", "''", $set_name) . "' , '" . str_replace("\'", "''", $set_desc) . "' , '" . str_replace("\'", "''", $set_img) . "' , '" . str_replace("\'", "''", $set_helm) . "' , '" . str_replace("\'", "''", $set_armour) . "' , '" . str_replace("\'", "''", $set_gloves) . "' , '" . str_replace("\'", "''", $set_shield) . "' , $set_might_bonus , $set_constitution_bonus , $set_ac_bonus , $set_dexterity_bonus , $set_intelligence_bonus , $set_wisdom_bonus , $set_might_penalty , $set_constitution_penalty , $set_ac_penalty , $set_dexterity_penalty , $set_intelligence_penalty , $set_wisdom_penalty )";
                         $result = $db->sql_query($sql);
                         if( !$result )
                         {
@@ -591,8 +487,6 @@ else
                         "SET_NAME"                => $sets[$i]['set_name'],
                         "SET_DESC"                => $sets[$i]['set_desc'],
                         "SET_HELM"                => adr_get_lang($sets[$i]['set_helm']),
-                        "SET_GREAVE"                => adr_get_lang($sets[$i]['set_greave']),
-                        "SET_BOOT"                => adr_get_lang($sets[$i]['set_boot']),
                         "SET_ARMOUR"        => adr_get_lang($sets[$i]['set_armour']),
                         "SET_GLOVES"        => adr_get_lang($sets[$i]['set_gloves']),
                         "SET_SHIELD"        => adr_get_lang($sets[$i]['set_shield']),
@@ -630,8 +524,6 @@ else
                 "L_SET_TITLE"                => $lang['Adr_admin_set_title'],
                 "L_SET_TEXT"                => $lang['Adr_admin_set_text'],
                 "L_SET_HELM"                 => $lang['Adr_admin_set_helm'],
-                "L_SET_GREAVE"                 => $lang['Adr_admin_set_greave'],
-                "L_SET_BOOT"                 => $lang['Adr_admin_set_boot'],
                 "L_SET_ARMOUR"                 => $lang['Adr_admin_set_armour'],
                 "L_SET_GLOVES"                 => $lang['Adr_admin_set_gloves'],
                 "L_SET_SHIELD"                 => $lang['Adr_admin_set_shield'],

@@ -54,6 +54,7 @@ if ( !$userdata['session_logged_in'] )
 // Includes the tpl and the header and choice of the season
 adr_template_file('adr_TownMap_Maison_body.tpl');
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
+include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
 
 adr_enable_check();
 adr_ban_check($user_id);

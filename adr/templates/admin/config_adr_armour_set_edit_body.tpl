@@ -41,14 +41,6 @@
 		<td class="row1">{L_SET_SHIELD}</td>
 		<td class="row2" align="center" >{SHIELD_LIST}</td>
 	</tr>
-	<tr>
-		<td class="row1">{L_SET_GREAVE}</td>
-		<td class="row2" align="center" >{GREAVE_LIST}</td>
-	</tr>
-	<tr>
-		<td class="row1">{L_SET_BOOT}</td>
-		<td class="row2" align="center" >{BOOT_LIST}</td>
-	</tr>
 
 	<tr>
 		<td class="row1">{L_SET_MIGHT_BONUS}</td>

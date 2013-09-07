@@ -18,8 +18,6 @@
 			<span class="gen"><b>{sets.SET_NAME}</b></span><br />
 			<span class="gensmall"><b>{L_SET_DESC}</b>&nbsp;<i>{sets.SET_DESC}</i></span><br /><br />
 			<span class="gensmall"><b>{L_SET_HELM}</b>&nbsp;{sets.SET_HELM}</span><br />
-			<span class="gensmall"><b>{L_SET_GREAVE}</b>&nbsp;{sets.SET_GREAVE}</span><br />
-			<span class="gensmall"><b>{L_SET_BOOT}</b>&nbsp;{sets.SET_BOOT}</span><br />
 			<span class="gensmall"><b>{L_SET_ARMOUR}</b>&nbsp;{sets.SET_ARMOUR}</span><br />
 			<span class="gensmall"><b>{L_SET_GLOVES}</b>&nbsp;{sets.SET_GLOVES}</span><br />
 			<span class="gensmall"><b>{L_SET_SHIELD}</b>&nbsp;{sets.SET_SHIELD}</span><br />
@@ -61,4 +59,10 @@
 </table>
 
 </form>
+
+<table width="100%">
+	<tr>
+		<td align="center"><span class="gen"><a href="{U_COPYRIGHT}">{L_COPYRIGHT}</a></span></td>
+	</tr>
+</table>
 <br clear="all" />

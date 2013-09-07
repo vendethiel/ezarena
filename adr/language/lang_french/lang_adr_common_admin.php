@@ -64,5 +64,6 @@ $lang['Seasons'] = 'Saisons';
 $lang['Check ADR Version'] = 'Vérification de version';
 $lang['Adr_Items'] = 'ADR-Objets';
 $lang['ADR-Recipes'] = 'ADR-Recettes /<br/>Donations';
+$lang['Spell Mod'] = 'Sorts';
 
 $lang['Loottable_Categories'] = 'Tables de butin';

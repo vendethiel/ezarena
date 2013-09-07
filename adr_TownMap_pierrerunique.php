@@ -59,6 +59,7 @@ adr_character_created_check($user_id);
 // Includes the tpl and the header and choice of the season
 adr_template_file('adr_TownMap_pierrerunique_body.tpl');
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
+include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
 
 $saison = 'Carte'.$board_config['adr_seasons'];
 

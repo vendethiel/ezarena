@@ -153,7 +153,7 @@ return;
 
 function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves, $amulet, $ring, $greave, $boot)
 {
-	global $db, $lang, $adr_general, $template, $board_config;
+	global $db, $lang, $adr_general, $template, $board_config, $phpEx;
 
 	$user_id = intval($user_id);
 	$armor = intval($armor);
@@ -206,6 +206,47 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 		$def = ( ( $char['character_dexterity'] + $char['character_wisdom'] + $char['character_ac'] ) + $bonus_def );
 	}
 
+	// Start party
+	$party = $char['character_party'];
+
+	if( $party > 0 )
+	{
+		$sql = " SELECT character_party FROM " . ADR_CHARACTERS_TABLE . "
+			 WHERE character_party = $party ";
+		if( !($result = $db->sql_query($sql)) )
+		{
+			message_die(GENERAL_ERROR, 'Could not query count for info page', '', __LINE__, __FILE__, $sql);
+		}
+		$count_members = $db->sql_numrows($result);
+	}
+	elseif( $party = 0 )
+	{
+		$sql = " SELECT character_party FROM " . ADR_CHARACTERS_TABLE . "
+			 WHERE character_party = 0 ";
+		if( !($result = $db->sql_query($sql)) )
+		{
+			message_die(GENERAL_ERROR, 'Could not query count for info page', '', __LINE__, __FILE__, $sql);
+		}
+		$count_members = $db->sql_numrows($result);
+	}
+
+	// Boost ATT
+	$att = $att + $count_members + $count_members + $count_members;
+	$att = round($att);
+
+	// Boost DEF
+	$def = $def + $count_members + $count_members + $count_members + $count_members + $count_members;
+	$def = round($def);
+
+	// Boost MA
+	$ma = $ma + $count_members + $count_members + $count_members;
+	$ma = round($ma);
+
+	// Boost MD
+	$md = $md + $count_members + $count_members + $count_members + $count_members + $count_members;
+	$md = round($md);
+	// End Party
+
 	if($armor)
 	{
 		$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
@@ -220,6 +261,7 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 		$armor_id = $item['item_id'];
 		$def = ($def + ($item['item_power'] + $item['item_add_power']));
 		adr_use_item($armor, $user_id);
+		$armour_name = adr_get_lang($item['item_name']);
 	}
 
 	if($buckler)
@@ -236,6 +278,7 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 		$buckler_id = $item['item_id'];
 		$def = ($def + ($item['item_power'] + $item['item_add_power']));
 		adr_use_item($buckler, $user_id);
+		$buckler_name = adr_get_lang($item['item_name']);
 	}
 
 	if($gloves)
@@ -252,6 +295,7 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 		$gloves_id = $item['item_id'];
 		$def = ($def + ($item['item_power'] + $item['item_add_power']));
 		adr_use_item($gloves, $user_id);
+		$gloves_name = adr_get_lang($item['item_name']);
 	}
 
 	if($helm)
@@ -268,6 +312,7 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 		$helm_id = $item['item_id'];
 		$def = ($def + ($item['item_power'] + $item['item_add_power']));
 		adr_use_item($helm, $user_id);
+		$helm_name = adr_get_lang($item['item_name']);
 	}
 
 	// Now we modify mp and hp regeneration with amulets and rings
@@ -285,6 +330,7 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 		$amulet_id = $item['item_id'];
 		$hp = ($hp + $item['item_power']);
 		adr_use_item($amulet, $user_id);
+		$amulet_name = adr_get_lang($item['item_name']);
 	}
 
 	if($ring)
@@ -301,6 +347,7 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 		$ring_id = $item['item_id'];
 		$mp = ($mp + $item['item_power']);
 		adr_use_item($ring, $user_id);
+		$ring_name = adr_get_lang($item['item_name']);
 	}
 	if ( $greave )
 	{
@@ -318,6 +365,7 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 		$def = ( $def + $item['item_power'] ) + $item['item_add_power'];
 		$greave_name = $item['item_name'];
 		adr_use_item($greave , $user_id);
+		$greave_name = adr_get_lang($item['item_name']);
 	}
 
 	if ( $boot )
@@ -336,6 +384,7 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 		$def = ( $def + $item['item_power'] ) + $item['item_add_power'];
 		$boot_name = $item['item_name'];
 		adr_use_item($boot , $user_id);
+		$boot_name = adr_get_lang($item['item_name']);
 	}
 
 	if ( $zone_check['zone_monsters_list'] == '' )
@@ -418,8 +467,10 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 	if(!$result){
 		message_die(GENERAL_ERROR, "Couldn't insert new battle", "", __LINE__, __FILE__, $sql);}
 	// Do armour set check
-	adr_armour_set_check($user_id, $armour_name, $buckler_name, $gloves_name, $helm_name, $greave_name, $boot_name);
 
+	// Do armour set check
+	include_once($phpbb_root_path . 'adr/includes/adr_functions_armour_sets.'.$phpEx);
+	adr_armour_set_check($user_id, $armour_name, $buckler_name, $gloves_name, $helm_name, $amulet_name, $ring_name, $greave_name, $boot_name);
 }
 
 

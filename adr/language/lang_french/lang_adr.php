@@ -75,7 +75,7 @@ $lang['Adr_skill_mining_desc']='Compétence minage';
 $lang['Adr_skill_brewing_desc']='Compétence brassage';
 $lang['Adr_skill_cooking_desc']='Compétence cuisine';
 $lang['Adr_skill_stone_desc']='Compétence taille des pierres';
-$lang['Adr_skill_forge_desc']='Compétence forge';
+$lang['Adr_skill_forge_desc']='Compétence forge (réparation d\'objets)';
 $lang['Adr_skill_enchantment_desc']='Compétence enchantement';
 $lang['Adr_skill_trading_desc']='Compétence marchandage';
 $lang['Adr_skill_thief_desc']='Compétence vol';
@@ -248,7 +248,7 @@ if ( defined ( 'IN_ADR_CHARACTER' ))
    $lang['Adr_level_up']='Montée de niveau !';
    $lang['Adr_level_up_select']='Sélectionnez la caractéristique que vous souhaitez augmenter';
    $lang['Adr_level_up_perform']='Monter de niveau';
-   $lang['Adr_level_up_congrats']='Félicitations ! Vous êtes maintenant de niveau %s !';
+   $lang['Adr_level_up_congrats']='Félicitations ! Vous êtes maintenant de niveau %s !%s<br/>';
    $lang['Adr_town_guilds_closed']='Le hall de guilde est actuelement fermé. <br /> Revenez plus tard';
    $lang['Adr_character_guilds_delete_title']='Erreur de suppression de personnage';
    $lang['Adr_character_guilds_delete']='Vous ne pouvez pas supprimer votr perssonnage tant qu\'il est associer a une Guilde.<br /><br />Quittez votre guilde et réessayé.';
@@ -1491,7 +1491,8 @@ $lang['ADR_DUEL_LIST'] = 'Cliquez sur l\'image pour accéder à vos duels';
 $lang['NO_ZONE_AVAILABLE'] = 'Il n\'existe pas de zone, ou aucune pour votre niveau. Veuillez contacter l\'administrateur du forum';
 $lang['ADR_MOVED_BACK_TO_SAFE_ZONE'] = 'Suites à de mystérieuses circonstances, vous vous réveillez en zone sûre ...';
 $lang['ADR_CAULDRON_EXPLAIN'] = 'Bienvenue au Chaudron Magique.<br/>Ici, vous pouvez combiner des objets pour obtenir un autre objet encore plus puissant.<br/><br/>Attention ! Toutes les combinaisons ne marchent pas, et l\'ordre est important !';
-$lang['ADR_RECIPES_LIST'] = 'Cliquez sur l\'image pour accéder à la liste des recettes que vous connaissez';
+$lang['ADR_RECIPES_LIST'] = 'Cliquez sur l\'image pour pour voir les recettes que vous connaissez';
+$lang['ADR_SPELL_LIST'] = 'Cliquez sur l\'image pour accéder à la liste des sorts que vous connaissez';
 //'Welcome to the Alchemy Lab. Here you can combine some items to get another powerfull item. Warning ! The order of the items you put into the cauldron is important! You have to search and find good combinations.';
 // END ezArena
 
@@ -1670,11 +1671,11 @@ if ( defined ('IN_ADR_COOKING'))
    $lang['food_stats']='Food Stats';
 }
 
-$lang['Adr_skill_blacksmithing_desc']='Compétence Forge';
-$lang['Adr_races_bonus_blacksmithing']='Bonus à la compétence forge';
-$lang['Adr_blacksmithing']='Forge';
-$lang['Adr_items_type_tools_blacksmithing']='Outils : Forge';
-$lang['Adr_items_blacksmithing_desc']='Indispensable à la forge';
+$lang['Adr_skill_blacksmithing_desc']='Compétence Forgeron (fabrication d\'armes et d\'armures)';
+$lang['Adr_races_bonus_blacksmithing']='Bonus à la compétence forgeron';
+$lang['Adr_blacksmithing']='Forgeron';
+$lang['Adr_items_type_tools_blacksmithing']='Outils : Forgeron';
+$lang['Adr_items_blacksmithing_desc']='Indispensable aux forgerons';
 
 if ( defined ('IN_ADR_BLACKSMITHING'))
 {
@@ -1826,8 +1827,7 @@ if ( defined ('IN_ADR_FISH'))
    $lang['Adr_fishing_go_to']="Go to Character Page";
    $lang['Adr_fishing_create']='Go Fishing';
    $lang['Adr_fishing_explain']='Welcome to the Lake. <br /><br />Here you fish for many types of fish. <br /><br />Use these fish to sell, or combined them to create other items. <br /><br />Good luck young one.';
-
- }
+}
 if ( defined ('IN_ADR_ALCHEMY'))
 {
    $lang['Adr_forge_alchemy']='Let\'s do some alchemy';
@@ -1843,3 +1843,10 @@ if ( defined ('IN_ADR_ALCHEMY'))
    $lang['Adr_alchemy_create']='Do Alchemy';
    $lang['Adr_alchemy_explain']='Welcome to the Alchemic Lab. <br /><br />Here you can use the art of alchemy to create many things. <br /><br />These things can be used to sell or combined to create other items. <br /><br />Good luck young one.';
 }
+
+$lang['Adr_battle_monster_regen']='%s regénère %s HP!';
+$lang['Adr_battle_monster_mp_regen']='%s regénère %s points de Mana !';
+$lang['Adr_battle_monster_mp_drain']='%s vous draine %s points de Mana!';
+$lang['Adr_battle_monster_mp_transfer']='%s vous vole %s MP pour lui !';
+$lang['Adr_battle_monster_hp_drain']='%s vous draine %s HP !';
+$lang['Adr_battle_monster_hp_transfer']='%s vous vole %s HP pour lui !';

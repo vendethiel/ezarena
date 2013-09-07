@@ -434,6 +434,11 @@ Ajoute un système de NPC (PNJ) avancé au Zone Mod, permettant de dépasser la 
 # ADR : Advanced NPC System Expansion 0.2.3-beta - Ozzie
 Ajoute de nombreuses fonctionnalités au mod "Advanced NPC System", comme la possibilité de reporter un tricheur (avec la possiblité pour un administrateur de mp/bannir/... le joueur), permet aux PNJs d'apparaître dans plusieurs zones, les PNJs peuvent demander plusieurs objets, et vous pouvez ajouter des restrictions de classe/race/niveau/élément/alignement/a parlé avec tel PNJ/a fini tel quête (aucune, une ou plusieurs).
 
+# ADR : Advanced Spell Addon 0.4.4 - AnimeMaster, egdcltd
+Permet aux joueurs d'apprendre des sorts en montant de niveau. Les sorts peuvent être édités dans l'administration.
+Addons :
+ - Addon Spells in PvP - Informpro
+
 # ADR : Blacksmithing 0.3.0 - Himmelweiss
 Ajoute un système avancé de forge au mod Crafting.
 
@@ -451,8 +456,14 @@ Permet de limiter l'accès à une zone pour les personnes d'un certain niveau
 Addons :
  - Addon pour NSEW Navigation - Informpro
 
+# ADR : Monster Abilities 0.4.2 - egdcltd
+Permet aux monstres de draîner, voire transférer, de la vie / du mana chaque tour.
+
 # ADR : Monster in multiple zones 1.0-beta - Dedo
 Permet de mettre les monstres dans plusieurs zones.
+
+# ADR : Party 1.1 - Spikez
+Ajoute un système de groupe au RPG, avec des bonus configurables.
 
 # ADR : QuestBook System v1.0.2 - Himmelweiss
 Ajoute un système pour garder la liste des quêtes en cours, incluant le nom du PNJ, sa zone, son message, quel objet il vous faut encore ou quel monstre vous devez toujours tuer.
@@ -470,8 +481,9 @@ Permet d'utiliser la chatbox communautaire plutôt que la chatbox du zone_mod.
 # ADR : Zone Specific Shops 0.0.3-beta - cêdo 
 Permet de mettre des magasins dans certaines zones seulement.
 
-# ADR (ST) : Armor Sets 0.1.2 - Seteo-Bloke
+# ADR (ST) : Armor Sets 0.1.5 - Seteo-Bloke
 Permet de créer des panoplies d'armures à équiper.
+(mis à jour depuis la version 0.1.2 de la prémode ADR)
 
 # ADR (ST) : Cauldron 2.0.0 - one_piece
 Ajoute un système de chaudron pour faire des recettes.
@@ -482,9 +494,9 @@ Ajoute un système de Temple et de Lac auxquels vous pouvez faire des offrandes.
 # ADR (ST) : Graphical Battles 0.1.5 - Seteo-Bloke
 Permet d'ajouter des meilleurs graphismes aux combats.
 
-# ADR (ST) : Guild Alliances 0.0.3 - Seteo-Bloke
+# ADR (ST) : Guild Alliances 0.0.5 - Seteo-Bloke
 Permet de faire des alliances
-Mise à jour en 0.0.5 dans l'ezArena (manque encore la mise à jour 0.0.4 !!).
+(mis à jour depuis la version 0.0.3 de la prémode ADR. la version 0.0.4 n'est *pas* installée).
 
 # ADR (ST) : Jobs 0.2.0 - Seteo-Bloke
 Ajoute un système complet de métiers à ADR.

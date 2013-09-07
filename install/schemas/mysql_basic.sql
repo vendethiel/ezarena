@@ -783,18 +783,6 @@ INSERT INTO phpbb_adr_stores (store_id, store_name, store_desc, store_img, store
 INSERT INTO phpbb_adr_stores (store_id, store_name, store_desc, store_img, store_status, store_sales_status, store_admin, store_owner_id, store_owner_img, store_owner_speech) VALUES (2, 'Admin Only Store', 'Viewable only by the board admin', '', 1, 0, 1, 1, '', '');
 INSERT INTO phpbb_adr_stores (store_id, store_name, store_desc, store_img, store_status, store_sales_status, store_admin, store_owner_id, store_owner_img, store_owner_speech) VALUES (3, 'The Grey Dwarf''s Armory', 'Get your quality armor here.', 'minning.gif', 1, 0, 0, 1, 'minning.gif', 'Armor made in the best Dwarven Forges around.');
 
-# Townmaps
-INSERT INTO phpbb_adr_townmap (townmap_id, townmap_num, townmap_name, townmap_desc, townmap_img) VALUES (1, 1, 'Adr_TownMap_name_1', 'Adr_TownMap_desc_1', 'Carte_1.gif');
-INSERT INTO phpbb_adr_townmap (townmap_id, townmap_num, townmap_name, townmap_desc, townmap_img) VALUES (2, 2, 'Adr_TownMap_name_2', 'Adr_TownMap_desc_2', 'Carte_2.gif');
-INSERT INTO phpbb_adr_townmap (townmap_id, townmap_num, townmap_name, townmap_desc, townmap_img) VALUES (3, 3, 'Adr_TownMap_name_3', 'Adr_TownMap_desc_3', 'Carte_3.gif');
-INSERT INTO phpbb_adr_townmap (townmap_id, townmap_num, townmap_name, townmap_desc, townmap_img) VALUES (4, 4, 'Adr_TownMap_name_4', 'Adr_TownMap_desc_4', 'Carte_4.gif');
-
-# Townmap Maps
-INSERT INTO phpbb_adr_townmap_map (townmap_map) VALUES (4);
-
-# Townmap Musics
-INSERT INTO phpbb_adr_townmap_music (music_spring, music_summer, music_automn, music_winter) VALUES ('spring', 'summer', 'automn', 'winter');
-
 # Zones
 INSERT INTO phpbb_adr_zones (zone_id, zone_name, zone_desc, zone_img, zone_element, zone_item, cost_goto1, cost_goto2, cost_goto3, cost_goto4, cost_return, goto1_name, goto2_name, goto3_name, goto4_name, return_name, zone_shops, zone_forge, zone_prison, zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, npc_price, npc1_enable, npc2_enable, npc3_enable, npc4_enable, npc5_enable, npc6_enable, npc1_message, npc2_message, npc3_message, npc4_message, npc5_message, npc6_message, zone_mine, zone_enchant) VALUES (1, 'Suzail', 'Suzail is the royal capital and richest city of the kingdom of Cormyr', 'cormyr', 'Fire', '0', 0, 0, 0, 0, 0, 'Suzail', 'Marsember', 'Eastern Cormyr Crossroads', '', 'Kings Forest', 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 10, 20, 10, 20, 20, 0, 1, 1, 1, 1, 1, 1, 'this is a test message', 'test 1', 'test 2', 'test 3', 'test 4', 'test 5', 1, 1);
 INSERT INTO phpbb_adr_zones (zone_id, zone_name, zone_desc, zone_img, zone_element, zone_item, cost_goto1, cost_goto2, cost_goto3, cost_goto4, cost_return, goto1_name, goto2_name, goto3_name, goto4_name, return_name, zone_shops, zone_forge, zone_prison, zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, npc_price, npc1_enable, npc2_enable, npc3_enable, npc4_enable, npc5_enable, npc6_enable, npc1_message, npc2_message, npc3_message, npc4_message, npc5_message, npc6_message, zone_mine, zone_enchant) VALUES (2, 'Marsember', 'Marsember is the second largest city in the kingdom of Cormyr', 'Marsember', 'Fire', '0', 10, 10, 10, 10, 10, 'Marsember', '', '', '', 'Suzail', 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 5, 100, 2, 100, 500, 0, 1, 1, 1, 1, 1, 1, 'test 1', 'test 2', 'test 3', 'test 4', 'test 5', 'event', 0, 0);
@@ -1019,3 +1007,6 @@ INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item
 INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (35, 517, 'Adr_items_type_alchemy');
 INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (36, 150, 'Adr_items_type_animals');
 INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (37, 50, 'Adr_items_type_tools_woodworking');
+
+# ADR - Advanced Spells
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (108, 1, 'Adr_items_type_magic_heal');

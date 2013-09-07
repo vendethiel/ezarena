@@ -18,8 +18,6 @@
 		<span class="gensmall"><b>{L_SET_ARMOUR}</b>&nbsp;{sets.SET_ARMOUR}</span><br />
 		<span class="gensmall"><b>{L_SET_GLOVES}</b>&nbsp;{sets.SET_GLOVES}</span><br />
 		<span class="gensmall"><b>{L_SET_SHIELD}</b>&nbsp;{sets.SET_SHIELD}</span><br />
-		<span class="gensmall"><b>{L_SET_GREAVE}</b>&nbsp;{sets.SET_GREAVE}</span><br />
-		<span class="gensmall"><b>{L_SET_BOOT}</b>&nbsp;{sets.SET_BOOT}</span><br />
 	</td>
 	<td width="25%" class="{sets.ROW_CLASS}" align="left" valign="bottom">
 		<span class="gensmall"><b>{L_SET_MIGHT_BONUS}</b>&nbsp;+{sets.SET_MIGHT_BONUS}</span><br />
