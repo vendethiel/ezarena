@@ -3,7 +3,7 @@
 <!-- BEGIN main -->
 <table cellspacing="2" cellpadding="2" border="1" align="center" class="forumline" width="50%" >
 	<tr>
-		<td align="center" class="row1" onmouseover="this.style.cursor='hand';this.className='row3';" onClick="window.location.href='{U_ALCHEMY}';" onmouseout="this.className='row1rt';"><span class="gen">{L_ALCHEMY}</span></td>
+		<td align="center" class="row1" onmouseover="this.style.cursor='hand';this.className='row3';" onClick="window.location.href='{U_ALCHEMY}';" onmouseout="this.className='row1rt';"><span class="gen">{L_GO_ALCHEMY}</span></td>
 	</tr>
 </table>
 <!-- END main -->

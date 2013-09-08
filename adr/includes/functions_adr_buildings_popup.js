@@ -4,6 +4,10 @@
  DHTML tip message version 1.2 copyright Essam Gamal 2003 (http://migoicons.tripod.com, migoicons@hotmail.com)
  All modifications are done in the style.js you should not modify this file.  Created on : 06/03/2003
  Script featured on and can be found at Dynamic Drive (http://www.dynamicdrive.com)
+
+
+ V: left the notice, but srsly
+ I want to throw that crap, it's 10 year old now :(
 */ 
 
 var ua = navigator.userAgent
@@ -13,7 +17,7 @@ var ie4 = (document.all&&!dom)? 1:0
 var ie5 = (document.all&&dom)? 1:0
 var nn4 =(navigator.appName.toLowerCase() == "netscape" && parseInt(navigator.appVersion) == 4)
 var nn6 = (dom&&!ie5)? 1:0
-var sNav = (nn4||nn6||ie4||ie5)? 1:0
+var sNav = true; //(nn4||nn6||ie4||ie5)? 1:0
 var cssFilters = ((ua.indexOf("MSIE 5.5")>=0||ua.indexOf("MSIE 6")>=0)&&ua.indexOf("Opera")<0)? 1:0
 var Style=[],Text=[],Count=0,sbw=0,move=0,hs="",mx,my,scl,sct,ww,wh,obj,sl,st,ih,iw,vl,hl,sv,evlh,evlw,tbody
 var HideTip = "eval(obj+sv+hl+';'+obj+sl+'=0;'+obj+st+'=-800')"
@@ -116,14 +120,7 @@ function stm(t,s) {
 		var closeLink=(hs=="sticky")? "<TD ALIGN='right'><FONT SIZE='"+s[12]+"' FACE='"+s[8]+"'><A HREF='javascript:void(0)' ONCLICK='stickyhide()' STYLE='text-decoration:none;color:"+s[0]+"'><B>Close</B></A></FONT></TD>":""
 		var title=(t[0]||hs=="sticky")? "<TABLE WIDTH='100%' BORDER='0' CELLPADDING='0' CELLSPACING='0'><TR><TD "+titTxtAli+"><FONT SIZE='"+s[12]+"' FACE='"+s[8]+"' "+titCol+"><B>"+t[0]+"</B></FONT></TD>"+closeLink+"</TR></TABLE>" : ""
 		var txt="<TABLE "+titBgImg+" "+ab+" WIDTH='"+s[14]+"' BORDER='0' CELLPADDING='"+s[16]+"' CELLSPACING='0' "+titBgCol+" ><TR><TD>"+title+"<TABLE WIDTH='100%' "+add_height+" BORDER='0' CELLPADDING='"+s[17]+"' CELLSPACING='0' "+txtBgCol+" "+txtBgImg+"><TR><TD "+txtTxtAli+" "+ap+" VALIGN='top'><FONT SIZE='"+s[13]+"' FACE='"+s[9]+"' "+txtCol +">"+t[1]+"</FONT></TD></TR></TABLE></TD></TR></TABLE>"
-		if(nn4) {
-			with(eval(obj+"document")) {
-				open()
-				write(txt)
-				close()
-			}
-		}
-		else eval(obj+"innerHTML=txt")
+		eval(obj+"innerHTML=txt")
 		tbody = {
 			Pos:s[10].toLowerCase(), 
 			Xpos:s[18],

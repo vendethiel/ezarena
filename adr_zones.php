@@ -29,6 +29,24 @@ $phpbb_root_path = './';
 include_once($phpbb_root_path . 'extension.inc');
 include_once($phpbb_root_path . 'common.'.$phpEx);
 
+// V: Integrate Town Env
+define('IN_ADR_TOWNMAP', true); 
+define('IN_TOWNMAP_TEMPLE', true);
+define('IN_TOWNMAP_FORGE', true);
+define('IN_TOWNMAP_PRISON', true);
+define('IN_TOWNMAP_BANQUE', true);
+define('IN_TOWNMAP_BOUTIQUE', true);
+define('IN_TOWNMAP_ENTRAINEMENT', true);
+define('IN_TOWNMAP_ENTREPOT', true);
+define('IN_TOWNMAP_COMBAT', true);
+define('IN_TOWNMAP_MINE', true);
+define('IN_TOWNMAP_ENCHANTEMENT', true);
+define('IN_TOWNMAP_CLAN', true);
+define('IN_TOWNMAP_MONSTRE', true);
+define('IN_TOWNMAP_MAISON', true);
+define('IN_TOWNMAP_INFOBOX', true);
+define('IN_TOWNMAP_COPYRIGHT', true);
+
 //
 // Start session management
 $userdata = session_pagestart($user_ip, PAGE_ADR);
@@ -119,7 +137,7 @@ $goto1_name = $zone['goto1_name'];
 $goto2_name = $zone['goto2_name'];
 $goto3_name = $zone['goto3_name'];
 $goto4_name = $zone['goto4_name'];
-$name_return = $zone['return_name'];
+$gotoreturn_name = $zone['return_name'];
 $cost_return = $zone['cost_return'];
 
 // V: let's check for neighborhood level
@@ -280,7 +298,7 @@ $template->assign_vars(array(
 //
 
 //Go To first choice zone
-$goto1 = $HTTP_POST_VARS['goto1'];
+$goto1 = isset($HTTP_POST_VARS['goto1']) ? $_POST['goto1'] : false;
 
 if ( $goto1 )
 {
@@ -1556,7 +1574,7 @@ if ( $actual_season == '4' )
 $weather = $adr_user['character_weather'];
 $weathers = array('sun', 'night', 'cloud', 'rain', 'cloudsun', 'snow');
 $weather_image = $weathers[$weather-1];
-$weather_name = $lang['Adr_zone_weather_'.$weather];
+$weather_name = $lang['Adr_Zone_Weather_'.$weather];
 
 //
 // END of zones seasons and weather
@@ -1572,6 +1590,7 @@ $sql = " SELECT * FROM  " . ADR_CHARACTERS_TABLE . "
 if( !($result = $db->sql_query($sql)) )
         message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
+$users_connected_list = '';
 while( $row = $db->sql_fetchrow($result)) 
 	$users_connected_list.=' <a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $row['character_id']) . '">' . $row['character_name'] . '</a> . ';
 
@@ -1582,6 +1601,138 @@ $users_connected_list = '<b><u>'. $lang['Adr_zone_connected']. '</u></b> : ' . $
 //
 // END of characters in zone
 //
+
+// Dynamic Zone Maps
+$sql = "select * from ".ADR_ZONE_MAPS_TABLE." where zone_id=$area_id";
+if ( !($result = $db->sql_query($sql)) ) {
+	message_die(GENERAL_ERROR, 'Could not query Zone Maps Table' );
+}
+$uhrow = mysql_fetch_array($result);
+if ( $uhrow['zonemap_type'] == '' || !$board_config['Adr_zone_townmap_enable'] )
+{
+	$template->assign_block_vars('switch_Adr_zone_townmap_disable',array());
+}
+else
+{
+	$template->assign_block_vars('switch_Adr_zone_townmap_enable',array());
+}
+
+if ( $board_config['Adr_zone_townmap_enable'] && $uhrow['zonemap_type'] > 0 )
+{
+	$sql = "select * from ".ADR_ZONE_TOWNMAP_TABLE." where zonemap_type=$uhrow[zonemap_type]";
+	if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_ERROR, 'Unable to query townmap table' ); }
+	$zrow = mysql_fetch_array($result);
+
+	$townmap = $zrow['zonemap_bg'];
+	$zwidth = $zrow['zonemap_width'];
+	$zcellsh = $zrow['zonemap_cellwidth'];
+	$zcellshn = $zrow['zonemap_cellwidthnumber'];
+	$zheight = $zrow['zonemap_height'];
+	$zcellsv = $zrow['zonemap_cellheight'];
+	$zcellsvn = $zrow['zonemap_cellheightnumber'];
+
+	$buildingarray = explode('~',$uhrow['zonemap_buildings']);
+	$buildingamount = count ($buildingarray);
+
+	$browcount = count ($brow);
+	// some pixies fly by and get our furniture organised
+	// V: let's make a better code ...
+	$sql = "SELECT * FROM " . ADR_ZONE_BUILDINGS_TABLE;
+	if ( !($result = $db->sql_query($sql, false, 'zone_building')) ) {
+		message_die(GENERAL_ERROR, 'Unable to query zone buildings');
+	}
+	$adr_buildings = array();
+	while ($brow = $db->sql_fetchrow($result)){
+		$adr_buildings[$brow['sdesc']] = $brow;
+	}
+	$db->sql_freeresult($result);
+
+	$ia = 0;
+	for ($iv = 1; $iv <= $zcellsvn; $iv++)
+	{
+		for ($ih = 1; $ih <= $zcellshn; $ih++)
+		{
+			if ($buildingarray[$ia] != '')
+			{
+				$brow = $adr_buildings[$buildingarray[$ia]];
+				$buildinglist2[$iv][$ih] = $brow['name'];
+				// V: go for it
+				if (true || $brow['zone_name_tag'] =='' )
+				{
+					$desc = isset($lang['Adr_building_'.$irow['sdesc']]) ? $lang['Adr_building_'.$irow['sdesc']] : ucfirst($irow['sdesc']);
+	   				$building_name_tag1[$iv][$ih] = 'alt="' . $desc . '" ';
+	   				$building_name_tag2[$iv][$ih] = 'name="' . $desc . '" ';
+	   			}
+	   			else
+	   			{
+		   			// $building_name_tag1[$iv][$ih] = 'alt="'.$brow['zone_name_tag'].'"';
+	   				// $building_name_tag2[$iv][$ih] = 'name="'.$brow['zone_name_tag'].'"';
+	   			}
+				if ( $brow['zone_link'] == '' )
+				{
+					$building_link[$iv][$ih] = '';
+				}
+				else
+				{
+					$linkarray = explode('/',$brow['zone_link']);
+					$linkarraycount = count ($linkarray);
+					if ( $linkarraycount == 1 )
+					{
+						$link = $brow['zone_link'];
+						$defined_link = append_sid("$link.$phpEx");
+					}
+					else if ( $linkarraycount == 2 )
+					{
+						$link1 = $linkarray[0];
+						$link2 = $linkarray[1];
+						$link = $link1 . '.' . $phpEx . $link2;
+						$defined_link = append_sid("$link");
+					}
+					$building_link[$iv][$ih] = '<a href="'.$defined_link.'">';
+				}
+				if ( $brow['zone_building_tag_no'] == 999  )
+				{
+					$building_tag_no[$iv][$ih] = '';
+				}
+				else
+				{
+					$building_tag_no[$iv][$ih] = 'onMouseOver="stm(Text['.$brow['zone_building_tag_no'].'],Style[0])" onMouseOut="htm()"';
+				}
+			}
+			else
+			{
+				$buildinglist2[$iv][$ih] = 'empty';
+	   			$building_name_tag1[$iv][$ih] = 'alt="" ';
+	   			$building_name_tag2[$iv][$ih] = 'name="" ';
+	            $building_tag_no[$iv][$ih] = '';
+	            $building_link[$iv][$ih] = '';
+			}
+			$ia++;
+		}
+	}
+
+	// lets get some gnomes to build the house
+
+	$showmap = '
+	<tr>
+		<td class="row1" align="center" valign="center">
+	<table background="./adr/images/zones/townmap/'.$actual_season.'/'.$townmap.'" width="'.$zwidth.'px" height="'.$zheight.'px" cellpadding=0 cellspacing=0 marginwidth=0 marginheight=0 topmargin=0 leftmargin=0 border=0>';
+
+	for ($sv = 1; $sv <= $zcellsvn; $sv++)
+	{
+		$showmap .= '<tr>';
+		for ($sh = 1; $sh <= $zcellshn; $sh++)
+		{
+			$showmap .= '
+			<td width="'.$zcellsh.'px" height="'.$zcellsv.'px">'.$building_link[$sv][$sh].'<img src="./adr/images/zones/townmap/buildings/'.$buildinglist2[$sv][$sh].'.gif" width="'.$zcellsh.'px" height="'.$zcellsv.'px" border="0" '.$building_name_tag1[$sv][$sh].' '.$building_name_tag2[$sv][$sh].''.$building_tag_no[$sv][$sh].'></td>';
+		}
+		$showmap .= '</tr>';
+	}
+
+	$showmap .= '
+	</table>';
+}
+// End dynamic zone maps
 
 // Building images
 
@@ -1596,14 +1747,37 @@ $users_connected_list = '<b><u>'. $lang['Adr_zone_connected']. '</u></b> : ' . $
 
 // Building links
 
-
-( $zone_temple == '1' ) ? $temple_link = '<a href="'.append_sid("adr_temple.$phpEx").'">'. $lang['Adr_zone_goto_temple'] .'</a>' : $temple_link = $lang['Adr_zone_building_disable'];
-( $zone_prison == '1' ) ? $prison_link = '<a href="'.append_sid("adr_courthouse.$phpEx").'">'. $lang['Adr_zone_goto_prison'] .'</a>' : $prison_link = $lang['Adr_zone_building_disable'];
-( $zone_shops == '1' ) ? $shops_link = '<a href="'.append_sid("adr_shops.$phpEx").'">'. $lang['Adr_zone_goto_shops'] .'</a>' : $shops_link = $lang['Adr_zone_building_disable'];
-( $zone_forge == '1' ) ? $forge_link = '<a href="'.append_sid("adr_forge.$phpEx").'">'. $lang['Adr_zone_goto_forge'] .'</a>' : $forge_link = $lang['Adr_zone_building_disable'];
-( $zone_mine == '1' ) ? $mine_link = '<a href="'.append_sid("adr_mine.$phpEx").'">'. $lang['Adr_zone_goto_mine'] .'</a>' : $mine_link = $lang['Adr_zone_building_disable'];
-( $zone_enchant == '1' ) ? $enchant_link = '<a href="'.append_sid("adr_enchant.$phpEx").'">'. $lang['Adr_zone_goto_enchant'] .'</a>' : $enchant_link = $lang['Adr_zone_building_disable'];
-( $zone_bank == '1' ) ? $bank_link = '<a href="'.append_sid("adr_vault.$phpEx").'">'. $lang['Adr_zone_goto_bank'] .'</a>' : $bank_link = $lang['Adr_zone_building_disable'];
+// V: integrate enchant&mine everywhere
+if ( $board_config['Adr_zone_picture_link'] )
+{
+	$picture_link = 1;
+	( $zone_temple == '1' ) ? $temple_link = '<a href="'.append_sid("adr_temple.$phpEx").'">' : '';
+	( $zone_prison == '1' ) ? $prison_link = '<a href="'.append_sid("adr_courthouse.$phpEx").'">' : '';
+	( $zone_shops == '1' ) ? $shops_link = '<a href="'.append_sid("adr_shops.$phpEx").'">' : '';
+	( $zone_forge == '1' ) ? $forge_link = '<a href="'.append_sid("adr_forge.$phpEx").'">' : '';
+	( $zone_bank == '1' ) ? $bank_link = '<a href="'.append_sid("adr_vault.$phpEx").'">' : '';
+	( $zone_enchant == '1' ) ? $enchant_link = '<a href="'.append_sid("adr_enchant.$phpEx").'">' : '';
+	( $zone_mine == '1' ) ? $mine_link = '<a href="'.append_sid("adr_mine.$phpEx").'">' : '';
+}
+else
+{
+	$picture_link = 0;
+	( $zone_temple == '1' ) ? $temple_link = '<a href="'.append_sid("adr_temple.$phpEx").'">'. $lang['Adr_zone_goto_temple'] .'</a>' : $temple_link = $lang['Adr_zone_building_disable'];
+	( $zone_prison == '1' ) ? $prison_link = '<a href="'.append_sid("adr_courthouse.$phpEx").'">'. $lang['Adr_zone_goto_prison'] .'</a>' : $prison_link = $lang['Adr_zone_building_disable'];
+	( $zone_shops == '1' ) ? $shops_link = '<a href="'.append_sid("adr_shops.$phpEx").'">'. $lang['Adr_zone_goto_shops'] .'</a>' : $shops_link = $lang['Adr_zone_building_disable'];
+	( $zone_forge == '1' ) ? $forge_link = '<a href="'.append_sid("adr_forge.$phpEx").'">'. $lang['Adr_zone_goto_forge'] .'</a>' : $forge_link = $lang['Adr_zone_building_disable'];
+	( $zone_bank == '1' ) ? $bank_link = '<a href="'.append_sid("adr_vault.$phpEx").'">'. $lang['Adr_zone_goto_bank'] .'</a>' : $bank_link = $lang['Adr_zone_building_disable'];
+	( $zone_enchant == '1' ) ? $enchant_link = '<a href="'.append_sid("adr_enchant.$phpEx").'">'. $lang['Adr_zone_goto_enchant'] .'</a>' : $enchant_link = $lang['Adr_zone_building_disable'];
+	( $zone_mine == '1' ) ? $mine_link = '<a href="'.append_sid("adr_mine.$phpEx").'">'. $lang['Adr_zone_goto_mine'] .'</a>' : $mine_link = $lang['Adr_zone_building_disable'];
+}
+if ( ( $zone_temple == '1' || $zone_prison == '1' || $zone_shops == '1' || $zone_forge == '1' || $zone_bank =='1' || $zone_enchant == '1' || $zone_mine = '1' ) && $picture_link )
+{
+	$template->assign_block_vars('switch_header_picture_link_enable',array());
+}
+else if ( ( $zone_temple == '1' || $zone_prison == '1' || $zone_shops == '1' || $zone_forge == '1' || $zone_bank =='1' || $zone_enchant == '1' || $zone_mine = '1' ) && !$picture_link )
+{
+	$template->assign_block_vars('switch_header_no_picture_link_enable',array());
+}
 
 // Define user money
 $points = $userdata['user_points'] . ' ' . $board_config['points_name'];
@@ -1647,6 +1821,8 @@ $template->assign_vars(array(
 	'ENCHANT_LINK' => $enchant_link,
 	'BANK_LINK' => $bank_link,
 	'PRISON_LINK' => $prison_link,
+	'SHOWMAP' => $showmap,
+	'MAP_NAME' => $map_name,
 	'L_TEMPLE_NAME' => $lang['Adr_zone_goto_temple'],
 	'L_FORGE_NAME' => $lang['Adr_zone_goto_forge'],
 	'L_MINE_NAME' => $lang['Adr_zone_goto_mine'],

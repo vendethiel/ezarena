@@ -38,6 +38,9 @@ include_once($phpbb_root_path . 'adr/includes/adr_global.'.$phpEx);
 adr_template_file('admin/config_adr_zone_general_body.tpl');
 
 $submit = isset($HTTP_POST_VARS['submit']);
+$sql = "SELECT zone_id from " . ADR_ZONES_TABLE . " WHERE zone_name = 'World Map'";
+$result = $db->sql_query($sql);
+$existing_zone_worldmap_zone = $db->sql_fetchrow($result);
 
 if ($submit)
 {
@@ -45,6 +48,11 @@ if ($submit)
 	$stat_bonus = intval($HTTP_POST_VARS['stat_bonus']);
 	$att_bonus = $HTTP_POST_VARS['att_bonus'];
 	$def_bonus = $HTTP_POST_VARS['def_bonus'];
+	$zone_townmap_enable = intval($HTTP_POST_VARS['Adr_zone_townmap_enable']);
+	$zone_townmap_name = $HTTP_POST_VARS['Adr_zone_townmap_name'];
+	$zone_picture_link_enable = intval($HTTP_POST_VARS['Adr_zone_picture_link_enable']);
+	$zone_worldmap_zone = intval($HTTP_POST_VARS['Adr_zone_worldmap_zone']);
+	$zone_townmap_display_required = intval($HTTP_POST_VARS['Adr_zone_townmap_display_required']);
 
 	$zone_npc_display_text = intval($HTTP_POST_VARS['npc_display_text']);
 	$zone_npc_image_link = intval($HTTP_POST_VARS['npc_image_link']);
@@ -245,6 +253,51 @@ if ($submit)
 	if ( !($result = $db->sql_query($sql)) )
 		message_die(GENERAL_ERROR, "Could not update Zone Cheat Default Public Setting.", '', __LINE__, __FILE__, $sql);
 
+	// update Dynamic Zone Town Maps Enable
+	$sql= "UPDATE ". CONFIG_TABLE . "
+		SET config_value = '$zone_townmap_enable'
+		WHERE config_name = 'Adr_zone_townmap_enable' ";
+	if ( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, "Could not update Dynamic Zone Town Maps setting.", '', __LINE__, __FILE__, $sql);
+	}
+
+	// update Dynamic Zone Town Maps Name
+	$sql= "UPDATE ". CONFIG_TABLE . "
+		SET config_value = '$zone_townmap_name'
+		WHERE config_name = 'Adr_zone_townmap_name' ";
+	if ( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, "Could not update Dynamic Zone Town Maps Name setting.", '', __LINE__, __FILE__, $sql);
+	}
+
+	// update Dynamic Zone Town Maps Picture Link Enable
+	$sql= "UPDATE ". CONFIG_TABLE . "
+		SET config_value = '$zone_picture_link_enable'
+		WHERE config_name = 'Adr_zone_picture_link' ";
+	if ( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, "Could not update Dynamic Zone Town Maps setting.", '', __LINE__, __FILE__, $sql);
+	}
+
+	// update Dynamic Zone Town Maps World Map Zone
+	$sql= "UPDATE ". CONFIG_TABLE . "
+		SET config_value = '$zone_worldmap_zone'
+		WHERE config_name = 'Adr_zone_worldmap_zone' ";
+	if ( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, "Could not update Dynamic Zone Town Maps setting.", '', __LINE__, __FILE__, $sql);
+	}
+
+	// update Dynamic Zone Town Maps World Map Zone
+	$sql= "UPDATE ". CONFIG_TABLE . "
+		SET config_value = '$zone_townmap_display_required'
+		WHERE config_name = 'Adr_zone_townmap_display_required' ";
+	if ( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, "Could not update Dynamic Zone Town Maps setting.", '', __LINE__, __FILE__, $sql);
+	}
+
 	adr_update_general_config();
 	adr_previous( Adr_zone_general_change_successful , admin_adr_zone_general , '' );
 }
@@ -293,6 +346,18 @@ $template->assign_vars(array(
 	"ZONE_BONUS_STAT" => ($board_config['zone_bonus_enable'] ? 'CHECKED' : ''),
 	"ZONE_BONUS_ATT" => $board_config['zone_bonus_att'],
 	"ZONE_BONUS_DEF" => $board_config['zone_bonus_def'],
+	"ZONE_DYNAMIC_ZONE_MAPS" => ($board_config['Adr_zone_townmap_enable'] ? 'CHECKED' : ''),
+	"ZONE_DYNAMIC_ZONE_MAPS_NAME" => $board_config['Adr_zone_townmap_name'],
+	"ZONE_DYNAMIC_ZONE_MAPS_PICTURE_LINK" => ($board_config['Adr_zone_picture_link'] ? 'CHECKED' : ''),
+	"ZONE_DYNAMIC_ZONE_MAPS_CURRENT_ZONE" => $existing_zone_worldmap_zone['zone_id'],
+	"ZONE_DYNAMIC_ZONE_MAPS_CONFIG_ZONE" => $board_config['Adr_zone_worldmap_zone'],
+	"ZONE_DYNAMIC_ZONE_MAPS_DISPLAY_REQUIRED" => ($board_config['Adr_zone_townmap_display_required'] ? 'CHECKED' : ''),
+	"L_ZONE_DYNAMIC_ZONE_MAPS_DISPLAY_REQUIRED" => $lang['Adr_zone_acp_zone_dynamic_maps_display_required'],
+	"L_ZONE_DYNAMIC_ZONE_MAPS_CURRENT_ZONE" => $lang['Adr_zone_acp_zone_dynamic_maps_current_zone'],
+	"L_ZONE_DYNAMIC_ZONE_MAPS_CONFIG_ZONE" => $lang['Adr_zone_acp_zone_dynamic_maps_config_zone'],
+	"L_ZONE_DYNAMIC_ZONE_MAPS" => $lang['Adr_zone_acp_enable_dynamic_zone_townmaps'],
+	"L_ZONE_DYNAMIC_ZONE_MAPS_NAME" => $lang['Adr_zone_acp_world_map_name'],
+	"L_ZONE_DYNAMIC_ZONE_MAPS_PICTURE_LINK" => $lang['Adr_zone_acp_picture_link'],
 	"L_ZONE_GENERAL_TITLE" => $lang['Adr_zone_acp_general_title'],
 	"L_ZONE_GENERAL_EXPLAIN" => $lang['Adr_zone_acp_general_explain'],
 	"L_ZONE_DEAD_TRAVEL" => $lang['Adr_zone_acp_dead_travel'],

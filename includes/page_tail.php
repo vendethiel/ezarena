@@ -33,7 +33,7 @@ if ( ( time() - $board_config['adr_seasons_last_time'] ) > $board_config['adr_se
 if ( $board_config['townmap_seasons_cron_enable'] && ( ( time() - $board_config['townmap_seasons_cron_last_time'] ) > $board_config['townmap_seasons_cron_time'] )) 
 { 
    include_once($php_root_path . 'includes/functions_townmap_seasons_cron.'.$phpEx); 
-} 
+}
 
 if ( $board_config['rabbitoshi_enable_cron'] && ( ( time() - $board_config['rabbitoshi_cron_last_time'] ) > $board_config['rabbitoshi_cron_time'] )) 
 { 

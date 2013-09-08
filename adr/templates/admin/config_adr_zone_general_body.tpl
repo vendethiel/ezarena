@@ -18,7 +18,7 @@
 		<td class="row1" align="center" colspan="2"><input type="post" name="att_bonus" maxlength="8" size="8" value="{ZONE_BONUS_ATT}" /></td>
 	</tr>
 	<tr>
-		<td class="row2" width="60%">{L_ZONE_BONUS_DEF}</span></td>
+		<td class="row2" width="60%">{L_ZONE_BONUS_DEF}</td>
 		<td class="row2" align="center" colspan="2"><input type="post" name="def_bonus" maxlength="8" size="8" value="{ZONE_BONUS_DEF}" /></td>
 	</tr>
 	<tr>
@@ -109,6 +109,30 @@
 				<input type="radio" name="cheat_auto_punishment" value="3" {ZONE_CHEAT_AUTO_PUNISHMENT_MIN_CHECKED} />{L_ZONE_CHEAT_IMPRISONMENT_PUNISHMENT_READ}
 			</span>
 		</td>
+	</tr>
+	<tr>
+		<td class="row1" width="60%">{L_ZONE_DYNAMIC_ZONE_MAPS}</td>
+		<td class="row1" align="center"><input type="checkbox" name="Adr_zone_townmap_enable" value="1" {ZONE_DYNAMIC_ZONE_MAPS} /></td>
+	</tr>
+	<tr>
+		<td class="row2" width="60%">{L_ZONE_DYNAMIC_ZONE_MAPS_NAME}</td>
+		<td class="row2" align="center"><input type="post" name="Adr_zone_townmap_name" maxlength="20" size="20" value="{ZONE_DYNAMIC_ZONE_MAPS_NAME}" /></td>
+	</tr>
+	<tr>
+		<td class="row1" width="60%">{L_ZONE_DYNAMIC_ZONE_MAPS_PICTURE_LINK}</td>
+		<td class="row1" align="center"><input type="checkbox" name="Adr_zone_picture_link_enable" value="1" {ZONE_DYNAMIC_ZONE_MAPS_PICTURE_LINK} /></td>
+	</tr>
+	<tr>
+		<td class="row2" width="60%">{L_ZONE_DYNAMIC_ZONE_MAPS_CURRENT_ZONE}</td>
+		<td class="row2" align="center"><b>{ZONE_DYNAMIC_ZONE_MAPS_CURRENT_ZONE}</b></td>
+	</tr>
+	<tr>
+		<td class="row1" width="60%">{L_ZONE_DYNAMIC_ZONE_MAPS_CONFIG_ZONE}</td>
+		<td class="row1" align="center"><input type="post" name="Adr_zone_worldmap_zone" maxlength="8" size="8" value="{ZONE_DYNAMIC_ZONE_MAPS_CONFIG_ZONE}" /></td>
+	</tr>
+	<tr>
+		<td class="row2" width="60%">{L_ZONE_DYNAMIC_ZONE_MAPS_DISPLAY_REQUIRED}</td>
+		<td class="row2" align="center"><input type="checkbox" name="Adr_zone_townmap_display_required" value="1" {ZONE_DYNAMIC_ZONE_MAPS_DISPLAY_REQUIRED} /></td>
 	</tr>
 	<tr>
 		<td class="catBottom" colspan="12" align="center" colspan="2"><input type="submit" name="submit" value="{L_ZONE_SUBMIT}" class="mainoption" /></td>

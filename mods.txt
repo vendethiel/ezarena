@@ -451,6 +451,13 @@ Transforme le Mod Brewing en système de crafting avancé, permet de créer des 
 # ADR : Cooking 0.3.5 - Himmelweiss
 Ajoute un système de cuisine au mod Crafting.
 
+# ADR : Dynamic Town Maps for Zone 0.1.4 - Ozzie
+Permet de créer (et de modifier) dynamiquement des cartes
+Addons :
+ - Addon pour Town Environment Enhanced into Zone Mod - Infomrpro
+ - Addon pour Enchant&Mine Links in header - Informpro
+ - Addon Assisted Cell Selection - Informpro
+
 # ADR : Level Required Zones 1.0.0 - Insydius
 Permet de limiter l'accès à une zone pour les personnes d'un certain niveau
 Addons :
@@ -469,7 +476,7 @@ Ajoute un système de groupe au RPG, avec des bonus configurables.
 Ajoute un système pour garder la liste des quêtes en cours, incluant le nom du PNJ, sa zone, son message, quel objet il vous faut encore ou quel monstre vous devez toujours tuer.
 
 # ADR : Skills 1.4 - Makien
-Ajoute pêche, l'herbalisme, bûcheronnage, chasse, alchemie et le métier de tailleur au RPG.
+Ajoute pêche, l'Herboristerie, bûcheronnage, chasse, alchemie et le métier de tailleur au RPG.
 
 # ADR : Town Environment Enhanced into Zone Mod - Informpro
 Intègre le mod Town Environment dans le Zone mod, et modifie l'interface de la page des zones pour retirer les informations inutiles et libérer de l'espace (remplace la map du Zone Mod par celles du Town Env tout en gérant les bâtiments inaccessibles, modifie les pages du Town Env pour utiliser les saisons du Zone Mod).

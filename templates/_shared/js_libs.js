@@ -213,8 +213,9 @@ tooltip.init = function () {
 
    if (!document.getElementById) return; 
 
-   this.tip = document.getElementById (this.name); 
-   if (this.tip) document.onmousemove = function (evt) {tooltip.move (evt)}; 
+   this.tip = document.getElementById (this.name);
+   var oldMove = document.onmousemove || function() {};
+   if (this.tip) document.onmousemove = function (evt) {oldMove(evt); tooltip.move (evt)}; 
 
    var a, sTitle; 
    var anchors = document.getElementsByTagName ("a"); 

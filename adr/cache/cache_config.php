@@ -28,7 +28,7 @@ if ( !defined('IN_PHPBB') )
 $adr_config = array(
 		'Adr_allow_retire_character' => '1',
 		'Adr_cache_interval' => '60',
-		'Adr_cache_last_updated' => '1378573032',
+		'Adr_cache_last_updated' => '1378659525',
 		'Adr_character_battle_limit' => '30',
 		'Adr_character_event_limit' => '40',
 		'Adr_character_limit_enable' => '0',
@@ -92,7 +92,7 @@ $adr_config = array(
 		'lake_chance_increase' => '500',
 		'lake_min_donation' => '5',
 		'lake_super_rare_amount' => '5000',
-		'lake_total_donations' => '2181',
+		'lake_total_donations' => '2681',
 		'lake_win_chance' => '90',
 		'loan_interests' => '8',
 		'loan_interests_time' => '432000',

@@ -242,101 +242,101 @@ function adr_use_skill_mining($user_id , $tool)
       $new_item_id = $data['item_id'] + 1 ; 
 
       if($new_item_type==1) 
-{ 
-   $item_name =  'Ore'; 
-   $item_desc =  'Adr_item_ore_desc'; 
-   $item_icon =  'ore.gif'; 
-   $item_quality = rand(1,6); 
-   $item_duration = rand(1,3); 
-   $item_power = rand(1,3); 
-} 
+	{ 
+	   $item_name =  'Ore'; 
+	   $item_desc =  'Adr_item_ore_desc'; 
+	   $item_icon =  'ore.gif'; 
+	   $item_quality = rand(1,6); 
+	   $item_duration = rand(1,3); 
+	   $item_power = rand(1,3); 
+	} 
     else 
-   {  $dice= rand (1,9); 
-   switch ($dice) 
-{ 
-case 1: 
+   {
+		$dice= rand (1,9); 
+	   	switch ($dice) 
+		{ 
+			case 1: 
+			   $item_name = 'Diamond'; 
+			   $item_desc = 'A Diamond'; 
+			   $item_icon =  'diamond.gif'; 
+			   $item_quality = rand(1,6); 
+			   $item_duration = rand(1,3); 
+			   $item_power = rand(1,3); 
+			break; 
+			
+			case 2: 
+			    $item_name = 'Sapphire'; 
+			   $item_desc = 'A Sapphire'; 
+			   $item_icon = 'sapphire.gif'; 
+			   $item_quality = rand(1,6); 
+			   $item_duration = rand(1,3); 
+			   $item_power = rand(1,3); 
+			break; 
+			case 3: 
+			  
+			    $item_name = 'Amethyst'; 
+			   $item_desc = 'A Amethyst'; 
+			   $item_icon = 'amethyst.gif'; 
+			   $item_quality = rand(1,6); 
+			   $item_duration = rand(1,3); 
+			   $item_power = rand(1,3); 
+			break; 
+			case 4: 
 
-    $item_name = 'Diamond'; 
-   $item_desc = 'A Diamond'; 
-   $item_icon =  'diamond.gif'; 
-   $item_quality = rand(1,6); 
-   $item_duration = rand(1,3); 
-   $item_power = rand(1,3); 
-break; 
-case 2: 
+			    $item_name = 'Aquamarine'; 
+			   $item_desc = 'A Aquamarine'; 
+			   $item_icon = 'Aquamarine.gif'; 
+			   $item_quality = rand(1,6); 
+			   $item_duration = rand(1,3); 
+			   $item_power = rand(1,3); 
+			break; 
+			case 5: 
+			  
+			    $item_name = 'Emerald'; 
+			   $item_desc = 'A Emerald'; 
+			   $item_icon = 'emerald.gif'; 
+			   $item_quality = rand(1,6); 
+			   $item_duration = rand(1,3); 
+			   $item_power = rand(1,3); 
+			break;
+			case 6: 
 
-    $item_name = 'Sapphire'; 
-   $item_desc = 'A Sapphire'; 
-   $item_icon = 'sapphire.gif'; 
-   $item_quality = rand(1,6); 
-   $item_duration = rand(1,3); 
-   $item_power = rand(1,3); 
-break; 
-case 3: 
-  
-    $item_name = 'Amethyst'; 
-   $item_desc = 'A Amethyst'; 
-   $item_icon = 'amethyst.gif'; 
-   $item_quality = rand(1,6); 
-   $item_duration = rand(1,3); 
-   $item_power = rand(1,3); 
-break; 
-case 4: 
+			    $item_name = 'Ruby'; 
+			   $item_desc = 'A Ruby'; 
+			   $item_icon =  'ruby.gif'; 
+			   $item_quality = rand(1,6); 
+			   $item_duration = rand(1,3); 
+			   $item_power = rand(1,3); 
+			break; 
+			case 7: 
 
-    $item_name = 'Aquamarine'; 
-   $item_desc = 'A Aquamarine'; 
-   $item_icon = 'Aquamarine.gif'; 
-   $item_quality = rand(1,6); 
-   $item_duration = rand(1,3); 
-   $item_power = rand(1,3); 
-break; 
-case 5: 
-  
-    $item_name = 'Emerald'; 
-   $item_desc = 'A Emerald'; 
-   $item_icon = 'emerald.gif'; 
-   $item_quality = rand(1,6); 
-   $item_duration = rand(1,3); 
-   $item_power = rand(1,3); 
-break;
-case 6: 
+			    $item_name = 'Opal'; 
+			   $item_desc = 'A Opal'; 
+			   $item_icon = 'opal.gif'; 
+			   $item_quality = rand(1,6); 
+			   $item_duration = rand(1,3); 
+			   $item_power = rand(1,3); 
+			break; 
+			case 8: 
+			  
+			    $item_name = 'Topaz'; 
+			   $item_desc = 'A Topaz'; 
+			   $item_icon = 'topaz.gif'; 
+			   $item_quality = rand(1,6); 
+			   $item_duration = rand(1,3); 
+			   $item_power = rand(1,3); 
+			break; 
+			case 9: 
 
-    $item_name = 'Ruby'; 
-   $item_desc = 'A Ruby'; 
-   $item_icon =  'ruby.gif'; 
-   $item_quality = rand(1,6); 
-   $item_duration = rand(1,3); 
-   $item_power = rand(1,3); 
-break; 
-case 7: 
-
-    $item_name = 'Opal'; 
-   $item_desc = 'A Opal'; 
-   $item_icon = 'opal.gif'; 
-   $item_quality = rand(1,6); 
-   $item_duration = rand(1,3); 
-   $item_power = rand(1,3); 
-break; 
-case 8: 
-  
-    $item_name = 'Topaz'; 
-   $item_desc = 'A Topaz'; 
-   $item_icon = 'topaz.gif'; 
-   $item_quality = rand(1,6); 
-   $item_duration = rand(1,3); 
-   $item_power = rand(1,3); 
-break; 
-case 9: 
-
-    $item_name = 'Zircon'; 
-   $item_desc = 'A Zircon'; 
-   $item_icon = 'zircon.gif'; 
-   $item_quality = rand(1,6); 
-   $item_duration = rand(1,3); 
-   $item_power = rand(1,3); 
-break; 
-} 
-} 
+			    $item_name = 'Zircon'; 
+			   $item_desc = 'A Zircon'; 
+			   $item_icon = 'zircon.gif'; 
+			   $item_quality = rand(1,6); 
+			   $item_duration = rand(1,3); 
+			   $item_power = rand(1,3); 
+			break; 
+		} 
+	} 
 
 
       adr_skill_limit( $user_id ); 

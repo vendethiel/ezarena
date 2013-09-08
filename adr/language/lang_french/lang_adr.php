@@ -490,7 +490,7 @@ if ( defined ( 'IN_ADR_SHOPS' ))
    $lang['Adr_items_type_tools_cooking']='Outils : cuisine';
    $lang['Adr_items_type_food']='Nourriture';
 
-   $lang['Adr_items_cooking_desc']='Indispensable à la cuisine';
+   $lang['Adr_items_cooking_desc']='Nécessaire à la cuisine';
 
    //Shops
    $lang['Adr_items_quality']='Qualité';
@@ -538,9 +538,9 @@ if ( defined ( 'IN_ADR_SHOPS' ))
    $lang['Adr_items_diamond']='Diamant';
    $lang['Adr_items_diamond_desc']='Pierre précieuse';
    $lang['Adr_item_tome']='Livre de sorts';
-   $lang['Adr_item_tome_desc']='Indispensable pour enchanter des objets';
+   $lang['Adr_item_tome_desc']='Nécessaire pour enchanter des objets';
    $lang['Adr_items_miner']='Pioche';
-   $lang['Adr_items_miner_desc']='Indispensable pour travailler dans la mine';
+   $lang['Adr_items_miner_desc']='Nécessaire pour travailler dans la mine';
    $lang['Adr_items_scroll_1']='Boule de feu';
    $lang['Adr_items_scroll_1_desc']='Parchemin de sort offensif';
    $lang['Adr_items_scroll_2']='Boule de glace';
@@ -1525,8 +1525,8 @@ $lang['Adr_brewing']='Brassage';
 $lang['Adr_items_type_tools_brewing']='Outils : brassage';
 $lang['Adr_items_type_potion']='Potion';
 $lang['Adr_items_type_recipe']='Recette';
-$lang['Adr_items_brewing_desc']='Indispensable pour brasser';
-if ( defined ('IN_ADR_BREWING'))
+$lang['Adr_items_brewing_desc']='Nécessaire pour brasser';
+if ( true || defined ('IN_ADR_BREWING'))
 {
    $lang['Adr_recipes_title']='Liste des recettes';
    $lang['Adr_recipes_title_explain']='Créez et éditez des recettes de brassage :';
@@ -1545,7 +1545,7 @@ if ( defined ('IN_ADR_BREWING'))
    $lang['recipe_desc']='Description :';
    $lang['recipe_desc_desc']='Description courte de al recette';
    $lang['recipe_level']='Niveau (puissance)';
-   $lang['recipe_level_desc']='Niveai requis pour écrire cette recette dans son livre des recettes';
+   $lang['recipe_level_desc']='Niveau requis pour écrire cette recette dans son livre des recettes';
    $lang['recipe_effect']='Effets';
    $lang['recipe_effect_desc']='Choisissez les effets de la potion.<br/>Pourcentage ou nombre fixe, les deux sont possibles, les nombres négatifs aussi.<br/>Laissez blanc ou mettez 0 pour ne pas avoir d\'effet.<br/>Si "Toucher un monstre" est sélectionné, la cible sera le monstre et la case "effets permanents" sera ignorée.';
    $lang['recipe_items_req']='La recette';
@@ -1565,123 +1565,104 @@ if ( defined ('IN_ADR_BREWING'))
    $lang['Adr_recipe_successful_added']='Recette et potion ajoutées avec succès';
    $lang['adr_brewing_potion_link']='Utiliser la potion';
    $lang['adr_brewing_recipe_link']='Apprendre la recette';
-   $lang['Adr_recipe_successful_added']='Recipe successfully written into your recipebook !';
-   $lang['Adr_recipe_already_known']='You already have written that recipe into your recipebook !';
-   $lang['Adr_recipe_was_delted']='This recipe is not anymore valid (Admin may have deleted it)';
-   $lang['Adr_recipebook_brewing']='Brewing Recipes';
-   $lang['Adr_potion_used']='You already used a potion with temp effects for battle !';
-   $lang['brewing_very_easy']='Very Easy';
-   $lang['brewing_easy']='Easy';
+   $lang['Adr_recipe_successful_added']='Recette apprise !';
+   $lang['Adr_recipe_already_known']='Vous connaissez déjà cette recette !';
+   $lang['Adr_recipe_was_delted']='Cette recette n\'est plus valide (un administrateur peut l\'avoir supprimé)';
+   $lang['Adr_recipebook_brewing']='Recettes de brassage';
+   $lang['Adr_potion_used']='Vous avez déjà un effet temporaire !';
+   $lang['brewing_very_easy']='Très facile';
+   $lang['brewing_easy']='Facile';
    $lang['brewing_normal']='Normal';
-   $lang['brewing_hard']='Hard';
-   $lang['brewing_very_hard']='Very Hard';
+   $lang['brewing_hard']='Difficile';
+   $lang['brewing_very_hard']='Très difficile';
    $lang['brewing_impossible']='Impossible';
-   $lang['brewing_select_recipe']='Select Recipe:';
-   $lang['brewing_no_recipe']='No recipe';
-   $lang['brewing_tool_explain']='Brewing tools allow you to brew potions';
-   $lang['brewing_tool_needed']='You can\'t brew a potion with only your hands!';
-   $lang['brewing_failure']='You brewed nothing';
-   $lang['brewing_success']='You brewed a %s with a value of %s %s !';
-   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
-   $lang['brewing_no_tool']='No tool';
-   $lang['brewing_create']='Brew this Potion';
-   $lang['brewing_select_tool']='Select a tool';
-   $lang['recipe_info']='Recipe Info';
-   $lang['recipe_items_needed']='Items needed for this recipe';
-   $lang['brewing_missing_item']='You don\'t have the required items to brew this potion !';
-   $lang['recipe_stats']='Recipe Stats:';
-   $lang['potion_effects']='Potion Effects:';
-   $lang['potion_stats']='Potion Stats:';
+   $lang['brewing_select_recipe']='Choisissez une recette :';
+   $lang['brewing_no_recipe']='PAs de recette';
+   $lang['brewing_tool_explain']='Les outils de brassage vous permettent de créer des potions';
+   $lang['brewing_tool_needed']='Vous ne pouvez pas brasser de potions avec vos mains !';
+   $lang['brewing_failure']='Vous brassez ... Sans résultat.';
+   $lang['brewing_success']='Vous avez préparé un %s avec une valeur de %s %s !';
+   $lang['Adr_skill_limit']='Vous ne pouvez plus brasser aujourd\'hui';
+   $lang['brewing_no_tool']='Pas d\'outil';
+   $lang['brewing_create']='Brasser cette potion';
+   $lang['brewing_select_tool']='Choisissez votre outil';
+   $lang['recipe_info']='Info recette';
+   $lang['recipe_items_needed']='Objets nécessaires à la recette';
+   $lang['brewing_missing_item']='Vous n\'avez pas les ingrédients nécessaires à la préparation de cette potion !';
+   $lang['recipe_stats']='Statistiques de la recette :';
+   $lang['potion_effects']='Effets :';
+   $lang['potion_stats']='Statistiques de la potion :';
 }
 
 if ( defined ('IN_ADR_CRAFTING'))
 {
-   $lang['Adr_recipes_title']='Crafting Patterns List';
-   $lang['Adr_recipes_title_explain']='Create & edit crafting patterns:';
-   $lang['Adr_recipes_name']='Name:';
-   $lang['Adr_recipes_level']='Level:';   
-   $lang['Adr_recipes_desc']='Description:';
-   $lang['Adr_recipes_add']='Add pattern:';
-   $lang['Adr_recipes_effect']='Effect';
-   $lang['Adr_recipes_items_req']='Items required:';
-   $lang['Adr_recipes_admin_only']='Admin only ?';
-   $lang['Adr_recipes_add_title']='Add or edit patterns';
-   $lang['Adr_recipes_add_title_explain']='Here you can add and edit the patterns';
-   $lang['Adr_recipes_img']='Image';
-   $lang['recipe_name']='Pattern name:';
-   $lang['recipe_name_desc']='Enter the name of the pattern';
-   $lang['recipe_desc']='Description:';
-   $lang['recipe_desc_desc']='Just a short description about the pattern';
-   $lang['recipe_level']='The level of the pattern. (power)';
-   $lang['recipe_level_desc']='Level that is needed to write the pattern into the recipebook';
-   $lang['recipe_effect']='Effects';
-   $lang['recipe_items_req']='The Pattern';
-   $lang['recipe_items_req_desc']='Select items that are required to make this item';
+   $lang['recipe_name']='Nom :';
+   $lang['recipe_name_desc']='Entrez le nom du modèle';
+   $lang['recipe_desc']='Description :';
+   $lang['recipe_desc_desc']='Courte description du modèle';
+   $lang['recipe_level']='Niveau du modèle. (puissance)';
+   $lang['recipe_level_desc']='Niveau nécessaire pour pouvoir apprendre le patron';
+   $lang['recipe_effect']='Effect';
+   $lang['recipe_items_req']='Modèle';
+   $lang['recipe_items_req_desc']='Choisissez les objets nécessaires à la fabrication du modèle';
    $lang['recipe_items_amount']='Amount of each selected item that is needed to make the finished product';
-   $lang['recipe_items_amount_desc']='Example: If selected 3 items and I want for the first one 2, second one 1 and the third one 5, then this field should look like <b>2:1:5</b><br>First item is the one that is selected and on top of all selected items !<br><br>Leave blank if not more than 1 of each item is needed to cook this food (default 1 for each selected item)';
-   $lang['recipe_admin_only']='Admin only pattern ?';
-   $lang['recipe_admin_only_desc']='Is this pattern an admin only item ?';
-   $lang['Adr_recipe_successful_deleted']='Pattern and it\'s final product deleted !';
-   $lang['Adr_recipe_successful_edited']='Pattern and it\'s final product updated.';
-   $lang['Adr_recipe_attention']='<font color="#FF0000">ATTENTION !!! Deleting a Pattern also will delete it\'s final product !!!<br>The pattern also will get removed of the recipebooks of the players<br>Players with leftovers in their inventory won\'t be able to learn the pattern you just deleted</font>';
+   $lang['recipe_items_amount_desc']='Example : si vous avez sélectionné 3 objets, que vous voulez 2 fois le premier, 1 fois le second et 5 fois le troisième, entrez <b>2:1:5</b><br/>Le premier objet est le plus haut.<br/><br/>Laissez blanc pour ne demander qu\'un de chaque';
+   $lang['recipe_admin_only']='Modèle seulement pour les administrateurs ?';
+   $lang['recipe_admin_only_desc']='Est-ce que ce modèle est réservé aux administrateurs ?';
+   $lang['Adr_recipe_successful_deleted']='Modèle et produit final supprimé !';
+   $lang['Adr_recipe_successful_edited']='Modèle et produit final mis à jour.';
+   $lang['Adr_recipe_attention']='<font color="#FF0000">ATTENTION ! Supprimer un modèle supprimera aussi le produit final !<br/>Les joueurs oublieront aussi le modèle.<br/>Les joueurs ayant des restes dans leur inventaire ne seront pas capables d\'apprendre le modèle</font>';
    $lang['Adr_forums_shop_recipe_items']='This item is a part of a Crafting Pattern, please use the Crafting ACP to edit it !';
-   $lang['Adr_temp_and_perm_effects']='Temp and/or permanent effects';
-   $lang['Adr_perm_only_effects']='Permanent effects only';
-   $lang['Adr_perm_effect']='permanent effect ?';
-   $lang['Adr_hit_monster']='Hits Monster ?'; 
-   $lang['Adr_recipe_successful_added']='Pattern & Product successfully added';
-   $lang['Adr_recipe_skill']='Skill';
-   $lang['Adr_recipe_skill_explain']='This is the skill used to make the product';
+   $lang['Adr_temp_and_perm_effects']='Effets temporaires et permanents';
+   $lang['Adr_perm_only_effects']='Effets permanents seulement';
+   $lang['Adr_perm_effect']='Effet permanent ?';
+   $lang['Adr_hit_monster']='Touche les monstres ?'; 
+   $lang['Adr_recipe_successful_added']='Modèle & produit final ajoutés';
+   $lang['Adr_recipe_skill']='Capacité';
+   $lang['Adr_recipe_skill_explain']='Capacité utilisée';
 }
 if ( defined ('IN_ADR_COOKING'))
 {
-   $lang['Adr_recipes_level']='Level:';   
-   $lang['Adr_recipes_desc']='Description:';
-   $lang['Adr_recipes_add']='Add recipe:';
-   $lang['Adr_recipes_effect']='Effect';
-   $lang['Adr_recipes_items_req']='Items required:';
-   $lang['adr_cooking_food_link']='Eat Food';
-   $lang['adr_cooking_recipe_link']='Learn Recipe';
-   $lang['Adr_recipe_successful_added']='Recipe successfully written into your recipebook !';
-   $lang['Adr_recipe_already_known']='You already have written that recipe into your recipebook !';
-   $lang['Adr_recipe_was_delted']='This recipe is not anymore valid (Admin may have deleted it)';
-   $lang['Adr_recipebook_cooking']='Cooking Recipes';
-   $lang['Adr_food_used']='You already ate food with temp effects for battle !';
-   $lang['cooking_very_easy']='Very Easy';
-   $lang['cooking_easy']='Easy';
+   $lang['adr_cooking_food_link']='Manger la nourriture';
+   $lang['adr_cooking_recipe_link']='Apprendre la recette';
+   $lang['Adr_recipe_successful_added']='Recette apprise avec succès !';
+   $lang['Adr_recipebook_cooking']='Recettes de cuisine';
+   $lang['Adr_food_used']='Vous avez déjà mangé de la nourriture avec des effets temporaires !';
+   $lang['cooking_very_easy']='Très facile';
+   $lang['cooking_easy']='Facile';
    $lang['cooking_normal']='Normal';
-   $lang['cooking_hard']='Hard';
-   $lang['cooking_very_hard']='Very Hard';
+   $lang['cooking_hard']='Difficile';
+   $lang['cooking_very_hard']='Très difficile';
    $lang['cooking_impossible']='Impossible';
-   $lang['cooking_select_recipe']='Select Recipe:';
-   $lang['cooking_no_recipe']='No recipe';
-   $lang['cooking_tool_explain']='Cooking tools allow you to cook food';
-   $lang['cooking_tool_needed']='You can\'t cook food with only your hands!';
-   $lang['cooking_failure']='You cooked nothing';
-   $lang['cooking_success']='You cooked a %s with a value of %s %s !';
-   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
-   $lang['cooking_no_tool']='No tool';
-   $lang['cooking_create']='Cook this Food';
-   $lang['cooking_select_tool']='Select a tool';
+   $lang['cooking_select_recipe']='Choisissez une recette :';
+   $lang['cooking_no_recipe']='Pas de recette';
+   $lang['cooking_tool_explain']='Les outils de cuisine vous permettent de préparer de la nourriture';
+   $lang['cooking_tool_needed']='Vous ne pouvez pas préparer de la nourriture seulement avec vos mains !';
+   $lang['cooking_failure']='Votre plat brûle sans que vous ne puissiez rien en tirer !';
+   $lang['cooking_success']='Vous avez cuisiné un %s avec une valeur de %s %s !';
+   $lang['Adr_skill_limit']='Vous ne pouvez plus cuisiner aujourd\'hui';
+   $lang['cooking_no_tool']='Pas d\'outil';
+   $lang['cooking_create']='Préparer ce plat';
+   $lang['cooking_select_tool']='Choisissez un plat';
    $lang['recipe_info']='Recipe Info';
    $lang['recipe_items_needed']='Items needed for this recipe';
-   $lang['cooking_missing_item']='You don\'t have the required items to cook this food !';
-   $lang['recipe_stats']='Recipe Stats:';
-   $lang['food_effects']='Food Effects:';
-   $lang['food_stats']='Food Stats';
+   $lang['cooking_missing_item']='Vous n\'avez pas les ingrédients nécessaires pour préparer cette recette !';
+   $lang['recipe_stats']='Statistiques de la recette :';
+   $lang['food_effects']='Effets :';
+   $lang['food_stats']='Statistiques du plat';
 }
 
 $lang['Adr_skill_blacksmithing_desc']='Compétence Forgeron (fabrication d\'armes et d\'armures)';
 $lang['Adr_races_bonus_blacksmithing']='Bonus à la compétence forgeron';
 $lang['Adr_blacksmithing']='Forgeron';
 $lang['Adr_items_type_tools_blacksmithing']='Outils : Forgeron';
-$lang['Adr_items_blacksmithing_desc']='Indispensable aux forgerons';
+$lang['Adr_items_blacksmithing_desc']='Nécessaire aux forgerons';
 
 if ( defined ('IN_ADR_BLACKSMITHING'))
 {
    $lang['Adr_recipes_level']='Niveau :';
    $lang['Adr_recipes_desc']='Description:';
-   $lang['Adr_recipe_successful_added']='Modèle inscrite dans votre livre des recettes !';
+   $lang['Adr_recipe_successful_added']='Modèle inscrit dans votre livre des modèles !';
    $lang['Adr_recipe_already_known']='Vous connaissez déjà ce modèle !';
    $lang['Adr_recipe_was_delted']='Ce modèle n\'existe plus (un administrateur l\'a peut-être supprimé)';
    $lang['Adr_recipebook_blacksmithing']='Modèles pour la forge';
@@ -1692,156 +1673,152 @@ if ( defined ('IN_ADR_BLACKSMITHING'))
    $lang['blacksmithing_very_hard']='Très dur';
    $lang['blacksmithing_impossible']='Impossible';
    $lang['blacksmithing_select_recipe']='Choisissez un modèle :';
-   $lang['blacksmithing_no_recipe']='No Pattern';
-   $lang['blacksmithing_tool_explain']='Blacksmithing tools allow you to craft items';
-   $lang['blacksmithing_tool_needed']='You can\'t craft items with only your hands!';
-   $lang['blacksmithing_failure']='You crafted nothing';
-   $lang['blacksmithing_success']='You crafted a %s with a value of %s %s !';
-   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
-   $lang['blacksmithing_no_tool']='No tool';
-   $lang['blacksmithing_create']='Craft this Item';
-   $lang['blacksmithing_select_tool']='Select a tool';
-   $lang['recipe_info']='Pattern Info';
-   $lang['recipe_items_needed']='Items needed for this pattern';
-   $lang['blacksmithing_missing_item']='You don\'t have the required items to craft this product !';
-   $lang['pattern_stats']='Pattern Stats:';
-   $lang['product_effects']='Product Effects:';
-   $lang['product_stats']='Product Stats';
+   $lang['blacksmithing_no_recipe']='Pas de modèle';
+   $lang['blacksmithing_tool_explain']='Les outils de forgeron vous permettent des fabriquer des objets';
+   $lang['blacksmithing_tool_needed']='Vous ne pouvez pas fabriquer des objets seulement avec vos mains !';
+   $lang['blacksmithing_failure']='Vous n\'avez rien réussi à fabriquer';
+   $lang['blacksmithing_success']='Vous avez fabriqué un %s avec une valeur de %s %s !';
+   $lang['Adr_skill_limit']='Vous ne pouvez plus rien fabriquer aujourd\'hui';
+   $lang['blacksmithing_no_tool']='Pas d\'outil';
+   $lang['blacksmithing_create']='Fabriquer cet objet';
+   $lang['blacksmithing_select_tool']='Choisissez un outil';
+   $lang['recipe_info']='Info sur le modèle';
+   $lang['recipe_items_needed']='Objets nécessaires à la fabrication du modèle';
+   $lang['blacksmithing_missing_item']='Vous n\'avez pas les objets nécessaires pour fabriquer cet objet !';
+   $lang['pattern_stats']='Statistiques de l\'outil :';
+   $lang['product_effects']='Effets :';
+   $lang['product_stats']='Statistiques de l\'objet :';
 }
 
 # Skills
-$lang['Adr_skill_fishing_desc']='Fishing Skill';
-$lang['Adr_skill_lumberjack_desc']='Lumberjack Skill';
-$lang['Adr_skill_herbalism_desc']='Herbalism Skill';
-$lang['Adr_skill_hunting_desc']='Hunting Skill';
-$lang['Adr_skill_tailoring_desc']='Tailoring Skill';
-$lang['Adr_skill_alchemy_desc']='Alchemy Skill';
-$lang['Adr_races_bonus_fishing']='Bonus to the Fishing Skill';
-$lang['Adr_races_bonus_herbalism']='Bonus to the Herbalism Skill';
-$lang['Adr_races_bonus_hunting']='Bonus to the Hunting Skill';
-$lang['Adr_races_bonus_lumberjack']='Bonus to the Lumberjack Skill';
-$lang['Adr_races_bonus_tailoring']='Bonus to the Tailoring Skill';
-$lang['Adr_races_bonus_alchemy']='Bonus to the Alchemy Skill';
-$lang['Adr_fishing']='Fishing';
-$lang['Adr_hunting']='Hunting';
-$lang['Adr_tailoring']='Tailoring';
-$lang['Adr_herbalism']='Herbalism';
-$lang['Adr_lumberjack']='Lumberjack';
-$lang['Adr_alchemy']='Alchemy';
-$lang['Adr_items_type_alchemy']='Alchemy';
-$lang['Adr_items_type_tools_alchemy']='Tools: Alchemy';
-$lang['Adr_items_type_tools_hunting']='Tools: Hunting';
-$lang['Adr_items_type_tools_pole']='Tools: Fishing Pole';
-$lang['Adr_items_type_tools_woodworking']='Tools: Woodworking';
-$lang['Adr_items_type_animals']='Animal Corpse';
-$lang['Adr_items_type_tools_needle']='Tools: Needle';
-$lang['Adr_items_type_clothes']='Clothes';   
-$lang['Adr_items_type_thread']='Thread';
-$lang['Adr_items_type_tools_seed']='Plants: Seed';
-$lang['Adr_items_type_plants']='Plants';  
-$lang['Adr_items_type_water']='Water'; 
-$lang['Adr_items_type_wood']='Wood';   
-$lang['Adr_items_type_fish']='Fish';
-$lang['Adr_items_fisher_desc']='Required for Fishing';
-$lang['Adr_items_hunting_desc']='Required for Hunting';
-$lang['Adr_items_herbal_desc']='Required for Herbalism';
-$lang['Adr_items_tailor_desc']='Required for Sewing';
-$lang['Adr_items_lumberjacker_desc']='Required for Lumberjacking';
-$lang['Adr_items_alchemy_desc']='Required to do Alchemy';
+$lang['Adr_skill_fishing_desc']='Compétence pêcheur';
+$lang['Adr_skill_lumberjack_desc']='Compétence bucheron';
+$lang['Adr_skill_herbalism_desc']='Compétence herboriste';
+$lang['Adr_skill_hunting_desc']='Compétence chasseur';
+$lang['Adr_skill_tailoring_desc']='Compétence chasseur';
+$lang['Adr_skill_alchemy_desc']='Compétence alchimiste';
+$lang['Adr_races_bonus_fishing']='Bonus à la compétence de pêche';
+$lang['Adr_races_bonus_herbalism']='Bonus à la compétence d\'herboristerie';
+$lang['Adr_races_bonus_hunting']='Bonus à la compétence de chasse';
+$lang['Adr_races_bonus_lumberjack']='Bonus à la compétence de bûcheron';
+$lang['Adr_races_bonus_tailoring']='Bonus à la compétence de tailleur';
+$lang['Adr_races_bonus_alchemy']='Bonus à la compétence d\'alchimie';
+$lang['Adr_fishing']='Pêche';
+$lang['Adr_hunting']='Chasse';
+$lang['Adr_tailoring']='Tailleur';
+$lang['Adr_herbalism']='Herboristerie';
+$lang['Adr_lumberjack']='Bûcheron';
+$lang['Adr_alchemy']='Alchimie';
+$lang['Adr_items_type_alchemy']='Alchemie';
+$lang['Adr_items_type_tools_alchemy']='Outils : Alchimie';
+$lang['Adr_items_type_tools_hunting']='Outils : Chasse';
+$lang['Adr_items_type_tools_pole']='Outils : Canne à pêche';
+$lang['Adr_items_type_tools_woodworking']='Outils : Travail du bois';
+$lang['Adr_items_type_animals']='Corps animal';
+$lang['Adr_items_type_tools_needle']='Outils : Aiguille';
+$lang['Adr_items_type_clothes']='Vêtements';   
+$lang['Adr_items_type_thread']='Fil';
+$lang['Adr_items_type_tools_seed']='Plantes : Graines';
+$lang['Adr_items_type_plants']='Plantes';  
+$lang['Adr_items_type_water']='Eau'; 
+$lang['Adr_items_type_wood']='Bois';   
+$lang['Adr_items_type_fish']='Poisson';
+$lang['Adr_items_fisher_desc']='Nécessaire à la pêche';
+$lang['Adr_items_hunting_desc']='Nécessaire à la chasse';
+$lang['Adr_items_herbal_desc']='Nécessaire à l\'herboristerie';
+$lang['Adr_items_tailor_desc']='Nécessaire à la couture';
+$lang['Adr_items_lumberjacker_desc']='Nécessaire au travail du bois';
+$lang['Adr_items_alchemy_desc']='Nécessaire à l\'alchimie';
 
 if ( defined ('IN_ADR_TAILOR'))
- {
-   $lang['Adr_forge_tailoring']='Let\'s Sew';
-   $lang['Adr_forge_tailoring_explain']='Needles allow you to sew together material';
-   $lang['Adr_forge_tailoring_select_tool']='Select a needle';
-   $lang['Adr_forge_tailoring_no_tool']='No needle';
-   $lang['Adr_forge_tailoring_go']='Go tailoring';
-   $lang['Adr_forge_tailoring_tool_needed']='You can\'t tailor with your hands!';
-   $lang['Adr_forge_tailoring_failure']='You ruined your stich and had to stop!';
-   $lang['Adr_forge_tailoring_success']='You sewed a(some) %s with a value of %s %s !';
-   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
-   $lang['Adr_tailoring_go_to']="Go to Character Page";
-   $lang['Adr_tailoring_create']='Go Tailoring';
-   $lang['Adr_tailoring_explain']='Welcome to the Talioring House. <br /><br />Here you can sew together thread and cloth to create many things. <br /><br />These things can be used to sell or combined to create other items. <br /><br />Good luck young one.';
-
- }
+{
+   $lang['Adr_forge_tailoring']='Cousons !';
+   $lang['Adr_forge_tailoring_explain']='Les aiguilles vous permettent de coudre des pans de tissus ensemble';
+   $lang['Adr_forge_tailoring_select_tool']='Choisissez une aiguille';
+   $lang['Adr_forge_tailoring_no_tool']='Pas d\'aiguille';
+   $lang['Adr_forge_tailoring_go']='Confectionner';
+   $lang['Adr_forge_tailoring_tool_needed']='Vous ne pouvez pas coudre avec vos mains !';
+   $lang['Adr_forge_tailoring_failure']='Vous manquez une maille et perdez votre travail !';
+   $lang['Adr_forge_tailoring_success']='Vous avez cousu un %s avec une valeur de %s %s !';
+   $lang['Adr_skill_limit']='Vous ne pouvez plus coudre pour aujourd\'hui';
+   $lang['Adr_tailoring_go_to']="Aller à votre feuille de personnage";
+   $lang['Adr_tailoring_create']='Aller à l\'atelier de tailleur';
+   $lang['Adr_tailoring_explain']='Bienvenue à l\'atelier de tailleur.<br/><br/>Ici, vous pouvez coudre afin de créer de nombreux objets, que vous pourrez vendre ou ré-utiliser pour créer des objets encore plus précieux.';
+}
 if ( defined ('IN_ADR_HUNTING'))
- {
-    $lang['Adr_forge_hunting']='Let\'s hunt';
-    $lang['Adr_forge_hunting_explain']='Hunting tools allow you to capture, skin, or de-horn wild beasts!';
-    $lang['Adr_forge_hunting_select_tool']='Select a tool';
-    $lang['Adr_forge_hunting_no_tool']='No tool';
-    $lang['Adr_forge_hunting_go']='Go hunting';
-    $lang['Adr_forge_hunting_tool_needed']='You can\'t slay wild beasts with your hands!';
-    $lang['Adr_forge_hunting_failure']='You killed nothing';
-    $lang['Adr_forge_hunting_success']='You slayed a %s with a value of %s %s caught from inside the woods!';
-    $lang['Adr_skill_limit']='You have used up your skill use quota for today';
-   $lang['Adr_hunting_go_to']="Go to Character Page";
-    $lang['Adr_hunting_create']='Go Hunting';
-   $lang['Adr_hunting_explain']='This is the Hunting Area. <br /><br />Here you can catch, kill, and skin many animals. <br /><br />You can use these hides and corpse to sell or combined to create other items. <br /><br />Good luck young one.';
-
- }
+{
+   $lang['Adr_forge_hunting']='Allons chasser !';
+   $lang['Adr_forge_hunting_explain']='Les outils de chasseur vous permettent de capturer, tuer et dépecer les animaux.';
+   $lang['Adr_forge_hunting_select_tool']='Choisissez un outil';
+   $lang['Adr_forge_hunting_no_tool']='Pas d\'outil';
+   $lang['Adr_forge_hunting_go']='Aller chasser';
+   $lang['Adr_forge_hunting_tool_needed']='Vous ne pouvez pas tuer de bête sauvage avec vos mains !';
+   $lang['Adr_forge_hunting_failure']='Vous n\'avez rien eu comme gibier';
+   $lang['Adr_forge_hunting_success']='Vous avez tué un %s avec une valeur de %s %s !';
+   $lang['Adr_skill_limit']='Vous ne pouvez plus chasser pour aujourd\'hui';
+   $lang['Adr_hunting_go_to']="Aller à votre feuille de personnage";
+   $lang['Adr_hunting_create']='Aller chasser';
+   $lang['Adr_hunting_explain']='Bienvenue dans la zone de chasse.<br/><br/>Ici vous pouvez attraper, tuer ou dépecer.<br/><br/>Vous pouvez les cuirs et les corps voire les combiner pour créer d\'autres objets.';
+}
 if ( defined ('IN_ADR_LUMBERJACK'))
- {
-   $lang['Adr_forge_lumberjack']='Let\'s chop trees';
-   $lang['Adr_forge_lumberjack_explain']='Woodworking tools allow you to chop on trees';
-   $lang['Adr_forge_lumberjack_select_tool']='Select a tool';
-   $lang['Adr_forge_lumberjack_no_tool']='No tool';
-   $lang['Adr_forge_lumberjack_go']='Go lumberjacking';
-   $lang['Adr_forge_lumberjack_tool_needed']='You can\'t chop on trees with your hands!';
-   $lang['Adr_forge_lumberjack_failure']='You chopped nothing';
-   $lang['Adr_forge_lumberjack_success']='You chopped a %s with a value of %s %s out of the trees!';
-   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
-   $lang['Adr_lumberjack_go_to']="Go to Character Page";
-   $lang['Adr_lumberjack_create']='Go Lumberjacking';
-   $lang['Adr_lumberjack_explain']='Welcome to the Forest. <br /><br />Here you can use might to chop down trees to collect lumber. <br /><br />This lumber can be used to sell or combined to create other items. <br /><br />Good luck young one.';
-
- }
+{
+   $lang['Adr_forge_lumberjack']='Coupons des arbres !';
+   $lang['Adr_forge_lumberjack_explain']='Les outils de bûcheron vous permettent de couper des arbres';
+   $lang['Adr_forge_lumberjack_select_tool']='Choisissez un outil';
+   $lang['Adr_forge_lumberjack_no_tool']='Pas d\'outil';
+   $lang['Adr_forge_lumberjack_go']='Couper du bois';
+   $lang['Adr_forge_lumberjack_tool_needed']='Vous ne pouvez pas couper des arbres à la main !';
+   $lang['Adr_forge_lumberjack_failure']='Vous n\'avez rien coupé';
+   $lang['Adr_forge_lumberjack_success']='Vous avez coupé un %s avec une valeur %s %s !';
+   $lang['Adr_skill_limit']='Vous ne pouvez plus couper du bois pour aujourd\'jui';
+   $lang['Adr_lumberjack_go_to']="Aller à votre feuille de personnage";
+   $lang['Adr_lumberjack_create']='Couper du bois';
+   $lang['Adr_lumberjack_explain']='Bienvenue dans la forêt.<br/><br/>Ici, vous pouvez utiliser votre force pour couper des arbres et récolter du bois, que vous pourrez revendre ou utiliser pour créer des objets';
+}
 if ( defined ('IN_ADR_HERBAL'))
- {
-   $lang['Adr_forge_herbalism']='Let\'s plant';
-   $lang['Adr_forge_herbalism_explain']='Seeds allow you to plant new flora';
-   $lang['Adr_forge_herbalism_select_tool']='Select a seed';
-   $lang['Adr_forge_herbalism_no_tool']='No Seeds';
-   $lang['Adr_forge_herbalism_go']='Go herbalisming';
-   $lang['Adr_forge_herbalism_tool_needed']='You can\'t grow with your hands!';
-   $lang['Adr_forge_herbalism_failure']='Your plant could not handle with its growing conditions and died!';
-   $lang['Adr_forge_herbalism_success']='You grew a %s with a value of %s %s !';
-   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
-   $lang['Adr_herbalism_go_to']="Go to Character Page";
-   $lang['Adr_herbalism_create']='Go Herbalisming';
-   $lang['Adr_herbalism_explain']='Welcome to the Herbal Area. <br /><br />Here you grow different types of flora to create many things. <br /><br />These things can be used to sell or combined to create other items. <br /><br />Good luck young one.';
-
- }
+{
+   $lang['Adr_forge_herbalism']='Plantons des graines !';
+   $lang['Adr_forge_herbalism_explain']='Les graines vous permettent de créer une nouvelle flore';
+   $lang['Adr_forge_herbalism_select_tool']='Choisissez une graine';
+   $lang['Adr_forge_herbalism_no_tool']='Pas de graine';
+   $lang['Adr_forge_herbalism_go']='Planter la graine';
+   $lang['Adr_forge_herbalism_tool_needed']='Vous ne pouvez pas planter vos mains !';
+   $lang['Adr_forge_herbalism_failure']='La plante n\'a pas supporté les conditions climatiques et est morte !';
+   $lang['Adr_forge_herbalism_success']='Vous avez fait grandir une %s avec une valeur de %s %s !';
+   $lang['Adr_skill_limit']='Vous ne pouvez rien planter pour la journée';
+   $lang['Adr_herbalism_go_to']="Aller à votre feuille de personnage";
+   $lang['Adr_herbalism_create']='Planter une graine';
+   $lang['Adr_herbalism_explain']='Bienvenue dans la serre.<br/><br/>Ici, vous pouvez faire grandir de nombreuses plantes, sur lesquelles vous pourrez récolter de nombreuses choses, utilisables dans la conception d\'autres objets, comme des potions.';
+}
 if ( defined ('IN_ADR_FISH'))
- {
-   $lang['Adr_forge_fishing']='Let\'s fish';
-   $lang['Adr_forge_fishing_explain']='Fishing Poles allow you to catch fish';
-   $lang['Adr_forge_fishing_select_tool']='Select a fishing pole';
-   $lang['Adr_forge_fishing_no_tool']='No fishing pole';
-   $lang['Adr_forge_fishing_go']='Go fishing';
-   $lang['Adr_forge_fishing_tool_needed']='You can\'t fish with your hands!';
-   $lang['Adr_forge_fishing_failure']='You caught nothing';
-   $lang['Adr_forge_fishing_success']='You caught a %s with a value of %s %s !';
-   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
-   $lang['Adr_fishing_go_to']="Go to Character Page";
-   $lang['Adr_fishing_create']='Go Fishing';
+{
+   $lang['Adr_forge_fishing']='Allons pêcher !';
+   $lang['Adr_forge_fishing_explain']='Les cannes à pêche vous permettent d\'attraper du poisson';
+   $lang['Adr_forge_fishing_select_tool']='Sélectionnez une canne à pêche';
+   $lang['Adr_forge_fishing_no_tool']='Vous n\'avez pas de canne à pêche';
+   $lang['Adr_forge_fishing_go']='Pêcher';
+   $lang['Adr_forge_fishing_tool_needed']='Vous ne pouvez pas pêcher avec vos mains !';
+   $lang['Adr_forge_fishing_failure']='Vous n\'avez rien attrapé';
+   $lang['Adr_forge_fishing_success']='Vous avez un attrapé un %s avec une valeur de %s %s !';
+   $lang['Adr_skill_limit']='Vous ne pouvez plus pêcher pour la journée';
+   $lang['Adr_fishing_go_to']="Aller à votre feuille de personnage";
+   $lang['Adr_fishing_create']='Aller pêcher';
    $lang['Adr_fishing_explain']='Welcome to the Lake. <br /><br />Here you fish for many types of fish. <br /><br />Use these fish to sell, or combined them to create other items. <br /><br />Good luck young one.';
 }
 if ( defined ('IN_ADR_ALCHEMY'))
 {
-   $lang['Adr_forge_alchemy']='Let\'s do some alchemy';
-   $lang['Adr_forge_alchemy_explain']='Alchemy tool allows you to do alchemy';
-   $lang['Adr_forge_alchemy_select_tool']='Select an alchemy tool';
-   $lang['Adr_forge_alchemy_no_tool']='No alchemy tool';
-   $lang['Adr_forge_alchemy_go']='Let\'s do some alchemy';
-   $lang['Adr_forge_alchemy_tool_needed']='You can\'t do alchemy with your hands!';
-   $lang['Adr_forge_alchemy_failure']='You didn\'t make anything';
-   $lang['Adr_forge_alchemy_success']='You made a %s with a value of %s %s !';
-   $lang['Adr_skill_limit']='You have used up your skill use quota for today';
-   $lang['Adr_alchemy_go_to']="Go to Character Page";
-   $lang['Adr_alchemy_create']='Do Alchemy';
-   $lang['Adr_alchemy_explain']='Welcome to the Alchemic Lab. <br /><br />Here you can use the art of alchemy to create many things. <br /><br />These things can be used to sell or combined to create other items. <br /><br />Good luck young one.';
+   $lang['Adr_forge_alchemy']='Faisons de l\'alchimie !';
+   $lang['Adr_forge_alchemy_explain']='Les outils d\'alchimie vous permettent de faire de l\'alchimie';
+   $lang['Adr_forge_alchemy_select_tool']='Choisissez un outil pour faire de l\'alchimie';
+   $lang['Adr_forge_alchemy_no_tool']='Pas d\'outil alchimique';
+   $lang['Adr_forge_alchemy_go']='Faire de l\'alchimie';
+   $lang['Adr_forge_alchemy_tool_needed']='Vous ne pouvez pas faire d\'alchimie avec vos mains !';
+   $lang['Adr_forge_alchemy_failure']='Vous n\'avez rien fabriqué';
+   $lang['Adr_forge_alchemy_success']='Vous avez fait un %s avec une valeur de %s %s !';
+   $lang['Adr_skill_limit']='Vous ne pouvez plus faire d\'alchimie pour la journée';
+   $lang['Adr_alchemy_go_to']="Aller à votre feuille de personnage";
+   $lang['Adr_alchemy_create']='Faire de l\'alchimie';
+   $lang['Adr_alchemy_explain']='Bienvenue à l\'atelier d\'alchimie.<br/><br/>Ici, vous pouvez utiliser l\'art de l\'alchimie pour créer de nombreuses choses, que vous pourrez directement revendre ou combiner afin de créer des objets encore plus rare.';
 }
 
 $lang['Adr_battle_monster_regen']='%s regénère %s HP!';
@@ -1850,3 +1827,7 @@ $lang['Adr_battle_monster_mp_drain']='%s vous draine %s points de Mana!';
 $lang['Adr_battle_monster_mp_transfer']='%s vous vole %s MP pour lui !';
 $lang['Adr_battle_monster_hp_drain']='%s vous draine %s HP !';
 $lang['Adr_battle_monster_hp_transfer']='%s vous vole %s HP pour lui !';
+
+// Dyanmic Town Map
+$lang['Adr_items_scroll_5']='Parchemin de Téléportation';
+$lang['Adr_items_scroll_5_desc']='Permet de se téléporter d\'une Zone à l\'autre';

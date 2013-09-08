@@ -245,3 +245,11 @@ $lang['Adr_Npc_acp_quest_monsteramount_explain']='Combien de monstres doivent êt
 // Zones by level
 $lang['Adr_Zone_acp_level']='Niveau requis';
 $lang['Adr_zone_change_level']='Vous n\'avez pas le niveau requis pour accéder à cette zone.';
+
+// Dynamic Town Maps
+$lang['Adr_zone_acp_enable_dynamic_zone_townmaps']='Activer les cartes de zone dynamiques';
+$lang['Adr_zone_acp_world_map_name']='Le nom de votre carte du Monde (laisser vide pour mettre le nom du site)';
+$lang['Adr_zone_acp_picture_link']='Activer les liens images à la place des liens textes dans l\'header et l\'affichage des zones.';
+$lang['Adr_zone_acp_zone_dynamic_maps_current_zone']='Current Zone Assignment of World Map';
+$lang['Adr_zone_acp_zone_dynamic_maps_config_zone']='Current Config Assignment of World Map <br /><span class="gensmall">If this does not match the Current Zone Assignment, your World Map will not display.</span>';
+$lang['Adr_zone_acp_zone_dynamic_maps_display_required']='Display the Required Item and Points on Teleport Popup';

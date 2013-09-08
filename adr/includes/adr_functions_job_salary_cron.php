@@ -21,6 +21,8 @@ if ( !defined('IN_PHPBB') )
 	die("Hacking attempt");
 }
 
+include_once($phpbb_root_path . 'adr/includes/adr_functions_communicate.'.$phpEx);
+
 function adr_job_salary_check( $user_id )
 {
 	global $db , $adr_general , $lang , $phpEx , $phpbb_root_path , $board_config, $table_prefix ;

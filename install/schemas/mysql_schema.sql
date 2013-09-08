@@ -1774,19 +1774,6 @@ CREATE TABLE phpbb_adr_zones (
   zone_pointloss1 int(8) NOT NULL default '0',
   zone_pointloss2 int(8) NOT NULL default '0',
   zone_chance int(8) NOT NULL default '0',
-  npc_price int(8) NOT NULL default '0',
-  npc1_enable int(1) NOT NULL default '0',
-  npc2_enable int(1) NOT NULL default '0',
-  npc3_enable int(1) NOT NULL default '0',
-  npc4_enable int(1) NOT NULL default '0',
-  npc5_enable int(1) NOT NULL default '0',
-  npc6_enable int(1) NOT NULL default '0',
-  npc1_message varchar(255) NOT NULL default '',
-  npc2_message varchar(255) NOT NULL default '',
-  npc3_message varchar(255) NOT NULL default '',
-  npc4_message varchar(255) NOT NULL default '',
-  npc5_message varchar(255) NOT NULL default '',
-  npc6_message varchar(255) NOT NULL default '',
   zone_mine int(1) NOT NULL default '0',
   zone_enchant int(1) NOT NULL default '0',
   PRIMARY KEY  (zone_id)
@@ -2193,3 +2180,40 @@ CREATE TABLE phpbb_adr_shops_spells (
 ALTER TABLE phpbb_adr_characters ADD character_party int(8) NOT NULL default'0';
 ALTER TABLE phpbb_adr_characters ADD character_leader int(1) NOT NULL default'0';
 ALTER TABLE phpbb_adr_characters ADD character_invites VARCHAR(255) NOT NULL;
+
+# ADR - Dynamic Town Maps
+CREATE TABLE phpbb_adr_zone_buildings (
+  id int(10) unsigned NOT NULL auto_increment,
+  name varchar(32) NOT NULL default '',
+  shop varchar(32) NOT NULL default '',
+  sdesc varchar(80) NOT NULL default '',
+  record_id int(10) unsigned NOT NULL default '0',
+  type varchar(32) NOT NULL default '',
+  zone_link text,
+  zone_name_tag varchar(100) default '',
+  zone_building_tag_no int(3) default '0',
+  zone_building_type tinyint(3) unsigned NOT NULL default '0',
+  KEY name (id)
+) ;
+
+CREATE TABLE phpbb_adr_zone_maps (
+  zone_id int(8) NOT NULL default '0',
+  zonemap_type smallint(2) NOT NULL default '0',
+  zone_world tinyint(1) NOT NULL default '0',
+  zonemap_buildings text,
+  PRIMARY KEY  (zone_id)
+) ;
+
+CREATE TABLE phpbb_adr_zone_townmaps (
+  zonemap_type smallint(2) NOT NULL default '0',
+  zonemap_name varchar(255) NOT NULL default '',
+  zonemap_bg varchar(255) NOT NULL default '',
+  zonemap_width int(8) NOT NULL default '0',
+  zonemap_cellwidth int(8) NOT NULL default '50',
+  zonemap_cellwidthnumber int(8) NOT NULL default '0',
+  zonemap_height int(8) NOT NULL default '0',
+  zonemap_cellheight int(8) NOT NULL default '50',
+  zonemap_cellheightnumber int(8) NOT NULL default '0',
+  zonemap_building text,
+  PRIMARY KEY  (zonemap_type)
+) ;

@@ -1,3 +1,6 @@
+<script src="{ROOT_STYLE}adr/language/lang_{LANG}/lang_adr_buildings.js"></script>
+<DIV id="TipLayer" style="visibility:hidden;position:absolute;z-index:1000;top:-100;"></DIV>
+
 <table width="100%" align="center" border="1">
 	<tr>
 		<th align="center" colspan="3" >{ZONE_NAME}</td>
@@ -10,16 +13,30 @@
 					<th align="center" colspan="10" ><u>{L_ZONE_SEASON} &amp; {L_ZONE_WEATHER}</u></td>
 				</tr>
 				<tr>
-					<td align="center" class="row2" ><span class="gen">{ZONE_SEASON_NAME}<br /><br /><img src="adr/images/zones/seasons/{ZONE_SEASON_IMG}.gif" border="0" ><br /><br /></span></td>
-					<td align="center" class="row1" ><span class="gen"><br /><img src="adr/images/zones/weather/rose.gif" border="0" ><br /><br /></span></td>
-					<td align="center" class="row2" ><span class="gen">{ZONE_WEATHER_NAME}<br /><br /><img src="adr/images/zones/weather/{ZONE_WEATHER_IMG}.gif" border="0" ><br /><br /></span></td>
+					<td align="center" class="row2" valign="top" ><span class="gen">{ZONE_SEASON_NAME}<br /><br /><img src="adr/images/zones/seasons/{ZONE_SEASON_IMG}.gif" border="0" ><br /><br /></span></td>
+					<td align="center" class="row2" valign="top" ><span class="gen">{ZONE_WEATHER_NAME}<br /><br /><img src="adr/images/zones/weather/{ZONE_WEATHER_IMG}.gif" border="0" ><br /><br /></span></td>
 				</tr>
 			</table>
 		</span></td>
 	</tr>
 </table>
-<!-- IF false --> HAS_SHOPS || HAS_FORGE || HAS_MINE || HAS_ENCHANT || HAS_TEMPLE || HAS_PRISON || HAS_BANK -->
+
 <br clear="all" />
+<!-- BEGIN switch_Adr_zone_building_picture_link_enable -->
+<table width="100%" align="center" border="1">
+	<tr>
+		<th align="center" colspan="10" ><u>{L_ZONE_BUILDINGS}</u></td>
+	</tr>
+	<tr>
+		<td align="center" class="row2" ><span class="gen">{SHOPS_LINK}<img src="adr/images/zones/{ZONE_SEASON}/{SHOPS_IMG}.gif" border="0" onMouseOver="stm(Text[26],Style[0])" onMouseOut="htm()" /></a></span></td>
+		<td align="center" class="row1" ><span class="gen">{TEMPLE_LINK}<img src="adr/images/zones/{ZONE_SEASON}/{TEMPLE_IMG}.gif" border="0" onMouseOver="stm(Text[24],Style[0])" onMouseOut="htm()" /></a></span></td>
+		<td align="center" class="row2" ><span class="gen">{FORGE_LINK}<img src="adr/images/zones/{ZONE_SEASON}/{FORGE_IMG}.gif" border="0" onMouseOver="stm(Text[20],Style[0])" onMouseOut="htm()" /></a></span></td>
+		<td align="center" class="row1" ><span class="gen">{BANK_LINK}<img src="adr/images/zones/{ZONE_SEASON}/{BANK_IMG}.gif" border="0" onMouseOver="stm(Text[18],Style[0])" onMouseOut="htm()" /></a></span></td>
+		<td align="center" class="row2" ><span class="gen">{PRISON_LINK}<img src="adr/images/zones/{ZONE_SEASON}/{PRISON_IMG}.gif" border="0" onMouseOver="stm(Text[14],Style[0])" onMouseOut="htm()" /></a></span></td>
+	</tr>
+</table>
+<!-- END switch_Adr_zone_building_picture_link_enable -->
+<!-- BEGIN switch_Adr_zone_building_no_picture_link_enable -->
 <table width="100%" align="center" border="1">
 	<tr>
 		<th align="center" colspan="14" ><u>{L_ZONE_BUILDINGS}</u></td>
@@ -35,7 +52,7 @@
 		<td width="12.5%" align="center" class="row1" ><span class="gen"><br /><b>Personnage</b><br /><br /><img src="adr/images/zones/character_sheet.gif" border="0" title="{L_PRISON_NAME}"><br /><br /><a href="adr_house.php">Personnage</a><br /><br /></span></td>
 	</tr>
 </table>
-<!-- ENDIF -->
+<!-- END switch_Adr_zone_building_no_picture_link_enable -->
 
 <br clear="all" />
 <table width="100%" align="center" border="1">
@@ -116,6 +133,8 @@
 			</tr>
 		</table>
 		<!-- ENDIF -->
+		<br clear="all" />
+
 		<table width="100%" align="center" border="1">
 			<tr>
 			<th align="center" colspan="4">{L_POINTS}</td>
@@ -124,33 +143,45 @@
 				<td align="center" class="row2" ><span class="gen"><b>{POINTS}</b><br /><br /></span></td>	
 			</tr>
 		</table>
+		<br clear="all" />
+
+		<table width="100%" align="center" border="1">
+			<tr>
+				<th align="center" colspan="4" >Cartographie</th>
+			</tr>
+			<tr>
+				<td align="center" class="row2" ><span class="gen"><br /><b>{MAP_NAME}</b><br /><br /><a href="adr_maps.php"><img src="adr/images/zones/townmap/World_small.gif" border="0" onMouseOver="stm(Text[100],Style[0])" onMouseOut="htm()" /><br /><br /></a></span></td>
+			</tr>
+		</table>
+
 		</form>
 		</td>
-
-		<!-- some settings are done because Carte4 (winter) sucks :( -->
-		<style>
-		.tile_Carte4_Haut {
-			width: 818px;
-		}
-		.tile_Carte4_27 {
-			width: 129px !important;
-		}
-		.tile_Carte4_35 {
-			width: 133px;
-			height: 121px;
-		}
-		.tile_Carte4_Milieu {
-			width: 818px;
-		}
-		.tile_Carte4_Bas {
-			width: 818px;
-		}
-		.tile_Carte4_39 {
-			width: 63px;
-			height: 121px;
-		}
-		</style>
-        <td align="center" valign="top" class="row1">
+	    <td align="center" valign="top" class="row1">
+	    	<!-- V: Well, this is a pain to integrate with my own stuff, but I did it anyway :( -->
+			<!-- BEGIN switch_Adr_zone_townmap_disable -->
+			<!-- some settings are done because Carte4 (winter) sucks :( -->
+			<style>
+			.tile_Carte4_Haut {
+				width: 818px;
+			}
+			.tile_Carte4_27 {
+				width: 129px !important;
+			}
+			.tile_Carte4_35 {
+				width: 133px;
+				height: 121px;
+			}
+			.tile_Carte4_Milieu {
+				width: 818px;
+			}
+			.tile_Carte4_Bas {
+				width: 818px;
+			}
+			.tile_Carte4_39 {
+				width: 63px;
+				height: 121px;
+			}
+			</style>
         	<img src="adr/images/TownMap/{SAISON}/Tuile_Haut.gif" class="tile_{SAISON}_Haut" /><br />
 
         	<img src="adr/images/TownMap/{SAISON}/Tuile_1_1.gif" style="height: 103px;" /><!-- IF HAS_PRISON --><a href="{U_TOWNMAP_PRISON}"><img src="adr/images/TownMap/{SAISON}/Tuile_1_2.gif" border="0" alt="{L_TOWNMAP_PRISON}" title="Prison" /></a><!-- ELSE --><img class="greyed" src="adr/images/TownMap/{SAISON}/Tuile_empty_downwalled.png" style="width: 84px; height: 103px" title="Prison ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_1_3.gif" style="height: 103px; max-width: 242px;" /><!-- IF HAS_BANK --><a href="{U_TOWNMAP_BANQUE}"><img src="adr/images/TownMap/{SAISON}/Tuile_1_4.gif" border="0" alt="{L_TOWNMAP_BANQUE}" title="Banque" /></a><!-- ELSE --><img src="adr/images/TownMap/{SAISON}/Tuile_empty.png" style="width: 107px; height: 103px" border="0" alt="{L_TOWNMAP_BANQUE}" title="Banque ({L_BUILDING_UNAV})" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_1_5.gif" style="height: 103px;" /><!-- IF HAS_MINE --><a href="{U_TOWNMAP_MINE}"><img src="adr/images/TownMap/{SAISON}/Tuile_1_6.gif" border="0" alt="{L_TOWNMAP_MINE}" title="Mine" /></a><!-- ELSE --><img class="greyed" src="adr/images/TownMap/{SAISON}/Tuile_empty.png" style="width: 92px; height: 103px" border="0" title="Mine ({L_BUILDING_UNAV})" alt="{L_TOWNMAP_MINE}" /><!-- ENDIF --><img src="adr/images/TownMap/{SAISON}/Tuile_1_7.gif" style="height: 103px;" /><br />
@@ -165,6 +196,18 @@
         	<!-- IF HAS_MONSTERS -->
         	<a href="{U_TOWNMAP_COMBAT}"><img src="adr/images/TownMap/{SAISON}/Tuile_Monstre.gif" border="0" alt="{L_TOWNMAP_MONSTRE}" /></a>
         	<!-- ENDIF -->
+        	<!-- END switch_Adr_zone_townmap_disable -->
+			<!-- BEGIN switch_Adr_zone_townmap_enable -->
+			<!-- V: let's restore the old layout layout -->
+			<table width="100%" height="100%" align="center" border="1">
+				<tr>
+					<th align="center" colspan="4" >{L_ZONE_TOWN}</td>
+				</tr>
+				{SHOWMAP}
+			</table>
+			<!-- END switch_Adr_zone_townmap_enable -->
+        </td>
+        <!-- BEGIN switch_Adr_zone_townmap_disable -->
 		<td align="center" class="row2" width="20%" valign="top"><span class="gen">
 			<form method="post" action="{S_CHARACTER_ACTION}">
 			<table><tr>
@@ -194,11 +237,12 @@
 			</table>
 			</form>
 		</span></td>
+		<!-- END switch_Adr_zone_townmap_disable -->
 	</tr>
 </table>
-
 <br clear="all" />
 
+<!-- BEGIN switch_Adr_zone_townmap_disable -->
 <table width="100%" align="center" border="1">
 	<tr>
 		<th align="center" colspan="10">Actions</td>
@@ -209,20 +253,23 @@
         <td align="center" class="row2" colspan="2"><a href="adr_cooking.php">Cuisine</a></td>
     </tr>
     <tr>
-	    <td align="center" class="row1"><a href="adr_alchemy.php">Atelier d'alchimie</a></td>
-        <td align="center" class="row1"><a href="adr_tailor.php">Tailleur</a></td>
+	    <td align="center" class="row1" colspan="1"><a href="adr_alchemy.php">Atelier d'alchimie</a></td>
+        <td align="center" class="row1" colspan="3"><a href="adr_tailor.php">Tailleur</a></td>
     </td>
 	<tr>
         <td align="center" class="row2"><a href="adr_fish.php">Pêche</a></td>
-        <td align="center" class="row2"><a href="adr_herbal.php">Herborisme</a></td>
+        <td align="center" class="row2"><a href="adr_herbal.php">Herboristerie</a></td>
         <td align="center" class="row1"><a href="adr_hunting.php">Chasse</a></td>
         <td align="center" class="row2"><a href="adr_lumberjack.php">Bûcheron</a></td>
     </tr>
     <tr>
-    	<td align="center" colspan="3"><a href="adr_beggar.php">Parler à la mendiante</a></td>
-    	<td align="center" colspan="4"><a href="adr_party.php">Groupe</a></td>
+    	<td align="center"><a href="adr_beggar.php">Parler à la mendiante</a></td>
+    	<td align="center"><a href="adr_lake.php">Lac magique</a></td>
+    	<td align="center" colspan="2"><a href="adr_party.php">Groupe</a></td>
     </tr>
 </table>
+<br clear="all" />
+<!-- END switch_Adr_zone_townmap_disable -->
 
 <!-- BEGIN npc_display_enable -->
 <br clear="all" />
@@ -244,7 +291,6 @@
 </table>
 <!-- END npc_display_enable -->
 
-<br clear="all" />
 <table width="100%" align="center" border="1">
 	<tr>
 		<th align="center" colspan="2" ><u>{L_ZONE_CONNECTED}</u></td>

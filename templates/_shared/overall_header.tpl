@@ -42,6 +42,16 @@ if ( {PRIVATE_MESSAGE_NEW_FLAG} )
 }
 </script>
 <!-- END switch_enable_pm_popup -->
+<script>
+var win = null;
+function Teleport_Popup(mypage,myname,w,h,scroll)
+{
+  var LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+  var TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+  var settings = 'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable';
+  win = window.open(mypage,myname,settings);
+}
+</script>
 <script language="javascript" src="templates/_shared/bbc_box/fade.js" type="text/javascript"></script>
 <script language="Javascript" type="text/javascript">
 //V
