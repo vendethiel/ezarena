@@ -15,7 +15,9 @@
 		<th align="center">{L_ITEM_IMG}</th>
 		<th align="center">{L_ITEM_NAME}</th>
 		<th align="center">{L_ITEM_DESC}</th>
-		<th align="center">{L_ITEM_ZONE}</th>
+		<th align="center">Statut</th>
+		<th align="center">Ventes</th>
+		<th align="center">Zones</th>
 		<th align="center" colspan="2">{L_ACTION}</a></th>
 	</tr>
 
@@ -24,7 +26,9 @@
 		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_IMG}</td>
 		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_NAME}</td>
 		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_DESC}</td>
-		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_ZONE}</td>
+		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_STATUS}</td>
+		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_SALES_STATUS}</td>
+		<td class="{items.ROW_CLASS}" align="center">{items.STORE_ZONE}</td>
 		<td class="{items.ROW_CLASS}" align="center"><a href="{items.U_ITEM_EDIT}">{L_EDIT}</a></td>
 		<td class="{items.ROW_CLASS}" align="center"><a href="{items.U_ITEM_DELETE}">{L_DELETE}</a></td>
 	</tr>
@@ -32,7 +36,7 @@
 	</form>
 	<form method="post" action="{S_SHOPS_ACTION}">
 	<tr>
-		<td class="catBottom" colspan="10" align="center">{S_HIDDEN_FIELDS}<input type="submit" value="{L_ADD_ITEM}" class="mainoption" /></td>
+		<td class="catBottom" colspan="12" align="center">{S_HIDDEN_FIELDS}<input type="submit" value="{L_ADD_ITEM}" class="mainoption" /></td>
 	</tr>
 </table>
 

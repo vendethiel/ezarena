@@ -20,11 +20,14 @@ $lang['Adr_elements']='Eléments';
 $lang['Adr_alignments']='Alignements';
 $lang['Adr_classes']='Classes';
 $lang['Adr_skills']='Compétences';
-$lang['Adr_forum_shop']='Magasin du forum';
 $lang['Adr_settings']='ADR-Configuration';
 $lang['Adr_misc_settings']='Divers';
-$lang['Adr_items_settings']='Objets';
-$lang['Adr_items_settings_advanced']='Types d\'objet';
+
+$lang['Adr_forum_shop']='Objets';
+$lang['Adr_items_settings']='Types d\'objet';
+// $lang['Adr_items_settings_advanced']='Types d\'objet';
+$lang['Adr_store_cats']='Magasins';
+
 $lang['Adr_skills_settings']='Compétences';
 $lang['Adr_vault']='ADR-Trésorerie';
 $lang['Adr_vault_exchange']='Actions';
@@ -43,7 +46,6 @@ $lang['Adr_display_settings']='Affichage';
 $lang['Adr_items_resync']='Prix des objets';
 $lang['Adr_characters']='Personnages';
 $lang['Adr_guilds']='Configuration des guildes';
-$lang['Adr_store_cats']='Categories de magasins';
 $lang['Adr_jobs']='Metiers';
 $lang['Adr_armour_sets']='Sets d\'armures';
 $lang['Adr_shops_tracker']='Logs des magasins';

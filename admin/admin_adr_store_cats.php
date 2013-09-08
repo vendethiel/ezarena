@@ -64,31 +64,33 @@ if ( $mode != "" )
 			}
 			$items = $db->sql_fetchrowset($result);
 			
-			//destinations lists
+			//zone lists
+			$zone_list = '<select name="store_zone[]" size="4" multiple>';
+			$zone_list .= '<option value="0" SELECTED class="post">'. $lang['Adr_zones_all_stores'] .'</option>';
+
 			$sql = "SELECT * FROM " . ADR_ZONES_TABLE ."
-				ORDER BY zone_name ASC";
-			$result = $db->sql_query($sql);
-			if( !$result )
-				message_die(GENERAL_ERROR, 'Could not obtain zones information', "", __LINE__, __FILE__, $sql);
+					ORDER BY zone_id ASC";
+			if( !($result = $db->sql_query($sql)) ){
+       			message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);}
 
-			$zonelist = $db->sql_fetchrowset($result);
-
-			$existing_zone = $items['store_zone'];
-			(  $existing_zone == '' ) ? $existing_zone_name = $lang['Adr_zone_acp_choose_nothing'] : $existing_zone_name = $existing_zone;
+			while( $row = $db->sql_fetchrow($result) ){
+				$zone_list .= '<option value="' . $row['zone_id'] . '" class="post">' . $row['zone_id'] . '-' . $row['zone_name'] . '</option>';
+			}
+			$zone_list .= '</select>';
 			
-			$store_zone = '<select name="store_zone">';
-			$store_zone .= '<option value = "' . $existing_destination1 . '" >' . $existing_destination1 . '</option>';
-			$store_zone .= '<option selected value="0" class="post">'. $lang['Adr_store_zone_nothing'] .'</option>';
-			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
-			  	$store_zone .= '<option value = "' . $zonelist[$i]['zone_id'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
-			$store_zone .= '</select>';
-
+			
+			//store lists
+/*			$sql = "SELECT * FROM " . ADR_STORES_TABLE ."
+					ORDER BY shop_name ASC";
+			if ( !$result = $db->sql_query($sql)){
+				message_die(GENERAL_ERROR, 'Could not obtain store information', "", __LINE__, __FILE__, $sql);}
+*/
 			$s_hidden_fields = '<input type="hidden" name="mode" value="savenew_store" /><input type="hidden" name="store_type" value="' . $item_type . '" />';
 			
 			$template->assign_vars(array(
-			    "STORE_ZONE" => $store_zone,
-			    "L_STORE_ZONE" => $lang['Adr_store_zone'],
-				"L_STORE_ZONE_EXPLAIN" => $lang['Adr_store_zone_explain'],
+				"ZONE_STORE_LIST" => $zone_list,
+				"L_ZONE_STORE_LIST" => $lang['Adr_items_zone_title'],
+				"L_ZONE_STORE_LIST_EXPLAIN" => $lang['Adr_zone_name_explain'],
 				"ITEM_QUALITY" => adr_get_item_quality($items['item_quality'],'list'),
 				"ITEM_TYPE" => adr_get_item_type($items['item_type_use'],'list'),
 				"L_POINTS" => $board_config['points_name'],
@@ -104,8 +106,6 @@ if ( $mode != "" )
 				"L_ITEM_NAME" => $lang['Adr_shops_categories_item_name'],
 				"L_ITEM_DESC" => $lang['Adr_shops_categories_item_desc'],
 				"L_ITEM_STATUS" => $lang['Adr_store_status'],
-				// cedô modification
-				"L_ITEM_ZONE" => $lang['Adr_store_zone'],
 				"L_ITEM_SALES" => $lang['Adr_store_sales'],
 				"L_ITEM_AUTH" => $lang['Adr_store_auth'],
 				"L_ITEM_VIEW" => $lang['Adr_store_view'],
@@ -119,10 +119,12 @@ if ( $mode != "" )
 				"L_ITEM_PRICE" => $lang['Adr_items_price'],
 				"L_ITEM_PRICE_EXPLAIN" => $lang['Adr_items_price_explain'],
 				"L_IMG" => $lang['Adr_races_image'],
-				"L_IMG_EXPLAIN" => $lang['Adr_items_image_explain'],
+				"L_IMG_EXPLAIN" => $lang['Adr_shop_image_explain'],
 				"L_SUBMIT" => $lang['Submit'],
 				"S_ITEMS_ACTION" => append_sid("admin_adr_store_cats.$phpEx"),
 				"S_HIDDEN_FIELDS" => $s_hidden_fields, 
+				'ITEM_STATUS_CHECKED' => ' checked',
+				'ITEM_SALES_CHECKED' => ' checked',
 			));
 
 			$template->pparse("body");
@@ -159,40 +161,31 @@ if ( $mode != "" )
 			}
 			$items = $db->sql_fetchrow($result);
 
-			//destinations lists
-			$sql = "SELECT * FROM " . ADR_ZONES_TABLE ."
-				ORDER BY zone_name ASC";
-			$result = $db->sql_query($sql);
-			if( !$result )
-				message_die(GENERAL_ERROR, 'Could not obtain zones information', "", __LINE__, __FILE__, $sql);
-
-			$zonelist = $db->sql_fetchrowset($result);
-
-			$existing_zone = $items['store_zone'];
-
-			$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
-			WHERE zone_id = $existing_zone ";
-			if( !($result = $db->sql_query($sql)) )
-				message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
-
-			$existing_zone2 = $db->sql_fetchrow($result); 
-			$existing_name = $existing_zone2['zone_name'];
-			
-			
-			$existing_name = (  $existing_name == '' ) ? $existing_name = $lang['Adr_zone_acp_choose_nothing'] : $existing_name;
-			
-			$store_zone = '<select name="store_zone">';
-			if ($existing_name)
-				$store_zone .= '<option value = "' . $existing_zone . '" >' . $existing_name . '</option>';
-			$store_zone .= '<option value="0" >'. $lang['Adr_store_zone_nothing'] .'</option>';
-			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
-			  	$store_zone .= '<option value = "' . $zonelist[$i]['zone_id'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
-			$store_zone .= '</select>';
-			
 			$s_hidden_fields = '<input type="hidden" name="mode" value="save_store" /><input type="hidden" name="store_id" value="' . $store_id . '" />';
+			
+			//zone lists
+			$zone_selected_array = explode( ',' , $items['store_zone'] );
+			$zone_list = '<select name="store_zone[]" size="4" multiple>';
+   			$zone_list .= ( $zone_selected_array[0] == '0' ) ? '<option value="0" selected="selected" class="post">'. $lang['Adr_zones_all_stores'] .'</option>' : '<option value="0" class="post">'. $lang['Adr_zones_all_stores'] .'</option>';
+
+			$sql = "SELECT zone_id, zone_name FROM " . ADR_ZONES_TABLE . "
+					ORDER BY zone_id ASC";
+			if( !($result = $db->sql_query($sql)) ){
+        		message_die(GENERAL_ERROR, 'Could not query zone list', '', __LINE__, __FILE__, $sql);}
+
+			while( $row = $db->sql_fetchrow($result) )
+			{
+				if ( in_array( $row['zone_id'] , $zone_selected_array ) ){
+					$zone_list .= '<option value="' . $row['zone_id'] . '" SELECTED class="post">' . $row['zone_id'] . '-' . $row['zone_name'] . '</option>';}
+				else{
+					$zone_list .= '<option value="' . $row['zone_id'] . '" class="post">' . $row['zone_id'] . '-' . $row['zone_name'] . '</option>';}
+			}
+			$zone_list .= '</select>';
 
 			$template->assign_vars(array(
-			"STORE_ZONE" => $store_zone,
+				"ZONE_STORE_LIST" => $zone_list,
+				"L_ZONE_STORE_LIST" => $lang['Adr_items_zone_title'],
+				"L_ZONE_STORE_LIST_EXPLAIN" => $lang['Adr_zone_name_explain'],
 				"ITEM_NAME" => $items['store_name'],
 				"ITEM_DESC" => $items['store_desc'],
 				"ITEM_NAME_EXPLAIN" => adr_get_lang($items['store_name']),
@@ -208,8 +201,6 @@ if ( $mode != "" )
 				"ITEM_STATUS" => $items['store_status'],
 				"ITEM_SALES" => $items['store_sales'],
 				"ITEM_AUTH" => $items['store_auth'],
-				"L_STORE_ZONE" => $lang['Adr_store_zone'],
-				"L_STORE_ZONE_EXPLAIN" => $lang['Adr_store_zone_explain'],
 				"L_POINTS" => $board_config['points_name'],
 				"L_CLOSED" => $lang['Adr_store_status_closed'],
 				"L_OPEN" => $lang['Adr_store_status_open'],
@@ -253,7 +244,11 @@ if ( $mode != "" )
 			$store_img = ( isset($HTTP_POST_VARS['item_img']) ) ? trim($HTTP_POST_VARS['item_img']) : trim($HTTP_GET_VARS['item_img']);
 			$store_status = intval($HTTP_POST_VARS['item_status']);
 			$store_sales = intval($HTTP_POST_VARS['item_sales']);
-			$store_zone1 = ( isset($HTTP_POST_VARS['store_zone']) ) ? trim($HTTP_POST_VARS['store_zone']) : trim($HTTP_GET_VARS['store_zone']);
+			if ( !$HTTP_POST_VARS['store_zone'] || in_array( '0' , $HTTP_POST_VARS['store_zone'] ) ){
+				$store_zone = '0';}
+			else {
+				$store_zone = implode(',' , $HTTP_POST_VARS['store_zone']);
+			}
 
 			$sql = "UPDATE " . ADR_STORES_TABLE . "
 				SET 	store_name = '" . str_replace("\'", "''", $store_name) . "', 
@@ -261,7 +256,7 @@ if ( $mode != "" )
 					store_img = '" . str_replace("\'", "''", $store_img) . "', 
 					store_status = $store_status, 
 					store_sales_status = $store_sales,
-					store_zone = '" . str_replace("\'", "''", $store_zone1) . "'
+					store_zone = '" . str_replace("\'", "''", $store_zone) . "'
 				WHERE store_id = " . $store_id . " 
 				AND store_owner_id = 1";
 			if( !($result = $db->sql_query($sql)) )
@@ -278,7 +273,11 @@ if ( $mode != "" )
 			$store_img = ( isset($HTTP_POST_VARS['item_img']) ) ? trim($HTTP_POST_VARS['item_img']) : trim($HTTP_GET_VARS['item_img']);
 			$store_status = intval($HTTP_POST_VARS['item_status']);
 			$store_sales = intval($HTTP_POST_VARS['item_sales']);
-			$store_zone1 = ( isset($HTTP_POST_VARS['store_zone']) ) ? trim($HTTP_POST_VARS['store_zone']) : trim($HTTP_GET_VARS['store_zone']);
+			if ( in_array( '0' , $HTTP_POST_VARS['store_zone'] ) || $HTTP_POST_VARS['store_zone'] == '' ){
+			    $store_zone = '0';}
+			else {
+				$store_zone = implode(',' , $HTTP_POST_VARS['store_zone']);
+			}
 
 			if ($store_name == '' || $store_desc == '' )
 			{
@@ -287,7 +286,7 @@ if ( $mode != "" )
 
 			$sql = "INSERT INTO " . ADR_STORES_TABLE . " 
 				( store_name , store_desc , store_img , store_status , store_sales_status , store_zone )
-				VALUES ( '" . str_replace("\'", "''", $store_name) . "', '" . str_replace("\'", "''", $store_desc) . "' , '" . str_replace("\'", "''", $store_img) . "' , $store_status , $store_sales , '" . str_replace("\'", "''", $store_zone1) . "')";
+				VALUES ( '" . str_replace("\'", "''", $store_name) . "', '" . str_replace("\'", "''", $store_desc) . "' , '" . str_replace("\'", "''", $store_img) . "' , $store_status , $store_sales , '" . str_replace("\'", "''", $store_zone) . "')";
 			$result = $db->sql_query($sql);
 			if( !$result )
 			{
@@ -304,13 +303,10 @@ else
 
 	$start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
 
-	if ( isset($HTTP_GET_VARS['mode2']) || isset($HTTP_POST_VARS['mode2']) )
-	{
-		$mode2 = ( isset($HTTP_POST_VARS['mode2']) ) ? htmlspecialchars($HTTP_POST_VARS['mode2']) : htmlspecialchars($HTTP_GET_VARS['mode2']);
-	}
-	else
-	{
-		$mode2 = 'itemname';
+	if ( isset($HTTP_GET_VARS['mode2']) || isset($HTTP_POST_VARS['mode2']) ){
+		$mode2 = ( isset($HTTP_POST_VARS['mode2']) ) ? htmlspecialchars($HTTP_POST_VARS['mode2']) : htmlspecialchars($HTTP_GET_VARS['mode2']);}
+	else{
+		$mode2 = 'store_zone';
 	}
 
 	if(isset($HTTP_POST_VARS['order']))
@@ -326,7 +322,7 @@ else
 		$sort_order = 'ASC';
 	}
 
-	$mode_types_text = array( $lang['Adr_store_name'] , $lang['Adr_store_status'] , $lang['Adr_store_sales'], $lang['Adr_store_zone'] );
+	$mode_types_text = array( $lang['Adr_store_name'] , $lang['Adr_store_status'] , $lang['Adr_store_sales']);
 	$mode_types = array( 'name', 'status' , 'sales', 'Zone' );	
 
 	$select_sort_mode = '<select name="mode2">';
@@ -359,22 +355,26 @@ else
 		case 'sales':
 			$order_by = "store_sales_status $sort_order LIMIT $start, " . $board_config['topics_per_page'];
 			break;
-		case 'Zone':
-			$order_by = "store_zone $sort_order LIMIT $start, " . $board_config['topics_per_page'];
-			break;
+		// case 'Zone':
+		// 	$order_by = "store_zone $sort_order LIMIT $start, " . $board_config['topics_per_page'];
+		// 	break;
 		default:
 			$order_by = "store_name $sort_order LIMIT $start, " . $board_config['topics_per_page'];
 			break;
 	}
 
+	$sql = "SELECT zone_id, zone_name FROM " . ADR_ZONES_TABLE ."
+			ORDER BY zone_id ASC";
+	if( !($result = $db->sql_query($sql)) ){
+		message_die(GENERAL_ERROR, 'Could not obtain zones information', "", __LINE__, __FILE__, $sql);}
+	$zone_list = $db->sql_fetchrowset($result);
+	
+	
 	$sql = "SELECT * FROM " . ADR_STORES_TABLE . "
 			WHERE store_admin = 0
-		ORDER BY $order_by";
-	$result = $db->sql_query($sql);
-	if( !$result )
-	{
-		message_die(GENERAL_ERROR, 'Could not obtain items information', "", __LINE__, __FILE__, $sql);
-	}
+			ORDER BY $order_by";
+	if( !($result = $db->sql_query($sql)) ){
+		message_die(GENERAL_ERROR, 'Could not obtain items information', "", __LINE__, __FILE__, $sql);}
 	$items = $db->sql_fetchrowset($result);
 
 	$s_hidden_fields = '<input type="hidden" name="mode" value="add_store" /><input type="hidden" name="store_type" value="' . $category_id . '" />';
@@ -382,6 +382,26 @@ else
 	for($k = 0; $k < count($items); $k++)
 	{
 		$row_class = ( !($k % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
+		
+		$store_zone_array = explode( ',' , $items[$k]['store_zone'] );
+		if ( $store_zone_array[0] == '0' ){
+		    $store_zone = $lang['Adr_zones_all_stores'];
+		} else {
+			$store_zone = '';
+			$first = true;
+			for ( $x = 0 ; $x < count( $zone_list ) ; $x++ )
+			{
+			    if ( in_array( $zone_list[$x]['zone_id'] , $store_zone_array ) )
+			    {
+					if ( $first )
+						$first = false;
+					else
+						$store_zone .= '<br/>';
+
+					$store_zone .= $zone_list[$x]['zone_id'] . '-' . $zone_list[$x]['zone_name'];
+				}
+			}
+		}
 
 		if ( $items[$k]['store_status'] == 0 )
 		{
@@ -403,25 +423,6 @@ else
 			$store_sales = $lang['Adr_store_sales_on'];
 		}
 
-		// cedô modification
-		if ( $items[$k]['store_zone'] != '' )
-		{
-			$zone = $items[$k]['store_zone'];
-
-			$sql = "SELECT * FROM  " . ADR_ZONES_TABLE . "
-			WHERE zone_id = $zone";
-			if( !($result = $db->sql_query($sql)) )
-				message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
-
-			$zone_name2 = $db->sql_fetchrow($result); 
-			$zone= $zone_name2['zone_name'];
-		}
-
-		if ( $items[$k]['store_zone'] == 0 )
-		{
-			$zone = $lang['Adr_store_zone_nothing'];
-		}
-
 		if ( $items[$k]['store_img'] != '' )
 		{
 			$store_img = '<img src="../adr/images/store/'.$items[$k]['store_img'].'">';
@@ -440,7 +441,7 @@ else
 			"ITEM_STATUS" => $store_status,
 			"ITEM_VIEW" => $store_view,
 			"ITEM_SALES_STATUS" => $store_sales,
-			"ITEM_ZONE" => $zone,
+			"STORE_ZONE" => $store_zone,
 			"ITEM_AUTH" => $store_auth,
 			"U_ITEM_EDIT" => append_sid("admin_adr_store_cats.$phpEx?mode=edit_store&amp;store_id=" . $items[$k]['store_id']), 
 			"U_ITEM_DELETE" => append_sid("admin_adr_store_cats.$phpEx?mode=delete_store&amp;store_id=" . $items[$k]['store_id']),
@@ -461,9 +462,6 @@ else
 
 	$template->assign_vars(array(
 		"L_ITEM_NAME" => $lang['Adr_store_name'],
-		"L_ZONE" => $lang['Adr_store_zone'],
-		"ZONE_LIST" => $lang['Adr_store_zone_explain'],	
-		"L_ITEM_ZONE" => $lang['Adr_store_zone'],
 		"L_ITEM_DESC" => $lang['Adr_store_desc'],
 		"L_ITEM_TITLE" => $lang['Adr_store_title'],
 		"L_ITEM_TEXT" => $lang['Adr_store_title_explain'],

@@ -1659,7 +1659,7 @@ CREATE TABLE phpbb_adr_stores (
   store_desc varchar(255) NOT NULL default '',
   store_img varchar(255) NOT NULL default '',
   store_status tinyint(1) NOT NULL default '1',
-  store_sales_status tinyint(1) NOT NULL default '0',
+  store_sales_status tinyint(1) NOT NULL default '1',
   store_admin tinyint(1) NOT NULL default '0',
   store_owner_id int(1) NOT NULL default '1',
   store_owner_img varchar(255) default '',
@@ -2059,10 +2059,6 @@ CREATE TABLE `phpbb_adr_character_quest_log_history` (
 # ADR - Zones by level
 ALTER TABLE `phpbb_adr_zones` ADD `zone_level` INT(8) DEFAULT '0' NOT NULL;
 
-# ADR - Zones specific shops
-ALTER TABLE `phpbb_adr_stores` ADD `store_zone` int(8) NOT NULL default '0'; 
-ALTER TABLE `phpbb_adr_shops` ADD `shop_zone` int(8) NOT NULL default '0';
-
 # ADR - Advanced Loot System
 ALTER TABLE `phpbb_adr_shops_items` ADD `item_loottables` TEXT NULL AFTER `item_store_id`;
 
@@ -2217,3 +2213,6 @@ CREATE TABLE phpbb_adr_zone_townmaps (
   zonemap_building text,
   PRIMARY KEY  (zonemap_type)
 ) ;
+
+# Shops in multiple zones
+ALTER TABLE `phpbb_adr_stores` ADD `store_zone` TEXT NOT NULL;

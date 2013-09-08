@@ -298,6 +298,7 @@ if ( defined ('IN_ADR_SHOPS'))
     $lang['Adr_shops_item_add_title']='Ajout et édition d\'objets';
     $lang['Adr_shops_item_add_title_explain']='Ici vous pouvez ajouter ou éditer les objets du magasin du forum';
     $lang['Adr_items_image_explain']='L\'image correspondante doit être placée dans le répertoire /adr/images/items/';
+    $lang['Adr_shop_image_explain']='L\'image correspondante doit être placée dans le répertoire /adr/images/store/';
     $lang['Adr_shops_items_successful_edited']='Objet mis à jour avec succès';
     $lang['Adr_shops_items_successful_added']='Objet ajouté au magasin des forums avec succès';
     $lang['Adr_shops_items_successful_deleted']='Objet supprimé du magasin des forums avec succès';
@@ -328,7 +329,7 @@ if ( defined ('IN_ADR_SHOPS'))
     $lang['Adr_store_status_closed']='Fermé';
     $lang['Adr_store_status_open']='Ouvert';
     $lang['Adr_store_sales_on']='Ventes ON';
-    $lang['Adr_store_sales_off']='Normal';
+    $lang['Adr_store_sales_off']='Ventes OFF';
     $lang['Adr_store_auth_all']='Tout';
     $lang['Adr_store_auth_admin']='Admin seulement';
     $lang['Adr_store_open']='Ouvert';
@@ -740,10 +741,8 @@ $lang['Adr_elements_all']='Tous les éléments';
 $lang['Adr_alignments_all']='Tous les alignements';
 $lang['Adr_levels_all']='N\'importe quel niveau';
 
-# Zone specific shops
-$lang['Adr_store_zone_nothing']= 'Pas de zone spécifique'; 
-$lang['Adr_store_zone_explain']= 'Choisissez la zone où le magasin se situera '; 
-$lang['Adr_store_zone'] = 'Nom de la zone'; 
+$lang['Adr_zones_all_stores']='-Toutes les zones-';
+  $lang['Adr_zone_name_explain']='Choisissez les zones dans lesquelles le magasin apparaîtra (utilisez ctrl+clic pour en sélectionner plusieurs).';
 
 # Loots
 if ( defined ('IN_ADR_LOOTTABLES'))

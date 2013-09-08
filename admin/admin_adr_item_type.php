@@ -23,6 +23,9 @@ define('IN_ADR_ADMIN', 1);
 define('IN_ADR_ITEM_TYPE', 1);
 define('IN_ADR_SHOPS', 1);
 
+// V: this is too dangerous.
+return;
+
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);

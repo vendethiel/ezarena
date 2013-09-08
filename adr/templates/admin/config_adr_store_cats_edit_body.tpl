@@ -31,10 +31,18 @@
 		<td class="row2" align="center" ><input type="text" name="item_img" value="{ITEM_IMG}" size="30" maxlength="255" /><br /><img src="../adr/images/store/{ITEM_IMG}" alt="{ITEM_NAME}" /></td>
 	<!-- END edit -->
 	</tr>
-	<tr> 
-      <td class="row2" width="60%" ><b>{L_STORE_ZONE} :</b><br \>{L_STORE_ZONE_EXPLAIN}</td> 
-      <td class="row2" align="center" ><span class="gen">{STORE_ZONE}</span></td> 
-   </tr>
+	<tr>
+		<td class="row1" width="65%"><span class="gen">{L_ITEM_STATUS}</span></td>
+		<td class="row2" align="center" valign="top"><input type="radio" name="item_status" value="1" {ITEM_STATUS_CHECKED} />{L_OPEN}&nbsp;<input type="radio" name="item_status" value="0" {NO_ITEM_STATUS_CHECKED} />{L_CLOSED}</td>
+	</tr>
+	<tr>
+		<td class="row1" width="65%"><span class="gen">{L_ITEM_SALES}</span></td>
+		<td class="row2" align="center" valign="top"><input type="radio" name="item_sales" value="1" {ITEM_SALES_CHECKED} />{L_SALE}&nbsp;<input type="radio" name="item_sales" value="0" {NO_ITEM_SALES_CHECKED} />{L_NORMAL}</td>
+	</tr>
+	<tr>
+		<td class="row1" width="60%" >{L_ZONE_STORE_LIST}<br \>{L_ZONE_STORE_LIST_EXPLAIN}</td>
+		<td class="row2" align="center" colspan="2"><span class="gen">{ZONE_STORE_LIST}</span></td>
+	</tr>
 </table>
 
 <br clear="all" />
