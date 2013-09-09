@@ -1,12 +1,14 @@
 <?php
 /***************************************************************************
-*                               admin_rabbitoshi_shop.php
-*                              -------------------
-*     begin                : 27/11/2003
-*     copyright            : Dr DLP / Malicious Rabbit
-*
-*
-****************************************************************************/
+ *                            admin_rabbitoshi_shop.php
+ *                              -------------------
+ *     begin                : Thurs June 9 2006
+ *     copyright            : (C) 2006 The ADR Dev Crew
+ *     site                 : http://www.adr-support.com
+ *
+ *     $Id: admin_rabbitoshi_shop.php,v 4.00.0.00 2006/06/09 02:32:18 Ethalic Exp $
+ *
+ ****************************************************************************/
 
 /***************************************************************************
  *
@@ -17,7 +19,7 @@
  *
  ***************************************************************************/
 
-define('IN_PHPBB', 1);
+define('IN_PHPBB', true);
 
 if( !empty($setmodules) )
 {
@@ -30,13 +32,11 @@ if( !empty($setmodules) )
 $phpbb_root_path = "./../";
 require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);
+include($phpbb_root_path.'rabbitoshi/includes/functions_rabbitoshi.'.$phpEx);
 
-include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_rabbitoshi.'.$phpEx);
+rabbitoshi_template_file('admin/config_rabbitoshi_shop_body.tpl');
+
 $board_config['points_name'] = $board_config['points_name'] ? $board_config['points_name'] : $lang['Rabbitoshi_default_points_name'] ;
-
-$template->set_filenames(array(
-	"body" => "admin/config_rabbitoshi_shop_body.tpl")
-);
 
 if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
 {
@@ -169,7 +169,7 @@ else
 			$item_name = isset($lang[$field_data['item_name']]) ? $lang[$field_data['item_name']] : $field_data['item_name'];
 
 			$pic = $field_data['item_img'];
-			if (!(file_exists("images/Rabbitoshi/$pic")) || !$pic )
+			if (!(file_exists("rabbitoshi/images/items/$pic")) || !$pic )
 			{
 				$pic = $field_data['item_name'].'.gif';
 			}
@@ -189,7 +189,7 @@ else
 				"L_ITEM_IMG_EXPLAIN" => $lang['Rabbitoshi_img_item_explain'],
 				"L_RABBITOSHI_TITLE" => $lang['Rabbitoshi_shop_title'],
 				"L_RABBITOSHI_CONFIG" => $lang['Rabbitoshi_shop_config'],
-				"L_RABBITOSHI_EXPLAIN" => $lang['Rabbitoshi_shop_desc'],
+				"L_RABBITOSHI_TEXT" => $lang['Rabbitoshi_shop_desc'],
 				"L_ITEM_NAME" => $lang['Rabbitoshi_shop_name'],
 				"L_ITEM_PRIZE" => $lang['Rabbitoshi_shop_prize'],
 				"L_ITEM_TYPE" => $lang['Rabbitoshi_shop_type'],
@@ -312,7 +312,7 @@ else
 				$item_name = isset($lang[$rabbitoshi_shop[$i]['item_name']]) ? $lang[$rabbitoshi_shop[$i]['item_name']] : $rabbitoshi_shop[$i]['item_name'];
 
 				$pic = $rabbitoshi_shop[$i]['item_img'];
-				if (!(file_exists("images/Rabbitoshi/$pic")) || !$pic )
+				if (!(file_exists("rabbitoshi/images/items/$pic")) || !$pic )
 				{
 					$pic = $rabbitoshi_shop[$i]['item_name'].'.gif';
 				}

@@ -1,11 +1,25 @@
 <?php
 /***************************************************************************
- *                         admin_rabbitoshi_ability.php
- *                            ------------------
- *   begin                : 18/01/2005
- *   copyright		  : One_Piece
+ *                          admin_rabbitoshi_abilities.php
+ *                              -------------------
+ *     begin                : Thurs June 9 2006
+ *     copyright            : (C) 2006 The ADR Dev Crew
+ *     site                 : http://www.adr-support.com
+ *
+ *     $Id: admin_rabbitoshi_abilities.php,v 4.00.0.00 2006/06/09 02:32:18 Ethalic Exp $
+ *
+ ****************************************************************************/
+
+/***************************************************************************
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
  *
  ***************************************************************************/
+
+define('IN_PHPBB', true);
 
 if( !empty($setmodules) )
 {
@@ -14,18 +28,12 @@ if( !empty($setmodules) )
 	return;
 }
 
-define('IN_PHPBB', true);
-
-$phpbb_root_path = '../';
+$phpbb_root_path = './../';
 require($phpbb_root_path . 'extension.inc');
-require("pagestart.$phpEx");
+require("./pagestart.$phpEx");
+include($phpbb_root_path.'rabbitoshi/includes/functions_rabbitoshi.'.$phpEx);
 
-include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_rabbitoshi.'.$phpEx);
-include($phpbb_root_path . 'includes/functions_rabbitoshi.'.$phpEx);
-
-$template->set_filenames(array(
-	'body' => 'admin/config_rabbitoshi_abilities_body.tpl')
-);
+rabbitoshi_template_file('admin/config_rabbitoshi_abilities_body.tpl');
 
 $submit = isset($HTTP_POST_VARS['submit']); 
 

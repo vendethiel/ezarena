@@ -296,7 +296,7 @@ $l_timezone = (count($l_timezone) > 1 && $l_timezone[count($l_timezone)-1] != 0)
 // check to see if we are supposed to toggle unread link from "View your unread posts" to "You have no unread posts" depending on whether 
 // there are unread posts (on large boards people may want to skip that toggle by defining $toggle_unreads_link as false 
 // in index.php to save query time)
-if ($toggle_unreads_link)
+if (!empty($toggle_unreads_link))
 {
 	// only run a new list_new_unreads check if we haven't already done that by the time we get here (if we're coming from index.php this will already have been done in index.php)
 	if ( !isset($new_unreads) )
@@ -310,6 +310,11 @@ else
 	$new_unreads = true;
 }
 //END MOD Keep_unread_2
+
+if (empty($page_title)) {
+	$page_title = '';
+}
+
 // www.phpBB-SEO.com SEO TOOLKIT BEGIN - META
 $seo_meta = "";
 if (is_object($phpbb_seo) ) {

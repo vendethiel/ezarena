@@ -106,7 +106,7 @@
    </tr>
    <tr>
 	   <td class="row2">
-      	<div class="post" style="text-align:center;width:100%;" height="200" tabindex="3" >
+      	<div class="post" style="text-align:center;width:100%; overflow: scroll; height: 300px;" tabindex="3" >
       	<!-- IF BATTLE_TEXT -->
 	  	{BATTLE_TEXT}
 	  	<!-- ELSE -->

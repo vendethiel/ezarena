@@ -19,10 +19,12 @@
  *
  ***************************************************************************/
 
-define('IN_ADR_BATTLE', true);
 if ( !defined('IN_PHPBB') )
 {
 	die("Hacking attempt");
+}
+if (!defined('IN_ADR_BATTLE')){
+	define('IN_ADR_BATTLE', true);
 }
 
 function adr_count_store_items($user_id)
@@ -148,6 +150,7 @@ function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, 
 	$item_element_same_dmg = $item_data['item_element_same_dmg'];
 	$item_element_weak_dmg = $item_data['item_element_weak_dmg'];
 	$item_weight = $item_data['item_weight'];
+	$item_no_sell = $item_data['item_no_sell'];
 	$item_max_skill = $item_data['item_max_skill'];
 	$item_sell_back_percentage = $item_data['item_sell_back_percentage'];
 	$item_brewing_recipe = $item_data['item_brewing_recipe'];
@@ -195,8 +198,8 @@ function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, 
 	if($item_duration_max < $item_duration) $item_duration_max = $item_duration;
 
 	$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . "
-		(item_id, item_owner_id, item_type_use, item_name, item_desc, item_icon, item_price, item_quality, item_duration, item_duration_max, item_power, item_add_power, item_mp_use, item_weight, item_auth, item_element, item_element_str_dmg, item_element_same_dmg, item_element_weak_dmg, item_max_skill, item_sell_back_percentage, item_bought_timestamp, item_restrict_align_enable, item_restrict_align, item_restrict_class_enable, item_restrict_class, item_restrict_element_enable, item_restrict_element, item_restrict_race_enable, item_restrict_race, item_restrict_level, item_restrict_str, item_restrict_dex, item_restrict_con, item_restrict_int, item_restrict_wis, item_restrict_cha, item_crit_hit, item_crit_hit_mod, item_stolen_id, item_stolen_by, item_stolen_timestamp, item_brewing_recipe , item_brewing_items_req , item_effect , item_recipe_linked_item , item_original_recipe_id)
-		VALUES($new_item_id, $user_id, $item_type_use, '$item_name', '$item_desc', '" . str_replace("\'", "''", $item_icon) . "', $item_price, $item_quality, $item_duration, $item_duration_max, $item_power, $item_add_power, $item_mp_use, $item_weight, 0, $item_element, $item_element_str_dmg, $item_element_same_dmg, $item_element_weak_dmg, $item_max_skill, $item_sell_back_percentage, ".time().", $align_enable, '$align_type', $class_enable, '$class_type', $element_enable, '$element_type', $race_enable, '$race_type', $restrict_level, $restrict_str, $restrict_dex, $restrict_con, $restrict_int, $restrict_wis, $restrict_cha, $item_crit, $item_crit_mod, $stolen_id, '$stolen_by', $stolen_timestamp, $item_brewing_recipe , '".$item_brewing_items_req."' , '".$item_effect."' , $item_recipe_linked_item , $item_original_recipe_id)";
+		(item_id, item_owner_id, item_type_use, item_name, item_desc, item_icon, item_price, item_quality, item_duration, item_duration_max, item_power, item_add_power, item_mp_use, item_weight, item_auth, item_element, item_element_str_dmg, item_element_same_dmg, item_element_weak_dmg, item_max_skill, item_sell_back_percentage, item_bought_timestamp, item_restrict_align_enable, item_restrict_align, item_restrict_class_enable, item_restrict_class, item_restrict_element_enable, item_restrict_element, item_restrict_race_enable, item_restrict_race, item_restrict_level, item_restrict_str, item_restrict_dex, item_restrict_con, item_restrict_int, item_restrict_wis, item_restrict_cha, item_crit_hit, item_crit_hit_mod, item_stolen_id, item_stolen_by, item_stolen_timestamp, item_brewing_recipe , item_brewing_items_req , item_effect , item_recipe_linked_item , item_original_recipe_id, item_no_sell)
+		VALUES($new_item_id, $user_id, $item_type_use, '$item_name', '$item_desc', '" . str_replace("\'", "''", $item_icon) . "', $item_price, $item_quality, $item_duration, $item_duration_max, $item_power, $item_add_power, $item_mp_use, $item_weight, 0, $item_element, $item_element_str_dmg, $item_element_same_dmg, $item_element_weak_dmg, $item_max_skill, $item_sell_back_percentage, ".time().", $align_enable, '$align_type', $class_enable, '$class_type', $element_enable, '$element_type', $race_enable, '$race_type', $restrict_level, $restrict_str, $restrict_dex, $restrict_con, $restrict_int, $restrict_wis, $restrict_cha, $item_crit, $item_crit_mod, $stolen_id, '$stolen_by', $stolen_timestamp, $item_brewing_recipe , '".$item_brewing_items_req."' , '".$item_effect."' , $item_recipe_linked_item , $item_original_recipe_id, $item_no_sell)";
 	$result = $db->sql_query($sql);
 	if(!$result){
 		message_die(GENERAL_ERROR, "Couldn't insert new item", "", __LINE__, __FILE__, $sql);}

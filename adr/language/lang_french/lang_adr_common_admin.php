@@ -69,3 +69,4 @@ $lang['ADR-Recipes'] = 'ADR-Recettes /<br/>Donations';
 $lang['Spell Mod'] = 'Sorts';
 $lang['Manage Zone Maps'] = 'Cartes de zone';
 $lang['Loottable_Categories'] = 'Tables de butin';
+$lang['Library'] = 'Bibliothèque';

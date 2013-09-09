@@ -147,25 +147,27 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 	//
 	preg_match('/(..)(..)(..)(..)/', $user_ip, $user_ip_parts);
 
-	$sql = "SELECT ban_ip, ban_userid, ban_email 
-		FROM " . BANLIST_TABLE . " 
-		WHERE ban_ip IN ('" . $user_ip_parts[1] . $user_ip_parts[2] . $user_ip_parts[3] . $user_ip_parts[4] . "', '" . $user_ip_parts[1] . $user_ip_parts[2] . $user_ip_parts[3] . "ff', '" . $user_ip_parts[1] . $user_ip_parts[2] . "ffff', '" . $user_ip_parts[1] . "ffffff')
-			OR ban_userid = $user_id";
-	if ( $user_id != ANONYMOUS )
-	{
-		$sql .= " OR ban_email LIKE '" . str_replace("\'", "''", $userdata['user_email']) . "' 
-			OR ban_email LIKE '" . substr(str_replace("\'", "''", $userdata['user_email']), strpos(str_replace("\'", "''", $userdata['user_email']), "@")) . "'";
-	}
-	if ( !($result = $db->sql_query($sql, false, true)) )
-	{
-		message_die(CRITICAL_ERROR, 'Could not obtain ban information', '', __LINE__, __FILE__, $sql);
-	}
-
-	if ( $ban_info = $db->sql_fetchrow($result) )
-	{
-		if ( $ban_info['ban_ip'] || $ban_info['ban_userid'] || $ban_info['ban_email'] )
+	if (count($user_ip_parts) == 4) {
+		$sql = "SELECT ban_ip, ban_userid, ban_email 
+			FROM " . BANLIST_TABLE . " 
+			WHERE ban_ip IN ('" . $user_ip_parts[1] . $user_ip_parts[2] . $user_ip_parts[3] . $user_ip_parts[4] . "', '" . $user_ip_parts[1] . $user_ip_parts[2] . $user_ip_parts[3] . "ff', '" . $user_ip_parts[1] . $user_ip_parts[2] . "ffff', '" . $user_ip_parts[1] . "ffffff')
+				OR ban_userid = $user_id";
+		if ( $user_id != ANONYMOUS )
 		{
-			message_die(CRITICAL_MESSAGE, 'You_been_banned');
+			$sql .= " OR ban_email LIKE '" . str_replace("\'", "''", $userdata['user_email']) . "' 
+				OR ban_email LIKE '" . substr(str_replace("\'", "''", $userdata['user_email']), strpos(str_replace("\'", "''", $userdata['user_email']), "@")) . "'";
+		}
+		if ( !($result = $db->sql_query($sql, false, true)) )
+		{
+			message_die(CRITICAL_ERROR, 'Could not obtain ban information', '', __LINE__, __FILE__, $sql);
+		}
+
+		if ( $ban_info = $db->sql_fetchrow($result) )
+		{
+			if ( $ban_info['ban_ip'] || $ban_info['ban_userid'] || $ban_info['ban_email'] )
+			{
+				message_die(CRITICAL_MESSAGE, 'You_been_banned');
+			}
 		}
 	}
 	

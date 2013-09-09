@@ -170,7 +170,7 @@ function adr_weight_check($user_id)
 	if(!($result = $db->sql_query($sql)))
 		message_die(CRITICAL_ERROR, 'Error Getting Adr Users!');
 	$weight = $db->sql_fetchrow($result);
-	$current_weight = $weight[total];
+	$current_weight = $weight['total'];
 
 	if(($adr_general['weight_enable']) && ($current_weight > $max_weight))
 		adr_previous(Adr_battle_over_weight, adr_character_inventory, '');

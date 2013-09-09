@@ -207,7 +207,7 @@ else
  * Let's check for fighting a bit.
  */
 // first, let's check if we have any monster ...
-$template->assign_var('HAS_MONSTERS', $has_monsters = !empty($zone['zone_monsters_list']));
+$template->assign_var('HAS_MONSTERS', $has_monsters = $zone['zone_monsters_list'] != '');
 
 // now, let's check for duels. Code ripped off adr_battle_pvp
 // ... Duh. I can't understand how this link ever worked, tbh

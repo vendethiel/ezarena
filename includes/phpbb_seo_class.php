@@ -406,7 +406,9 @@ class phpbb_seo {
 			'meta_lang' => 'fr',
 			'meta_cat' => 'general',
 			'meta_robots' => 'index,follow',
-			'meta_gened' => FALSE
+			'meta_gened' => FALSE,
+			'page_title' => '',
+			'keywords' => '',
 		);
 		return;
 	}	

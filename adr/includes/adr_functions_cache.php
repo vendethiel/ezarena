@@ -583,7 +583,9 @@ function adr_get_element_infos($element_id)
 {
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config, $table_prefix;
 
-	define('IN_ADR_CHARACTER', 1);
+	if (!defined('IN_ADR_CHARACTER')){
+		define('IN_ADR_CHARACTER', 1);
+	}
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 	$element_id = intval($element_id);
 	$cache_config = explode('-', $board_config['Adr_use_cache_system']);
@@ -676,7 +678,9 @@ function adr_get_alignment_infos($alignment_id)
 {
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config, $table_prefix;
 
-	define('IN_ADR_CHARACTER', 1);
+	if (!defined('IN_ADR_CHARACTER')){
+		define('IN_ADR_CHARACTER', 1);
+	}
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 	$alignment_id = intval($alignment_id);
 	$cache_config = explode('-', $board_config['Adr_use_cache_system']);
@@ -719,7 +723,9 @@ function adr_update_alignment_infos()
 {
 	global $db, $lang, $phpEx, $userdata, $phpbb_root_path, $table_prefix;
 
-	define('IN_ADR_CHARACTER', 1);
+	if (!defined('IN_ADR_CHARACTER')){
+		define('IN_ADR_CHARACTER', 1);
+	}
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 
 	$template = new Template($phpbb_root_path);
@@ -769,7 +775,9 @@ function adr_get_class_infos($class_id)
 {
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config, $table_prefix;
 
-	define('IN_ADR_CHARACTER', 1);
+	if (!defined('IN_ADR_CHARACTER')){
+		define('IN_ADR_CHARACTER', 1);
+	}
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 	$cache_config = explode('-', $board_config['Adr_use_cache_system']);
 
@@ -953,7 +961,9 @@ function adr_get_monster_infos($monster_id)
 {
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config, $table_prefix;
 
-	define('IN_ADR_BATTLE', 1);
+	if (!defined('IN_ADR_CHARACTER')){
+		define('IN_ADR_CHARACTER', 1);
+	}
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 	$cache_config = explode('-', $board_config['Adr_use_cache_system']);
 
@@ -1014,7 +1024,7 @@ function adr_update_monster_infos()
 	$x = 1;
 	while($row = $db->sql_fetchrow($result))
 	{
-		$id = $x;
+		$id = $row['monster_id'];
 		$cells = array();
 		@reset($row);
 		while(list($key, $value) = @each($row)){
@@ -1029,7 +1039,6 @@ function adr_update_monster_infos()
 			'ID'		=> sprintf("'%s'", str_replace("'", "\'", $id)),
 			'CELLS'		=> $s_cells,
 		));
-		$x = ($x + 1);
 	}
 
 	$template->assign_var_from_handle('cache', 'cache');

@@ -1,11 +1,25 @@
 <?php
 /***************************************************************************
- *                         admin_rabbitoshi_levelup.php
- *                            ------------------
- *   begin                : 26/01/2005
- *   copyright		  : One_Piece
+ *                          admin_rabbitoshi_levelup.php
+ *                              -------------------
+ *     begin                : Thurs June 9 2006
+ *     copyright            : (C) 2006 The ADR Dev Crew
+ *     site                 : http://www.adr-support.com
+ *
+ *     $Id: admin_rabbitoshi_levelup.php,v 4.00.0.00 2006/06/09 02:32:18 Ethalic Exp $
+ *
+ ****************************************************************************/
+
+/***************************************************************************
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
  *
  ***************************************************************************/
+
+define('IN_PHPBB', true);
 
 if( !empty($setmodules) )
 {
@@ -14,20 +28,14 @@ if( !empty($setmodules) )
 	return;
 }
 
-define('IN_PHPBB', true);
-
-$phpbb_root_path = '../';
+$phpbb_root_path = './../';
 require($phpbb_root_path . 'extension.inc');
-require("pagestart.$phpEx");
+require("./pagestart.$phpEx");
+include($phpbb_root_path.'rabbitoshi/includes/functions_rabbitoshi.'.$phpEx);
 
-include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_rabbitoshi.'.$phpEx);
-include($phpbb_root_path . 'includes/functions_rabbitoshi.'.$phpEx);
+rabbitoshi_template_file('admin/config_rabbitoshi_levelup_body.tpl');
 
-$template->set_filenames(array(
-	'body' => 'admin/config_rabbitoshi_levelup_body.tpl')
-);
-
-$submit = isset($HTTP_POST_VARS['submit']); 
+$submit = isset($HTTP_POST_VARS['submit']);
 
 $sql = "SELECT *
 FROM " . RABBITOSHI_GENERAL_TABLE ;
@@ -89,9 +97,9 @@ if ( $submit )
 		message_die(GENERAL_ERROR, $lang['Rabbitoshi_update_error'] , "", __LINE__, __FILE__, $lsql); 
 	}
 	$lsql= "UPDATE ". RABBITOSHI_GENERAL_TABLE . " SET config_value = '$power_levelup' WHERE config_name = 'power_levelup' ";
-	if ( !($lresult = $db->sql_query($lsql)) ) 
+	if ( !($lresult = $db->sql_query($lsql)) )
 	{ 
-		message_die(GENERAL_ERROR, $lang['Rabbitoshi_update_error'] , "", __LINE__, __FILE__, $lsql); 
+		message_die(GENERAL_ERROR, $lang['Rabbitoshi_update_error'] , "", __LINE__, __FILE__, $lsql);
 	}
 	$lsql= "UPDATE ". RABBITOSHI_GENERAL_TABLE . " SET config_value = '$magicpower_levelup' WHERE config_name = 'magicpower_levelup' ";
 	if ( !($lresult = $db->sql_query($lsql)) ) 
@@ -123,9 +131,10 @@ if ( $submit )
 }
 
 $template->assign_vars(array(
-	'L_RABBITOSHI_LEVELUP_SETTINGS' => $lang['Rabbitoshi_abilities_settings'],
-	'L_RABBITOSHI_LEVELUP_SETTINGS_EXPLAIN' => $lang['Rabbitoshi_abilities_settings_explain'],
-	'L_HEALTH_LEVELUP' => $lang['Rabbitoshi_health_levelup'],
+	'L_RABBITOSHI_LEVELUP_SETTINGS' => $lang['Rabbitoshi_levelup_settings'],
+	'L_RABBITOSHI_LEVELUP_SETTINGS_EXPLAIN' => $lang['Rabbitoshi_levelup_settings_explain'],
+	'L_RABBITOSHI_LEVELUP_EARNED' => $lang['Rabbitoshi_levelup_earned'],
+        'L_HEALTH_LEVELUP' => $lang['Rabbitoshi_health_levelup'],
 	'L_HUNGER_LEVELUP' => $lang['Rabbitoshi_hunger_levelup'],
 	'L_THIRST_LEVELUP' => $lang['Rabbitoshi_thirst_levelup'],
 	'L_HYGIENE_LEVELUP' => $lang['Rabbitoshi_hygiene_levelup'],

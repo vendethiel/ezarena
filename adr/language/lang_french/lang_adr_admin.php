@@ -323,7 +323,8 @@ if ( defined ('IN_ADR_SHOPS'))
     $lang['Adr_store_status']='Status:';
     $lang['Adr_store_sales']='Status des ventes:';
     $lang['Adr_store_auth']='Faire un objet "que pour les admins":';
-    $lang['Adr_store_view']='Rendre les objets du magasin impossible a acheter ( seulement les voir )';
+    $lang['Adr_store_no_sell']='Cocher la case pour empêcher les joueurs de vendre cet objet';
+    $lang['Adr_store_view']='Rendre les objets du magasin impossible à acheter ( seulement visibles )';
     $lang['Adr_store_view_title']='Voir:';
     $lang['Adr_store_cat_add']='Ajouter une nouvelle Categorie';
     $lang['Adr_store_status_closed']='Fermé';

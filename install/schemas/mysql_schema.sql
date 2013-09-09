@@ -2214,5 +2214,28 @@ CREATE TABLE phpbb_adr_zone_townmaps (
   PRIMARY KEY  (zonemap_type)
 ) ;
 
-# Shops in multiple zones
+# ADR - Shops in multiple zones
 ALTER TABLE `phpbb_adr_stores` ADD `store_zone` TEXT NOT NULL;
+
+# ADR - Items no sell
+ALTER TABLE phpbb_adr_shops_items ADD item_no_sell INT(1) DEFAULT '0' NOT NULL AFTER item_auth;
+
+# ADR - Research
+CREATE TABLE `phpbb_adr_library` (
+  `book_id` int(8) NOT NULL auto_increment,
+  `book_name` varchar(255) NOT NULL default '',
+  `book_details` LONGTEXT NOT NULL,
+  `book_difficulty` tinyint(2) NOT NULL default '2',
+  `book_false` int(1) NOT NULL default '0',
+  `book_zone` text NOT NULL,
+  `book_crafting` INT( 8 ) DEFAULT '0' NOT NULL,
+  PRIMARY KEY  (`book_id`)
+) ; 
+
+CREATE TABLE `phpbb_adr_library_learned` (
+  `user_id` int(8) NOT NULL,
+  `book_id` int(8) NOT NULL,
+  `book_name` varchar(255) NOT NULL default '',
+  `book_details` LONGTEXT NOT NULL,
+  INDEX  (`book_id`) 
+);

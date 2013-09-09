@@ -291,6 +291,7 @@ class sql_db
 			unset($this->rowset[$query_id]);
 			unset($this->row[$query_id]);
 
+			$result = array();
 			while($rowset = mysql_fetch_array($query_id, MYSQL_ASSOC))
 			{
 				/*Vende: WTF?

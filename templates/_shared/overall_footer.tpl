@@ -17,6 +17,7 @@
 	{TRANSLATION_INFO}
 	{COPYRIGHT}<br />
 	{PREMOD}<br />
+	{STYLE_C}<br/>
 	<a href="http://www.phpbb-seo.com/" title="Optimisation du Référencement" target="_phpBBSEO">phpBB SEO</a>
 	</span>
 	<br/>

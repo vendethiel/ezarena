@@ -30,11 +30,6 @@ if ( ( time() - $board_config['adr_seasons_last_time'] ) > $board_config['adr_se
    include_once($php_root_path . 'adr/includes/functions_adr_seasons_cron.'.$phpEx); 
 } 
 
-if ( $board_config['townmap_seasons_cron_enable'] && ( ( time() - $board_config['townmap_seasons_cron_last_time'] ) > $board_config['townmap_seasons_cron_time'] )) 
-{ 
-   include_once($php_root_path . 'includes/functions_townmap_seasons_cron.'.$phpEx); 
-}
-
 if ( $board_config['rabbitoshi_enable_cron'] && ( ( time() - $board_config['rabbitoshi_cron_last_time'] ) > $board_config['rabbitoshi_cron_time'] )) 
 { 
    include_once($php_root_path . 'includes/functions_rabbitoshi_cron.'.$phpEx); 
@@ -58,6 +53,7 @@ $template->assign_vars(array(
 	'PAGE_GENERATION' => sprintf($lang['debug_generation'], $page_gen_time),
 	'MYSQL_QUERIES' => sprintf($lang['sql_queries'], $db->num_queries),
 	'PREMOD' => sprintf($lang['Premod'], $board_config['ezarena_version']) . '</strong>',
+	'STYLE_C' => $lang['style_copyright'],
 	'TRANSLATION_INFO' => (isset($lang['TRANSLATION_INFO'])) ? $lang['TRANSLATION_INFO'] :
 	((isset($lang['TRANSLATION'])) ? $lang['TRANSLATION'] : ''),
 ));

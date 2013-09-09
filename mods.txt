@@ -458,6 +458,9 @@ Addons :
  - Addon pour Enchant&Mine Links in header - Informpro
  - Addon Assisted Cell Selection - Informpro
 
+# ADR : Items no sell 0.0.2 - Makien
+Permet de rendre des objets non vendables (objets rares, par exemple).
+
 # ADR : Level Required Zones 1.0.0 - Insydius
 Permet de limiter l'accès à une zone pour les personnes d'un certain niveau
 Addons :
@@ -474,6 +477,11 @@ Ajoute un système de groupe au RPG, avec des bonus configurables.
 
 # ADR : QuestBook System v1.0.2 - Himmelweiss
 Ajoute un système pour garder la liste des quêtes en cours, incluant le nom du PNJ, sa zone, son message, quel objet il vous faut encore ou quel monstre vous devez toujours tuer.
+
+# ADR : Research 0.2.3-beta - egdcltd
+Permet aux joueurs de découvrir des informations dans des livres, le tout configurable dans l'ACP.
+Addons :
+ - Addon Research Crafting - egdcltd
 
 # ADR : Shops in multiple zones 1.0-beta - Makien
 Vous permet de choisir dans quelles zones seront les magasins, avec la possibilité d'en choisir plusieurs.
@@ -505,7 +513,7 @@ Permet d'ajouter des meilleurs graphismes aux combats.
 
 # ADR (ST) : Guild Alliances 0.0.5 - Seteo-Bloke
 Permet de faire des alliances
-(mis à jour depuis la version 0.0.3 de la prémode ADR. la version 0.0.4 n'est *pas* installée).
+(mis à jour depuis la version 0.0.3 de la prémode ADR. La version 0.0.4 n'est *PAS* installée).
 
 # ADR (ST) : Jobs 0.2.0 - Seteo-Bloke
 Ajoute un système complet de métiers à ADR.
@@ -521,8 +529,9 @@ Ajoute nord/sud/est/ouest aux zones.
 Addons :
  - Addon hide price if free - Informpro
 
-# ADR (ST) : Rabitoshi 2.0 - one_piece
-Ajoute un système d'animalerie complet, intégré à ADR.
+# ADR (ST) : Rabbitoshi 3.1.3 - one_piece
+Ajoute un système d'animalerie complet, intégré à ADR. Votre familier peut vous aider pendant les combats.
+(mis à jour depuis la version 2.0 de la prémode ADR)
 
 # ADR (ST) : Town Environment 4.1.0 - one_piece
 Donne aux villes des interfaces interactives et ajoute des images aux différentes pages.

@@ -10,6 +10,9 @@
 *
 ****************************************************************************/
 
+$lang['Adr_pvp_taunt'] = 'Provoquer';
+$lang['Adr_pvp_custom_taunt'] = 'Provocation personnalisée';
+
 // General language keys
 //ZONE
 $lang['Adr_shops_user_money']='Votre argent';
@@ -1824,10 +1827,17 @@ if ( defined ('IN_ADR_ALCHEMY'))
 $lang['Adr_battle_monster_regen']='%s regénère %s HP!';
 $lang['Adr_battle_monster_mp_regen']='%s regénère %s points de Mana !';
 $lang['Adr_battle_monster_mp_drain']='%s vous draine %s points de Mana!';
-$lang['Adr_battle_monster_mp_transfer']='%s vous vole %s MP pour lui !';
+$lang['Adr_battle_monster_mp_transfer']='%s vous vole %s points de Mana pour lui !';
 $lang['Adr_battle_monster_hp_drain']='%s vous draine %s HP !';
 $lang['Adr_battle_monster_hp_transfer']='%s vous vole %s HP pour lui !';
 
 // Dyanmic Town Map
 $lang['Adr_items_scroll_5']='Parchemin de Téléportation';
 $lang['Adr_items_scroll_5_desc']='Permet de se téléporter d\'une Zone à l\'autre';
+
+// Items no sell
+$lang['Adr_inventory_items_fail_selled']='Vous ne pouvez pas vendre cet objet';
+$lang['Adr_inventory_items_shop_fail_selled']='Vous ne pouvez pas ajouter cet objet à votre magasin';
+$lang['Adr_items_sellable']='Objet vendable :';
+$lang['Adr_items_sellable_yes']='Oui';
+$lang['Adr_items_sellable_no']='Non';

@@ -1,12 +1,14 @@
 <?php
 /***************************************************************************
-*                               admin_rabbitoshi.php
-*                              -------------------
-*     begin                : 27/11/2003
-*     copyright            : One_Piece & Dr DLP
-*
-*
-****************************************************************************/
+ *                              admin_rabbitoshi.php
+ *                              -------------------
+ *     begin                : Thurs June 9 2006
+ *     copyright            : (C) 2006 The ADR Dev Crew
+ *     site                 : http://www.adr-support.com
+ *
+ *     $Id: admin_rabbitoshi.php,v 4.00.0.00 2006/06/09 02:32:18 Ethalic Exp $
+ *
+ ****************************************************************************/
 
 /***************************************************************************
  *
@@ -23,15 +25,14 @@ if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);
 	$module['Rabbitoshi']['Rabbitoshi_Pets_Management'] = $filename;
-
 	return;
 }
 
 $phpbb_root_path = "./../";
 require($phpbb_root_path . 'extension.inc');
-require('./pagestart.' . $phpEx);
+require('./pagestart.'.$phpEx);
+include($phpbb_root_path.'rabbitoshi/includes/functions_rabbitoshi.'.$phpEx);
 
-include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_rabbitoshi.'.$phpEx);
 $board_config['points_name'] = $board_config['points_name'] ? $board_config['points_name'] : $lang['Rabbitoshi_default_points_name'] ;
 
 if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
@@ -45,10 +46,7 @@ else
 
 if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 {
-
-	$template->set_filenames(array(
-		"body" => "admin/config_rabbitoshi_edit_body.tpl")
-	);
+	rabbitoshi_template_file('admin/config_rabbitoshi_edit_body.tpl');
 
 	$s_hidden_fields = '<input type="hidden" name="mode" value="savenew" />';
 
@@ -89,7 +87,7 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 
 
 	$template->assign_vars(array(
-		"L_RABBITOSHI_TITLE" => $lang['Rabbitoshi_title'],
+		"L_RABBITOSHI_TITLE" => $lang['Rabbitoshi_manage_title'],
 		"L_RABBITOSHI_CONFIG" => $lang['Rabbitoshi_config'],
 		"L_RABBITOSHI_EXPLAIN" => $lang['Rabbitoshi_desc'],
 		"L_RABBITOSHI_NAME" => $lang['Rabbitoshi_name'],
@@ -108,7 +106,6 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 		"L_RABBITOSHI_FOOD_TYPE" => $lang['Rabbitoshi_food_type'],
 		"L_RABBITOSHI_IMG" => $lang['Rabbitoshi_img'],
 		"L_RABBITOSHI_IMG_EXPLAIN" => $lang['Rabbitoshi_img_explain'],
-		"L_RABBITOSHI_NAME_EXPLAIN" => $lang['Rabbitoshi_language_key'],
 		"L_IMG_EXPLAIN" => $lang['Rabbitoshi_img_explain'],
 		"L_SUBMIT" => $lang['Submit'],
 		"L_RESET" => $lang['Reset'],
@@ -124,6 +121,7 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 	);
 
 	$template->pparse("body");
+	include('./page_footer_admin.'.$phpEx);
 }
 else if ( $mode != "" )
 {
@@ -202,16 +200,14 @@ else if ( $mode != "" )
 				$pets_list .= '<option value = "'.$pets[$i]['creature_id'].'" '.$selected.' >' . $pets[$i]['creature_name'] . '</option>';
 			}
 
-			$template->set_filenames(array(
-				"body" => "admin/config_rabbitoshi_edit_body.tpl")
-			);
+			rabbitoshi_template_file('admin/config_rabbitoshi_edit_body.tpl');
 
 			$template->assign_block_vars( 'rabbitoshi_edit', array());
 
 			$s_hidden_fields = '<input type="hidden" name="mode" value="save" /><input type="hidden" name="creature_id" value="' . $field_data['creature_id'] . '" />';
 
 			$pic = $field_data['creature_img'];
-			if (!(file_exists("../images/Rabbitoshi/$pic")) || !$pic )
+			if (!(file_exists("../rabbitoshi/images/pets/$pic")) || !$pic )
 			{
 				$pic = $field_data['creature_name'].'.gif';
 			}
@@ -219,7 +215,7 @@ else if ( $mode != "" )
 
 			$template->assign_vars(array(
 				"RABBITOSHI_NAME" => $field_data['creature_name'],
-				"RABBITOSHI_NAME_EXPLAIN" => $creature_name,
+				"RABBITOSHI_NAME_EXPLAIN" => '('.$creature_name.')',
 				"RABBITOSHI_IMG" =>  $field_data['creature_img'],
 				"RABBITOSHI_IMG_EX" =>  $pic ,
 				"RABBITOSHI_PRIZE" => $field_data['creature_prize'],
@@ -238,9 +234,9 @@ else if ( $mode != "" )
 				"RABBITOSHI_EVOLUTION_OF" => $pets_list,
 				"RABBITOSHI_BUYABLE_CHECKED" => ( $field_data['creature_buyable'] ? checked : '' ),
 				"L_POINTS" => $board_config['points_name'],
-				"L_RABBITOSHI_TITLE" => $lang['rrabbitoshi_title'],
-				"L_RABBITOSHI_CONFIG" => $lang['rrabbitoshi_config'],
-				"L_RABBITOSHI_EXPLAIN" => $lang['rrabbitoshi_desc'],
+				"L_RABBITOSHI_TITLE" => $lang['Rabbitoshi_manage_title'],
+				"L_RABBITOSHI_CONFIG" => $lang['Rabbitoshi_config'],
+				"L_RABBITOSHI_EXPLAIN" => $lang['Rabbitoshi_desc'],
 				"L_RABBITOSHI_NAME" => $lang['Rabbitoshi_name'],
 				"L_RABBITOSHI_PRIZE" => $lang['Rabbitoshi_pet_prize'],
 				"L_RABBITOSHI_RHEALTH" => $lang['Rabbitoshi_pet_health'],
@@ -256,7 +252,6 @@ else if ( $mode != "" )
 				"L_RABBITOSHI_EXPERIENCE" => $lang['Rabbitoshi_pet_experience_limit'],
 				"L_RABBITOSHI_FOOD_TYPE" => $lang['Rabbitoshi_food_type'],
 				"L_RABBITOSHI_IMG" => $lang['Rabbitoshi_img'],
-				"L_RABBITOSHI_NAME_EXPLAIN" => $lang['Rabbitoshi_language_key'],
 				"L_RABBITOSHI_IMG_EXPLAIN" => $lang['Rabbitoshi_img_explain'],
 				"L_EVOLUTION" => $lang['Rabbitoshi_is_evolution_of'],
 				"L_BUYABLE" => $lang['Rabbitoshi_buyable'],
@@ -271,6 +266,7 @@ else if ( $mode != "" )
 			);
 
 			$template->pparse("body");
+                        include('./page_footer_admin.'.$phpEx);
 			break;
 
 		case "save":
@@ -393,9 +389,7 @@ else
 	}
 	$rabbitoshi = $db->sql_fetchrowset($result);
 
-	$template->set_filenames(array(
-		"body" => "admin/config_rabbitoshi_list_body.tpl")
-	);
+	rabbitoshi_template_file('admin/config_rabbitoshi_list_body.tpl');
 
 	for($i = 0; $i < count($rabbitoshi); $i++)
 	{
@@ -430,7 +424,7 @@ else
 		$favorite_food = isset($lang[$food_type['item_name']]) ? $lang[$food_type['item_name']] : $food_type['item_name'];
 
 		$pic = $rabbitoshi[$i]['creature_img'];
-		if (!(file_exists("../images/Rabbitoshi/$pic"))|| !$pic )
+		if (!(file_exists("../rabbitoshi/images/pets/$pic"))|| !$pic )
 		{
 			$pic = $rabbitoshi[$i]['creature_name'].'.gif';
 		}
@@ -462,7 +456,7 @@ else
 
 	$template->assign_vars(array(
 		"L_ACTION" => $lang['Action'],
-		"L_RABBITOSHI_TITLE" => $lang['Rabbitoshi_title'],
+		"L_RABBITOSHI_TITLE" => $lang['Rabbitoshi_manage_title'],
 		"L_RABBITOSHI_TEXT" => $lang['Rabbitoshi_desc'],
 		"L_DELETE" => $lang['Delete'],
 		"L_EDIT" => $lang['Edit'],
@@ -497,7 +491,5 @@ else
 	$template->pparse("body");
 	include('./page_footer_admin.'.$phpEx);
 }
-
-
 
 ?>

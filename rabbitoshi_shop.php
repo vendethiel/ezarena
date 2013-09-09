@@ -1,12 +1,14 @@
-<?php 
+<?php
 /***************************************************************************
- *					rabbitoshi_shop.php
- *				------------------------
- *	begin 			: 06/12/2003
- *	copyright			: Malicious Rabbit / Dr DLP
+ *                              rabbitoshi_shop.php
+ *                              -------------------
+ *     begin                : Thurs June 9 2006
+ *     copyright            : (C) 2006 The ADR Dev Crew
+ *     site                 : http://www.adr-support.com
  *
+ *     $Id: rabbitoshi_shop.php,v 4.00.0.00 2006/06/09 02:32:18 Ethalic Exp $
  *
- ***************************************************************************/
+ ****************************************************************************/
 
 /***************************************************************************
  *
@@ -15,49 +17,21 @@
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
  *
- *
  ***************************************************************************/
 
-define('IN_PHPBB', true); 
+define('IN_PHPBB', true);
 define('IN_RABBITOSHI', true);
-define('IN_ADR_BATTLE', true);
-define('IN_ADR_CHARACTER', true); 
-$phpbb_root_path = './'; 
-include($phpbb_root_path . 'extension.inc'); 
-include($phpbb_root_path . 'common.'.$phpEx);
-include($phpbb_root_path . 'adr/includes/adr_global.'.$phpEx);
-
+$phpbb_root_path = './';
+include($phpbb_root_path.'extension.inc');
+include($phpbb_root_path.'common.'.$phpEx);
+include($phpbb_root_path.'rabbitoshi/includes/functions_rabbitoshi.'.$phpEx);
 
 //
 // Start session management
-$userdata = session_pagestart($user_ip, PAGE_RABBITOSHI); 
-init_userprefs($userdata); 
+$userdata = session_pagestart($user_ip, PAGE_RABSHO);
+init_userprefs($userdata);
 // End session management
 //
-$user_id = $userdata['user_id'];
-include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_rabbitoshi.'.$phpEx);
-
-// Get the general settings
-$adr_general = adr_get_general_config();
-adr_enable_check();
-adr_ban_check($user_id);
-adr_character_created_check($user_id);
-
-// Deny access if the user is into a battle
-	$sql = "SELECT * 
-			FROM  ". ADR_BATTLE_LIST_TABLE ." 
-			WHERE battle_challenger_id = '$user_id'
-			AND battle_result = '0'
-			AND battle_type = '1'";
-		if( !($result = $db->sql_query($sql)) )
-			message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
-	
-	$bat = $db->sql_fetchrow($result);
-	
-	if (is_numeric($bat['battle_id']))
-		adr_previous( Adr_battle_progress , adr_battle , '' );
-
-include($phpbb_root_path . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr.'.$phpEx);
 
 if ( !$userdata['session_logged_in'] )
 {
@@ -66,11 +40,12 @@ if ( !$userdata['session_logged_in'] )
 	header('Location: ' . append_sid("login.$phpEx?redirect=$redirect", true));
 }
 
-// Includes the tpl and the header
-$template->set_filenames(array(
-	'body' => 'rabbitoshi_shop_body.tpl')
-);
+//
+// Generate page
+//
+$page_title = $lang['Rabbitoshi_title'];
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
+rabbitoshi_template_file('rabbitoshi_shop_body.tpl');
 
 $board_config['points_name'] = $board_config['points_name'] ? $board_config['points_name'] : $lang['Rabbitoshi_default_points_name'] ;
 
@@ -131,14 +106,14 @@ if ( $board_config['rabbitoshi_enable'] && $searchid == $user_id )
 		$items = $db->sql_fetchrowset($result);
 
 		$prizee = 0;
-		for ($i=0; $i <= $max ; $i++) 
+		for ($i=0; $i <= $max ; $i++)
 		{
-			$input = 'buy_item' . $i; 
+			$input = 'buy_item' . $i;
 			$$input = intval($HTTP_POST_VARS[$input]);
-			$input2 = 'sell_item' . $i; 
+			$input2 = 'sell_item' . $i;
 			$$input2 = intval($HTTP_POST_VARS[$input2]);
 			$price = (( $$input - $$input2 ) * ( $items[$i]['item_prize'] ));
-			$prizee = 	$prizee + $price ;
+			$prizee = $prizee + $price ;
 
 			$item_id = $items[$i]['item_id'];
 			if ( is_numeric($item_id) )
@@ -256,12 +231,10 @@ if ( $board_config['rabbitoshi_enable'] && $searchid == $user_id )
 		$item_name = isset($lang[$rabbitoshi_shop[$k]['item_name']]) ? $lang[$rabbitoshi_shop[$k]['item_name']] : $rabbitoshi_shop[$k]['item_name'];
 		$row_color = ( !($k % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
 		$row_class = ( !($k % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
-
-		$pic = $rabbitoshi_shop[$k]['item_img'];
-		if (!(file_exists("images/Rabbitoshi/$pic")) || !$pic )
-		{
-			$pic = $rabbitoshi_shop[$k]['item_name'].'.gif';
-		}
+		
+		if(file_exists($phpbb_root_path."rabbitoshi/images/items/".$rabbitoshi_shop[$k]['item_img'].""))
+		{ $pic = '<img src="'.$phpbb_root_path.'rabbitoshi/images/items/'.$rabbitoshi_shop[$k]['item_img'].'">'; }
+		else { $pic = ''; }
 
 		$template->assign_block_vars('items', array(
 			"ROW_COLOR" => "#" . $row_color,
@@ -278,33 +251,55 @@ if ( $board_config['rabbitoshi_enable'] && $searchid == $user_id )
 }
 
 $template->assign_vars(array(
-	'L_PUBLIC_TITLE' => $lang['Rabbitoshi_Shop'],
-	'L_RETURN' => $lang['Rabbitoshi_shop_return'],
-	'L_OWNER_POINTS' => $lang['Rabbitoshi_owner_points'],
-	'L_POINTS'         => $board_config['points_name'],
-	'L_NAME' 		 => $lang['Rabbitoshi_shop_name'],
-	'L_PRIZE' 		 => $lang['Rabbitoshi_shop_prize'],
-	'L_DESC' 		 => $lang['Rabbitoshi_item_desc'],
-	'L_SUM' 		 => $lang['Rabbitoshi_item_sum'],
-	'L_PIC' 		 => $lang['Rabbitoshi_shop_img'],
-	'L_ACTION' 		 => $lang['Rabbitoshi_shop_action'],
-	'L_BUY'		 => $lang['Rabbitoshi_shop_buy'],
-	'L_SELL'		 => $lang['Rabbitoshi_shop_sell'],
-	'L_TRANSLATOR'     => $lang['Rabbitoshi_translation'],
+	'L_PUBLIC_TITLE'        => $lang['Rabbitoshi_Shop'],
+	'L_RETURN'              => $lang['Rabbitoshi_shop_return'],
+	'L_OWNER_POINTS'        => $lang['Rabbitoshi_owner_points'],
+	'L_POINTS'              => $board_config['points_name'],
+	'L_NAME' 		=> $lang['Rabbitoshi_shop_name'],
+	'L_PRIZE' 		=> $lang['Rabbitoshi_shop_prize'],
+	'L_DESC' 		=> $lang['Rabbitoshi_item_desc'],
+	'L_SUM' 		=> $lang['Rabbitoshi_item_sum'],
+	'L_PIC' 		=> $lang['Rabbitoshi_shop_img'],
+	'L_ACTION' 		=> $lang['Rabbitoshi_shop_action'],
+	'L_BUY'		        => $lang['Rabbitoshi_shop_buy'],
+	'L_SELL'		=> $lang['Rabbitoshi_shop_sell'],
+	'L_TRANSLATOR'          => $lang['Rabbitoshi_translation'],
 	'L_PET_GENERAL_MESSAGE' => $lang['Rabbitoshi_general_message'],
-	'L_PET_MESSAGE'    => $lang['Rabbitoshi_message'],
-	'PET_GENERAL_MESSAGE' => $thought,
-	'PET_MESSAGE'      => $message,
-	'POINTS'           => $userdata['user_points'],
-	'NUMBER_ITEMS'     => $number_items ,
-	'S_PET_ACTION'     => append_sid("rabbitoshi_shop.$phpEx"),
-	'S_PET_RETURN'     => append_sid("rabbitoshi.$phpEx"),
-	'S_HIDDEN_FIELDS'	 => $s_hidden_fields,
+	'L_PET_MESSAGE'         => $lang['Rabbitoshi_message'],
+	'PET_GENERAL_MESSAGE'   => $thought,
+	'PET_MESSAGE'           => $message,
+	'POINTS'                => $userdata['user_points'],
+	'NUMBER_ITEMS'          => $number_items ,
+	'S_PET_ACTION'          => append_sid("rabbitoshi_shop.$phpEx"),
+	'S_PET_RETURN'          => append_sid("rabbitoshi.$phpEx"),
+	'S_HIDDEN_FIELDS'	=> $s_hidden_fields,
 ));
 
-include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
-
 $template->pparse('body');
+
+#==== Start Copyright ======================== |
+?>
+<script language="JavaScript">
+
+function copyright()
+{
+	var popurl = "rabbitoshi/includes/rabbitoshi_copy.php"
+	var winpops = window.open(popurl, "", "width=400, height=350,")
+}
+</script>
+
+<?php
+echo "<table width='100%' border='0'>
+		<tr>
+			<td align='center' valign='top' colspan='1'>
+				<span class='genmed'>
+					<a style='text-decoration:none;' href='javascript:copyright();'><span class='gensmall'>Rabbitoshi &copy; 2006</a></span>
+				</span>
+			</td>
+		</tr>
+	  </table>";
+#==== End Copyright ========================== |
+
 include($phpbb_root_path . 'includes/page_tail.'.$phpEx);
- 
-?> 
+
+?>
