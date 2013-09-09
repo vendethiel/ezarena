@@ -26,10 +26,10 @@ if ( !defined('IN_PHPBB') )
 // V: LOL date() notices
 date_default_timezone_set(@date_default_timezone_get());
 
-// V: ok no, far too many errors :'(
 error_reporting  (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
 
-error_reporting(-1);
+// V: ok no, far too many errors :'(
+// error_reporting(-1);
 
 @set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
 @ini_set('register_globals',0); 

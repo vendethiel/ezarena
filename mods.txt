@@ -424,6 +424,7 @@ Note : Tous les mods préfixés par "ADR (ST)" sont les mods faisant parti de la
 D'autres mods ont été rajoutés, et le mod ADR en lui-même a été mis à jour (0.3.4 -> 0.4.5).
 Addons :
  - Addon pour RCS - Informpro
+ - Addon Fix Bare Attacks (fix $dice's rand() ...) - Informpro
 
 # ADR : Advanced Loot System 1.0.3 - Himmelweiss
 Ajoute un système super-complet de butin pour les monstres, avec des catégories de butin, chance de drop, combien d'items il est possible de drop, etc ... à découvrir en jeu et dans l'admin !
@@ -532,6 +533,8 @@ Addons :
 # ADR (ST) : Rabbitoshi 3.1.3 - one_piece
 Ajoute un système d'animalerie complet, intégré à ADR. Votre familier peut vous aider pendant les combats.
 (mis à jour depuis la version 2.0 de la prémode ADR)
+Addons :
+ - Fix adr_battle not changing turn when rabbit's playing - Informpro
 
 # ADR (ST) : Town Environment 4.1.0 - one_piece
 Donne aux villes des interfaces interactives et ajoute des images aux différentes pages.

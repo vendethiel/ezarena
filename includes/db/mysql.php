@@ -261,11 +261,11 @@ class sql_db
 			$this->row[(int)$query_id] = mysql_fetch_array($query_id, MYSQL_ASSOC);
 			if($this->caching)
 			{
-				if($this->row[$query_id] === false)
+				if($this->row[(int) $query_id] === false)
 				{
 					$this->write_cache();
 				}
-				$this->cache[] = $this->row[$query_id];
+				$this->cache[] = $this->row[(int) $query_id];
 			}			
 			return $this->row[(int)$query_id];
 		}
