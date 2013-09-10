@@ -16,8 +16,11 @@
 		<th align="center">{L_ITEM_NAME}</th>
 		<th align="center">{L_ITEM_DESC}</th>
 		<th align="center">{L_ITEM_POWER}</th>
+		<th align="center">{L_ITEM_REQ}</th>
 		<th align="center">{L_ITEM_TYPE}</th>
-		<th align="center" colspan="2">{L_ACTION}</a></th>
+		<th align="center" colspan="3">&nbsp;</th>
+		<th align="center">{L_ITEM_ADMIN_ONLY}</th>
+		<th align="center" colspan="2">{L_ACTION}</th>
 	</tr>
 
 	<!-- BEGIN items -->
@@ -26,7 +29,14 @@
 		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_NAME}</td>
 		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_DESC}</td>
 		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_POWER}</td>
+		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_REQ}</td>
 		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_TYPE}</td>
+		<td class="{items.ROW_CLASS}" align="left" valign="top" colspan="3"><span class="gensmall">
+			 <!-- BEGIN class_restrict -->
+			{items.class_restrict.CLASS_LIST}
+			 <!-- END class_restrict -->
+		</span></td>
+		<td class="{items.ROW_CLASS}" align="center">{items.ITEM_ADMIN_ONLY}</td>
 		<td class="{items.ROW_CLASS}" align="center"><a href="{items.U_ITEM_EDIT}">{L_EDIT}</a></td>
 		<td class="{items.ROW_CLASS}" align="center"><a href="{items.U_ITEM_DELETE}">{L_DELETE}</a></td>
 	</tr>
@@ -34,7 +44,7 @@
 	</form>
 	<form method="post" action="{S_SHOPS_ACTION}">
 	<tr>
-		<td class="catBottom" colspan="12" align="center">{S_HIDDEN_FIELDS}<input type="submit" value="{L_ADD_ITEM}" class="mainoption" /></td>
+		<td class="catBottom" colspan="14" align="center">{S_HIDDEN_FIELDS}<input type="submit" value="{L_ADD_ITEM}" class="mainoption" /></td>
 	</tr>
 </table>
 
@@ -53,5 +63,9 @@
 </table>
 
 </form>
+
+<div align="center">
+	{L_SPELLS_ATTENTION}
+</div>
 
 <br clear="all" />

@@ -227,6 +227,12 @@ else
 	{
 		$rabbit_general[$row['config_name']] = $row['config_value'];
 	}
+	
+	$experience_points_req = $rabbit_user['creature_experience_level_limit'];
+	for ( $p = 1 ; $p < $rabbit_user['creature_level'] ; $p ++ )
+	{
+		$experience_points_req = floor($experience_points_req * ( ( $rabbit_general['next_level_penalty'] + 100 ) / 100 ));
+	}
 
 	list($is_in_hotel , $hotel_time) = rabbitoshi_get_hotel();
 	if ( $is_in_hotel && ( $Vet || $Feed || $Drink || $Clean )) {
@@ -1321,6 +1327,7 @@ else
 			'PET_EXPERIENCE' => $rabbit_user['creature_experience'],
 			'PET_EXPERIENCE_LIMIT' => $rabbit_user['creature_experience_level'],
 			'PET_EXPERIENCE_LIMIT_MAX' => $rabbit_user['creature_experience_level_limit'],
+			'PET_EXPERIENCE_LIMIT_MAX' => $experience_points_req,
 			'PET_ATTACK' => $rabbit_user['creature_attack'],
 			'PET_MAGICATTACK' => $rabbit_user['creature_magicattack'],
 			'CPET_NAME' => $rabbit_config['creature_name'],

@@ -1012,6 +1012,9 @@ INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item
 
 # ADR - Advanced Spells
 INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (108, 1, 'Adr_items_type_magic_heal');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (110, 50, 'Adr_items_type_spell_recipe');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (107, 1, 'Adr_items_type_spell_attack');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (108, 1, 'Adr_items_type_magic_heal');
 
 # ADR - Dynamic Town Map
 #INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (297, 'TowerHill', '', 'zone 1', 0, '', 'zone 1', '', 101, 0);
@@ -1099,3 +1102,9 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_zone_worldmap_
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_zone_townmap_display_required', '1');
 
 INSERT INTO phpbb_adr_shops_items (item_id, item_owner_id, item_price, item_quality, item_power, item_duration, item_duration_max, item_icon, item_name, item_desc, item_type_use, item_in_shop, item_mp_use, item_element, item_element_str_dmg, item_element_same_dmg, item_element_weak_dmg, item_store_id, item_weight, item_auth, item_max_skill, item_add_power, item_monster_thief, item_in_warehouse, item_sell_back_percentage, item_zone, item_zone_name) VALUES (6765, 1, 5000, 3, 1, 2, 3, 'scroll5.gif', 'Adr_items_scroll_5', 'Adr_items_scroll_5_desc', 4, 0, 0, 0, 0, 0, 0, 8, 1, 0, 0, 0, 0, 0, 75, 0, '');
+
+# ADR - Spell advanced - upgrade
+INSERT INTO `phpbb_adr_general` VALUES ('spell_enable_pm', '1');
+
+# Rabbitoshi - levelup penalty
+INSERT INTO `phpbb_rabbitoshi_general` VALUES ('next_level_penalty', 10);

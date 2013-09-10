@@ -495,22 +495,28 @@ if ( $turn_check && ( $attack || ($spell2 && intval($HTTP_POST_VARS['item_spell2
         if ( $item_spell2 )
         {
 
-            $sql = " SELECT spell_name , spell_power , item_type_use , spell_add_power , spell_mp_use , spell_element , spell_element_str_dmg, spell_element_weak_dmg , spell_element_same_dmg FROM " . ADR_SHOPS_SPELLS_TABLE . "
+            $sql = " SELECT spell_name , spell_power , item_type_use , spell_add_power , spell_mp_use , spell_element , spell_element_str_dmg, spell_element_weak_dmg , spell_element_same_dmg, spell_items_req, spell_xtreme_pvp FROM " . ADR_SHOPS_SPELLS_TABLE . "
                 WHERE spell_owner_id = $user_id 
-                AND spell_id = $item_spell2 ";
+                AND spell_id = $item_spell2 
+                ORDER BY spell_name ASC";
             if( !($result = $db->sql_query($sql)) )
             {
                 message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
             }
-            $spell = $db->sql_fetchrow($result);
+            $item = $db->sql_fetchrow($result);
 
-            if ( $challenger['character_mp'] < ($spell['spell_mp_use'] + $spell['spell_power']) || $challenger['character_mp'] < 0 ) 
+            if (($item['spell_items_req'] !='') && ($item['spell_items_req'] !='0'))
+            {
+                adr_spell_check_components($item_spell2, $user_id, 'adr_battle_pvp');
+            }
+
+            if ( $current_mp < ($item['spell_mp_use'] + $item['spell_power']) || $current_mp < 0 ) 
             {   
                 adr_previous ( Adr_battle_check_two , 'adr_battle' , '' );
             }
 
-            $power = (($spell['spell_power'] * 1.2) + $spell['spell_add_power']);
-            $mp_usage = $spell['spell_mp_use'];
+            $power = (($item['spell_power'] * 1.2) + $item['spell_add_power']);
+            $mp_usage = ($item['spell_mp_use'] + $item['spell_power']);
             if ( $mp_usage == '' )
             {
                     adr_previous ( Adr_battle_check , 'adr_battle' , '' );              
@@ -518,142 +524,214 @@ if ( $turn_check && ( $attack || ($spell2 && intval($HTTP_POST_VARS['item_spell2
 
             adr_use_item($item_spell2 , $user_id);
             
-            // Substract the magic points
-            $sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
-                SET character_mp = character_mp - $mp_usage
-                WHERE character_id = $user_id ";
-            if( !($result = $db->sql_query($sql)) )
+            // Subtract the magic points
+            if ( $user_id == $battle_challenger_id )
             {
-                message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+                $sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
+                    SET battle_challenger_mp = battle_challenger_mp - (" . $item['spell_power'] . " + " . $item['spell_mp_use'] . ")
+                    WHERE battle_challenger_id = $user_id
+                    AND battle_id = $battle_id ";
+                if( !($result = $db->sql_query($sql)) )
+                {
+                    message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+                }
+            }
+            else if ( $user_id == $battle_opponent_id )
+            {
+                $sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
+                    SET battle_opponent_mp = battle_opponent_mp - (" . $item['spell_power'] . " + " . $item['spell_mp_use'] . ")
+                    WHERE battle_opponent_id = $user_id
+                    AND battle_id = $battle_id ";
+                if( !($result = $db->sql_query($sql)) )
+                {
+                    message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+                }
             }
         }
 
-        if ( $spell['item_type_use'] == 11 )
+        if ( $item['item_type_use'] == 107 )
         {
             // Sort out magic check & opponents saving throw
             $dice = rand(1,20);
-            $monster['monster_wisdom'] = (10 + (rand(1, $monster['monster_level']) *2)); //temp calc
-            $magic_check = ceil($dice + $item['item_power'] + adr_modifier_calc($challenger['character_intelligence']));
-            $fort_save = (11 + adr_modifier_calc($monster['monster_wisdom']));
-            $diff = ((($magic_check >= $fort_save) && ($dice != '1')) || ($dice == '20')) ? TRUE : FALSE;
-            $power = ($power + adr_modifier_calc($challenger['character_intelligence']));
+            $magic_check = ceil($dice + $item['item_power'] + adr_modifier_calc($current_infos['character_intelligence']));
+            $fort_save = (11 + adr_modifier_calc($opponent_infos['character_wisdom']));
+            $success = ((($magic_check >= $fort_save) && ($dice != '1')) || ($dice == '20')) ? TRUE : FALSE;
+            $power = ($power + adr_modifier_calc($current_infos['character_intelligence']));
 
             // Grab details for Elemental infos
             $elemental = adr_get_element_infos($opponent_element);
-            $element_name = ($spell['spell_name'] != '') ? adr_get_element_infos($spell['spell_element']) : '';
+            $element_name = ($item['spell_name'] != '') ? adr_get_element_infos($item['spell_element']) : '';
 
             // Here we apply text colour if set
-            if($element_name['element_colour'] != ''){
-                $spell['spell_name'] = '<font color="'.$element_name['element_colour'].'">'.adr_get_lang($spell['spell_name']).'</font>';}
-            else{
-                $spell['spell_name'] = adr_get_lang($spell['spell_name']);}
-
-            if((($diff === TRUE) && ($dice != '1')) || ($dice == '20')){
-                $damage = 1;
-
-                // Work out attack type
-                if(($spell['spell_element']) && ($spell['spell_element'] === $elemental['element_oppose_strong']) && (!empty($spell['spell_name']))){
-                    $damage = ceil(($power *($spell['spell_element_weak_dmg'] /100)));
-                }
-                elseif(($spell['spell_element']) && (!empty($spell['spell_name'])) && ($spell['spell_element'] === $opponent_element)){
-                    $damage = ceil(($power *($spell['spell_element_same_dmg'] /100)));
-                }
-                elseif(($spell['spell_element']) && (!empty($spell['spell_name'])) && ($spell['spell_element'] === $elemental['element_oppose_weak'])){
-                    $damage = ceil(($power *($spell['spell_element_str_dmg'] /100)));
-                }
-                else{
-                    $damage = ceil($power);
-                }
-
-
-                // Fix dmg value
-                $damage = ($damage < '1') ? rand(1,3) : $damage;
-                $damage = ($damage > $bat['battle_opponent_hp']) ? $bat['battle_opponent_hp'] : $damage;
-
-                // Fix attack msg type
-                if(($spell['spell_element'] > '0') && ($element_name['element_name'] != '')){
-                    $battle_message .= sprintf($lang['Adr_battle_spell_success'], $challenger['character_name'], $spell['spell_name'], adr_get_lang($element_name['element_name']), $damage, $monster['monster_name']).'<br>';}
-                else{
-                    $battle_message .= sprintf($lang['Adr_battle_spell_success_norm'], $challenger['character_name'], $spell['spell_name'], $damage, $monster['monster_name']).'<br>';}
+            if($element_name['element_colour'] != '')
+            {
+                $item['spell_name'] = '<font color="'.$element_name['element_colour'].'">'.adr_get_lang($item['spell_name']).'</font>';
             }
-            else{
+            else
+            {
+                $item['spell_name'] = adr_get_lang($item['spell_name']);
+            }
+
+            $attbonus = 0;
+            $attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+
+            if((($diff === TRUE) && ($dice != '1')) || ($dice == '20'))
+            {
+
+                if($code = $item['spell_xtreme_pvp'])
+                {
+                    eval($code);
+                }
+                else
+                {
+
+                    $damage = 1;
+
+                    // Work out attack type
+                    if(($item['spell_element']) && ($item['spell_element'] === $elemental['element_oppose_strong']) && (!empty($item['spell_name'])))
+                    {
+                        $damage = ceil(($power *($spell['spell_element_weak_dmg'] /100)) * $attbonus);
+                    }
+                    elseif(($item['spell_element']) && (!empty($item['spell_name'])) && ($item['spell_element'] === $opponent_element))
+                    {
+                        $damage = ceil(($power *($spell['spell_element_same_dmg'] /100)) * $attbonus);
+                    }
+                    elseif(($item['spell_element']) && (!empty($item['spell_name'])) && ($item['spell_element'] === $elemental['element_oppose_weak']))
+                    {
+                        $damage = ceil(($power *($spell['spell_element_str_dmg'] /100)) * $attbonus);
+                    }
+                    else
+                    {
+                        $damage = ceil($power * $attbonus);
+                    }
+
+
+                    // Fix dmg value
+                    $damage = ($damage < '1') ? rand(1,3) : $damage;
+                    $damage = ($damage > $bat['battle_opponent_hp']) ? $bat['battle_opponent_hp'] : $damage;
+
+                    // Fix attack msg type
+                    if(($item['item_element'] != '') && ($item['item_element'] != '0'))
+                    {
+                        $battle_message .= sprintf($lang['Adr_pvp_spell_success'], $current_name, $item['spell_name'], $element_name['element_name'], $opponent_name, $damage).'<br />';}
+                    else
+                    {
+                        $battle_message .= sprintf($lang['Adr_pvp_spell_success_norm'], $current_name, $item['spell_name'], $opponent_name, $damage).'<br />';
+                    }
+                }
+            }
+            else
+            {
                 $damage = 0;
-                $battle_message .= sprintf( $lang['Adr_battle_spell_failure'], $challenger['character_name'], $spell['spell_name'], $monster['monster_name']).'<br />';
+                $battle_message .= sprintf($lang['Adr_pvp_spell_failure'], $current_name, $item['spell_name'], $opponent_name).'<br />';
             }
 
+            // Work out correct details for db update
+            if($user_id === $battle_challenger_id)
+            {
+                $hp_opponent_check = 'battle_opponent_hp = (battle_opponent_hp - '.$damage.')';
+                $dmg_opponent_check = 'battle_opponent_dmg = '.$damage;
+            }
+            else
+            {
+                $hp_opponent_check = 'battle_challenger_hp = (battle_challenger_hp - '.$damage.')';
+                $dmg_opponent_check = 'battle_challenger_dmg = '.$damage;
+            }
             // Update the database
-            $sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
-                SET battle_opponent_hp = battle_opponent_hp - $damage ,
-                    battle_challenger_dmg = $damage , 
-                    battle_turn = 2 ,
-                    battle_round = (battle_round + 1)
-                WHERE battle_challenger_id = $user_id
-                AND battle_result = 0
-                AND battle_type = 1 ";
-            if( !($result = $db->sql_query($sql)) )
+            $sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
+                SET $hp_opponent_check,
+                    $dmg_opponent_check
+                WHERE battle_id = '$battle_id'";
+            if(!($result = $db->sql_query($sql)))
             {
                 message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
             }
+            
         }   
 
-        if ( $spell['item_type_use'] == 108 )
+        if ( $item['item_type_use'] == 108 )
         {
-            // New HP check required after regeneration
-            $sql = "SELECT character_hp, character_hp_max FROM " . ADR_CHARACTERS_TABLE . "
-                WHERE character_id = $user_id ";
-            if( !($result = $db->sql_query($sql)) )
+            $attbonus = 0;
+            $attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+            $power = ceil($power * $attbonus);
+
+            if($code = $item['spell_xtreme_pvp'])
             {
-                message_die(GENERAL_ERROR, 'Could not query user', '', __LINE__, __FILE__, $sql);
+
+                eval($code);
+
             }
-            $hp_check = $db->sql_fetchrow($result);
-
-            $power = ( $power > ( $hp_check['character_hp_max'] - $hp_check['character_hp'] ) ) ? ( $hp_check['character_hp_max'] - $hp_check['character_hp'] ) : $power ;
-
-            $battle_message .= sprintf($lang['Adr_battle_healing_success'] ,$challenger['character_name'], adr_get_lang($spell['spell_name']) , $power ).'<br />' ; 
-
-            // Update the database
-            $sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
-                SET battle_turn = 2,
-                    battle_round = (battle_round + 1)
-                WHERE battle_challenger_id = $user_id
-                AND battle_result = 0
-                AND battle_type = 1 ";
-            if( !($result = $db->sql_query($sql)) )
+            else
             {
-                message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
-            }
+                // Create message
+                $battle_message .= sprintf($lang['Adr_battle_healing_success'], $current_name, adr_get_lang($item['spell_name']), $power).'<br />';
 
-            $sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
-                SET character_hp = character_hp + $power
-                WHERE character_id = $user_id ";
-            if( !($result = $db->sql_query($sql)) )
-            {
-                message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+                if ( $user_id == $battle_challenger_id )
+                {
+                    // Update the database
+                    $sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
+                        SET battle_challenger_hp = battle_challenger_hp + $power , 
+                            battle_turn = 2 
+                        WHERE battle_challenger_id = $user_id
+                        AND battle_id = $battle_id ";
+                    if( !($result = $db->sql_query($sql)) )
+                    {
+                        message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+                    }
+                        }
+                        else if ( $user_id == $battle_opponent_id )
+                        {
+                    // Update the database
+                    $sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
+                        SET battle_opponent_hp = battle_opponent_hp + $power , 
+                            battle_turn = 1 
+                        WHERE battle_opponent_id = $user_id
+                        AND battle_id = $battle_id ";
+                    if( !($result = $db->sql_query($sql)) )
+                    {
+                        message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+                    }
+                }
             }
         }
     
-        else if ( $spell['item_type_use'] == 12 )
+        else if ( $item['item_type_use'] == 109 )
         {
+            $attbonus = 0;
+            $attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+            $power = ceil($power * $attbonus);
 
-                $battle_message .= sprintf($lang['Adr_battle_spell_defensive_success'], $challenger['character_name'], $spell['spell_name'], $power).'<br>';
-
-
-            // Update the database
-            $sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
-                SET battle_challenger_att = battle_challenger_att + $power ,
-                    battle_challenger_def = battle_challenger_def + $power ,
-                    battle_turn = 2,
-                    battle_round = (battle_round + 1)
-                WHERE battle_challenger_id = $user_id
-                AND battle_result = 0
-                AND battle_type = 1 ";
-            if( !($result = $db->sql_query($sql)) )
+            if($code = $item['spell_xtreme_pvp'])
             {
-                message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+
+                eval($code);
+
+            }
+            else
+            {
+                // Create message
+                $battle_message .= sprintf($lang['Adr_pvp_spell_defensive_success'], $current_name, adr_get_lang($item['spell_name']), $current_name, $power).'<br />';
+
+                // Update the database
+                if($user_id === $battle_challenger_id){
+                    $check_att = 'battle_challenger_att';
+                    $check_def = 'battle_challenger_def';
+                }
+                elseif($user_id === $battle_opponent_id){
+                    $check_att = 'battle_opponent_att';
+                    $check_def = 'battle_opponent_def';
+                }
+
+                $sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
+                    SET $check_att = ($check_att + $power),
+                        $check_def = ($check_def + $power)
+                    WHERE battle_id = '$battle_id'";
+                if(!($result = $db->sql_query($sql))){
+                    message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);}
             }
 
         }
-    }
+    } // end if spell2
     else if ( $potion )
     {
         // Define the weapon quality and power
@@ -1309,7 +1387,9 @@ if ( $battle['battle_turn'] == $user_id )
     $potion_list .= '<option value = "0" >' . $lang['Adr_battle_no_potion'] . '</option>'; 
 
     $sql = " SELECT * FROM " . ADR_SHOPS_SPELLS_TABLE . "
-        WHERE spell_owner_id = $user_id ";
+        WHERE spell_owner_id = $user_id 
+        AND (spell_battle = '0' OR spell_battle = '2')
+        ORDER BY spell_name ASC";
     if( !($result = $db->sql_query($sql)) )
     {
         message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
@@ -1342,10 +1422,10 @@ if ( $battle['battle_turn'] == $user_id )
     {
         $spells_power = $spells[$s]['spell_power'] + $spells[$s]['spell_add_power'];
 
-        if ( ( $spells[$s]['item_type_use'] ==  107 || $spells[$s]['item_type_use'] ==  108 || $spells[$s]['item_type_use'] ) && ( $spells[$s]['spell_mp_use'] <= $challenger['character_mp'] ) )
+        if ( ( $spells[$s]['item_type_use'] ==  107 || $spells[$s]['item_type_use'] ==  108 || $spells[$s]['item_type_use'] == 109 ) && ( $spells[$s]['spell_mp_use'] <= $current_mp ) )
         {
             $spell2_selected = ( $HTTP_POST_VARS['item_spell2'] == $spells[$s]['spell_id'] ) ? 'selected' : '';
-                $spell2_list .= '<option value = "'.$spells[$s]['spell_id'].'" '.$spell2_selected.'>' . adr_get_lang($spells[$s]['spell_name']) . ' ( ' . $lang['Adr_items_power'] . ' : ' . $spells_power . ' )'.'</option>'; 
+            $spell2_list .= '<option value = "'.$spells[$s]['spell_id'].'" '.$spell2_selected.'>' . adr_get_lang($spells[$s]['spell_name']) . ' ( ' . $lang['Adr_items_power'] . ' : ' . $spells_power . ' )'.'</option>'; 
         }
     }
 
@@ -1667,7 +1747,7 @@ $template->assign_vars(array(
 	'L_TAUNT_8' => $lang['Adr_pvp_taunt_8'],
 	'L_TAUNT_9' => $lang['Adr_pvp_taunt_9'],
 	'L_TAUNT_10' => $lang['Adr_pvp_taunt_10'],
-		// END Graphical sequences
+	// END Graphical sequences
     'L_SPELL2' => $lang['Adr_spell_learned'],
     'L_HP'=> $lang['Adr_character_health'],
     'L_MP' => $lang['Adr_character_magic'],

@@ -28,6 +28,8 @@ $lang['Adr_items_settings']='Types d\'objet';
 // $lang['Adr_items_settings_advanced']='Types d\'objet';
 $lang['Adr_store_cats']='Magasins';
 
+$lang['ADR Spells'] = 'ADR-Sorts';
+
 $lang['Adr_skills_settings']='Compétences';
 $lang['Adr_vault']='ADR-Trésorerie';
 $lang['Adr_vault_exchange']='Actions';

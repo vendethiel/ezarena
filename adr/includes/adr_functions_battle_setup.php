@@ -459,6 +459,28 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 		else $turn = 2;
 	##=== END: Initiative Checks
 
+	$spell_effects = explode(':',$char['character_spell_pre_effects']);
+	for ($i = 0; $i < count($spell_effects);$i++)
+	{
+		if($spell_effects[$i] == 'ATT')
+		{
+			$value = $spell_effects[$i+1];
+			$att = $att + $value;
+		}
+		if($spell_effects[$i] == 'DEF')
+		{
+			$value = $spell_effects[$i+1];
+			$def = $def + $value;
+		}
+	}
+
+	//remove spell pre-effects
+	$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+		SET character_spell_pre_effects = ''
+		WHERE character_id = $user_id ";
+	if (!$db->sql_query($sql))
+		message_die(GENERAL_ERROR, 'Couldn\'t remove characters spell pre effects for battle', '', __LINE__, __FILE__, $sql);
+
 	// Finally insert all theses values into the database
 	$sql = "INSERT INTO " . ADR_BATTLE_LIST_TABLE . "
 		(battle_type, battle_start, battle_turn,  battle_result, battle_text, battle_challenger_id, battle_challenger_hp, battle_challenger_mp, battle_challenger_att, battle_challenger_def, battle_challenger_element, battle_challenger_magic_attack, battle_challenger_magic_resistance, battle_challenger_equipment_info, battle_opponent_id, battle_opponent_hp, battle_opponent_hp_max, battle_opponent_mp, battle_opponent_mp_max, battle_opponent_mp_power, battle_opponent_att, battle_opponent_def, battle_opponent_element, battle_opponent_magic_attack, battle_opponent_magic_resistance, battle_opponent_sp)

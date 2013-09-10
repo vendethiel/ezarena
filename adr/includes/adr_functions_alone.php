@@ -89,6 +89,13 @@ function adr_delete_character($user_id)
 	{
 		message_die(GENERAL_ERROR, 'Cannot delete this user', '', __LINE__, __FILE__, $sql);
 	}
+	
+	$sql = " DELETE FROM " . ADR_SHOPS_SPELLS_TABLE . "
+		WHERE spell_owner_id = $user_id ";
+	if (!$db->sql_query($sql))
+	{
+		message_die(GENERAL_ERROR, 'Cannot delete user spells', '', __LINE__, __FILE__, $sql);
+	}
 }
 
 function adr_add_experience_points($user_id,$mode)

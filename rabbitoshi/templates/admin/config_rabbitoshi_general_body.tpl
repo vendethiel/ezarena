@@ -220,6 +220,10 @@
 		<td class="row2" align="center" ><input class="post" type="text" maxlength="255" size="15" name="mp_max" value="{RABBITOSHI_MP_MAX}" /></td>
 	</tr>
 	<tr>
+		<td class="row1" width="65%"><span class="gen">{L_RABBITOSHI_LEVEL_UP_PENALTY}</span><br /><span class="gensmall">{L_RABBITOSHI_LEVEL_UP_PENALTY_EXPLAIN}</span></td>
+		<td class="row2" align="center" ><input class="post" type="text" maxlength="255" size="15" name="level_up_penalty" value="{RABBITOSHI_LEVEL_UP_PENALTY}" />%</td>
+	</tr>
+	<tr>
 		<td class="catBottom" colspan="2" align="center"><input type="submit" name="submit" value="{L_SUBMIT}" class="mainoption" /></td>
 	</tr>
 </table>

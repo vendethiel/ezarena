@@ -126,28 +126,28 @@
    </tr> 
    </tr> 
       <td align="right" class="row2" width="50%" >{ATTACK}&nbsp;&nbsp;&nbsp;</td> 
-      <td align="left" class="row2" width="50%" >&nbsp;&nbsp;&nbsp;<input type="submit" style="width: 125" value="{L_ATTACK}" name="attack" class="mainoption" /></td> 
+      <td align="left" class="row2" width="50%" >&nbsp;&nbsp;&nbsp;<input type="submit" style="width: 180" value="{L_ATTACK}" name="attack" class="mainoption" /></td> 
    </tr> 
    </tr> 
       <td align="right" class="row1" width="50%" >{SPELL}&nbsp;&nbsp;&nbsp;</td> 
-      <td align="left" class="row1" width="50%" >&nbsp;&nbsp;&nbsp;<input type="submit" style="width: 125" value="{L_SPELL}" name="spell" class="mainoption" /></td> 
+      <td align="left" class="row1" width="50%" >&nbsp;&nbsp;&nbsp;<input type="submit" style="width: 180" value="{L_SPELL}" name="spell" class="mainoption" /></td> 
    </tr>
 	</tr>
 		<td align="right" class="row1" width="50%" >{SPELL2}&nbsp;&nbsp;&nbsp;</td>
-		<td align="left" class="row1" width="50%" >&nbsp;&nbsp;&nbsp;<input type="submit" style="width: 125" value="{L_SPELL2}" onClick="return checksubmit(this)" name="spell2" class="mainoption" /></td>
+		<td align="left" class="row1" width="50%" >&nbsp;&nbsp;&nbsp;<input type="submit" style="width: 180" value="{L_SPELL2}" onClick="return checksubmit(this)" name="spell2" class="mainoption" /></td>
 	</tr>
    </tr> 
       <td align="right" class="row2" width="50%" >{POTION}&nbsp;&nbsp;&nbsp;</td> 
-      <td align="left" class="row2" width="50%" >&nbsp;&nbsp;&nbsp;<input type="submit" style="width: 125" value="{L_POTION}" name="potion" class="mainoption" /></td> 
+      <td align="left" class="row2" width="50%" >&nbsp;&nbsp;&nbsp;<input type="submit" style="width: 180" value="{L_POTION}" name="potion" class="mainoption" /></td> 
    </tr> 
    </tr> 
-      <td align="center" class="row1" width="100%" colspan="2" ><input type="submit" style="width: 125" value="{L_DEFEND}" name="defend" class="mainoption" /></td> 
+      <td align="center" class="row1" width="100%" colspan="2" ><input type="submit" style="width: 180" value="{L_DEFEND}" name="defend" class="mainoption" /></td> 
    </tr> 
    </tr> 
-      <td align="center" class="row2" width="100%" colspan="2" ><input type="submit" style="width: 125" value="{L_FLEE}" name="flee" class="mainoption" /></td> 
+      <td align="center" class="row2" width="100%" colspan="2" ><input type="submit" style="width: 180" value="{L_FLEE}" name="flee" class="mainoption" /></td> 
    </tr>
 	</tr>
-		<td align="center" class="row2" width="100%" colspan="2" ><input type="submit" style="width: 125" value="Scan" name="scan" class="mainoption" /></td>
+		<td align="center" class="row2" width="100%" colspan="2" ><input type="submit" style="width: 180" value="Scanner l'ennemi" name="scan" class="mainoption" /></td>
 	</tr> 
 
 </table> 

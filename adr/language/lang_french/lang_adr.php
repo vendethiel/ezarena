@@ -100,8 +100,8 @@ $lang['Adr_character_quota_timer']='Prochaine régénération de quota';
 $lang['Adr_prefs_tax_pm_notify']='Activer la notification par MP des taxes de magasin et entrepôt';
 
 //ARMOUR SET
-$lang['Adr_set_title']='Sets d\'Armures'; 
-$lang['Adr_set_name']='Nom Sets d\'Armures'; 
+$lang['Adr_set_title']='Panoplies'; 
+$lang['Adr_set_name']='Nom de la panoplie'; 
 $lang['Adr_set_no_item']='Rien'; 
 $lang['Adr_set_helm']='Casque:';
 $lang['Adr_set_greave']='Jambière:';
@@ -483,8 +483,8 @@ if ( defined ( 'IN_ADR_SHOPS' ))
    $lang['Adr_items_type_greave']='Jambière';
    $lang['Adr_items_type_boot']='Bottes';
    $lang['Adr_items_type_gloves']='Gants';
-   $lang['Adr_items_type_magic_attack']='Sort offensif';
-   $lang['Adr_items_type_magic_defend']='Sort defensif';
+   $lang['Adr_items_type_magic_attack']='Parchemin de magie offensive';
+   $lang['Adr_items_type_magic_defend']='Parchemin de magie defensive';
    $lang['Adr_items_type_amulet']='Amulette';
    $lang['Adr_items_type_ring']='Anneau';
    $lang['Adr_items_type_health_potion']='Potion de soins';

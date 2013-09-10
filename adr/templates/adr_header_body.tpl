@@ -8,7 +8,8 @@
 		<a href="adr_questbook.php"class="gradualfader"><img src="adr/images/nav/INV_Misc_Book_06.png" alt="Livre de quête" title="Livre de quête" height="48" width="48" onMouseOver="stm(Text[50],Style[0])" onMouseOut="htm()" /></a>
 		<a href="adr_questbook_history.php"class="gradualfader"><img src="adr/images/nav/INV_Misc_Book_05.png" alt="Historique des quêtes" title="Historique des quêtes" height="48" width="48" onMouseOver="stm(Text[51],Style[0])" onMouseOut="htm()" /></a>
 		<a href="adr_recipebook.php"class="gradualfader"><img src="adr/images/nav/INV_Misc_Book_14.png" alt="Livre de recettes" title="Livre de recettes" height="48" width="48" onMouseOver="stm(Text[52],Style[0])" onMouseOut="htm()" /></a>
-		<a href="adr_character_inventory_spells.php"class="gradualfader"><img src="adr/images/nav/INV_Misc_Book_15.png" alt="Livre de sorts" title="Livre de sorts" height="48" width="48" onMouseOver="stm(Text[53],Style[0])" onMouseOut="htm()" /></a>
+		<a href="adr_spellbook.php"class="gradualfader"><img src="adr/images/nav/INV_Misc_Book_15.png" alt="Livre de sorts" title="Livre de sorts" height="48" width="48" onMouseOver="stm(Text[53],Style[0])" onMouseOut="htm()" /></a>
+		<a href="adr_character_armour_sets.php"><img src="adr/images/nav/Ability_defend.png" class="gradualfader" alt="Panoplies" title="Panoplies" height="48" width="48" /></a>
 		<a href="rabbitoshi.php" class="gradualfader"><img src="adr/images/nav/Ability_mount_blackpanther.png" alt="Familier" title="Familier" height="48" width="48" onMouseOver="stm(Text[57], Style[0])" onMouseOut="htm()" /></a>
 		<!--
 		<a href="adr_cauldron_learned.php"class="gradualfader"><img src="adr/images/nav/INV_Misc_Book_13.png" alt="Cauldron Learned" title="Cauldron Learned" height="48" width="48" onMouseOver="stm(Text[54],Style[0])" onMouseOut="htm()" /></a>-->

@@ -133,6 +133,11 @@ $attack_lack = ( $rabbit_user['creature_attack_max'] - $rabbit_user['creature_at
 $magic_lack = ( $rabbit_user['creature_magicattack_max'] - $rabbit_user['creature_magicattack']);
 $attack_price = ($attack_lack * $attack_reload_price);
 $magic_price = ($magic_lack * $magic_reload_price);
+$experience_points_req = $rabbit_user['creature_experience_level_limit'];
+for ( $p = 1 ; $p < $rabbit_user['creature_level'] ; $p ++ )
+{
+	$experience_points_req = floor($experience_points_req * ( ( $rabbit_general['next_level_penalty'] + 100 ) / 100 ));
+}
 
 //Special attacks restrictions
 $regeneration_level = $rabbit_general['regeneration_level'];
@@ -372,7 +377,12 @@ if ( $board_config['rabbitoshi_enable'] && $searchid == $user_id )  {
 
 	if ( $level_action )
 	{
-		if ( $rabbit_user['creature_experience_level'] >= $rabbit_user['creature_experience_level_limit'] )
+		$max_hp = $rabbit_user['creature_experience_level_limit'];
+		for ( $p = 1 ; $p < $rabbit_user['creature_level'] ; $p ++ )
+		{
+			$max_hp = floor($max_hp * ( ( $rabbit_general['next_level_penalty'] + 100 ) / 100 ));
+		}
+		if ( $rabbit_user['creature_experience_level'] >= $max_hp )
 		{
 			if ($price_level < '0') {
 				rabbitoshi_previous( Rabbitoshi_progress_experience_lack , rabbitoshi_progress , '' );
@@ -587,7 +597,7 @@ $template->assign_vars(array(
 	'L_ABILITY_SACRIFICE'		=> $lang['Rabbitoshi_ability_sacrifice'],
 	'L_ABILITY_SACRIFICE_EXPLAIN'	=> $lang['Rabbitoshi_ability_sacrifice_explain'],
 	'POINTS'			=> $rabbit_user['creature_experience'],
-	'ABILITY_POINTS'		=> $rabbit_user['creature_experience_level'] .' / '. $rabbit_user['creature_experience_level_limit'],
+	'ABILITY_POINTS'		=> $rabbit_user['creature_experience_level'] .' / '. $experience_points_req,
 	'S_PET_ACTION'			=> append_sid("rabbitoshi_progress.$phpEx"),
 	'S_PET_RETURN'			=> append_sid("rabbitoshi.$phpEx"),
 	'S_HIDDEN_FIELDS'		=> $s_hidden_fields,

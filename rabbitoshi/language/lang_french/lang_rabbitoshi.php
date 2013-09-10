@@ -568,4 +568,7 @@ $lang['Adr_battle_pet_newstatut_4']='Votre créature est furieuse';
 // That's all Folks!
 // -------------------------------------------------
 
-?>
+// V: Level Up Penalty
+
+$lang['Rabbitoshi_level_up_penalty']='Pénalité d\'xp pour la montée de niveau';
+$lang['Rabbitoshi_level_up_penalty_explain']='Pourcentage d\'expérience nécessaire pour monter de niveau (plus un familier est haut niveau, plus il a besoin d\'expérience pour passer le prochain niveau)';

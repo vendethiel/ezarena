@@ -103,6 +103,7 @@ $template->assign_vars(array(
 	'RABBITOSHI_EVOLUTION_CHECKED' => ( $rabitoshi['evolution_enable'] ? 'CHECKED' :'' ),
 	'RABBITOSHI_EVOLUTION_PRICE' => $rabitoshi['evolution_cost'],
 	'RABBITOSHI_EVOLUTION_TIME' => $rabitoshi['evolution_time'],
+	'RABBITOSHI_LEVEL_UP_PENALTY' => $rabitoshi['next_level_penalty'],
 ));
 
 if ( $submit )
@@ -156,8 +157,9 @@ if ( $submit )
 	$mp_max = $HTTP_POST_VARS['mp_max'];
 	$attack_reload = $HTTP_POST_VARS['attack_reload'];
 	$magic_reload = $HTTP_POST_VARS['magic_reload'];
+	$level_up_penalty = $HTTP_POST_VARS['level_up_penalty'];
 
-
+	// V: could use class_common
 	$lsql= "UPDATE ". RABBITOSHI_GENERAL_TABLE . " SET config_value = '$magic_reload' WHERE config_name = 'magic_reload' ";
 	if ( !($lresult = $db->sql_query($lsql)) ) 
 	{ 
@@ -168,7 +170,11 @@ if ( $submit )
 	{ 
 		message_die(GENERAL_ERROR, $lang['Rabbitoshi_update_error'] , "", __LINE__, __FILE__, $lsql); 
 	}
-
+	$lsql= "UPDATE ". RABBITOSHI_GENERAL_TABLE . " SET config_value = '$level_up_penalty' WHERE config_name = 'next_level_penalty' ";
+	if ( !($lresult = $db->sql_query($lsql)) ) 
+	{ 
+		message_die(GENERAL_ERROR, $lang['Rabbitoshi_update_error'] , "", __LINE__, __FILE__, $lsql); 
+	} 
 	$lsql= "UPDATE ". RABBITOSHI_GENERAL_TABLE . " SET config_value = '$mp_min' WHERE config_name = 'mp_min' ";
 	if ( !($lresult = $db->sql_query($lsql)) ) 
 	{ 
@@ -472,6 +478,8 @@ $template->assign_vars(array(
 	'L_SECONDS' => $lang['Rabbitoshi_seconds'],
 	'L_RABBITOSHI_USE_CRON' => $lang['Rabbitoshi_cron_use'],
 	'L_RABBITOSHI_USE_CRON_EXPLAIN' => $lang['Rabbitoshi_cron_explain'],
+	'L_RABBITOSHI_LEVEL_UP_PENALTY' => $lang['Rabbitoshi_level_up_penalty'],
+	'L_RABBITOSHI_LEVEL_UP_PENALTY_EXPLAIN' => $lang['Rabbitoshi_level_up_penalty_explain'],
 	'L_RABBITOSHI_CRON_TIME' => $lang['Rabbitoshi_cron_time'],
 	'S_RABBITOSHI_ACTION' => append_sid(basename(__FILE__)))
 );

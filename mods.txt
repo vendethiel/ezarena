@@ -435,7 +435,7 @@ Ajoute un système de NPC (PNJ) avancé au Zone Mod, permettant de dépasser la 
 # ADR : Advanced NPC System Expansion 0.2.3-beta - Ozzie
 Ajoute de nombreuses fonctionnalités au mod "Advanced NPC System", comme la possibilité de reporter un tricheur (avec la possiblité pour un administrateur de mp/bannir/... le joueur), permet aux PNJs d'apparaître dans plusieurs zones, les PNJs peuvent demander plusieurs objets, et vous pouvez ajouter des restrictions de classe/race/niveau/élément/alignement/a parlé avec tel PNJ/a fini tel quête (aucune, une ou plusieurs).
 
-# ADR : Advanced Spell Addon 0.4.4 - AnimeMaster, egdcltd
+# ADR : Advanced Spell Addon 0.4.10 - AnimeMaster, egdcltd
 Permet aux joueurs d'apprendre des sorts en montant de niveau. Les sorts peuvent être édités dans l'administration.
 Addons :
  - Addon Spells in PvP - Informpro
@@ -535,17 +535,21 @@ Ajoute nord/sud/est/ouest aux zones.
 Addons :
  - Addon hide price if free - Informpro
 
-# ADR (ST) : Rabbitoshi 3.1.3 - one_piece
-Ajoute un système d'animalerie complet, intégré à ADR. Votre familier peut vous aider pendant les combats.
-(mis à jour depuis la version 2.0 de la prémode ADR)
-Addons :
- - Fix adr_battle not changing turn when rabbit's playing - Informpro
-
 # ADR (ST) : Town Environment 4.1.0 - one_piece
 Donne aux villes des interfaces interactives et ajoute des images aux différentes pages.
 
 # ADR (ST) : Zone 1.0 - one_piece
 Ajoute un système très complet de zones à ADR.
+
+# (ADR) Rabbitoshi 3.1.3 - one_piece
+Ajoute un système d'animalerie complet, intégré à ADR.
+Parfaitement intégré à ADR.
+(mis à jour depuis la version 2.0 de la prémode ADR)
+Addons :
+ - Fix adr_battle not changing turn when rabbit's playing - Informpro
+
+# Rabbitoshi : Level Up Penalty 0.2.0 - egdcltd
+L'expérience nécessaire pour monter de niveau augmente avec le niveau (comme sur le RPG).
 
 # File Attachment Mod 2.4.5 - Acyd Burn
 Permet d'attacher des fichiers aux messages

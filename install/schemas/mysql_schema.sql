@@ -2239,3 +2239,16 @@ CREATE TABLE `phpbb_adr_library_learned` (
   `book_details` LONGTEXT NOT NULL,
   INDEX  (`book_id`) 
 );
+
+# ADR - Advanced Spells 0.4.5 upgrade
+ALTER TABLE phpbb_adr_shops_spells ADD `spell_battle` int(1) NOT NULL default '0';
+ALTER TABLE phpbb_adr_shops_spells ADD `spell_xtreme` text NOT NULL default '';
+ALTER TABLE phpbb_adr_shops_spells ADD `spell_xtreme_battle` text NOT NULL default '';
+ALTER TABLE phpbb_adr_shops_spells ADD `spell_xtreme_pvp` text NOT NULL default '';
+
+# ditto 0.4.9
+ALTER TABLE phpbb_adr_shops_spells ADD `spell_alignment` varchar(255) NOT NULL DEFAULT '0';
+ALTER TABLE phpbb_adr_shops_spells ADD `spell_element_restrict` varchar(255) NOT NULL DEFAULT '0';
+
+# ditto 0.4.10
+ALTER TABLE `phpbb_adr_characters` ADD `character_spell_pre_effects` varchar(255) NOT NULL DEFAULT '';
