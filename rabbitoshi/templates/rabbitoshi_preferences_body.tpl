@@ -1,3 +1,5 @@
+<!-- INCLUDE ../../adr/templates/adr_header_body -->
+
 <table align="center" border="0" cellpadding="3" cellspacing="1" width="100%">
 	<tr>
 	  <td align="left"><span class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a> &raquo; <a href="{U_RABBITOSHI}" class="nav">{L_RABBITOSHI}</a> &raquo; {L_CONFIRM_TITLE}</span></td>

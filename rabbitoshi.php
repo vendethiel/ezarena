@@ -86,6 +86,12 @@ else if ( isset($HTTP_GET_VARS['from']) )
 //
 $page_title = $board_config['rabbitoshi_name'];
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
+
+// V: include ADR new header
+include($phpbb_root_path.'adr/includes/adr_global.'.$phpEx);
+$template->assign_var('OUT_OF_ZONES', true);
+// V: End New ADR header
+
 rabbitoshi_template_file('rabbitoshi_body.tpl');
 
 $board_config['points_name'] = $board_config['points_name'] ? $board_config['points_name'] : $lang['Rabbitoshi_default_points_name'] ;

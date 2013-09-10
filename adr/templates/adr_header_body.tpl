@@ -1,29 +1,27 @@
-<DIV id="TipLayer" style="visibility:hidden;position:absolute;z-index:1000;top:-100;"></DIV>
-<SCRIPT language="JavaScript1.2" src="adr/language/lang_{LANG}/lang_adr_buildings.js" type="text/javascript"></SCRIPT>
-
-<table width="100%" align="center" border="1">
+<table border="1" align="center" width="100%">
 	<tr>
-		<!-- BEGIN switch_header_no_picture_link_enable -->
-		<td align="center" class="row2" ><span class="gen"><br /><img src="adr/images/zones/{ZONE_SEASON}/{H_SHOPS_IMG}.gif" border="0" ><br /><br />{SHOPS_LINK}<br /><br /></span></td>
-		<td align="center" class="row1" ><span class="gen"><br /><img src="adr/images/zones/{ZONE_SEASON}/{H_TEMPLE_IMG}.gif" border="0" ><br /><br />{TEMPLE_LINK}<br /><br /></span></td>
-		<td align="center" class="row2" ><span class="gen"><br /><img src="adr/images/zones/{ZONE_SEASON}/{H_FORGE_IMG}.gif" border="0" ><br /><br />{FORGE_LINK}<br /><br /></span></td>
-		<td align="center" class="row1" ><span class="gen"><br /><img src="adr/images/zones/{ZONE_SEASON}/{H_MINE_IMG}.gif" border="0" ><br /><br />{MINE_LINK}<br /><br /></span></td>
-		<td align="center" class="row2" ><span class="gen"><br /><img src="adr/images/zones/{ZONE_SEASON}/{H_ENCHANT_IMG}.gif" border="0" ><br /><br />{ENCHANT_LINK}<br /><br /></span></td>
-		<td align="center" class="row1" ><span class="gen"><br /><img src="adr/images/zones/{ZONE_SEASON}/{H_BANK_IMG}.gif" border="0" ><br /><br />{BANK_LINK}<br /><br /></span></td>
-		<td align="center" class="row2" ><span class="gen"> <br /><img src="adr/images/zones/{ZONE_SEASON}/{H_PRISON_IMG}.gif" border="0" ><br /><br />{PRISON_LINK}<br /><br /></span></td>
-		<!-- END switch_header_no_picture_link_enable -->
-		<!-- BEGIN switch_header_picture_link_enable -->
-		<td align="center" class="row2" ><span class="gen">{SHOPS_LINK}<img src="adr/images/zones/{ZONE_SEASON}/{H_SHOPS_IMG}.gif" border="0" onMouseOver="stm(Text[26],Style[0])" onMouseOut="htm()" /></a></span></td>
-		<td align="center" class="row1" ><span class="gen">{TEMPLE_LINK}<img src="adr/images/zones/{ZONE_SEASON}/{H_TEMPLE_IMG}.gif" border="0" onMouseOver="stm(Text[24],Style[0])" onMouseOut="htm()" /></a></span></td>
-		<td align="center" class="row2" ><span class="gen">{FORGE_LINK}<img src="adr/images/zones/{ZONE_SEASON}/{H_FORGE_IMG}.gif" border="0" onMouseOver="stm(Text[20],Style[0])" onMouseOut="htm()" /></a></span></td>
-		<td align="center" class="row1"><span class="gen">{MINE_LINK}<img src="adr/images/zones/{ZONE_SEASON}/{H_MINE_IMG}.gif" border="0" onMouseOver="stm(Text[11], Style[0])" onMouseOut="htm()" ></a></span></td>
-		<td align="center" class="row2" ><span class="gen">{ENCHANT_LINK}<img src="adr/images/zones/{ZONE_SEASON}/{H_ENCHANT_IMG}.gif" onMouseOver="stm(Text[12], Style[0])" onMouseOut="htm()" border="0" ></a></span></td>
-		<td align="center" class="row1" ><span class="gen">{BANK_LINK}<img src="adr/images/zones/{ZONE_SEASON}/{H_BANK_IMG}.gif" border="0" onMouseOver="stm(Text[18],Style[0])" onMouseOut="htm()" /></a></span></td>
-		<td align="center" class="row2" ><span class="gen">{PRISON_LINK}<img src="adr/images/zones/{ZONE_SEASON}/{H_PRISON_IMG}.gif" border="0" onMouseOver="stm(Text[14],Style[0])" onMouseOut="htm()" /></a></span></td>
+		<td align="center" class="row2" width="100%">
+		<a href="adr_character.php"class="gradualfader"><img src="adr/images/nav/Ability_Rogue_MasterOfSubtlety.png" alt="Feuille de personnage" title="Feuille de personnage" height="48" width="48" onMouseOver="stm(Text[47],Style[0])" onMouseOut="htm()" /></a>
+		<a href="adr_character_skills.php"class="gradualfader"><img src="adr/images/nav/Ability_Warrior_Revenge.png" alt="Compétences" title="Compétences" height="48" width="48" onMouseOver="stm(Text[48],Style[0])" onMouseOut="htm()" /></a>
+		<a href="adr_character_inventory.php"class="gradualfader"><img src="adr/images/nav/INV_Misc_Bag_07.png" alt="Inventaire" title="Inventaire" height="48" width="48" onMouseOver="stm(Text[49],Style[0])" onMouseOut="htm()" /></a>
+		<a href="adr_party.php" class="gradualfader"><img src="adr/images/nav/INV_Misc_GroupNeedMore.png" alt="Groupe" title="Groupe" height="48" width="48" onMouseOver="stm(Text[57],Style[0])" onMouseOut="htm()" /></a>
+		<a href="adr_questbook.php"class="gradualfader"><img src="adr/images/nav/INV_Misc_Book_06.png" alt="Livre de quête" title="Livre de quête" height="48" width="48" onMouseOver="stm(Text[50],Style[0])" onMouseOut="htm()" /></a>
+		<a href="adr_questbook_history.php"class="gradualfader"><img src="adr/images/nav/INV_Misc_Book_05.png" alt="Historique des quêtes" title="Historique des quêtes" height="48" width="48" onMouseOver="stm(Text[51],Style[0])" onMouseOut="htm()" /></a>
+		<a href="adr_recipebook.php"class="gradualfader"><img src="adr/images/nav/INV_Misc_Book_14.png" alt="Livre de recettes" title="Livre de recettes" height="48" width="48" onMouseOver="stm(Text[52],Style[0])" onMouseOut="htm()" /></a>
+		<a href="adr_character_inventory_spells.php"class="gradualfader"><img src="adr/images/nav/INV_Misc_Book_15.png" alt="Livre de sorts" title="Livre de sorts" height="48" width="48" onMouseOver="stm(Text[53],Style[0])" onMouseOut="htm()" /></a>
+		<a href="rabbitoshi.php" class="gradualfader"><img src="adr/images/nav/Ability_mount_blackpanther.png" alt="Familier" title="Familier" height="48" width="48" onMouseOver="stm(Text[57], Style[0])" onMouseOut="htm()" /></a>
+		<!--
+		<a href="adr_cauldron_learned.php"class="gradualfader"><img src="adr/images/nav/INV_Misc_Book_13.png" alt="Cauldron Learned" title="Cauldron Learned" height="48" width="48" onMouseOver="stm(Text[54],Style[0])" onMouseOut="htm()" /></a>-->
+		<a href="adr_research_learned.php"class="gradualfader"><img src="adr/images/nav/INV_Misc_Book_12.png" alt="Recherches effectuées" title="Recherches effectuées" height="48" width="48" onMouseOver="stm(Text[55],Style[0])" onMouseOut="htm()" /></a><a href="adr_maps.php" class="gradualfader"><img src="adr/images/nav/INV_Misc_Map_01.png" alt="Carte du monde" title="Carte du monde" height="48" width="48" onMouseOver="stm(Text[56],Style[0])" onMouseOut="htm()" /></a>
+		</td>
 	</tr>
-	<!-- END switch_header_picture_link_enable -->
+	<!-- IF OUT_OF_ZONES -->
 	<tr>
-		<td align="center" class="row2" colspan ="8" ><span class="gen"><br \><b>{ZONE_RETURN}</b><br \><br \></span></td>
+		<td align="center" class="row2" colspan ="8" ><span class="gen"><br /><b>{L_Adr_zone_header_return}</b><br /><br /></span></td>
 	</tr>
+	<!-- ENDIF -->
 </table>
+
+<!-- IF OUT_OF_ZONES -->
 <br clear="all" />
+<!-- ENDIF -->

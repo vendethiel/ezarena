@@ -19,25 +19,8 @@
  ***************************************************************************/
 
 /*
- *V:
- * Just a note if you come check what's in here.
- *  ShadowTek's ADR premod (included in ezArena)
- *  DOES NOT USE TOWN ENVIRONMENT. Using townenv would
- *  defeat the purpose of the modifications made.
- *
- * However, it *does* use the graphical modifications
- *  This is why there are no "carteX" folders.
- *  See the old ShadowTek todos from the ADR github issue :
- *   https://github.com/Nami-Doc/ezarena/issues/7#issuecomment-23674076
- *
- * Basically, yes, we could remove those files now, they're not used
- *  and we could probably remove them. However, we could also go the
- *  other way around and integrate them. I have not done this because
- * I think they're more cumbersome with all those added texts
- *  and they keep adding more and more barriers to a fast user experience
- *
- * !!! EDIT !!!
- * So, this got integrated and we know use Town Env with Zone mod \o/
+ * V:
+ *  Keep this file for the INFOS
  */
 
 define('IN_PHPBB', true); 
@@ -83,25 +66,6 @@ if ( !$userdata['session_logged_in'] )
 	$redirect = "adr_TownMap.$phpEx";
 	$redirect .= ( isset($user_id) ) ? '&user_id=' . $user_id : '';
 	header('Location: ' . append_sid("login.$phpEx?redirect=$redirect", true));
-}
-
-// Includes the tpl and the header and choice of the season and music
-
-$music_spring = '';
-$music_summer = '';
-$music_automn = '';
-$music_winter = '';
-
-$sql = "SELECT music_spring, music_summer, music_automn, music_winter FROM " . ADR_TOWNMAP_MUSIC_TABLE ;
-if ( !($result = $db->sql_query($sql)) ) message_die(GENERAL_ERROR, "Could not acces music table.", '', __LINE__, __FILE__, $sql);
-if ($alignments = $db->sql_fetchrow($result))
-{
-	$musics = array(
-		$alignments['music_spring'],
-		$alignments['music_summer'],
-		$alignments['music_automn'],
-		$alignments['music_winter'],
-	);
 }
 
 $saison = 'Carte' . $board_config['adr_seasons'];

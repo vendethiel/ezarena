@@ -48,6 +48,7 @@ if ( !$userdata['session_logged_in'] )
 
 // Includes the tpl and the header
 include_once($phpbb_root_path . 'includes/page_header.'.$phpEx);
+include_once($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
 
 // Who is looking at this page ?
 $user_id = $userdata['user_id'];

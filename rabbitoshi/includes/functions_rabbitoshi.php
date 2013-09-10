@@ -51,7 +51,12 @@ function rabbitoshi_template_file($file)
 
 function rabbitoshi_previous( $lang_key , $direct , $nav='' )
 {
-	global $lang , $phpEx ;
+	global $lang , $phpEx, $template;
+
+	// V: Integrate ADR new Header
+	$template->set_filenames(array('adr_header' => '../../adr/templates/adr_header_body.tpl'));
+	$template->pparse('adr_header');
+	// End ADR new Header
 
 	$lang_key = $lang[$lang_key];
 	$temp = ( !$nav ) ? $direct.'.'.$phpEx : $direct.'.'.$phpEx.'?'.$nav;

@@ -84,6 +84,17 @@ function createReducerFor(elId) {
 	}
 };
 </script>
+<style>
+.gradualfader {
+	opacity: 0.6;
+
+	transition-duration: 300ms;
+}
+.gradualfader:hover {
+	opacity: 1;
+}
+</style>
+<DIV id="TipLayer" style="visibility:hidden;position:absolute;z-index:1000;top:-100;"></DIV>
 </head>
 <body bgcolor="{T_BODY_BGCOLOR}" text="{T_BODY_TEXT}" link="{T_BODY_LINK}" vlink="{T_BODY_VLINK}">
 

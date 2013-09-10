@@ -182,7 +182,7 @@ Ce MOD va créer des plans de site United Sitemaps (auparavant connu sous le nom
 Utilise un système de cache supportant pleinement la compression Gun-zip, ainsi que de la mise en forme XSLTransform pour les plans de site Google et les flux RSS. 
 
 # Hypercell Class 1.1.0 - reddog
-Ce MOD ajoute un effet au passage de la souris sur les cellules de la liste des sujets et sur les catégories de l'index du forum, avec une icône dynamique selon le type de sujet (annonce, post-it, ...) et le statut (nouveau message, verrouillé, ...). 
+Ce MOD ajoute un effet au passage de la souris sur les cellules de la liste des sujets et sur les catégories de l'index du forum, avec une icône dynamique selon le type de sujet (annonce, post-it,...) et le statut (nouveau message, verrouillé,...). 
 
 # Inactive Users 1.1.8 - Sko22
 Affiche les membres dont le compte n'est pas activé, ou ceux ayant 0 message. Vous avez la possibilité de les contacter ou de les supprimer.
@@ -472,6 +472,11 @@ Permet aux monstres de draîner, voire transférer, de la vie / du mana chaque t
 
 # ADR : Monster in multiple zones 1.0-beta - Dedo
 Permet de mettre les monstres dans plusieurs zones.
+
+# ADR : New Header - Informpro
+Change le header de l'ADR pour mettre des icones, et utilise le même objet entre adr_zones et les autres pages.
+Addons :
+ - Addon pour Rabbitoshi - Infomrpro
 
 # ADR : Party 1.1 - Spikez
 Ajoute un système de groupe au RPG, avec des bonus configurables.

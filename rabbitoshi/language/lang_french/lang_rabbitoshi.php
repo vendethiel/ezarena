@@ -263,7 +263,7 @@ $lang['Rabbitoshi_shop_lack_items']='Vous ne pouvez pas vendre des articles que 
 //
 // Pet Inventory
 //
-$lang['Rabbitoshi_inventory']='Caresser l\'Inventaire';
+$lang['Rabbitoshi_inventory']='Voir l\'Inventaire';
 $lang['Rabbitoshi_inventory_value']='Valeur';
 $lang['Rabbitoshi_inventory_quanity']='Quanity';
 $lang['Rabbitoshi_inventory_action']='Vendre des Articles';

@@ -48,6 +48,10 @@ Text[39]=["Bûcheronnage", "Coupez du bois"]
 Text[40]=["Groupe", "Cherchez et rejoignez un groupe, afin d'avoir des bonus d'XP et de Caractéristiques"]
 Text[41]=["Couture", "Cousez des vêtements, pour l'hiver ou pour tuer des monstres !"]
 Text[42]=["Entrepot", "Stockez votre surplus d'objets ici ! Moyennant une légère compensation financière"]
+
+Text[47]=["Feuille de personnage", "Votre personnage"]
+Text[56]=["Carte du monde", "Liste des zones du monde. Vous pouvez vous téléporter d'ici si vous possédez un parchemin"]
+// now, this is from 
 // V: finished
 
 Text[100]=["Carte du Monde","Regardez toutes les Zones des Royaumes, et téléportez vous si vous possédez le bon parchemin"]

@@ -1,3 +1,5 @@
+<!-- INCLUDE ../../adr/templates/adr_header_body -->
+
 <form action="{S_MODE_ACTION}" method="post">
 <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
 	<tr>
