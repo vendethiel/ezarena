@@ -50,8 +50,16 @@ Text[41]=["Couture", "Cousez des vêtements, pour l'hiver ou pour tuer des monstr
 Text[42]=["Entrepot", "Stockez votre surplus d'objets ici ! Moyennant une légère compensation financière"]
 
 Text[47]=["Feuille de personnage", "Votre personnage"]
-Text[56]=["Carte du monde", "Liste des zones du monde. Vous pouvez vous téléporter d'ici si vous possédez un parchemin"]
-// now, this is from 
+Text[48]=["Compétences", "Liste de vos compétences"]
+Text[49]=["Inventaire", "Liste des objets que vous possédez"]
+Text[50]=["Livre de quête", "Livre de vos quêtes en cours/historique"]
+Text[51]=["Livre de sorts", "Livre des sorts que vous connaisez"]
+Text[52]=["Livre de recettes", "Livre des recettes que vous connaissez"]
+Text[53]=["Panoplies", "Liste des panoplies"]
+Text[54]=["Bibliothèque", "Effectuez vos recherches à la bibliothèque"]
+Text[55]=["Recherches effectuées", "Liste des connaissances que vous avez aquises dans les livres"]
+Text[56]=["Carte du monde", "Liste des zones du monde, téléportation possible si vous possédez un parchemin"]
+Text[57]=["Groupe", "Rejoignez d'autres joueurs pour former une équipe"]
 // V: finished
 
 Text[100]=["Carte du Monde","Regardez toutes les Zones des Royaumes, et téléportez vous si vous possédez le bon parchemin"]

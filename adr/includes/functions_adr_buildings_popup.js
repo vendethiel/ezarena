@@ -86,6 +86,7 @@ function applyCssFilter(){
 }
 
 function stm(t,s) {
+	console.log('hover')
   if(sNav) {
   	if(t.length<2||s.length<25) {
 		var ErrorNotice = "DHTML TIP MESSAGE VERSION 1.2 ERROR NOTICE.\n"
@@ -94,6 +95,7 @@ function stm(t,s) {
 		else if(s.length<25) alert(ErrorNotice+"It looks like you removed an entry or more from the Style Array of this tip.\nTheir should be 25 entries in every Style Array even though empty. You defined only "+s.length+" entries. This tip won't be viewed to avoid errors.")
  	}
   	else {
+  		console.log('go', t)
 		var ab = "" ;var ap = ""
 		var titCol = (s[0])? "COLOR='"+s[0]+"'" : ""
 		var txtCol = (s[1])? "COLOR='"+s[1]+"'" : ""

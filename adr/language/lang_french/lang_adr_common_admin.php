@@ -29,6 +29,8 @@ $lang['Adr_items_settings']='Types d\'objet';
 $lang['Adr_store_cats']='Magasins';
 
 $lang['ADR Spells'] = 'ADR-Sorts';
+$lang['Give User Spells'] = 'Ajouter un sort a un joueur';
+$lang['Spell Settings'] = 'Réglages';
 
 $lang['Adr_skills_settings']='Compétences';
 $lang['Adr_vault']='ADR-Trésorerie';
