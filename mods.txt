@@ -478,6 +478,10 @@ Change le header de l'ADR pour mettre des icones, et utilise le même objet entr
 Addons :
  - Addon pour Rabbitoshi - Infomrpro
 
+# ADR : Night & Day 1.0-beta - Raven
+Ajoute Aube/Jour/Crépuscule/Nuit au RPG.
+Basé sur le mod de ShadowTek.
+
 # ADR : Party 1.1 - Spikez
 Ajoute un système de groupe au RPG, avec des bonus configurables.
 
@@ -500,6 +504,9 @@ Ajoute pêche, l'Herboristerie, bûcheronnage, chasse, alchemie et le métier de
 # ADR : Town Environment Enhanced into Zone Mod - Informpro
 Intègre le mod Town Environment dans le Zone mod, et modifie l'interface de la page des zones pour retirer les informations inutiles et libérer de l'espace (remplace la map du Zone Mod par celles du Town Env tout en gérant les bâtiments inaccessibles, modifie les pages du Town Env pour utiliser les saisons du Zone Mod).
 Intègre aussi différents mods ensemble (comme le quest book) et fixe certaines parties manquantes du Town Env (page des clans remplacé par une page des guildes).
+
+# ADR : Weapon Proficiency 1.0.0-beta3 - Dyrwnyn
+Ajoute les maitrises d'armes : plus vous utiliser un type d'arme, plus vous ferez de dégâts avec.
 
 # ADR : Zone shoutbox & Battle Community Integration 1.0.0 - Informpro
 Permet d'utiliser la chatbox communautaire plutôt que la chatbox du zone_mod.

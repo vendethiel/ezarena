@@ -1071,9 +1071,9 @@ INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zo
 # V: and now, let's add other pages ...
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (346, 'alchemy', '', 'Alchemy', 0, '', 'adr_alchemy', '', 28, 1);
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (347, 'beggar', '', 'Beggar Donation', 0, '', 'adr_beggar', '', 29, 1);
-INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (348, 'blacksmith', '', 'Blacksmithing', 0, '', 'adr_blacksmithing', '', 30, 1);
-INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (349, 'brewing', '', 'Brewing', 0, '', 'adr_brewing', '', 31, 1);
-INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (350, 'cooking', '', 'Cooking', 0, '', 'adr_cooking', '', 32, 1);
+INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (348, 'smithy', '', 'Blacksmithing', 0, '', 'adr_blacksmithing', '', 30, 1);
+INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (349, '!!brewing', '', 'Brewing', 0, '', 'adr_brewing', '', 31, 1);
+INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (350, 'farmhouse', '', 'Cooking', 0, '', 'adr_cooking', '', 32, 1);
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (351, 'enchant', '', 'Enchant', 0, '', 'adr_enchant', '', 33, 1);
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (352, 'fish', '', 'Fishing', 0, '', 'adr_fish', '', 34, 1);
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (353, 'herbal', '', 'Herbalism', 0, '', 'adr_herbal', '', 35, 1);
@@ -1105,6 +1105,20 @@ INSERT INTO phpbb_adr_shops_items (item_id, item_owner_id, item_price, item_qual
 
 # ADR - Spell advanced - upgrade
 INSERT INTO `phpbb_adr_general` VALUES ('spell_enable_pm', '1');
+
+# ADR - Day & Night
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('adr_time', '1');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('adr_length_time', '10800');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('adr_time_last_time', '0');
+
+# ADR - Weapon Proficiency
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (40, 2000, 'Adr_items_type_staff');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (41, 2000, 'Adr_items_type_dirk');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (42, 2000, 'Adr_items_type_mace');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (43, 2000, 'Adr_items_type_ranged');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (44, 2000, 'Adr_items_type_fist');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (45, 2000, 'Adr_items_type_axe');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (46, 2000, 'Adr_items_type_spear');
 
 # Rabbitoshi - levelup penalty
 INSERT INTO `phpbb_rabbitoshi_general` VALUES ('next_level_penalty', 10);

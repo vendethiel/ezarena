@@ -2252,3 +2252,23 @@ ALTER TABLE phpbb_adr_shops_spells ADD `spell_element_restrict` varchar(255) NOT
 
 # ditto 0.4.10
 ALTER TABLE `phpbb_adr_characters` ADD `character_spell_pre_effects` varchar(255) NOT NULL DEFAULT '';
+
+# ADR - Weapon proficiency
+ALTER TABLE phpbb_adr_characters ADD character_skill_sword_level int(8) UNSIGNED NOT NULL default '1';
+ALTER TABLE phpbb_adr_characters ADD character_skill_dirk_level int(8) UNSIGNED NOT NULL default '1';
+ALTER TABLE phpbb_adr_characters ADD character_skill_ranged_level int(8) UNSIGNED NOT NULL default '1';
+ALTER TABLE phpbb_adr_characters ADD character_skill_magic_level int(8) UNSIGNED NOT NULL default '1';
+ALTER TABLE phpbb_adr_characters ADD character_skill_mace_level int(8) UNSIGNED NOT NULL default '1';
+ALTER TABLE phpbb_adr_characters ADD character_skill_fist_level int(8) UNSIGNED NOT NULL default '1';
+ALTER TABLE phpbb_adr_characters ADD character_skill_staff_level int(8) UNSIGNED NOT NULL default '1';
+ALTER TABLE phpbb_adr_characters ADD character_skill_axe_level int(8) UNSIGNED NOT NULL default '1';
+ALTER TABLE phpbb_adr_characters ADD character_skill_spear_level int(8) UNSIGNED NOT NULL default '1';
+ALTER TABLE phpbb_adr_characters ADD character_skill_sword_uses int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_characters ADD character_skill_dirk_uses int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_characters ADD character_skill_ranged_uses int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_characters ADD character_skill_mace_uses int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_characters ADD character_skill_fist_uses int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_characters ADD character_skill_staff_uses int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_characters ADD character_skill_axe_uses int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_characters ADD character_skill_spear_uses int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_characters ADD character_skill_magic_uses int(8) UNSIGNED NOT NULL default '0';

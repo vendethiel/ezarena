@@ -925,3 +925,22 @@ if ( defined ('IN_ADR_ZONE_MAPS'))
     $lang['Adr_admin_maps_assign']='Assigner';
     $lang['Adr_admin_maps_none']='Aucun';
 }
+
+// Day & Night & moar
+if ( defined ('IN_ADR_TIME'))
+{
+    $lang['Adr_time_acp_title']='Réglages de la période de la journée';
+    $lang['Adr_time_acp_explain']='Ici vous pouvez changer la période de la journée et changer la durée entre chaque';
+    $lang['Adr_time_acp_config']='Réglages';
+    $lang['Adr_time_acp_choice']='Changer la période de la journée';
+    $lang['Adr_time_acp_time']='Temps entre chaque période';
+    $lang['Adr_time_acp_days']='Jours';
+    $lang['Adr_time_acp_submit']='Modifier';
+    $lang['Adr_time_change_successful']='Réglages modifiés correctement';
+    $lang['Adr_time_empty']='Vous devez donner un temps entre 2 périodes';
+    $lang['Adr_Time_1']='Aube';
+    $lang['Adr_Time_2']='Jour';
+    $lang['Adr_Time_3']='Crépuscule';
+    $lang['Adr_Time_4']='Nuit';
+}
+$lang['Adr_monster_time_choose']='Apparaît à l\'heure :';

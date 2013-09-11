@@ -147,7 +147,7 @@ if ( defined ('IN_ADR_ZONES'))
    $lang['Adr_Zone_Season_3']='Automne';
    $lang['Adr_Zone_Season_4']='Hiver';
    $lang['Adr_Zone_Weather_1']='Soleil';
-   $lang['Adr_Zone_Weather_2']='Nuit';
+   $lang['Adr_Zone_Weather_2']='Brumeux';
    $lang['Adr_Zone_Weather_3']='Nuages';
    $lang['Adr_Zone_Weather_4']='Pluie';
    $lang['Adr_Zone_Weather_5']='Eclaircie';
@@ -253,3 +253,10 @@ $lang['Adr_zone_acp_picture_link']='Activer les liens images à la place des lien
 $lang['Adr_zone_acp_zone_dynamic_maps_current_zone']='Current Zone Assignment of World Map';
 $lang['Adr_zone_acp_zone_dynamic_maps_config_zone']='Current Config Assignment of World Map <br /><span class="gensmall">If this does not match the Current Zone Assignment, your World Map will not display.</span>';
 $lang['Adr_zone_acp_zone_dynamic_maps_display_required']='Display the Required Item and Points on Teleport Popup';
+
+// Day & Night
+$lang['Adr_zone_time_title']='Heure de la journée';
+$lang['Adr_Zone_Time_1']='Aube';
+$lang['Adr_Zone_Time_2']='Jour';
+$lang['Adr_Zone_Time_3']='Crépuscule';
+$lang['Adr_Zone_Time_4']='Nuit';

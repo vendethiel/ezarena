@@ -9,11 +9,12 @@
 		<td align="left" class="row2" width="60%" ><span class="gen"><br /><b><u>{L_ZONE_DESCRIPTION} :</u></b> {ZONE_DESCRIPTION}<br /><br /><b><u>{L_ZONE_ELEMENT} :</u></b> {ZONE_ELEMENT}<br /><br />
 			<table width="100%" align="center" border="1">
 				<tr>
-					<th align="center" colspan="10" ><u>{L_ZONE_SEASON} &amp; {L_ZONE_WEATHER}</u></td>
+					<th align="center" colspan="10" ><u>{L_ZONE_TIME}, {L_ZONE_SEASON} &amp; {L_ZONE_WEATHER}</u></td>
 				</tr>
 				<tr>
-					<td align="center" class="row2" valign="top" ><span class="gen">{ZONE_SEASON_NAME}<br /><br /><img src="adr/images/zones/seasons/{ZONE_SEASON_IMG}.gif" border="0" ><br /><br /></span></td>
-					<td align="center" class="row2" valign="top" ><span class="gen">{ZONE_WEATHER_NAME}<br /><br /><img src="adr/images/zones/weather/{ZONE_WEATHER_IMG}.gif" border="0" ><br /><br /></span></td>
+					<td align="center" class="row2" ><span class="gen">{ZONE_TIME_NAME}<br /><br /><img src="adr/images/zones/time/{ZONE_TIME_IMG}.gif" border="0" ><br /><br /></span></td>
+					<td align="center" class="row2" ><span class="gen">{ZONE_WEATHER_NAME}<br /><br /><img src="adr/images/zones/weather/{ZONE_WEATHER_IMG}.gif" border="0" ><br /><br /></span></td>
+					<td align="center" class="row2" ><span class="gen">{ZONE_SEASON_NAME}<br /><br /><img src="adr/images/zones/seasons/{ZONE_SEASON_IMG}.gif" border="0" ><br /><br /></span></td>
 				</tr>
 			</table>
 		</span></td>

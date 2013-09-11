@@ -694,8 +694,8 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				$item['spell_name'] = adr_get_lang($item['spell_name']);
 			}
 
-				$attbonus = 0;
-				$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+			$attbonus = 0;
+			$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
 
 			if((($diff === TRUE) && ($dice != '1')) || ($dice == '20')){
 				$damage = 1;
@@ -1689,6 +1689,8 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 			
 			adr_use_item($weap, $user_id);
 		} // end if weapon
+		// Grab modifers
+		// $attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
 		
 		// Let's sort out the weapon animations...
 		// Make table for start battle sequence...
@@ -1697,17 +1699,17 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		$monster_action     = 1;
 		$attack_img         = $item['item_name'];
 		$attackwith_overlay = ((file_exists("adr/images/battle/spells/" . $attack_img . ".gif"))) ? '<img src="adr/images/battle/spells/' . $attack_img . '.gif" width="256" height="96" border="0">' : '';
-		
+
+		$crit_result = adr_battle_make_crit_roll($bat['battle_challenger_att'], $challenger['character_level'], $bat['battle_opponent_def'], $item['item_type_use'], $power, $quality, 20);
+
+		// Bare fist strike
 		if ($item['item_name'] == '')
 		{
 			$monster_def_dice = rand(1, 20);
 			$monster_modifier = rand(1, 20); // this is temp. until proper monster characteristics are added to ADR
-			$crit_roll        = rand(1, 20);
+			// $crit_roll        = rand(1, 20);
 			// stupid mistake ... earlier the rand is 1, 5 -_-
 			$bare_dice = rand(1, 20);
-			
-			// Grab modifers
-			$bare_power = adr_modifier_calc($challenger['character_might']);
 
 			if ((($bare_dice + $bare_power > $monster_def_dice + $monster_modifier) && ($bare_dice != '1')) || ($bare_dice == '20'))
 			{
@@ -1754,10 +1756,12 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				
 				// Attack success , calculate the damage . Critical dice roll is still success
 				$damage = (($bare_dice == '20') && ($crit_roll == '20')) ? ($bare_power * 2) : $bare_power;
+				// weap prof
+				$damage = ceil($damage * $attbonus);
 				$damage = ($damage > $bat['battle_opponent_hp']) ? $bat['battle_opponent_hp'] : $damage;
 				
-				$battle_message .= (($bare_dice == '20') && ($crit_roll == '20')) ? $lang['Adr_battle_critical_hit'] . "<br>" : '';
-				$battle_message .= sprintf($lang['Adr_battle_attack_bare'], $challenger['character_name'], $damage, $monster['monster_name']) . "<br>";
+				$battle_message .= $crit_result ? $lang['Adr_battle_critical_hit'] . "<br>" : '';
+				$battle_message .= sprintf($lang['Adr_battle_attack_bare'], $challenger['character_name'], floor($attbonus), $damage, $monster['monster_name']) . "<br>";
 			} //(($bare_dice + $bare_power > $monster_def_dice + $monster_modifier) && ($bare_dice != '1')) || ($bare_dice == '20')
 			else
 			{
@@ -1767,6 +1771,8 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		} // end if item_name is empty
 		else
 		{
+			// weaprof
+			$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
 			if ((($diff === TRUE) && ($dice != '1')) || ($dice >= $threat_range))
 			{
 				// Prefix msg if crit hit
@@ -1776,15 +1782,15 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				// Work out attack type
 				if (($item['item_element']) && ($item['item_element'] === $elemental['element_oppose_strong']) && ($item['item_duration'] > '1') && (!empty($item['item_name'])))
 				{
-					$damage = ceil(($power * ($item['item_element_weak_dmg'] / 100)));
+					$damage = ceil(($power *($item['item_element_weak_dmg'] /100)) * $attbonus);
 				} //($item['item_element']) && ($item['item_element'] === $elemental['element_oppose_strong']) && ($item['item_duration'] > '1') && (!empty($item['item_name']))
 				elseif (($item['item_element']) && (!empty($item['item_name'])) && ($item['item_element'] === $opponent_element) && ($item['item_duration'] > '1'))
 				{
-					$damage = ceil(($power * ($item['item_element_same_dmg'] / 100)));
+					$damage = ceil(($power * ($item['item_element_same_dmg'] / 100)) * $attbonus);
 				} //($item['item_element']) && (!empty($item['item_name'])) && ($item['item_element'] === $opponent_element) && ($item['item_duration'] > '1')
 				elseif (($item['item_element']) && (!empty($item['item_name'])) && ($item['item_element'] === $elemental['element_oppose_weak']) && ($item['item_duration'] > '1'))
 				{
-					$damage = ceil(($power * ($item['item_element_str_dmg'] / 100)));
+					$damage = ceil(($power * ($item['item_element_str_dmg'] / 100)) * $attbonus);
 				} //($item['item_element']) && (!empty($item['item_name'])) && ($item['item_element'] === $elemental['element_oppose_weak']) && ($item['item_duration'] > '1')
 				else
 				{
@@ -1798,11 +1804,11 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				// Fix attack msg type
 				if (($item['item_element'] > '0') && ($element_name['element_name'] != ''))
 				{
-					$battle_message .= sprintf($lang['Adr_battle_attack_success'], $challenger['character_name'], $monster['monster_name'], $item['item_name'], adr_get_lang($element_name['element_name']), $damage) . '<br>';
+					$battle_message .= sprintf($lang['Adr_battle_attack_success'], $challenger['character_name'], $monster['monster_name'], $item['item_name'], adr_get_lang($element_name['element_name']), floor($attbonus), $damage) . '<br>';
 				} //($item['item_element'] > '0') && ($element_name['element_name'] != '')
 				else
 				{
-					$battle_message .= sprintf($lang['Adr_battle_attack_success_norm'], $challenger['character_name'], $monster['monster_name'], $item['item_name'], $damage) . '<br>';
+					$battle_message .= sprintf($lang['Adr_battle_attack_success_norm'], $challenger['character_name'], $monster['monster_name'], $item['item_name'], floor($attbonus), $damage) . '<br>';
 				}
 			} //(($diff === TRUE) && ($dice != '1')) || ($dice >= $threat_range)
 			else
@@ -2759,21 +2765,25 @@ for ($i = 0, $count_items = count($items); $i < $count_items; $i++)
 	$item_power = ($adr_general['item_power_level'] == '1') ? ($items[$i]['item_power'] + $items[$i]['item_add_power']) : $items[$i]['item_power'];
 	
 	
-	if (($items[$i]['item_type_use'] == 5 || $items[$i]['item_type_use'] == 6) && ($items[$i]['item_mp_use'] <= $challenger['character_mp']))
+	if ( ( $items[$i]['item_type_use'] ==  5 || $items[$i]['item_type_use'] ==  6 ||
+		// weap prof mod : 40-46
+		$items[$i]['item_type_use'] ==  40 || $items[$i]['item_type_use'] ==  41 || $items[$i]['item_type_use'] ==  42 || $items[$i]['item_type_use'] == 43
+		|| $items[$i]['item_type_use'] ==  44 || $items[$i]['item_type_use'] ==  45 || $items[$i]['item_type_use'] ==  46 )
+	 && ( $items[$i]['item_mp_use'] <= $challenger['character_mp'] ) )
 	{
 		$weapon_selected = ($HTTP_POST_VARS['item_weapon'] == $items[$i]['item_id']) ? 'selected' : '';
 		$weapon_list .= '<option value = "' . $items[$i]['item_id'] . '" ' . $weapon_selected . '>' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )' . '</option>';
-	} //($items[$i]['item_type_use'] == 5 || $items[$i]['item_type_use'] == 6) && ($items[$i]['item_mp_use'] <= $challenger['character_mp'])
+	}
 	else if (($items[$i]['item_type_use'] == 11 || $items[$i]['item_type_use'] == 12) && (($items[$i]['item_power'] + $items[$i]['item_mp_use']) <= $challenger['character_mp']))
 	{
 		$spell_selected = ($HTTP_POST_VARS['item_spell'] == $items[$i]['item_id']) ? 'selected' : '';
 		$spell_list .= '<option value = "' . $items[$i]['item_id'] . '" ' . $spell_selected . ' >' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )' . '</option>';
-	} //($items[$i]['item_type_use'] == 11 || $items[$i]['item_type_use'] == 12) && (($items[$i]['item_power'] + $items[$i]['item_mp_use']) <= $challenger['character_mp'])
+	}
 	else if ($items[$i]['item_type_use'] == 15 || $items[$i]['item_type_use'] == 16 || $items[$i]['item_type_use'] == 19)
 	{
 		$potion_selected = ($HTTP_POST_VARS['item_potion'] == $items[$i]['item_id']) ? 'selected' : '';
 		$potion_list .= '<option value = "' . $items[$i]['item_id'] . '" ' . $potion_selected . ' >' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )' . '</option>';
-	} //$items[$i]['item_type_use'] == 15 || $items[$i]['item_type_use'] == 16 || $items[$i]['item_type_use'] == 19
+	}
 } //$i = 0, $count_items = count($items); $i < $count_items; $i++
 for ($s = 0; $s < count($spells); $s++)
 {

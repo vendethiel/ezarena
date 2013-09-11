@@ -397,10 +397,12 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 	// Let's care about the opponent now
 	$actual_weather = $zone_user['character_weather'];
 	$actual_season = $board_config['adr_seasons'];
+	$actual_time = $board_config['adr_time'];
 	$sql = " SELECT * FROM " . ADR_BATTLE_MONSTERS_TABLE . "
 			WHERE monster_level <= $level 
 			$monster_area
 			AND ( monster_weather = $actual_weather || monster_weather = 0 )
+			AND (monster_time = $actual_time OR monster_time = 0)
 			AND ( monster_season = $actual_season || monster_season = 0 )";
 	if( !($result = $db->sql_query($sql)) )
 	{

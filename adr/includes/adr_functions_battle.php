@@ -927,3 +927,270 @@ function drop_loot($monster_id,$user_id,$dropped_loot_list)
 
 	return $message;
 }
+
+function adr_weapon_skill_check($user_id , $bonus_hit)
+{
+	global $db , $lang , $adr_general , $item;
+	$char = adr_get_user_infos($user_id);
+	$sql = "SELECT * FROM " . ADR_CHARACTERS_TABLE . "
+	WHERE character_id = $user_id ";
+	if ( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, 'Could not obtain user list', '', __LINE__, __FILE__, $sql);
+	}
+
+	if ($item['item_type_use'] == 6)
+	{  
+		if ( ( $char['character_skill_magic_uses'] +1 ) >= (500 * $char['character_skill_magic_level']) )
+		{
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+			SET character_skill_magic_uses = 0 , 
+			character_skill_magic_level = character_skill_magic_level + 1
+			WHERE character_id = $user_id ";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, 'Could not obtain skill information', "", __LINE__, __FILE__, $sql);
+			}
+		}
+		else
+		{
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+			SET character_skill_magic_uses = character_skill_magic_uses + 1
+			WHERE character_id = $user_id ";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+			}
+		}
+		$bonus_hit = ($char['character_skill_magic_level'] / 4) + 1;
+		return $bonus_hit;
+	}
+
+	else if ($item['item_type_use'] == 5)
+	{  
+		if ( ( $char['character_skill_sword_uses'] +1 ) >= (500 * $char['character_skill_sword_level']) )
+		{
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+			SET character_skill_sword_uses = 0 , 
+			character_skill_sword_level = character_skill_sword_level + 1
+			WHERE character_id = $user_id ";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, 'Could not obtain skill information', "", __LINE__, __FILE__, $sql);
+			}
+		}
+		else
+		{
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+				SET character_skill_sword_uses = character_skill_sword_uses + 1
+				WHERE character_id = $user_id ";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+			}
+		}
+		$bonus_hit = ($char['character_skill_sword_level'] / 4) + 1;
+		return $bonus_hit;
+	}
+
+	else if ($item['item_type_use'] == 40)
+	{  
+		if ( ( $char['character_skill_staff_uses'] +1 ) >= (500 * $char['character_skill_staff_level']) )
+		{
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+			SET character_skill_staff_uses = 0 , 
+			character_skill_staff_level = character_skill_staff_level + 1
+			WHERE character_id = $user_id ";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, 'Could not obtain skill information', "", __LINE__, __FILE__, $sql);
+			}
+		}
+		else
+		{
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+			SET character_skill_staff_uses = character_skill_staff_uses + 1
+			WHERE character_id = $user_id ";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+			}
+		}
+		$bonus_hit = ($char['character_skill_staff_level'] / 4) + 1;
+		return $bonus_hit;
+	}
+	else if ($item['item_type_use'] == 41)
+	{  
+		if ( ( $char['character_skill_dirk_uses'] +1 ) >= (500 * $char['character_skill_dirk_level']) )
+		{
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+			SET character_skill_dirk_uses = 0 , 
+			character_skill_dirk_level = character_skill_dirk_level + 1
+			WHERE character_id = $user_id ";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, 'Could not obtain skill information', "", __LINE__, __FILE__, $sql);
+			}
+		}
+		else
+		{
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+			SET character_skill_dirk_uses = character_skill_dirk_uses + 1
+			WHERE character_id = $user_id ";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+			}
+		}
+		$bonus_hit = ($char['character_skill_dirk_level'] / 4) + 1;
+		return $bonus_hit;
+	}
+	else if ($item['item_type_use'] == 42)
+	{  
+		if ( ( $char['character_skill_mace_uses'] +1 ) >= (500 * $char['character_skill_mace_level']) )
+		{
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+			SET character_skill_mace_uses = 0 , 
+			character_skill_mace_level = character_skill_mace_level + 1
+			WHERE character_id = $user_id ";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, 'Could not obtain skill information', "", __LINE__, __FILE__, $sql);
+			}
+		}
+		else
+		{
+			$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+			SET character_skill_mace_uses = character_skill_mace_uses + 1
+			WHERE character_id = $user_id ";
+			$result = $db->sql_query($sql);
+			if( !$result )
+			{
+				message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+			}
+		}
+		$bonus_hit = ($char['character_skill_mace_level'] / 4) + 1;
+		return $bonus_hit;
+	}
+	else if ($item['item_type_use'] == 43)
+	{  
+	if ( ( $char['character_skill_ranged_uses'] +1 ) >= (500 * $char['character_skill_ranged_level']) )
+	{
+	$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+	SET character_skill_ranged_uses = 0 , 
+	character_skill_ranged_level = character_skill_ranged_level + 1
+	WHERE character_id = $user_id ";
+	$result = $db->sql_query($sql);
+	if( !$result )
+	{
+	message_die(GENERAL_ERROR, 'Could not obtain skill information', "", __LINE__, __FILE__, $sql);
+	}
+	}
+	else
+	{
+	$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+	SET character_skill_ranged_uses = character_skill_ranged_uses + 1
+	WHERE character_id = $user_id ";
+	$result = $db->sql_query($sql);
+	if( !$result )
+	{
+	message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+	}
+	}
+	$bonus_hit = ($char['character_skill_ranged_level'] / 4) + 1;
+	return $bonus_hit;
+	}
+	else if ($item['item_type_use'] == 44 || $item['item_type_use'] == '')
+	{  
+	if ( ( $char['character_skill_fist_uses'] +1 ) >= (500 * $char['character_skill_fist_level']) )
+	{
+	$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+	SET character_skill_fist_uses = 0 , 
+	character_skill_fist_level = character_skill_fist_level + 1
+	WHERE character_id = $user_id ";
+	$result = $db->sql_query($sql);
+	if( !$result )
+	{
+	message_die(GENERAL_ERROR, 'Could not obtain skill information', "", __LINE__, __FILE__, $sql);
+	}
+	}
+	else
+	{
+	$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+	SET character_skill_fist_uses = character_skill_fist_uses + 1
+	WHERE character_id = $user_id ";
+	$result = $db->sql_query($sql);
+	if( !$result )
+	{
+	message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+	}
+	}
+	$bonus_hit = ($char['character_skill_fist_level'] / 4) + 1;
+	return $bonus_hit;
+	}
+	else if ($item['item_type_use'] == 45)
+	{  
+	if ( ( $char['character_skill_axe_uses'] +1 ) >= (500 * $char['character_skill_axe_level']) )
+	{
+	$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+	SET character_skill_axe_uses = 0 , 
+	character_skill_axe_level = character_skill_axe_level + 1
+	WHERE character_id = $user_id ";
+	$result = $db->sql_query($sql);
+	if( !$result )
+	{
+	message_die(GENERAL_ERROR, 'Could not obtain skill information', "", __LINE__, __FILE__, $sql);
+	}
+	}
+	else
+	{
+	$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+	SET character_skill_axe_uses = character_skill_axe_uses + 1
+	WHERE character_id = $user_id ";
+	$result = $db->sql_query($sql);
+	if( !$result )
+	{
+	message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+	}
+	}
+	$bonus_hit = ($char['character_skill_axe_level'] / 4) + 1;
+	return $bonus_hit;
+	}
+	else if ($item['item_type_use'] == 46)
+	{  
+	if ( ( $char['character_skill_spear_uses'] +1 ) >= (500 * $char['character_skill_spear_level']) )
+	{
+	$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+	SET character_skill_spear_uses = 0 , 
+	character_skill_spear_level = character_skill_spear_level + 1
+	WHERE character_id = $user_id ";
+	$result = $db->sql_query($sql);
+	if( !$result )
+	{
+	message_die(GENERAL_ERROR, 'Could not obtain skill information', "", __LINE__, __FILE__, $sql);
+	}
+	}
+	else
+	{
+	$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+	SET character_skill_spear_uses = character_skill_spear_uses + 1
+	WHERE character_id = $user_id ";
+	$result = $db->sql_query($sql);
+	if( !$result )
+	{
+	message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+	}
+	}
+	$bonus_hit = ($char['character_skill_spear_level'] / 4) + 1;
+	return $bonus_hit;
+	}
+}

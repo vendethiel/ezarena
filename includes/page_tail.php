@@ -25,15 +25,22 @@ if ( !defined('IN_PHPBB') )
 	die('Hacking attempt');
 }
 
+// BEGIN RPG
 if ( ( time() - $board_config['adr_seasons_last_time'] ) > $board_config['adr_seasons_time'] ) 
 { 
    include_once($php_root_path . 'adr/includes/functions_adr_seasons_cron.'.$phpEx); 
 } 
 
+if ( ( time() - $board_config['adr_time_last_time'] ) > $board_config['adr_time'] )
+{
+	include_once($php_root_path . 'adr/includes/functions_adr_time_cron.'.$phpEx);
+}
+
 if ( $board_config['rabbitoshi_enable_cron'] && ( ( time() - $board_config['rabbitoshi_cron_last_time'] ) > $board_config['rabbitoshi_cron_time'] )) 
 { 
    include_once($php_root_path . 'includes/functions_rabbitoshi_cron.'.$phpEx); 
 } 
+// END RPG
 
 global $do_gzip_compress;
 

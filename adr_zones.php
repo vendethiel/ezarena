@@ -307,7 +307,7 @@ if ( $goto1 )
 
 	//Select the zone destination
 	$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
-      	WHERE zone_name = '$goto1_name' ";
+      	WHERE zone_name = '" . $db->sql_escape($goto1_name) . "' ";
 	if( !($result = $db->sql_query($sql)) )
        	 message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
@@ -381,7 +381,7 @@ if ( $goto2 )
 
 	//Select the zone destination
 	$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
-      	WHERE zone_name = '$goto2_name' ";
+      	WHERE zone_name = '" . $db->sql_escape($goto2_name) . "' ";
 	if( !($result = $db->sql_query($sql)) )
        	 message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
@@ -454,7 +454,7 @@ if ( $goto3 )
 
 	//Select the zone destination
 	$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
-      	WHERE zone_name = '$goto3_name' ";
+      	WHERE zone_name = '" . $db->sql_escape($goto3_name) . "' ";
 	if( !($result = $db->sql_query($sql)) )
        	 message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
@@ -528,7 +528,7 @@ if ( $goto4 )
 
 	//Select the zone destination
 	$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
-      	WHERE zone_name = '$goto4_name' ";
+      	WHERE zone_name = '" . $db->sql_escape($goto4_name) . "' ";
 	if( !($result = $db->sql_query($sql)) )
        	 message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
@@ -594,7 +594,7 @@ if ( $return )
 
 	//Select the zone destination
 	$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
-      	WHERE zone_name = '$return_name' ";
+      	WHERE zone_name = '" . $db->sql_escape($return_name) . "'";
 	if( !($result = $db->sql_query($sql)) )
        	 message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
@@ -1539,7 +1539,7 @@ if($a!=0)
 }
 
 //
-// BEGIN of zones seasons and weather
+// BEGIN of zones seasons and weather and time
 //
 
 //Begin seasons
@@ -1576,8 +1576,32 @@ $weathers = array('sun', 'night', 'cloud', 'rain', 'cloudsun', 'snow');
 $weather_image = $weathers[$weather-1];
 $weather_name = $lang['Adr_Zone_Weather_'.$weather];
 
+//Begin time
+$actual_time = $board_config['adr_time'];
+if ( $actual_time == '1' )
+{
+	$time_image = 'dawn';
+	$time_name = $lang['Adr_Zone_Time_1'];
+}
+if ( $actual_time == '2' )
+{
+	$time_image = 'day';
+	$time_name = $lang['Adr_Zone_Time_2'];
+}
+if ( $actual_time == '3' )
+{
+	$time_image = 'dusk';
+	$time_name = $lang['Adr_Zone_Time_3'];
+}
+if ( $actual_time == '4' )
+{
+	$time_image = 'night';
+	$time_name = $lang['Adr_Zone_Time_4'];
+}
+
+
 //
-// END of zones seasons and weather
+// END of zones seasons and weather and time
 //
 
 //
@@ -1796,6 +1820,9 @@ $template->assign_vars(array(
 	'ZONE_SEASON_IMG' => $season_image,
 	'ZONE_WEATHER_NAME' => $weather_name,
 	'ZONE_WEATHER_IMG' => $weather_image,
+	'ZONE_TIME' => $actual_time,
+	'ZONE_TIME_NAME' => $time_name,
+	'ZONE_TIME_IMG' => $time_image,
 	'ZONE_GOTO1' => $goto1_name,
 	'ZONE_COST1' => $cost_goto1,
 	'ZONE_GOTO2' => $goto2_name,
@@ -1837,6 +1864,7 @@ $template->assign_vars(array(
 	'L_ZONE_DESCRIPTION' => $lang['Adr_zone_description_title'],
 	'L_ZONE_ELEMENT' => $lang['Adr_zone_element_title'],
 	'L_ZONE_SEASON' => $lang['Adr_zone_season_title'],
+	'L_ZONE_TIME' => $lang['Adr_zone_time_title'],
 	'L_ZONE_WEATHER' => $lang['Adr_zone_weather_title'],
 	'L_ZONE_GOTO' => $lang['Adr_zone_goto_title'],
 	'L_ZONE_GOTO1' => $lang['Adr_zone_goto1_title'],
