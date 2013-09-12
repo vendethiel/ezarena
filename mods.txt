@@ -507,6 +507,8 @@ Intègre aussi différents mods ensemble (comme le quest book) et fixe certaines
 
 # ADR : Weapon Proficiency 1.0.0-beta3 - Dyrwnyn
 Ajoute les maitrises d'armes : plus vous utiliser un type d'arme, plus vous ferez de dégâts avec.
+Addons :
+ - Addon Spell Proficiency 0.2.1-alpha - egdcltd
 
 # ADR : Zone shoutbox & Battle Community Integration 1.0.0 - Informpro
 Permet d'utiliser la chatbox communautaire plutôt que la chatbox du zone_mod.

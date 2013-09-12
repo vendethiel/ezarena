@@ -2272,3 +2272,9 @@ ALTER TABLE phpbb_adr_characters ADD character_skill_staff_uses int(8) UNSIGNED 
 ALTER TABLE phpbb_adr_characters ADD character_skill_axe_uses int(8) UNSIGNED NOT NULL default '0';
 ALTER TABLE phpbb_adr_characters ADD character_skill_spear_uses int(8) UNSIGNED NOT NULL default '0';
 ALTER TABLE phpbb_adr_characters ADD character_skill_magic_uses int(8) UNSIGNED NOT NULL default '0';
+
+# ADR - ditto for spell
+ALTER TABLE phpbb_adr_characters ADD character_skill_defmagic_level int(8) UNSIGNED NOT NULL default '1';
+ALTER TABLE phpbb_adr_characters ADD character_skill_offmagic_level int(8) UNSIGNED NOT NULL default '1';
+ALTER TABLE phpbb_adr_characters ADD character_skill_defmagic_uses int(8) UNSIGNED NOT NULL default '0';
+ALTER TABLE phpbb_adr_characters ADD character_skill_offmagic_uses int(8) UNSIGNED NOT NULL default '0';

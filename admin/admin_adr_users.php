@@ -138,6 +138,11 @@ if ( $mode != '' )
 			$staff_uses = intval($_POST['character_skill_staff_uses']);
 			$axe_uses = intval($_POST['character_skill_axe_uses']);
 			$spear_uses = intval($_POST['character_skill_spear_uses']);
+			// spell
+			$defmagic_level = intval($HTTP_POST_VARS['character_skill_defmagic_level']);
+			$defmagic_uses = intval($HTTP_POST_VARS['character_skill_defmagic_uses']);
+			$offmagic_level = intval($HTTP_POST_VARS['character_skill_offmagic_level']);	
+			$offmagic_uses = intval($HTTP_POST_VARS['character_skill_offmagic_uses']);
 
 			$hp = intval($_POST['character_hp']);
 			$hp_max = intval($_POST['character_hp_max']);
@@ -199,6 +204,7 @@ if ( $mode != '' )
 					character_intelligence = $intelligence ,
 					character_wisdom = $willpower ,
 					character_charisma = $charm ,
+
 					character_skill_sword_level = $sword_level ,
 					character_skill_dirk_level = $dirk_level ,
 					character_skill_ranged_level = $ranged_level ,
@@ -217,15 +223,22 @@ if ( $mode != '' )
 					character_skill_staff_uses = $staff_uses ,
 					character_skill_axe_uses = $axe_uses ,
 					character_skill_spear_uses = $spear_uses ,
+
+					character_skill_defmagic_level = $defmagic_level ,
+					character_skill_defmagic_uses = $defmagic_uses ,
+					character_skill_offmagic_level = $offmagic_level ,
+					character_skill_offmagic_uses = $offmagic_uses ,
+
 					character_skill_mining =  $mining ,
-					character_skill_brewing =  $brewing ,
-					character_skill_cooking =  $cooking ,
-					character_skill_blacksmithing =  $blacksmithing ,
 					character_skill_stone = $stone ,
 					character_skill_forge = $forge ,
 					character_skill_enchantment = $enchantment ,
 					character_skill_trading = $trading ,
 					character_skill_thief = $thief ,
+
+					character_skill_brewing =  $brewing ,
+					character_skill_cooking =  $cooking ,
+					character_skill_blacksmithing =  $blacksmithing ,
 					character_skill_fishing =  $fishing ,
 					character_skill_tailoring =  $tailoring ,
 					character_skill_herbalism =  $herbalism ,
@@ -404,6 +417,12 @@ if ( $mode != '' )
 			'ELEMENTS_LIST' => $elements_list,
 			'ALIGNMENTS_LIST' => $alignments_list,
 			'CLASSES_LIST' => $classes_list,
+			'DEFMAGIC' => $row['character_skill_defmagic_level'],
+			'DEFMAGIC_MIN' => $row['character_skill_defmagic_uses'],
+			'DEFMAGIC_MAX' => ($row['character_skill_defmagic_level'] * $adr_general['weapon_prof']),
+			'OFFMAGIC' => $row['character_skill_offmagic_level'],
+			'OFFMAGIC_MIN' => $row['character_skill_offmagic_uses'],
+			'OFFMAGIC_MAX' => ($row['character_skill_offmagic_level'] * $adr_general['weapon_prof']),
 			'SWORD' => $row['character_skill_sword_level'],
 			'SWORD_MIN' => $row['character_skill_sword_uses'],
 			'SWORD_MAX' => ($row['character_skill_sword_level'] * 500),
@@ -531,6 +550,8 @@ if ( $mode != '' )
 			'L_MACE' => $lang['Adr_items_type_mace'],
 			'L_RANGED' => $lang['Adr_items_type_ranged'],
 			'L_FIST' => $lang['Adr_items_type_fist'],
+			'L_DEFMAGIC' => $lang['Adr_items_type_magic_defend'],
+			'L_OFFMAGIC' => $lang['Adr_items_type_magic_attack'],
 			'L_AXE' => $lang['Adr_items_type_axe'],
 			'L_SPEAR' => $lang['Adr_items_type_spear'],
 			'L_MD' => $lang['Adr_character_md'],

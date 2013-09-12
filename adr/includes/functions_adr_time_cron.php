@@ -12,6 +12,7 @@ if ( !$board_config['adr_time_last_time'] )
 		message_die(GENERAL_ERROR, 'Error updating config' , "", __LINE__, __FILE__, $sql); 
 
 	$board_config['adr_time_last_time'] = time();
+	$db->clear_cache('config');
 }
 
 if ( ( time() - $board_config['adr_time_last_time'] ) > $board_config['adr_length_time'])
@@ -38,6 +39,7 @@ if ( ( time() - $board_config['adr_time_last_time'] ) > $board_config['adr_lengt
 		WHERE config_name = 'adr_time_last_time' ";
 	if ( !($result = $db->sql_query($sql)) ) 
 		message_die(GENERAL_ERROR, 'Error updating config' , "", __LINE__, __FILE__, $sql); 
+	$db->clear_cache('config');
 }
 
 ?>

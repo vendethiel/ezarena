@@ -149,6 +149,50 @@ function setCheckboxes(theForm, elementName, isChecked)
 		<td align="center" class="row1" width="60%"><span class="gen">{L_THIEF_LIMIT}</span></td>
 		<td align="center" class="row2"><span class="gen"><input type="post" name="character_thief_limit" value="{THIEF_LIMIT}" size="5"></span></td>
 	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_SWORD} : <input type="post" class="post" name="character_skill_sword_uses" value="{SWORD_MIN}" size="5"> / {SWORD_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_sword_level" value="{SWORD}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_DIRK} : <input type="post" class="post" name="character_skill_dirk_uses" value="{DIRK_MIN}" size="5"> / {DIRK_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_dirk_level" value="{DIRK}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_RANGED} : <input type="post" class="post" name="character_skill_ranged_uses" value="{RANGED_MIN}" size="5"> / {RANGED_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_ranged_level" value="{RANGED}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_SPECIAL} : <input type="post" class="post" name="character_skill_magic_uses" value="{SPECIAL_MIN}" size="5"> / {SPECIAL_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_magic_level" value="{SPECIAL}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_MACE} : <input type="post" class="post" name="character_skill_mace_uses" value="{MACE_MIN}" size="5"> / {MACE_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_mace_level" value="{MACE}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_FIST} : <input type="post" class="post" name="character_skill_fist_uses" value="{FIST_MIN}" size="5"> / {FIST_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_fist_level" value="{FIST}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_STAFF} : <input type="post" class="post" name="character_skill_staff_uses" value="{STAFF_MIN}" size="5"> / {STAFF_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_staff_level" value="{STAFF}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_AXE} : <input type="post" class="post" name="character_skill_axe_uses" value="{AXE_MIN}" size="5"> / {AXE_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_axe_level" value="{AXE}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_SPEAR} : <input type="post" class="post" name="character_skill_spear_uses" value="{SPEAR_MIN}" size="5"> / {SPEAR_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_spear_level" value="{SPEAR}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_DEFMAGIC} : <input type="post" class="post" name="character_skill_defmagic_uses" value="{DEFMAGIC_MIN}" size="5"> / {DEFMAGIC_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_defmagic_level" value="{DEFMAGIC}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_OFFMAGIC} : <input type="post" class="post" name="character_skill_offmagic_uses" value="{OFFMAGIC_MIN}" size="5"> / {OFFMAGIC_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_offmagic_level" value="{OFFMAGIC}" size="5"></td>
+	</tr>
 </table>
 
 <br clear="all" />

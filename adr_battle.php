@@ -500,6 +500,9 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				} //!$result = $db->sql_query($sql)
 			} //$rabbit_user['creature_ability'] == '1'
 			
+			$attbonus = 0;
+			$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+
 			if ((($diff === TRUE) && ($dice != '1')) || ($dice == '20'))
 			{
 				$damage = 1;
@@ -507,19 +510,19 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				// Work out attack type
 				if (($item['item_element']) && ($item['item_element'] === $elemental['element_oppose_strong']) && ($item['item_duration'] > '1') && (!empty($item['item_name'])))
 				{
-					$damage = ceil(($power * ($item['item_element_weak_dmg'] / 100)));
+					$damage = ceil(($power * ($item['item_element_weak_dmg'] / 100)) * $attbonus);
 				} //($item['item_element']) && ($item['item_element'] === $elemental['element_oppose_strong']) && ($item['item_duration'] > '1') && (!empty($item['item_name']))
 				elseif (($item['item_element']) && (!empty($item['item_name'])) && ($item['item_element'] === $opponent_element) && ($item['item_duration'] > '1'))
 				{
-					$damage = ceil(($power * ($item['item_element_same_dmg'] / 100)));
+					$damage = ceil(($power * ($item['item_element_same_dmg'] / 100)) * $attbonus);
 				} //($item['item_element']) && (!empty($item['item_name'])) && ($item['item_element'] === $opponent_element) && ($item['item_duration'] > '1')
 				elseif (($item['item_element']) && (!empty($item['item_name'])) && ($item['item_element'] === $elemental['element_oppose_weak']) && ($item['item_duration'] > '1'))
 				{
-					$damage = ceil(($power * ($item['item_element_str_dmg'] / 100)));
+					$damage = ceil(($power * ($item['item_element_str_dmg'] / 100)) * $attbonus);
 				} //($item['item_element']) && (!empty($item['item_name'])) && ($item['item_element'] === $elemental['element_oppose_weak']) && ($item['item_duration'] > '1')
 				else
 				{
-					$damage = ceil($power);
+					$damage = ceil($power * $attbonus);
 				}
 				
 				// Fix dmg value
@@ -573,6 +576,9 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		
 		else if ($item['item_type_use'] == 12)
 		{
+			$attbonus = 0;
+			$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+			$power = ceil($power * $attbonus);
 			// Check if pet have regeneration ability
 			$mp_consumned = '0';
 			$pet_regen    = '0';

@@ -146,6 +146,14 @@ function adr_job_salary_check( $user_id )
 				}
 				$item_data = $db->sql_fetchrow($result);
 
+				// V: item data was deleted
+				// return here to avoid pm'ing
+				// @todo should this pm an error to admin?
+				if (!$item_data)
+				{
+					return;
+				}
+
 				// Make the new id for the item
 				$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
 					WHERE item_owner_id = $character_id
