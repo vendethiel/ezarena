@@ -106,6 +106,26 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 		"L_RABBITOSHI_FOOD_TYPE" => $lang['Rabbitoshi_food_type'],
 		"L_RABBITOSHI_IMG" => $lang['Rabbitoshi_img'],
 		"L_RABBITOSHI_IMG_EXPLAIN" => $lang['Rabbitoshi_img_explain'],
+		"L_RABBITOSHI_HEALTH_LEVELUP" => $lang['Rabbitoshi_healthlevelup'],
+		"L_RABBITOSHI_HEALTH_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_health_levelup_explain'],
+		"L_RABBITOSHI_HUNGER_LEVELUP" => $lang['Rabbitoshi_hungerlevelup'],
+		"L_RABBITOSHI_HUNGER_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_hunger_levelup_explain'],
+		"L_RABBITOSHI_THIRST_LEVELUP" => $lang['Rabbitoshi_thirstlevelup'],
+		"L_RABBITOSHI_THIRST_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_thirst_levelup_explain'],
+		"L_RABBITOSHI_HYGIENE_LEVELUP" => $lang['Rabbitoshi_hygienelevelup'],
+		"L_RABBITOSHI_HYGIENE_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_hygiene_levelup_explain'],
+		"L_RABBITOSHI_POWER_LEVELUP" => $lang['Rabbitoshi_powerlevelup'],
+		"L_RABBITOSHI_POWER_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_power_levelup_explain'],
+		"L_RABBITOSHI_MAGICPOWER_LEVELUP" => $lang['Rabbitoshi_magicpowerlevelup'],
+		"L_RABBITOSHI_MAGICPOWER_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_magicpower_levelup_explain'],
+		"L_RABBITOSHI_ARMOR_LEVELUP" => $lang['Rabbitoshi_armorlevelup'],
+		"L_RABBITOSHI_ARMOR_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_armor_levelup_explain'],
+		"L_RABBITOSHI_MP_LEVELUP" => $lang['Rabbitoshi_mplevelup'],
+		"L_RABBITOSHI_MP_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_mp_levelup_explain'],
+		"L_RABBITOSHI_ATTACK_LEVELUP" => $lang['Rabbitoshi_attacklevelup'],
+		"L_RABBITOSHI_ATTACK_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_attack_levelup_explain'],
+		"L_RABBITOSHI_MAGICATTACK_LEVELUP" => $lang['Rabbitoshi_magicattacklevelup'],
+		"L_RABBITOSHI_MAGICATTACK_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_magicattack_levelup_explain'],
 		"L_IMG_EXPLAIN" => $lang['Rabbitoshi_img_explain'],
 		"L_SUBMIT" => $lang['Submit'],
 		"L_RESET" => $lang['Reset'],
@@ -229,6 +249,16 @@ else if ( $mode != "" )
 				"RABBITOSHI_ARMOR" => $field_data['creature_armor'],
 				"RABBITOSHI_ATTACK" => $field_data['creature_max_attack'],
 				"RABBITOSHI_MAGICATTACK" => $field_data['creature_max_magicattack'],
+				"RABBITOSHI_HEALTH_LEVELUP" => $field_data['creature_health_levelup'],
+				"RABBITOSHI_HUNGER_LEVELUP" => $field_data['creature_hunger_levelup'],
+				"RABBITOSHI_THIRST_LEVELUP" => $field_data['creature_thirst_levelup'],
+				"RABBITOSHI_HYGIENE_LEVELUP" => $field_data['creature_hygiene_levelup'],
+				"RABBITOSHI_POWER_LEVELUP" => $field_data['creature_power_levelup'],
+				"RABBITOSHI_MAGICPOWER_LEVELUP" => $field_data['creature_magicpower_levelup'],
+				"RABBITOSHI_ARMOR_LEVELUP" => $field_data['creature_armor_levelup'],
+				"RABBITOSHI_ATTACK_LEVELUP" => $field_data['creature_attack_levelup'],
+				"RABBITOSHI_MAGICATTACK_LEVELUP" => $field_data['creature_magicattack_levelup'],
+				"RABBITOSHI_MP_LEVELUP" => $field_data['creature_mp_levelup'],
 				"RABBITOSHI_EXPERIENCE" => $field_data['creature_experience_max'],
 				"RABBITOSHI_FOOD_TYPE" => $filename_list,
 				"RABBITOSHI_EVOLUTION_OF" => $pets_list,
@@ -253,6 +283,26 @@ else if ( $mode != "" )
 				"L_RABBITOSHI_FOOD_TYPE" => $lang['Rabbitoshi_food_type'],
 				"L_RABBITOSHI_IMG" => $lang['Rabbitoshi_img'],
 				"L_RABBITOSHI_IMG_EXPLAIN" => $lang['Rabbitoshi_img_explain'],
+				"L_RABBITOSHI_HEALTH_LEVELUP" => $lang['Rabbitoshi_healthlevelup'],
+				"L_RABBITOSHI_HEALTH_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_health_levelup_explain'],
+				"L_RABBITOSHI_HUNGER_LEVELUP" => $lang['Rabbitoshi_hungerlevelup'],
+				"L_RABBITOSHI_HUNGER_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_hunger_levelup_explain'],
+				"L_RABBITOSHI_THIRST_LEVELUP" => $lang['Rabbitoshi_thirstlevelup'],
+				"L_RABBITOSHI_THIRST_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_thirst_levelup_explain'],
+				"L_RABBITOSHI_HYGIENE_LEVELUP" => $lang['Rabbitoshi_hygienelevelup'],
+				"L_RABBITOSHI_HYGIENE_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_hygiene_levelup_explain'],
+				"L_RABBITOSHI_POWER_LEVELUP" => $lang['Rabbitoshi_powerlevelup'],
+				"L_RABBITOSHI_POWER_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_power_levelup_explain'],
+				"L_RABBITOSHI_MAGICPOWER_LEVELUP" => $lang['Rabbitoshi_magicpowerlevelup'],
+				"L_RABBITOSHI_MAGICPOWER_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_magicpower_levelup_explain'],
+				"L_RABBITOSHI_ARMOR_LEVELUP" => $lang['Rabbitoshi_armorlevelup'],
+				"L_RABBITOSHI_ARMOR_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_armor_levelup_explain'],
+				"L_RABBITOSHI_MP_LEVELUP" => $lang['Rabbitoshi_mplevelup'],
+				"L_RABBITOSHI_MP_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_mp_levelup_explain'],
+				"L_RABBITOSHI_ATTACK_LEVELUP" => $lang['Rabbitoshi_attacklevelup'],
+				"L_RABBITOSHI_ATTACK_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_attack_levelup_explain'],
+				"L_RABBITOSHI_MAGICATTACK_LEVELUP" => $lang['Rabbitoshi_magicattacklevelup'],
+				"L_RABBITOSHI_MAGICATTACK_LEVELUP_EXPLAIN" => $lang['Rabbitoshi_magicattack_levelup_explain'],
 				"L_EVOLUTION" => $lang['Rabbitoshi_is_evolution_of'],
 				"L_BUYABLE" => $lang['Rabbitoshi_buyable'],
 				"L_RABBITOSHI_BUYABLE_EXPLAIN" => $lang['Rabbitoshi_buyable_explain'],
@@ -291,6 +341,17 @@ else if ( $mode != "" )
 			$buyable = ( isset($HTTP_POST_VARS['buyable']) ) ? trim($HTTP_POST_VARS['buyable']) : trim($HTTP_GET_VARS['buyable']);
 			$evolution_of = ( isset($HTTP_POST_VARS['evolution_of']) ) ? trim($HTTP_POST_VARS['evolution_of']) : trim($HTTP_GET_VARS['evolution_of']);
 
+			$health_levelup = ( isset($_POST['health_levelup']) ) ? trim($_POST['health_levelup']) : trim($_GET['health_levelup']);
+			$hunger_levelup = ( isset($_POST['hunger_levelup']) ) ? trim($_POST['hunger_levelup']) : trim($_GET['hunger_levelup']);
+			$thirst_levelup = ( isset($_POST['thirst_levelup']) ) ? trim($_POST['thirst_levelup']) : trim($_GET['thirst_levelup']);
+			$hygiene_levelup = ( isset($_POST['hygiene_levelup']) ) ? trim($_POST['hygiene_levelup']) : trim($_GET['hygiene_levelup']);
+			$power_levelup = ( isset($_POST['power_levelup']) ) ? trim($_POST['power_levelup']) : trim($_GET['power_levelup']);
+			$magicpower_levelup = ( isset($_POST['magicpower_levelup']) ) ? trim($_POST['magicpower_levelup']) : trim($_GET['magicpower_levelup']);
+			$armor_levelup = ( isset($_POST['armor_levelup']) ) ? trim($_POST['armor_levelup']) : trim($_GET['armor_levelup']);
+			$mp_levelup = ( isset($_POST['mp_levelup']) ) ? trim($_POST['mp_levelup']) : trim($_GET['mp_levelup']);
+			$attack_levelup = ( isset($_POST['attack_levelup']) ) ? trim($_POST['attack_levelup']) : trim($_GET['attack_levelup']);
+			$magicattack_levelup = ( isset($_POST['magicattack_levelup']) ) ? trim($_POST['magicattack_levelup']) : trim($_GET['magicattack_levelup']);
+
 			if ($creature_name == '' || $creature_prize == '' || $creature_max_hunger == '' || $creature_max_thirst == '' || $creature_max_health == '' || $creature_max_hygiene == '' || $creature_mp_max == '' || $creature_power == '' || $creature_magicpower == '' || $creature_armor == '' || $creature_attack == '' || $creature_magicattack == '' || $creature_experience == '' || $creature_food_id == '')
 			{
 				message_die(MESSAGE, $lang['Fields_empty']);
@@ -313,7 +374,18 @@ else if ( $mode != "" )
 				    creature_experience_max = '" . str_replace("\'", "''", $creature_experience) . "',
 				    creature_food_id = '" . str_replace("\'", "''", $creature_food_id) . "',
 				    creature_buyable = '" . str_replace("\'", "''", $buyable) . "',
-				    creature_evolution_of = '" . str_replace("\'", "''", $evolution_of) . "'					
+				    creature_evolution_of = '" . str_replace("\'", "''", $evolution_of) . "',
+
+				    creature_health_levelup = $health_levelup,
+				    creature_hunger_levelup = $hunger_levelup,
+				    creature_thirst_levelup = $thirst_levelup,
+				    creature_hygiene_levelup = $hygiene_levelup,
+				    creature_power_levelup = $power_levelup,
+				    creature_magicpower_levelup = $magicpower_levelup,
+				    creature_armor_levelup = $armor_levelup,
+				    creature_mp_levelup = $mp_levelup,
+				    creature_attack_levelup = $attack_levelup,
+				    creature_magicattack_levelup = $magicattack_levelup		
 				WHERE creature_id = " . $creature_id;
 			if( !($result = $db->sql_query($sql)) )
 			{
@@ -357,13 +429,24 @@ else if ( $mode != "" )
 			$evolution_of = ( isset($HTTP_POST_VARS['evolution_of']) ) ? trim($HTTP_POST_VARS['evolution_of']) : trim($HTTP_GET_VARS['evolution_of']);
 			$creature_id = $fields_data['creature_id'] +1;
 
+			$health_levelup = ( isset($_POST['health_levelup']) ) ? trim($_POST['health_levelup']) : trim($_GET['health_levelup']);
+			$hunger_levelup = ( isset($_POST['hunger_levelup']) ) ? trim($_POST['hunger_levelup']) : trim($_GET['hunger_levelup']);
+			$thirst_levelup = ( isset($_POST['thirst_levelup']) ) ? trim($_POST['thirst_levelup']) : trim($_GET['thirst_levelup']);
+			$hygiene_levelup = ( isset($_POST['hygiene_levelup']) ) ? trim($_POST['hygiene_levelup']) : trim($_GET['hygiene_levelup']);
+			$power_levelup = ( isset($_POST['power_levelup']) ) ? trim($_POST['power_levelup']) : trim($_GET['power_levelup']);
+			$magicpower_levelup = ( isset($_POST['magicpower_levelup']) ) ? trim($_POST['magicpower_levelup']) : trim($_GET['magicpower_levelup']);
+			$armor_levelup = ( isset($_POST['armor_levelup']) ) ? trim($_POST['armor_levelup']) : trim($_GET['armor_levelup']);
+			$mp_levelup = ( isset($_POST['mp_levelup']) ) ? trim($_POST['mp_levelup']) : trim($_GET['mp_levelup']);
+			$attack_levelup = ( isset($_POST['attack_levelup']) ) ? trim($_POST['attack_levelup']) : trim($_GET['attack_levelup']);
+			$magicattack_levelup = ( isset($_POST['magicattack_levelup']) ) ? trim($_POST['magicattack_levelup']) : trim($_GET['magicattack_levelup']);
+
 			if ($creature_name == '' || $creature_img == '' || $creature_prize == '' || $creature_max_hunger == '' || $creature_max_thirst == '' || $creature_max_health == '' || $creature_max_hygiene == '' || $creature_mp_max == '' || $creature_power == '' || $creature_magicpower == '' || $creature_armor == '' || $creature_attack == '' || $creature_magicattack == '' || $creature_experience == '' || $creature_food_id == '')
 			{
 				message_die(MESSAGE, $lang['Fields_empty']);
 			}
 
-			$sql = "INSERT INTO " . RABBITOSHI_CONFIG_TABLE . " (creature_id, creature_name , creature_img , creature_prize , creature_max_hunger , creature_max_thirst , creature_max_health , creature_max_hygiene , creature_mp_max , creature_power , creature_magicpower , creature_armor , creature_food_id , creature_buyable , creature_evolution_of, creature_experience_max, creature_max_attack, creature_max_magicattack)
-				VALUES ( $creature_id,'" . str_replace("\'", "''", $creature_name) . "' ,'" . str_replace("\'", "''", $creature_img) . "', '" . str_replace("\'", "''", $creature_prize) . "',  '" . str_replace("\'", "''", $creature_max_hunger) . "',   '" . str_replace("\'", "''", $creature_max_thirst) . "',  '" . str_replace("\'", "''", $creature_max_health) . "',  '" . str_replace("\'", "''", $creature_max_hygiene) . "',  '" . str_replace("\'", "''", $creature_mp_max) . "', '" . str_replace("\'", "''", $creature_power) . "', '" . str_replace("\'", "''", $creature_magicpower) . "', '" . str_replace("\'", "''", $creature_armor) . "','" . str_replace("\'", "''", $creature_food_id) . "',  '" . str_replace("\'", "''", $buyable) . "',  '" . str_replace("\'", "''", $evolution_of) . "' ,  '" . str_replace("\'", "''", $creature_experience) . "' , '" . str_replace("\'", "''", $creature_attack) . "' , '" . str_replace("\'", "''", $creature_magicattack) . "' )";
+			$sql = "INSERT INTO " . RABBITOSHI_CONFIG_TABLE . " (creature_id, creature_name , creature_img , creature_prize , creature_max_hunger , creature_max_thirst , creature_max_health , creature_max_hygiene , creature_mp_max , creature_power , creature_magicpower , creature_armor , creature_food_id , creature_buyable , creature_evolution_of, creature_experience_max, creature_max_attack, creature_max_magicattack, creature_health_levelup, creature_hunger_levelup, creature_thirst_levelup, creature_hygiene_levelup, creature_power_levelup, creature_magicpower_levelup, creature_armor_levelup, creature_mp_levelup. creature_attack_levelup, creature_magicattack_levelup)
+				VALUES ( $creature_id,'" . str_replace("\'", "''", $creature_name) . "' ,'" . str_replace("\'", "''", $creature_img) . "', '" . str_replace("\'", "''", $creature_prize) . "',  '" . str_replace("\'", "''", $creature_max_hunger) . "',   '" . str_replace("\'", "''", $creature_max_thirst) . "',  '" . str_replace("\'", "''", $creature_max_health) . "',  '" . str_replace("\'", "''", $creature_max_hygiene) . "',  '" . str_replace("\'", "''", $creature_mp_max) . "', '" . str_replace("\'", "''", $creature_power) . "', '" . str_replace("\'", "''", $creature_magicpower) . "', '" . str_replace("\'", "''", $creature_armor) . "','" . str_replace("\'", "''", $creature_food_id) . "',  '" . str_replace("\'", "''", $buyable) . "',  '" . str_replace("\'", "''", $evolution_of) . "' ,  '" . str_replace("\'", "''", $creature_experience) . "' , '" . str_replace("\'", "''", $creature_attack) . "' , '" . str_replace("\'", "''", $creature_magicattack) . "' , $health_levelup, $hunger_levelup, $thirst_levelup, $hygiene_levelup, $power_levelup, $magicpower_levelup, $armor_levelup, $mp_levelup. $attack_levelup, $magicattack_levelup )";
 			$result = $db->sql_query($sql);
 			if( !$result )
 			{

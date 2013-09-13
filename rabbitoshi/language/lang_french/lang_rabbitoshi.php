@@ -395,6 +395,28 @@ $lang['Rabbitoshi_add_success']='Cette créature a été ajoutée avec succès';
 $lang['Rabbitoshi_edit_success']='Cette créature a été éditée avec succès';
 $lang['Click_return_rabbitoshiadmin']='Cliquez %sici%s pour retourner à l\'administration des créatures';
 
+// Pet specific levelup
+$lang['Rabbitoshi_healthlevelup']='Vie à la montée de niveau';
+$lang['Rabbitoshi_health_levelup_explain']='Nombre de points de vie que le familier reçoit quand il monte de niveau';
+$lang['Rabbitoshi_hungerlevelup']='Faim à la montée de niveau';
+$lang['Rabbitoshi_hunger_levelup_explain']='Nombre de points de faim que le familier reçoit quand il monte de niveau';
+$lang['Rabbitoshi_thirstlevelup']='Soif à la montée de niveau';
+$lang['Rabbitoshi_thirst_levelup_explain']='Nombre de points de soif que le familier reçoit quand il monte de niveau';
+$lang['Rabbitoshi_hygienelevelup']='Hygiène à la montée de niveau';
+$lang['Rabbitoshi_hygiene_levelup_explain']='Nombre de points d\'hygiène que le familier reçoit quand il monte de niveau';
+$lang['Rabbitoshi_powerlevelup']='Force à la montée de niveau';
+$lang['Rabbitoshi_power_levelup_explain']='Nombre de points de force que le familier reçoit quand il monte de niveau';
+$lang['Rabbitoshi_magicpowerlevelup']='Force mentale à la montée de niveau';
+$lang['Rabbitoshi_magicpower_levelup_explain']='Nombre de points de force mentale que le familier reçoit quand il monte de niveau';
+$lang['Rabbitoshi_armorlevelup']='Défense à la montée de niveau';
+$lang['Rabbitoshi_armor_levelup_explain']='Nombre de points de défense que le familier reçoit quand il monte de niveau';
+$lang['Rabbitoshi_mplevelup']='Mana à la montée de niveau';
+$lang['Rabbitoshi_mp_levelup_explain']='Nombre de points de mana que le familier reçoit quand il monte de niveau';
+$lang['Rabbitoshi_attacklevelup']='Attaque à la montée de niveau';
+$lang['Rabbitoshi_attack_levelup_explain']='Nombre de points d\'attaque que le familier reçoit quand il monte de niveau';
+$lang['Rabbitoshi_magicattacklevelup']='Attaque magique à la montée de niveau';
+$lang['Rabbitoshi_magicattack_levelup_explain']='Nombre de points d\'attaque magique que le familier reçoit quand il monte de niveau';
+
 //
 // Pet Shop
 //

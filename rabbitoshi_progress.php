@@ -70,6 +70,13 @@ if (!$result = $db->sql_query($sql)) {
 }
 $rabbit_user = $db->sql_fetchrow($result);
 
+$sql = "SELECT * FROM  " . RABBITOSHI_CONFIG_TABLE . " 
+	WHERE creature_id = ".$rabbit_user['owner_creature_id'];
+if (!$result = $db->sql_query($sql)) {
+	message_die(GENERAL_MESSAGE, $lang['Rabbitoshi_owner_pet_lack']);
+}
+$rabbit_class = $db->sql_fetchrow($result);
+
 $sql = "SELECT * FROM  " . RABBITOSHI_GENERAL_TABLE ;
 if (!$result = $db->sql_query($sql)) {
 	message_die(GENERAL_MESSAGE, $lang['Rabbitoshi_owner_pet_lack']);
@@ -91,16 +98,17 @@ $armor_raise = $rabbit_general['armor_raise'];
 $attack_raise = $rabbit_general['attack_raise'];
 $magicattack_raise = $rabbit_general['magicattack_raise'];
 $mp_raise = $rabbit_general['mp_raise'];
-$health_levelup = $rabbit_general['health_levelup'];
-$hunger_levelup = $rabbit_general['hunger_levelup'];
-$thirst_levelup = $rabbit_general['thirst_levelup'];
-$hygiene_levelup = $rabbit_general['hygiene_levelup'];
-$power_levelup = $rabbit_general['power_levelup'];
-$magicpower_levelup = $rabbit_general['magicpower_levelup'];
-$armor_levelup = $rabbit_general['armor_levelup'];
-$attack_levelup = $rabbit_general['attack_levelup'];
-$magicattack_levelup = $rabbit_general['magicattack_levelup'];
-$mp_levelup = $rabbit_general['mp_levelup'];
+// class specific
+$health_levelup = $rabbit_class['creature_health_levelup'];
+$hunger_levelup = $rabbit_class['creature_hunger_levelup'];
+$thirst_levelup = $rabbit_class['creature_thirst_levelup'];
+$hygiene_levelup = $rabbit_class['creature_hygiene_levelup'];
+$power_levelup = $rabbit_class['creature_power_levelup'];
+$magicpower_levelup = $rabbit_class['creature_magicpower_levelup'];
+$armor_levelup = $rabbit_class['creature_armor_levelup'];
+$attack_levelup = $rabbit_class['creature_attack_levelup'];
+$magicattack_levelup = $rabbit_class['creature_magicattack_levelup'];
+$mp_levelup = $rabbit_class['creature_mp_levelup'];
 
 //stats proce
 $health_price = $rabbit_general['health_price'];

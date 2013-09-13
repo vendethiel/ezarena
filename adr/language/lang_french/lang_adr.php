@@ -720,8 +720,8 @@ if ( defined ('IN_ADR_BATTLE'))
    $lang['Adr_battle_no_spell']='Aucun objet magique';
    $lang['Adr_battle_no_potion']='Aucune potion';
    $lang['Adr_battle_critical_hit']='Coup critique !';
-   $lang['Adr_battle_won']='Vous infligez un coup mortel de %s point(s ) de dégat et sortez victorieux de la bataille ! Vous gagnez %s point(s) d\'experience, %s point(s) de Spiritualité (SP) et %s %s';
-   $lang['Adr_battle_pvp_won']='Vous infligez un coup mortel de %s point(s ) de dégat et sortez victorieux de la bataille ! Vous gagnez %s point(s) d\'experience et %s %s';
+   $lang['Adr_battle_won']='Vous infligez un coup mortel de %s point(s) de dégat et sortez victorieux de la bataille !<br/>Vous gagnez %s point(s) d\'experience, %s point(s) de Spiritualité (SP) et %s %s';
+   $lang['Adr_battle_pvp_won']='Vous infligez un coup mortel de %s point(s) de dégat et sortez victorieux de la bataille !<br/>Vous gagnez %s point(s) d\'experience et %s %s';
    $lang['Adr_battle_stolen_items']=' %s\'s est mort et vous avez récuperer vos objets volé';
    $lang['Adr_battle_stolen_items_lost']='%s s\'est enfuit avec un de vos objets!';
    $lang['Adr_battle_return']='Cliquez %sici%s pour engager un nouveau combat';
@@ -1502,6 +1502,7 @@ $lang['NO_ZONE_AVAILABLE'] = 'Il n\'existe pas de zone, ou aucune pour votre niv
 $lang['ADR_MOVED_BACK_TO_SAFE_ZONE'] = 'Suites à de mystérieuses circonstances, vous vous réveillez en zone sûre ...';
 $lang['ADR_CAULDRON_EXPLAIN'] = 'Bienvenue au Chaudron Magique.<br/>Ici, vous pouvez combiner des objets pour obtenir un autre objet encore plus puissant.<br/><br/>Attention ! Toutes les combinaisons ne marchent pas, et l\'ordre est important !';
 $lang['ADR_RECIPES_LIST'] = 'Cliquez sur l\'image pour pour voir les recettes que vous connaissez';
+$lang['ADR_ITEM_LOOTTABLES_EXPLAIN'] = 'Choisissez à quelles tables de butin cet objet appartient';
 $lang['ADR_SPELL_LIST'] = 'Cliquez sur l\'image pour accéder à la liste des sorts que vous connaissez';
 //'Welcome to the Alchemy Lab. Here you can combine some items to get another powerfull item. Warning ! The order of the items you put into the cauldron is important! You have to search and find good combinations.';
 // END ezArena

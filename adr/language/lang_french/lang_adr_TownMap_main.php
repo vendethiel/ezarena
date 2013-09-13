@@ -111,8 +111,8 @@ if ( defined ('IN_TOWNMAP_BOUTIQUE'))
 {
    $lang['TownMap_Boutique']='Boutique du Village';
    $lang['TownMap_Boutique_Entree']='Bienvenue à la Boutique du Village !<br/>Ne vous inquiètez pas, j\'ai tout ce dont vous avez besoin.';
-   $lang['TownMap_Boutique_Lien']='Accéder à la boutique générale';
-   $lang['TownMap_Boutique_liste']='Accéder à la liste des magasins';
+   $lang['TownMap_Boutique_Lien']='Accéder aux boutique de votre zone';
+   $lang['TownMap_Boutique_liste']='Accéder à la liste des magasins des joueurs';
    $lang['TownMap_Boutique_recherche']='Accéder à la recherche des objets';
    $lang['TownMap_Boutique_creer']='Accéder à la création de magasin';
 }

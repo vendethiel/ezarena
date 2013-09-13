@@ -2253,6 +2253,9 @@ ALTER TABLE phpbb_adr_shops_spells ADD `spell_element_restrict` varchar(255) NOT
 # ditto 0.4.10
 ALTER TABLE `phpbb_adr_characters` ADD `character_spell_pre_effects` varchar(255) NOT NULL DEFAULT '';
 
+# ADR - Advanced Night & Day
+ALTER TABLE phpbb_adr_battle_monsters ADD monster_time int(8) UNSIGNED NOT NULL DEFAULT '0';
+
 # ADR - Weapon proficiency
 ALTER TABLE phpbb_adr_characters ADD character_skill_sword_level int(8) UNSIGNED NOT NULL default '1';
 ALTER TABLE phpbb_adr_characters ADD character_skill_dirk_level int(8) UNSIGNED NOT NULL default '1';
@@ -2278,3 +2281,15 @@ ALTER TABLE phpbb_adr_characters ADD character_skill_defmagic_level int(8) UNSIG
 ALTER TABLE phpbb_adr_characters ADD character_skill_offmagic_level int(8) UNSIGNED NOT NULL default '1';
 ALTER TABLE phpbb_adr_characters ADD character_skill_defmagic_uses int(8) UNSIGNED NOT NULL default '0';
 ALTER TABLE phpbb_adr_characters ADD character_skill_offmagic_uses int(8) UNSIGNED NOT NULL default '0';
+
+# Rabbitoshi - pet specific levelup
+ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_health_levelup` int(8) NOT NULL DEFAULT '0';
+ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_hunger_levelup` int(8) NOT NULL DEFAULT '0';
+ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_thirst_levelup` int(8) NOT NULL DEFAULT '0';
+ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_hygiene_levelup` int(8) NOT NULL DEFAULT '0';
+ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_power_levelup` int(8) NOT NULL DEFAULT '0';
+ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_magicpower_levelup` int(8) NOT NULL DEFAULT '0';
+ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_armor_levelup` int(8) NOT NULL DEFAULT '0';
+ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_attack_levelup` int(8) NOT NULL DEFAULT '0';
+ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_magicattack_levelup` int(8) NOT NULL DEFAULT '0';
+ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_mp_levelup` int(8) NOT NULL DEFAULT '0';

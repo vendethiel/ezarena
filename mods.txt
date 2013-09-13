@@ -1,6 +1,6 @@
 EzArena (Ullti modifiée)
 
-Templates :
+Thèmes :
  - acid
  - aqua
  - chronicles
@@ -425,6 +425,7 @@ D'autres mods ont été rajoutés, et le mod ADR en lui-même a été mis à jou
 Addons :
  - Addon pour RCS - Informpro
  - Addon Fix Bare Attacks (fix $dice's rand() ...) - Informpro
+ - Addon Fix element colors - Informpro
 
 # ADR : Advanced Loot System 1.0.3 - Himmelweiss
 Ajoute un système super-complet de butin pour les monstres, avec des catégories de butin, chance de drop, combien d'items il est possible de drop, etc ... à découvrir en jeu et dans l'admin !
@@ -550,7 +551,7 @@ Donne aux villes des interfaces interactives et ajoute des images aux différent
 # ADR (ST) : Zone 1.0 - one_piece
 Ajoute un système très complet de zones à ADR.
 
-# (ADR) Rabbitoshi 3.1.3 - one_piece
+# Rabbitoshi 3.1.3 - one_piece
 Ajoute un système d'animalerie complet, intégré à ADR.
 Parfaitement intégré à ADR.
 (mis à jour depuis la version 2.0 de la prémode ADR)
@@ -559,6 +560,11 @@ Addons :
 
 # Rabbitoshi : Level Up Penalty 0.2.0 - egdcltd
 L'expérience nécessaire pour monter de niveau augmente avec le niveau (comme sur le RPG).
+
+# Rabbitoshi : Pet Specific Levelup 0.2.1 - egdcltd
+Permet de modifier les gains à la montée de niveau par familier.
+
+---
 
 # File Attachment Mod 2.4.5 - Acyd Burn
 Permet d'attacher des fichiers aux messages

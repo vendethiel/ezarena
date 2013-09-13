@@ -825,7 +825,6 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 
 			if($code = $item['spell_xtreme_battle'])
 			{
-
 				eval($code);
 
 				// Update the database
@@ -842,7 +841,6 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 			else
 			{
 				$battle_message .= sprintf($lang['Adr_battle_spell_defensive_success'], $challenger['character_name'], $item['spell_name'], $power).'<br>';
-
 
 				// Update the database
 				$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
@@ -1764,6 +1762,8 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				$damage = (($bare_dice == '20') && ($crit_roll == '20')) ? ($bare_power * 2) : $bare_power;
 				// weap prof
 				$damage = ceil($damage * $attbonus);
+				// V: sigh.
+				$damage = $damage < 1 ? 1 : $damage;
 				$damage = ($damage > $bat['battle_opponent_hp']) ? $bat['battle_opponent_hp'] : $damage;
 				
 				$battle_message .= $crit_result ? $lang['Adr_battle_critical_hit'] . "<br>" : '';
@@ -1806,7 +1806,20 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				// Fix dmg value
 				$damage = ($damage < '1') ? rand(1, 3) : $damage;
 				$damage = ($damage > $bat['battle_opponent_hp']) ? $bat['battle_opponent_hp'] : $damage;
+
+				// V: fix element
+				$element_name = adr_get_element_infos($item['item_element']);
 				
+				// Here we apply text colour if set
+				if ($element_name['element_colour'] != '')
+				{
+					$item['item_name'] = '<font color="' . $element_name['element_colour'] . '">' . $item['item_name'] . '</font>';
+				} //$element_name['element_colour'] != ''
+				else
+				{
+					$item['item_name'] = $item['item_name'];
+				}
+
 				// Fix attack msg type
 				if (($item['item_element'] > '0') && ($element_name['element_name'] != ''))
 				{

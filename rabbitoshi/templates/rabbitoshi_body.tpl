@@ -23,7 +23,22 @@
 			<tr><td class="row1"><span class="gen">{L_POWER}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_POWER}</span></td></tr>
 			<tr><td class="row1"><span class="gen">{L_MAGICPOWER}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_MAGICPOWER}</span></td></tr>
 			<tr><td class="row1"><span class="gen">{L_ARMOR}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_ARMOR}</span></td></tr>
-                </table></td>
+			<tr><td class="row1"><span class="gen">{L_RATIO_ATTACK}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_ATTACK}</span></td></tr>
+			<tr><td class="row1"><span class="gen">{L_RATIO_MAGIC}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_MAGICATTACK}</span></td></tr>
+			<tr><td class="row1"><span class="gen">{L_MP}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_MP}</span></td></tr>
+        </table></td>
+		<td class="row2" width="20%"><table align="center" border="0" cellpadding="3" cellspacing="1" class="bodyline" width="180">
+			<tr><td class="row1"><span class="gen">{L_PET_HEALTH_LEVELUP}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_HEALTH_LEVELUP}</span></td></tr>
+			<tr><td class="row1"><span class="gen">{L_PET_HUNGER_LEVELUP}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_HUNGER_LEVELUP}</span></td></tr>
+			<tr><td class="row1"><span class="gen">{L_PET_THIRST_LEVELUP}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_THIRST_LEVELUP}</span></td></tr>
+			<tr><td class="row1"><span class="gen">{L_PET_HYGIENE_LEVELUP}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_HYGIENE_LEVELUP}</span></td></tr>
+			<tr><td class="row1"><span class="gen">{L_PET_POWER_LEVELUP}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_POWER_LEVELUP}</span></td></tr>
+			<tr><td class="row1"><span class="gen">{L_PET_MAGICPOWER_LEVELUP}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_MAGICPOWER_LEVELUP}</span></td></tr>
+			<tr><td class="row1"><span class="gen">{L_PET_ARMOR_LEVELUP}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_ARMOR_LEVELUP}</span></td></tr>
+			<tr><td class="row1"><span class="gen">{L_PET_ATTACK_LEVELUP}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_ATTACK_LEVELUP}</span></td></tr>
+			<tr><td class="row1"><span class="gen">{L_PET_MAGICATTACK_LEVELUP}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_MAGICATTACK_LEVELUP}</span></td></tr>
+			<tr><td class="row1"><span class="gen">{L_PET_MP_LEVELUP}</span></td><td align="right" class="row1"><span class="gen">{nopet.pets.RABBIT_NOPET_MP_LEVELUP}</span></td></tr>
+        </table></td>
 		<td class="row1" width="20%"><span class="gen"><br />{L_PET_PRIZE} {nopet.pets.RABBIT_NOPET_PRIZE}&nbsp;{L_POINTS}<br /><br />{L_PET_CHOOSE}{nopet.pets.RABBIT_NOPET_NAME}<br /><input type="radio" name="purchacing_pet" value="{nopet.pets.RABBIT_NOPET_ID}" ></span></td>
 	</tr>
 	<!-- END pets -->

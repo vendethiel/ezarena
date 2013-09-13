@@ -70,6 +70,46 @@
 		<td class="row2"><input type="text" class="post" name="experience" value="{RABBITOSHI_EXPERIENCE}" size="10" maxlength="8"/></td>
 	</tr>
 	<tr>
+		<td class="row1"><span class="gen">{L_RABBITOSHI_HEALTH_LEVELUP}</span><br /><span class="gensmall">{L_RABBITOSHI_HEALTH_LEVELUP_EXPLAIN}</span></td>
+		<td class="row2"><input type="text" class="post" name="health_levelup" value="{RABBITOSHI_HEALTH_LEVELUP}" size="10" maxlength="8"/></td>
+	</tr>
+	<tr>
+		<td class="row1"><span class="gen">{L_RABBITOSHI_HUNGER_LEVELUP}</span><br /><span class="gensmall">{L_RABBITOSHI_HUNGER_LEVELUP_EXPLAIN}</span></td>
+		<td class="row2"><input type="text" class="post" name="hunger_levelup" value="{RABBITOSHI_HUNGER_LEVELUP}" size="10" maxlength="8"/></td>
+	</tr>
+	<tr>
+		<td class="row1"><span class="gen">{L_RABBITOSHI_THIRST_LEVELUP}</span><br /><span class="gensmall">{L_RABBITOSHI_THIRST_LEVELUP_EXPLAIN}</span></td>
+		<td class="row2"><input type="text" class="post" name="thirst_levelup" value="{RABBITOSHI_THIRST_LEVELUP}" size="10" maxlength="8"/></td>
+	</tr>
+	<tr>
+		<td class="row1"><span class="gen">{L_RABBITOSHI_HYGIENE_LEVELUP}</span><br /><span class="gensmall">{L_RABBITOSHI_HYGIENE_LEVELUP_EXPLAIN}</span></td>
+		<td class="row2"><input type="text" class="post" name="hygiene_levelup" value="{RABBITOSHI_HYGIENE_LEVELUP}" size="10" maxlength="8"/></td>
+	</tr>
+	<tr>
+		<td class="row1"><span class="gen">{L_RABBITOSHI_POWER_LEVELUP}</span><br /><span class="gensmall">{L_RABBITOSHI_POWER_LEVELUP_EXPLAIN}</span></td>
+		<td class="row2"><input type="text" class="post" name="power_levelup" value="{RABBITOSHI_POWER_LEVELUP}" size="10" maxlength="8"/></td>
+	</tr>
+	<tr>
+		<td class="row1"><span class="gen">{L_RABBITOSHI_MAGICPOWER_LEVELUP}</span><br /><span class="gensmall">{L_RABBITOSHI_MAGICPOWER_LEVELUP_EXPLAIN}</span></td>
+		<td class="row2"><input type="text" class="post" name="magicpower_levelup" value="{RABBITOSHI_MAGICPOWER_LEVELUP}" size="10" maxlength="8"/></td>
+	</tr>
+	<tr>
+		<td class="row1"><span class="gen">{L_RABBITOSHI_ARMOR_LEVELUP}</span><br /><span class="gensmall">{L_RABBITOSHI_ARMOR_LEVELUP_EXPLAIN}</span></td>
+		<td class="row2"><input type="text" class="post" name="armor_levelup" value="{RABBITOSHI_ARMOR_LEVELUP}" size="10" maxlength="8"/></td>
+	</tr>
+	<tr>
+		<td class="row1"><span class="gen">{L_RABBITOSHI_MP_LEVELUP}</span><br /><span class="gensmall">{L_RABBITOSHI_MP_LEVELUP_EXPLAIN}</span></td>
+		<td class="row2"><input type="text" class="post" name="mp_levelup" value="{RABBITOSHI_MP_LEVELUP}" size="10" maxlength="8"/></td>
+	</tr>
+	<tr>
+		<td class="row1"><span class="gen">{L_RABBITOSHI_ATTACK_LEVELUP}</span><br /><span class="gensmall">{L_RABBITOSHI_ATTACK_LEVELUP_EXPLAIN}</span></td>
+		<td class="row2"><input type="text" class="post" name="attack_levelup" value="{RABBITOSHI_ATTACK_LEVELUP}" size="10" maxlength="8"/></td>
+	</tr>
+	<tr>
+		<td class="row1"><span class="gen">{L_RABBITOSHI_MAGICATTACK_LEVELUP}</span><br /><span class="gensmall">{L_RABBITOSHI_MAGICATTACK_LEVELUP_EXPLAIN}</span></td>
+		<td class="row2"><input type="text" class="post" name="magicattack_levelup" value="{RABBITOSHI_MAGICATTACK_LEVELUP}" size="10" maxlength="8"/></td>
+	</tr>
+	<tr>
 		<td class="row1"><span class="gen">{L_RABBITOSHI_FOOD_TYPE}</span></td>
 		<td class="row2"><select name="food_type">{RABBITOSHI_FOOD_TYPE}</select></td>
 	</tr>

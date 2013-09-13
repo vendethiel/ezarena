@@ -60,6 +60,47 @@ function adr_store_img_delete($user_id)
 	return;
 }
 
+function adr_update_store_status($user_id, $store_id, $items, $quantity)
+{
+	global $db;
+
+	// Fix the values
+	$user_id = intval($user_id);
+	$store_id = intval($store_id);
+
+	##=== START: Update the store stats table with user infos ===##
+	$sql = "SELECT store_stats_character_id, store_stats_buy_total FROM ". ADR_STORES_STATS_TABLE ."
+		WHERE store_stats_character_id = '$user_id'
+		AND store_stats_store_id = '$store_id'";
+	$result = $db->sql_query($sql);
+	if(!$result){
+		message_die(GENERAL_ERROR, 'Could not query for store stats', '', __LINE__, __FILE__, $sql);}
+	$store_stats = $db->sql_fetchrow($result);
+	$total_bought = intval($store_stats['store_stats_buy_total'] + (count($items) *$quantity));
+
+	// If no stats for store already exist in table then create new for this user
+	if($store_stats['store_stats_character_id'] == ''){
+		$sql = "INSERT INTO " . ADR_STORES_STATS_TABLE . "
+			(store_stats_character_id, store_stats_store_id, store_stats_buy_total, store_stats_buy_last)
+			VALUES($user_id, $store_id, $total_bought, ".time().")";
+		$result = $db->sql_query($sql);
+		if(!$result){
+			message_die(GENERAL_ERROR, "Couldn't insert user store stats", "", __LINE__, __FILE__, $sql);}
+	}
+
+	// if store stats for this user do already exist then we'll simply update current entry
+	if($store_stats['store_stats_character_id'] != ''){
+		$sql = "UPDATE " . ADR_STORES_STATS_TABLE ."
+			SET store_stats_buy_total = $total_bought,
+				store_stats_buy_last = ".time()."
+			WHERE store_stats_store_id = '$store_id'
+			AND store_stats_character_id = '$user_id'";
+		if(!$db->sql_query($sql)){
+			message_die(GENERAL_ERROR, 'Could not update store with updated stats', "", __LINE__, __FILE__, $sql);}
+	}
+	##=== END: Update the store stats table with user infos ===##
+}
+
 function adr_update_store_user_trans($user_id, $shop_owner_id, $items, $sum)
 {
 	global $db, $lang, $adr_user, $invent_array;

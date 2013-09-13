@@ -25,6 +25,6 @@ if ( !defined('IN_PHPBB') )
 }
 
 $adr_posters = array(
-		'1' => array('character_id' => '2', 'character_level' => '1', 'race_name' => 'Adr_race_human', 'race_img' => 'Human.gif', 'element_name' => 'Air', 'element_img' => 'Wind.gif', 'alignment_name' => 'Adr_alignment_good', 'alignment_img' => 'Good.gif', 'class_name' => 'Anti Paladin', 'class_img' => 'Anti Paladin.gif'),
+		'1' => array('character_id' => '2', 'character_level' => '15', 'race_name' => 'Adr_race_human', 'race_img' => 'Human.gif', 'element_name' => 'Air', 'element_img' => 'Wind.gif', 'alignment_name' => 'Adr_alignment_good', 'alignment_img' => 'Good.gif', 'class_name' => 'Anti Paladin', 'class_img' => 'Anti Paladin.gif'),
 	);
 ?>

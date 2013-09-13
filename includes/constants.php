@@ -26,8 +26,11 @@ if ( !defined('IN_PHPBB') )
 }
 
 // Debug Level
-//define('DEBUG', 1); // Debugging on
-define('DEBUG', 1); // Debugging off
+// just comment out this line to disable debugging
+define('DEBUG', 1); // Debugging on
+
+
+if (!defined('DEBUG')) define('DEBUG', 0); // Debugging off
 
 
 // User Levels <- Do not change the values of USER or ADMIN
@@ -176,7 +179,6 @@ define('ANNOUNCEMENTS_LEFTY74_FORUM_TOPIC_FIRST', 0);
 define('DISALLOW_TABLE', $table_prefix.'disallow');
 define('FORUMS_TABLE', $table_prefix.'forums');
 //-- mod : today userlist ------------------------------------------------------
-//-- add
 define('GUESTS_VISIT_TABLE', $table_prefix . 'guests_visit');
 //-- fin mod : today userlist --------------------------------------------------
 define('GROUPS_TABLE', $table_prefix.'groups');
@@ -212,7 +214,6 @@ define('QUICKLINKS_TABLE', $table_prefix.'quicklinks');
 define('LOGOS_TABLE', $table_prefix.'logos'); 
 // FIN MOD Logos aléatoires
 //-- mod : bbcode box reloaded -------------------------------------------------
-//-- add
 define('BBC_BOX_TABLE', $table_prefix.'bbc_box');
 //-- fin mod : bbcode box reloaded ---------------------------------------------
 

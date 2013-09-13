@@ -856,8 +856,4 @@ else
 	$template->pparse("body");
 
 	$db->sql_close();
-	exit;
-
 }
-
-?>
