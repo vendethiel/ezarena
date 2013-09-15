@@ -183,6 +183,11 @@ window.onload = doOnLoadMenuACP;
 		<tr> 
 		  <td class="row1"><span class="genmed"><a href="{U_FORUM_INDEX}" target="_parent" class="genmed">{L_FORUM_INDEX}</a></span></td>
 		</tr>
+		<!-- IF MODE == 'rpg' -->
+		<tr> 
+		  <td class="row1"><span class="genmed"><a href="{U_RPG}" target="_parent" class="genmed">RPG</a></span></td>
+		</tr>
+		<!-- ENDIF -->
 		<tr> 
 		  <td class="row1"><span class="genmed"><a href="{U_FORUM_INDEX}" target="main" class="genmed">{L_PREVIEW_FORUM}</a></span></td>
 		</tr>

@@ -1972,9 +1972,6 @@ ALTER TABLE phpbb_adr_shops_items_type ADD item_type_order MEDIUMINT( 8 ) NOT NU
 ALTER TABLE `phpbb_adr_shops_items_type` ADD `item_type_category` VARCHAR( 50 ) NOT NULL DEFAULT '';
 
 # ADR - Advanced NPC System
-ALTER TABLE `phpbb_adr_zones` DROP `npc_price`, DROP `npc1_enable`, DROP `npc2_enable`, DROP `npc3_enable`, DROP `npc4_enable`, DROP `npc5_enable`, DROP `npc1_message`, DROP `npc2_message`, DROP `npc3_message`, DROP `npc4_message`, DROP `npc5_message`;
-# drop shadowtek's event kruft too
-ALTER TABLE `phpbb_adr_zones` DROP `npc6_message`, DROP `npc6_enable`;
 ALTER TABLE `phpbb_adr_characters` ADD `character_npc_check` TEXT NOT NULL;
 
 CREATE TABLE `phpbb_adr_npc` (

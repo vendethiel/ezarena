@@ -137,7 +137,7 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
    	$monsterlist = $db->sql_fetchrowset($result);
 
    	$monsters_list = '<select name="monsters[]" size="8" multiple>';
-   	$monsters_list .= '<option value = "0" selected>' . $lang['Adr_zones_all_monsters'] . '</option>';
+   	$monsters_list .= '<option value="0">' . $lang['Adr_zones_all_monsters'] . '</option>';
    	for ( $i = 0 ; $i < count($monsterlist) ; $i++ )
    	  	$monsters_list .= '<option value = "' . $monsterlist[$i]['monster_id'] . '" >' . $monsterlist[$i]['monster_name'] . ' - ' . $lang['Adr_zones_monster_level'] . ' ' . $monsterlist[$i]['monster_level'] . '</option>';
    	$monsters_list .= '</select>';
@@ -147,6 +147,17 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 	//
 	
 	$template->assign_vars(array(
+		// V: set defaults ...
+		'ZONE_COSTRETURN' => 0,
+		'ZONE_COSTDESTINATION2' => 0,
+		'ZONE_COSTDESTINATION3' => 0,
+		'ZONE_COSTDESTINATION4' => 0,
+		'ZONE_CHANCE' => 0,
+		'ZONE_POINTWIN1' => 0,
+		'ZONE_POINTWIN2' => 0,
+		'ZONE_POINTLOSS1' => 0,
+		'ZONE_POINTLOSS2' => 0,
+		// basic fields
 		"ZONE_ELEMENT" => $element_list,
 		"ZONE_ITEM" => $item_list,
 		"ZONE_MONSTER_LIST" => $monsters_list,
@@ -575,7 +586,7 @@ else if ( $mode != "" )
 			$pointwin2 = $HTTP_POST_VARS['zone_pointwin2'];
 			$pointloss1 = $HTTP_POST_VARS['zone_pointloss1'];
 			$pointloss2 = $HTTP_POST_VARS['zone_pointloss2'];
-			$chance = intval($HTTP_POST_VARS['zone_chance']);
+			$chance = (string) intval($HTTP_POST_VARS['zone_chance']);
 			$level = intval($HTTP_POST_VARS['zone_level']);
 
 			$monsters = array();
@@ -595,7 +606,7 @@ else if ( $mode != "" )
 			}
 
 			// || $goto1 == ''  || $cost1 == ''
-			if ( $name == '' || $description == '' || $image == '' || $element == '' || $cost2 == '' || $cost3 == '' || $cost4 == '' || $costreturn == '' || $pointwin1 == '' || $pointwin2 == '' || $pointloss1 == '' || $pointloss2 == '' || $chance == '' )
+			if ( $name == '' || $description == '' || $element == '' || $cost2 == '' || $cost3 == '' || $cost4 == '' || $costreturn == '' || $pointwin1 == '' || $pointwin2 == '' || $pointloss1 == '' || $pointloss2 == '' || $chance == '' )
 				adr_previous( Fields_empty , admin_adr_zones , '' );
 
 			// goto1_name = '" . str_replace("\'", "''", $goto1) . "',
@@ -688,7 +699,8 @@ else if ( $mode != "" )
 			$pointwin2 = $HTTP_POST_VARS['zone_pointwin2'];
 			$pointloss1 = $HTTP_POST_VARS['zone_pointloss1'];
 			$pointloss2 = $HTTP_POST_VARS['zone_pointloss2'];
-			$chance = intval($HTTP_POST_VARS['zone_chance']);
+			// V: coerce to string to allow 0
+			$chance = (string)intval($HTTP_POST_VARS['zone_chance']);
 			$level = intval($HTTP_POST_VARS['zone_level']);
 
 			$monsters = array();
@@ -707,11 +719,12 @@ else if ( $mode != "" )
 					$monsters_list .= ( $monsters_list == '' ) ? $monsters[$a] : ", ".$monsters[$a];
 			}
 
-			if ( $name == '' || $description == '' || $image == '' || $element == '' || $goto1 == '' || $cost1 == '' || $cost2 == '' || $cost3 == '' || $cost4 == '' || $costreturn == '' || $pointwin1 == '' || $pointwin2 == '' || $pointloss1 == '' || $pointloss2 == '' || $chance == '' )
+			//$goto1 == '' || $cost1 == ''
+			if ( $name == '' || $description == '' || $element == '' || $cost2 == '' || $cost3 == '' || $cost4 == '' || $costreturn == '' || $pointwin1 == '' || $pointwin2 == '' || $pointloss1 == '' || $pointloss2 == '' || $chance == '' )
 				adr_previous( Fields_empty , admin_adr_zones , '' );
 
 			$sql = "INSERT INTO " . ADR_ZONES_TABLE . " 
-				( zone_id , zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto2, cost_goto3, cost_goto4, cost_return, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, zone_mine, zone_enchant, zone_monsters_list , zone_chance )
+				( zone_id , zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto2, cost_goto3, cost_goto4, cost_return, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, zone_mine, zone_enchant, zone_monsters_list , zone_level )
 				VALUES ( '$zone_id' ,'" . str_replace("\'", "''", $name) . "','" . str_replace("\'", "''", $description) . "', '" . str_replace("\'", "''", $image) . "' , '" . str_replace("\'", "''", $element) . "', '" . str_replace("\'", "''", $item) . "' , '$cost2' , '$cost3' , '$cost4' , '$costreturn' , '" . str_replace("\'", "''", $goto2) . "' , '" . str_replace("\'", "''", $goto3) . "' , '" . str_replace("\'", "''", $goto4) . "' , '" . str_replace("\'", "''", $return) . "', '$shops' , '$forge' , '$prison' , '$temple' , '$bank' , '$event1' , '$event2' , '$event3' , '$event4' , '$event5' , '$event6' , '$event7' , '$event8' , '$pointwin1' , '$pointwin2' , '$pointloss1' , '$pointloss2' , '$chance' , '$mine' , '$enchant', '" . $monsters_list . "' , '$level' )";
 			$result = $db->sql_query($sql);
 			if( !$result )

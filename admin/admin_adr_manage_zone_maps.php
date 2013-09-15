@@ -65,8 +65,8 @@ $adr_general = adr_get_general_config();
 adr_template_file('admin/config_adr_zones_manage_maps_body.tpl');
 
 $zone_townmap_name = $HTTP_POST_VARS['Adr_zone_townmap_name'];
-$mode = $HTTP_POST_VARS['mode'];
-$action = $HTTP_POST_VARS['action'];
+$mode = stripslashes($HTTP_POST_VARS['mode']);
+$action = stripslashes($HTTP_POST_VARS['action']);
 $zone_name2 = $HTTP_POST_VARS['zone_name2'];
 $zone_name1 = $HTTP_POST_VARS['zone_name1'];
 $assignzone = $HTTP_POST_VARS['assignzone'];
@@ -104,7 +104,8 @@ $origname = $HTTP_POST_VARS['origname'];
 $origtype = $HTTP_POST_VARS['origtype'];
 
 //--------------------------------Main Page START-----------------------------------------
-if ((!isset($mode)) || ($mode == 'MAIN') || ($mode == 'Main'))
+
+if ((empty($mode)) || ($mode == 'MAIN') || ($mode == 'Main'))
 {
 
 	$sql = "SELECT zone_name,zone_id from " . ADR_ZONES_TABLE . " WHERE zone_name = 'World Map'";
@@ -626,10 +627,8 @@ if ($action == $lang['Adr_admin_maps_place building'])
 
 if ($mode == $lang['Adr_admin_maps_building_types'])
 {
-
 	if ($action == "main")
 	{
-	
 		$sql = "select * from ".ADR_ZONE_BUILDINGS_TABLE." ORDER by sdesc";
 		if ( !($iresult = $db->sql_query($sql)) )
 		{
@@ -688,7 +687,9 @@ if ($mode == $lang['Adr_admin_maps_building_types'])
 		<td class="row2"><input type="text" name="building_tag_no" value="" size="5" MAXLENGTH="5"></td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center" class="row2"><input type="submit" value="'.$lang['Adr_admin_maps_add_building'].'" name="action"></td>
+		<td colspan="2" align="center" class="row2">
+			<input type="hidden" name="mode" value="'.$lang['Adr_admin_maps_building_types'].'" />
+			<input type="submit" value="'.$lang['Adr_admin_maps_add_building'].'" name="action"></td>
 	</tr>
 	<br /><br />
 
@@ -715,6 +716,7 @@ if ($mode == $lang['Adr_admin_maps_building_types'])
 			'STATEXPLAIN' => $lang['Adr_admin_maps_building_configure_title_explain'])
 		);
 	}
+
 	if ($action == $lang['Adr_admin_maps_add_building'])
 	{
 

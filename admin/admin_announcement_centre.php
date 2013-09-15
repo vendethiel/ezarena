@@ -24,7 +24,7 @@ if( !empty($setmodules) )
 //
 // Let's set the root dir for phpBB
 //
-define('PHPBB_ROOT_PATH', './../');
+$phpbb_root_path = "./../";
 require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);
 include($phpbb_root_path . 'includes/bbcode.'.$phpEx);

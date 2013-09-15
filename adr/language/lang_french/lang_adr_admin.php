@@ -847,7 +847,7 @@ if ( defined ('IN_ADR_ZONE_MAPS'))
     $lang['Adr_admin_maps_place_building']='bâtiment à placer sur le plan de ville';
     $lang['Adr_admin_maps_place_image']='image à placer sur le plan de ville';
     $lang['Adr_admin_maps_building_name']='Nom du bâtiment/paysage/ville:';
-    $lang['Adr_admin_maps_building_name_explain']='Description basiqua de l\'image du bâtiment/ville (exemple \'Prison/Banque\').';
+    $lang['Adr_admin_maps_building_name_explain']='Description basique de l\'image du bâtiment/ville (exemple \'prison2\').';
     $lang['Adr_admin_maps_building_image']='Nom du fichier de l\'image:';
     $lang['Adr_admin_maps_building_image_explain']='Nom du fichier de l\'image (sans l\'extension, le fichier doit être dans le dossier adr/images/zones/townmap/buildings ), exemple \'banque_1\'.';
     $lang['Adr_admin_maps_building_zone_link']='Lien de Zone :';

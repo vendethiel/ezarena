@@ -13,6 +13,10 @@
 $lang['Adr_pvp_taunt'] = 'Provoquer';
 $lang['Adr_pvp_custom_taunt'] = 'Provocation personnalisée';
 
+$lang['Adr_Zone_acp_item_title']='Objet requis';
+$lang['Adr_zone_maps_close_window']='Fermer';
+$lang['Adr_zone_maps_yes'] ='Oui';
+$lang['Adr_zone_maps_no'] ='Non';
 // General language keys
 //ZONE
 $lang['Adr_shops_user_money']='Votre argent';
@@ -1617,7 +1621,7 @@ if ( defined ('IN_ADR_CRAFTING'))
    $lang['recipe_items_req']='Modèle';
    $lang['recipe_items_req_desc']='Choisissez les objets nécessaires à la fabrication du modèle';
    $lang['recipe_items_amount']='Amount of each selected item that is needed to make the finished product';
-   $lang['recipe_items_amount_desc']='Example : si vous avez sélectionné 3 objets, que vous voulez 2 fois le premier, 1 fois le second et 5 fois le troisième, entrez <b>2:1:5</b><br/>Le premier objet est le plus haut.<br/><br/>Laissez blanc pour ne demander qu\'un de chaque';
+   $lang['recipe_items_amount_desc']='Exemple : si vous avez sélectionné 3 objets, que vous voulez 2 fois le premier, 1 fois le second et 5 fois le troisième, entrez <b>2:1:5</b><br/>Le premier objet est le plus haut.<br/><br/>Laissez blanc pour ne demander qu\'un de chaque';
    $lang['recipe_admin_only']='Modèle seulement pour les administrateurs ?';
    $lang['recipe_admin_only_desc']='Est-ce que ce modèle est réservé aux administrateurs ?';
    $lang['Adr_recipe_successful_deleted']='Modèle et produit final supprimé !';
@@ -1814,7 +1818,7 @@ if ( defined ('IN_ADR_FISH'))
    $lang['Adr_skill_limit']='Vous ne pouvez plus pêcher pour la journée';
    $lang['Adr_fishing_go_to']="Aller à votre feuille de personnage";
    $lang['Adr_fishing_create']='Aller pêcher';
-   $lang['Adr_fishing_explain']='Welcome to the Lake. <br /><br />Here you fish for many types of fish. <br /><br />Use these fish to sell, or combined them to create other items. <br /><br />Good luck young one.';
+   $lang['Adr_fishing_explain']='Bienvenue au lac.<br /><br />Ici, vous pouvez pêcher de nombreux types de poissons, que vous pourrez vendre ou faire cuir plus tard.';
 }
 if ( defined ('IN_ADR_ALCHEMY'))
 {

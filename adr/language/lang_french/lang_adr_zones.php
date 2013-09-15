@@ -50,13 +50,14 @@ if ( defined ('IN_ADR_ZONES_ADMIN'))
    $lang['Adr_Zone_acp_config']='Configurations de la Navigation';
    $lang['Adr_Zone_acp_buildings']='Configurations des Batiments';
    $lang['Adr_Zone_acp_events']='Configurations des Evenements';
-   $lang['Adr_Zone_acp_chance']='Chance Evènements';
-   $lang['Adr_Zone_acp_chance_explain']='Mettez ici le pourcentage de chance pour lequel un évènement peut survenir<br \>Il est impératif de mettre une valeur même si vous ne voulez pas utiliser d\'évènements pour cette zone';
+   $lang['Adr_Zone_acp_chance']='Chance &Eacute;vènements';
+   $lang['Adr_Zone_acp_chance_explain']='Mettez ici le pourcentage de chance pour lequel un évènement peut survenir<br \>Laissez 0 pour ne pas activer les évènements.';
    $lang['Adr_Zone_acp_pointwin1']='Points recus minimum';
    $lang['Adr_Zone_acp_pointwin1_explain']='Nombre de points minimum que vous pouvez recevoir lors d\'un évènement';
    $lang['Adr_Zone_acp_pointwin2']='Points recus maximum';
    $lang['Adr_Zone_acp_pointwin2_explain']='Nombre de points maximum que vous pouvez recevoir lors d\'un évènement';
    $lang['Adr_Zone_acp_pointloss1']='Points perdus minimum';
+   $lang['Adr_zone_acp_item_nothing']='Pas d\'objet';
    $lang['Adr_Zone_acp_pointloss1_explain']='Nombre de points minimum que vous pouvez perdre lors d\'un évènement';
    $lang['Adr_Zone_acp_pointloss2']='Points perdus maximum';
    $lang['Adr_Zone_acp_pointloss2_explain']='Nombre de points maximum que vous pouvez perdre lors d\'un évènement';
@@ -85,10 +86,8 @@ if ( defined ('IN_ADR_ZONES_ADMIN'))
    $lang['Adr_zone_acp_choose_destination']='Choisir une destination';
    $lang['Adr_zone_acp_choose_nothing']='Pas de destination';
    $lang['Adr_Zone_acp_npc_title']='Personnages Non Joueurs';
-   $lang['Adr_zone_acp_item_nothing']='Pas d\'objet';
    $lang['Adr_Zone_acp_item']='Objet requis pour entrer dans cette zone';
    $lang['Adr_Zone_acp_item_explain']='Choisissez un objet que le membre devra avoir dans son inventaire pour pouvoir entrer dans cette zone';
-   $lang['Adr_Zone_acp_item_title']='Objet requis';
    $lang['Adr_zone_acp_general_title']='Configuration Générale des zones';
    $lang['Adr_zone_acp_general_explain']='Configurez ici les options générales pour les zones';
    $lang['Adr_zone_acp_dead_travel']='Cocher pour empecher les voyages en étant mort';
@@ -106,6 +105,7 @@ if ( defined ('IN_ADR_ZONES_ADMIN'))
    $lang['Adr_zones_all_monsters']='-Tous les monstres-';
    $lang['Adr_zones_monster_level']='Niv.';
 }
+
 
 if ( defined ('IN_ADR_ZONES'))
 {
@@ -250,8 +250,8 @@ $lang['Adr_zone_change_level']='Vous n\'avez pas le niveau requis pour accéder à
 $lang['Adr_zone_acp_enable_dynamic_zone_townmaps']='Activer les cartes de zone dynamiques';
 $lang['Adr_zone_acp_world_map_name']='Le nom de votre carte du Monde (laisser vide pour mettre le nom du site)';
 $lang['Adr_zone_acp_picture_link']='Activer les liens images à la place des liens textes dans l\'header et l\'affichage des zones.';
-$lang['Adr_zone_acp_zone_dynamic_maps_current_zone']='Current Zone Assignment of World Map';
-$lang['Adr_zone_acp_zone_dynamic_maps_config_zone']='Current Config Assignment of World Map <br /><span class="gensmall">If this does not match the Current Zone Assignment, your World Map will not display.</span>';
+$lang['Adr_zone_acp_zone_dynamic_maps_current_zone']='Zone actuellement assignée en tant que "World Map" (mapmonde)';
+$lang['Adr_zone_acp_zone_dynamic_maps_config_zone']='Zone actuellement <b>dans la configuration</b> en tant que "World Map" (mapmonde).<br/><span class="gensmall">Si cette valeur ne correspond pas à celle ci-dessus, votre mapmonde n\'affichera pas.</span>';
 $lang['Adr_zone_acp_zone_dynamic_maps_display_required']='Display the Required Item and Points on Teleport Popup';
 
 // Day & Night

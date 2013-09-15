@@ -33,7 +33,7 @@ function page_header($text, $form_action = false)
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $lang['ENCODING']; ?>">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <title><?php echo $lang['Welcome_install'];?></title>
-<link rel="stylesheet" href="../templates/subSilver/subSilver.css" type="text/css">
+<link rel="stylesheet" href="../templates/phpbb/subSilver/style.css" type="text/css">
 <style type="text/css">
 <!--
 th			{ background-image: url('../templates/subSilver/images/cellpic3.gif') }
@@ -54,8 +54,8 @@ td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom { background-image: u
 			<tr>
 				<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td><img src="../templates/subSilver/images/ulti1.gif" border="0" alt="Forum Home" vspace="1" /></td>
-						<td align="center" width="100%" valign="middle"><span class="maintitle"><?php echo $lang['Welcome_install'];?></span></td>
+<!-- 						<td><img src="../templates/subSilver/images/ulti1.gif" border="0" alt="Forum Home" vspace="1" /></td>
+ -->						<td align="center" width="100%" valign="middle"><span class="maintitle"><?php echo $lang['Welcome_install'];?></span></td>
 					</tr>
 				</table></td>
 			</tr>

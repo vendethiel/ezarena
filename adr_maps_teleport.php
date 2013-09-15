@@ -84,7 +84,12 @@ $sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
 if( !($result = $db->sql_query($sql)) )
         message_die(GENERAL_ERROR, $lang['Adr_zone_maps_error_message_4'], '', __LINE__, __FILE__, $sql);
 
+
 $destination_zone = $db->sql_fetchrow($result);
+if (!$destination_zone) {
+	message_die(GENERAL_MESSAGE, 'Zone introuvable');
+}
+
 $destination_zone_name = $destination_zone['zone_name'];
 $destination_zone_id = $destination_zone['zone_id'];
 $destination_zone_img = $destination_zone['zone_img'];
@@ -115,6 +120,7 @@ $destination_zone_pointloss2 = $destination_zone['zone_pointloss2'];
 $destination_zone_chance = $destination_zone['zone_chance'];
 $destination_required_item = $destination_zone['zone_item'];
 $destination_return_cost = $destination_zone['cost_return'];
+$destination_level = $destination_zone['zone_level'];
 
 if ( $destination_zone['zone_shops'] > 0 ){ $map_shops = $lang['Adr_zone_maps_yes']; }else{ $map_shops = $lang['Adr_zone_maps_no'];}
 if ( $destination_zone['zone_forge'] > 0 ){ $map_forge = $lang['Adr_zone_maps_yes']; }else{ $map_forge = $lang['Adr_zone_maps_no'];}
@@ -155,6 +161,8 @@ $scroll_check = $db->sql_fetchrow($result);
 $scroll_item_id = $scroll_check['item_id'];
 $scroll_item_duration = $scroll_check['item_duration'];
 
+$destination_zone_required_level = $adr_user['character_level'] >= $destination_level;
+
 if ( $scroll == $scroll_check['item_name'] ){ $destination_zone_required_scroll = 1; }else{ $destination_zone_required_scroll = 0; }
 
 if ( $destination_zone_id == $adr_user['character_area'] )
@@ -169,15 +177,17 @@ else
 	$template->assign_block_vars('switch_Adr_zone_teleport_no_welcome',array());
 }
 //Can the player teleport
-if ( $destination_zone_required_item && $destination_zone_return_cost && $destination_zone_required_scroll && $teleport_enable )
+if ( $destination_zone_required_level && $destination_zone_required_item && $destination_zone_return_cost && $destination_zone_required_scroll && $teleport_enable )
 {
 	$template->assign_block_vars('switch_Adr_zone_teleport_enable',array());
 }
+
 //Display Required Items?
 if ( $board_config['Adr_zone_townmap_display_required'] )
 {
 	$template->assign_block_vars('switch_Adr_zone_townmap_display_required',array());
 }
+
 //Change Item to No Item if no item is required
 if ( $destination_required_item == '0' )
 {
@@ -189,7 +199,7 @@ else
 }
 
 //teleport the player
-if ( $destination_zone_required_item && $destination_zone_return_cost && $destination_zone_required_scroll && $teleport == $lang['Adr_zone_maps_teleport_to_zone'] )
+if ( $destination_zone_required_level && $destination_zone_required_item && $destination_zone_return_cost && $destination_zone_required_scroll && $teleport == $lang['Adr_zone_maps_teleport_to_zone'] )
 {
 		adr_substract_points( $user_id , $cost_return , adr_zones , '' );
         $new_scroll_item_duration = $scroll_item_duration - 1;
@@ -229,7 +239,6 @@ if ( $destination_zone_required_item && $destination_zone_return_cost && $destin
 		break;
 }
 
-
 $template->assign_vars(array(
 	'POINTS' => $board_config['points_name'],
 	'ZONE_NAME' => $destination_zone_name,
@@ -238,6 +247,7 @@ $template->assign_vars(array(
 	'ZONE_ELEMENT' => $destination_zone_element,
 	'ZONE_RETURN' => $destination_return_name,
 	'ZONE_COST_RETURN' => $destination_cost_return,
+	'ZONE_LEVEL' => $destination_level,
 	'ZONE_REQUIRED_ITEM' => $destination_required_item_text,
 	'MAP_SHOPS' => $map_shops,
 	'MAP_FORGE' => $map_forge,
@@ -255,7 +265,7 @@ $template->assign_vars(array(
 	'L_ZONE_DESCRIPTION' => $lang['Adr_zone_description_title'],
 	'L_ZONE_ELEMENT' => $lang['Adr_zone_element_title'],
 	'L_ZONE_COST' => $lang['Adr_zone_cost_title'],
-	'L_ZONE_REQUIRED_ITEM' => $lang['Adr_Zone_maps_item_title'],
+	'L_ZONE_REQUIRED_ITEM' => $lang['Adr_Zone_acp_item_title'],
 	'L_ZONE_TOWN' => $lang['Adr_zone_town_title'],
 	'L_POINTS' => $lang['Adr_zone_points'],
 	'S_TELEPORT_ACTION' => append_sid("adr_maps_teleport.$phpEx"),

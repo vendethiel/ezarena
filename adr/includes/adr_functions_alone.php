@@ -446,7 +446,7 @@ function adr_display_poster_infos($poster_id, $character_info, $race_info, $elem
 				{
 					if ($character_info[$adr]['character_element'] == $element_info[$elements]['element_id'])
 					{
-						$element_lang 	= adr_get_lang([$element_info[$elements]['element_name']]);
+						$element_lang 	= adr_get_lang($element_info[$elements]['element_name']);
 						$element_img	= $element_info[$elements]['element_img'];
 						break;
 					}
@@ -467,7 +467,7 @@ function adr_display_poster_infos($poster_id, $character_info, $race_info, $elem
 				{
 					if ($character_info[$adr]['character_alignment'] == $alignment_info[$alignment]['alignment_id'])
 					{
-						$alignment_lang = adr_get_lang([$alignment_info[$alignment]['alignment_name']]);
+						$alignment_lang = adr_get_lang($alignment_info[$alignment]['alignment_name']);
 						$alignment_img = $alignment_info[$alignment]['alignment_img'];
 						break;
 					}

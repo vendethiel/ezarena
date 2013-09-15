@@ -355,7 +355,7 @@ if ( $goto1 )
 		if( !($result = $db->sql_query($sql)) )
 			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
-		header('Location:'.append_sid("adr_zones.$phpEx"));
+		@header('Location:'.append_sid("adr_zones.$phpEx"));
 		adr_previous( Adr_zone_change_success , adr_zones , '' );
 		break;
 	}
@@ -428,7 +428,7 @@ if ( $goto2 )
 		if( !($result = $db->sql_query($sql)) )
 			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
-		header('Location:'.append_sid("adr_zones.$phpEx"));
+		@header('Location:'.append_sid("adr_zones.$phpEx"));
 		adr_previous( Adr_zone_change_success , adr_zones , '' );
 		break;
 	}
@@ -502,7 +502,7 @@ if ( $goto3 )
 		if( !($result = $db->sql_query($sql)) )
 			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
-		header('Location:'.append_sid("adr_zones.$phpEx"));
+		@header('Location:'.append_sid("adr_zones.$phpEx"));
 		adr_previous( Adr_zone_change_success , adr_zones , '' );
 		break;
 	}
@@ -568,7 +568,7 @@ if ( $goto4 )
 		if( !($result = $db->sql_query($sql)) )
 			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
-		header('Location:'.append_sid("adr_zones.$phpEx"));
+		@header('Location:'.append_sid("adr_zones.$phpEx"));
 		adr_previous( Adr_zone_change_success , adr_zones , '' );
 		break;
 	}
@@ -634,7 +634,7 @@ if ( $return )
 		if( !($result = $db->sql_query($sql)) )
 			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
-		header('Location:'.append_sid("adr_zones.$phpEx"));
+		@header('Location:'.append_sid("adr_zones.$phpEx"));
 		adr_previous( Adr_zone_change_success , adr_zones , '' );
 		break;
 	}
@@ -655,173 +655,175 @@ if ( $return )
 //
 
 //Define if the event happened
-$zone_events = rand( 1 , $zone_chance );
-
-if ( $zone_events == '1' )
+if ($zone_events)
 {
-	$what_event = rand( 1 , 8 );
+	$zone_events = rand( 1 , $zone_chance );
 
-	//Get points
-	if ( $what_event == '1' && $event_1 == '1' )
+	if ( $zone_events == '1' )
 	{
-		//Define money value
-		$win = rand( $zone_pointwin1 , $zone_pointwin2 );
+		$what_event = rand( 1 , 8 );
 
-		adr_add_points( $user_id , $win );
+		//Get points
+		if ( $what_event == '1' && $event_1 == '1' )
+		{
+			//Define money value
+			$win = rand( $zone_pointwin1 , $zone_pointwin2 );
 
-		$message = '<img src="adr/images/zones/get_money.gif"><br \><br \>' . $lang['Adr_zone_event_winpoint'] . ' ' . $win . ' ' . $board_config['points_name'] . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-		message_die(GENERAL_ERROR, $message , Zones , '' );
-		break;
-	}
+			adr_add_points( $user_id , $win );
 
-	//Loss of points
-	else if ( $what_event == '2' && $event_2 == '1' )
-	{
-		//Define money value
-		$loss = rand( $zone_pointloss1 , $zone_pointloss2 );
+			$message = '<img src="adr/images/zones/get_money.gif"><br \><br \>' . $lang['Adr_zone_event_winpoint'] . ' ' . $win . ' ' . $board_config['points_name'] . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
+			message_die(GENERAL_ERROR, $message , Zones , '' );
+			break;
+		}
 
-		if ( $loss > $userdata['user_points'] ) $loss = ( $userdata['user_points'] / 2 );
+		//Loss of points
+		else if ( $what_event == '2' && $event_2 == '1' )
+		{
+			//Define money value
+			$loss = rand( $zone_pointloss1 , $zone_pointloss2 );
 
-		adr_substract_points( $user_id , $loss , adr_zones , '' );
+			if ( $loss > $userdata['user_points'] ) $loss = ( $userdata['user_points'] / 2 );
 
-		$message = '<img src="adr/images/zones/loss_money.gif"><br \><br \>' . $lang['Adr_zone_event_losspoint'] . ' ' . $loss . ' ' . $board_config['points_name'] . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-		message_die(GENERAL_ERROR, $message , Zones , '' );
-		break;
-	}
+			adr_substract_points( $user_id , $loss , adr_zones , '' );
 
-	//Fountain of youth
-	else if ( $what_event == '3' && $event_3 == '1' )
-	{
-		//Update character health
-		$sql = " UPDATE  " . ADR_CHARACTERS_TABLE . " 
-			SET character_hp = character_hp_max
-			WHERE character_id = '$user_id' ";
-		if( !($result = $db->sql_query($sql)) )
-			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
+			$message = '<img src="adr/images/zones/loss_money.gif"><br \><br \>' . $lang['Adr_zone_event_losspoint'] . ' ' . $loss . ' ' . $board_config['points_name'] . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
+			message_die(GENERAL_ERROR, $message , Zones , '' );
+			break;
+		}
 
-		$message = '<img src="adr/images/zones/fountain_of_youth.gif"><br \><br \>' . $lang['Adr_zone_event_fountain_youth'] . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-		message_die(GENERAL_ERROR, $message , Zones , '' );
-		break;
-	}
+		//Fountain of youth
+		else if ( $what_event == '3' && $event_3 == '1' )
+		{
+			//Update character health
+			$sql = " UPDATE  " . ADR_CHARACTERS_TABLE . " 
+				SET character_hp = character_hp_max
+				WHERE character_id = '$user_id' ";
+			if( !($result = $db->sql_query($sql)) )
+				message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
-	//Fountain of mana
-	else if ( $what_event == '4' && $event_4 == '1' )
-	{
-		//Update character mp
-		$sql = " UPDATE  " . ADR_CHARACTERS_TABLE . " 
-			SET character_mp = character_mp_max
-			WHERE character_id = '$user_id' ";
-		if( !($result = $db->sql_query($sql)) )
-			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
+			$message = '<img src="adr/images/zones/fountain_of_youth.gif"><br \><br \>' . $lang['Adr_zone_event_fountain_youth'] . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
+			message_die(GENERAL_ERROR, $message , Zones , '' );
+			break;
+		}
 
-		$message = '<img src="adr/images/zones/fountain_of_mana.gif"><br \><br \>' . $lang['Adr_zone_event_fountain_mana'] . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-		message_die(GENERAL_ERROR, $message , Zones , '' );
-		break;
-	}
+		//Fountain of mana
+		else if ( $what_event == '4' && $event_4 == '1' )
+		{
+			//Update character mp
+			$sql = " UPDATE  " . ADR_CHARACTERS_TABLE . " 
+				SET character_mp = character_mp_max
+				WHERE character_id = '$user_id' ";
+			if( !($result = $db->sql_query($sql)) )
+				message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
-	//Poisonned
-	else if ( $what_event == '5' && $event_5 == '1' )
-	{
-		//Update character hp
-		$sql = " UPDATE  " . ADR_CHARACTERS_TABLE . " 
-			SET character_hp = '1'
-			WHERE character_id = '$user_id' ";
-		if( !($result = $db->sql_query($sql)) )
-			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
+			$message = '<img src="adr/images/zones/fountain_of_mana.gif"><br \><br \>' . $lang['Adr_zone_event_fountain_mana'] . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
+			message_die(GENERAL_ERROR, $message , Zones , '' );
+			break;
+		}
 
-		$message = '<img src="adr/images/zones/poisonned.gif"><br \><br \>' . $lang['Adr_zone_event_poison'] . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-		message_die(GENERAL_ERROR, $message , Zones , '' );
-		break;
-	}
+		//Poisonned
+		else if ( $what_event == '5' && $event_5 == '1' )
+		{
+			//Update character hp
+			$sql = " UPDATE  " . ADR_CHARACTERS_TABLE . " 
+				SET character_hp = '1'
+				WHERE character_id = '$user_id' ";
+			if( !($result = $db->sql_query($sql)) )
+				message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
-	//Weakness
-	else if ( $what_event == '6' && $event_6 == '1' )
-	{
-		//Update character mp
-		$sql = " UPDATE  " . ADR_CHARACTERS_TABLE . " 
-			SET character_mp = '0'
-			WHERE character_id = '$user_id' ";
-		if( !($result = $db->sql_query($sql)) )
-			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
+			$message = '<img src="adr/images/zones/poisonned.gif"><br \><br \>' . $lang['Adr_zone_event_poison'] . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
+			message_die(GENERAL_ERROR, $message , Zones , '' );
+			break;
+		}
 
-		$message = '<img src="adr/images/zones/weakness.gif"><br \><br \>' . $lang['Adr_zone_event_weakness'] . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-		message_die(GENERAL_ERROR, $message , Zones , '' );
-		break;
-	}
+		//Weakness
+		else if ( $what_event == '6' && $event_6 == '1' )
+		{
+			//Update character mp
+			$sql = " UPDATE  " . ADR_CHARACTERS_TABLE . " 
+				SET character_mp = '0'
+				WHERE character_id = '$user_id' ";
+			if( !($result = $db->sql_query($sql)) )
+				message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
 
-	//Get items
-	else if ( $what_event == '7' && $event_7 == '1' )
-	{
-		// Make the new id for the item
-		$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE . "
-			WHERE item_owner_id = '$user_id'
-			ORDER BY 'item_id' DESC 
-			LIMIT 1";
-		$result = $db->sql_query($sql);
-		if( !$result )
-			message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+			$message = '<img src="adr/images/zones/weakness.gif"><br \><br \>' . $lang['Adr_zone_event_weakness'] . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
+			message_die(GENERAL_ERROR, $message , Zones , '' );
+			break;
+		}
 
-		$data = $db->sql_fetchrow($result);
-		$new_item_id = $data['item_id'] + 1 ;
+		//Get items
+		else if ( $what_event == '7' && $event_7 == '1' )
+		{
+			// Make the new id for the item
+			$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE . "
+				WHERE item_owner_id = '$user_id'
+				ORDER BY 'item_id' DESC 
+				LIMIT 1";
+			$result = $db->sql_query($sql);
+			if( !$result )
+				message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
 
-		//Select zone specific items
-		$sql = " SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . " 
-			WHERE item_owner_id = '1'
-			AND ( item_zone = '$area_id' || item_zone = '0' )
-			ORDER BY rand() LIMIT 1 ";
-		if( !($result = $db->sql_query($sql)) )
-			message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
+			$data = $db->sql_fetchrow($result);
+			$new_item_id = $data['item_id'] + 1 ;
 
-		$new_item				= $db->sql_fetchrow($result);
-		$item_type_use 			= $new_item['item_type_use'];
-		$item_name 				= trim(rtrim(addslashes(stripslashes($new_item['item_name']))));
-		$item_desc 				= trim(rtrim(addslashes(stripslashes($new_item['item_desc']))));
-		$item_icon 				= trim(rtrim($new_item['item_icon']));
-		$item_price				= $new_item['item_price'];
-		$item_quality 			= $new_item['item_quality'];
-		$item_duration 			= $new_item['item_duration'];
-		$item_duration_max 		= $new_item['item_duration_max'];
-		$item_power 			= $new_item['item_power'];
-		$item_add_power 			= $new_item['item_add_power'];
-		$item_mp_use 			= $new_item['item_mp_use'];
-		$item_element 			= $new_item['item_element'];
-		$item_element_str_dmg 		= $new_item['item_element_str_dmg'];
-		$item_element_same_dmg 		= $new_item['item_element_same_dmg'];
-		$item_element_weak_dmg 		= $new_item['item_element_weak_dmg'];
-		$item_weight 			= $new_item['item_weight'];
-		$item_max_skill 			= $new_item['item_max_skill'];
-		$item_sell_back_percentage 	= $new_item['item_sell_back_percentage'];
+			//Select zone specific items
+			$sql = " SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . " 
+				WHERE item_owner_id = '1'
+				AND ( item_zone = '$area_id' || item_zone = '0' )
+				ORDER BY rand() LIMIT 1 ";
+			if( !($result = $db->sql_query($sql)) )
+				message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
 
-		if ( $item_duration_max < $item_duration ) $item_duration_max = $item_duration;
+			$new_item				= $db->sql_fetchrow($result);
+			$item_type_use 			= $new_item['item_type_use'];
+			$item_name 				= trim(rtrim(addslashes(stripslashes($new_item['item_name']))));
+			$item_desc 				= trim(rtrim(addslashes(stripslashes($new_item['item_desc']))));
+			$item_icon 				= trim(rtrim($new_item['item_icon']));
+			$item_price				= $new_item['item_price'];
+			$item_quality 			= $new_item['item_quality'];
+			$item_duration 			= $new_item['item_duration'];
+			$item_duration_max 		= $new_item['item_duration_max'];
+			$item_power 			= $new_item['item_power'];
+			$item_add_power 			= $new_item['item_add_power'];
+			$item_mp_use 			= $new_item['item_mp_use'];
+			$item_element 			= $new_item['item_element'];
+			$item_element_str_dmg 		= $new_item['item_element_str_dmg'];
+			$item_element_same_dmg 		= $new_item['item_element_same_dmg'];
+			$item_element_weak_dmg 		= $new_item['item_element_weak_dmg'];
+			$item_weight 			= $new_item['item_weight'];
+			$item_max_skill 			= $new_item['item_max_skill'];
+			$item_sell_back_percentage 	= $new_item['item_sell_back_percentage'];
 
-		$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . "
-			( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , item_duration , item_duration_max , item_power , item_add_power , item_mp_use , item_weight , item_auth , item_element , item_element_str_dmg , item_element_same_dmg , item_element_weak_dmg , item_max_skill , item_sell_back_percentage )
-			VALUES ( '$new_item_id' , '$user_id' , '$item_type_use' , '$item_name' , '$item_desc' , '" . str_replace("\'", "''", $item_icon) . "' , '$item_price' , '$item_quality' , '$item_duration' , '$item_duration_max' , '$item_power' , '$item_add_power' , '$item_mp_use' , '$item_weight' , '0' , '$item_element' , '$item_element_str_dmg' , '$item_element_same_dmg' , '$item_element_weak_dmg' , '$item_max_skill' , '$item_sell_back_percentage' )";
-		$result = $db->sql_query($sql);
-		if( !$result )
-			message_die(GENERAL_ERROR, "Couldn't insert new item", "", __LINE__, __FILE__, $sql);
+			if ( $item_duration_max < $item_duration ) $item_duration_max = $item_duration;
 
-		$message = '<img src="adr/images/zones/get_item.gif"><br \><br \>' . $lang['Adr_zone_event_item'] . '<br \><br \><b>' . $item_name . '</b><br \><br \><img src="adr/images/items/' . $item_icon . '"><br \><br \>' . $item_desc . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-		message_die(GENERAL_ERROR, $message , Zones , '' );
-		break;
-	}
+			$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . "
+				( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , item_duration , item_duration_max , item_power , item_add_power , item_mp_use , item_weight , item_auth , item_element , item_element_str_dmg , item_element_same_dmg , item_element_weak_dmg , item_max_skill , item_sell_back_percentage )
+				VALUES ( '$new_item_id' , '$user_id' , '$item_type_use' , '$item_name' , '$item_desc' , '" . str_replace("\'", "''", $item_icon) . "' , '$item_price' , '$item_quality' , '$item_duration' , '$item_duration_max' , '$item_power' , '$item_add_power' , '$item_mp_use' , '$item_weight' , '0' , '$item_element' , '$item_element_str_dmg' , '$item_element_same_dmg' , '$item_element_weak_dmg' , '$item_max_skill' , '$item_sell_back_percentage' )";
+			$result = $db->sql_query($sql);
+			if( !$result )
+				message_die(GENERAL_ERROR, "Couldn't insert new item", "", __LINE__, __FILE__, $sql);
 
-	//Ambush
-	else if ( $what_event == '8' && $event_8 == '1' )
-	{
-		//Define money value
-		$loss = rand( $zone_pointloss1 , $zone_pointloss2 );
+			$message = '<img src="adr/images/zones/get_item.gif"><br \><br \>' . $lang['Adr_zone_event_item'] . '<br \><br \><b>' . $item_name . '</b><br \><br \><img src="adr/images/items/' . $item_icon . '"><br \><br \>' . $item_desc . '<br \><br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
+			message_die(GENERAL_ERROR, $message , Zones , '' );
+			break;
+		}
 
-		if ( $loss > $userdata['user_points'] ) $loss =  $userdata['user_points'];
+		//Ambush
+		else if ( $what_event == '8' && $event_8 == '1' )
+		{
+			//Define money value
+			$loss = rand( $zone_pointloss1 , $zone_pointloss2 );
 
-		adr_substract_points( $user_id , $loss , adr_zones , '' );
+			if ( $loss > $userdata['user_points'] ) $loss =  $userdata['user_points'];
 
-		$message = '<img src="adr/images/zones/ambush.gif"><br \><br \>' . $lang['Adr_zone_event_ambush'] . ' ' . $loss . ' ' . $board_config['points_name'] . '<br \><br \>' . $lang['Adr_zone_event_battle'] . '<br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
-		message_die(GENERAL_ERROR, $message , Zones , '' );
-		break;
+			adr_substract_points( $user_id , $loss , adr_zones , '' );
+
+			$message = '<img src="adr/images/zones/ambush.gif"><br \><br \>' . $lang['Adr_zone_event_ambush'] . ' ' . $loss . ' ' . $board_config['points_name'] . '<br \><br \>' . $lang['Adr_zone_event_battle'] . '<br \>' . $lang['Adr_zone_event_return'] . '<br \><br \>';
+			message_die(GENERAL_ERROR, $message , Zones , '' );
+			break;
+		}
 	}
 }
-
 //
 // END of Zones Events
 //

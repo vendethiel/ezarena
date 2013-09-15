@@ -30,8 +30,8 @@
 		<td class="row1" align="center" ><span class="gen">{ZONE_ITEM}</span></td>
 	</tr>
 	<tr>
-		<td class="row1"><b>{L_ZONE_LEVEL}</b></td>
-		<td class="row1" align="center"><input type="text" class="post" name="zone_level" value="{ZONE_LEVEL}" size="6" maxlength="255" /></td>
+		<td class="row2"><b>{L_ZONE_LEVEL}</b></td>
+		<td class="row2" align="center"><input type="text" class="post" name="zone_level" value="{ZONE_LEVEL}" size="6" maxlength="255" /></td>
 	</tr>
 </table>
 

@@ -84,6 +84,7 @@ if( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'left' )
 
 	$template->assign_vars(array(
 		"U_FORUM_INDEX" => append_sid("../index.$phpEx"),
+		"U_RPG" => append_sid("../adr_zones.$phpEx"),
 		"U_ADMIN_INDEX" => append_sid("index.$phpEx?pane=right"),
 //+MOD: DHTML Menu for ACP
 		'COOKIE_NAME'	=> $board_config['cookie_name'],
@@ -824,7 +825,7 @@ MOD-*/
 	
 MOD-*/
 //-- add
-	$version_info = sprintf($lang['click_check_versions'], '<a href="' . $get->url('admin/admin_versions', '', true) . '">', '</a>');
+	$version_info = sprintf($lang['click_check_versions'], '<a href="' . $get->url('admin_versions', '', true) . '">', '</a>');
 //-- fin mod : rank color system -----------------------------------------------
 	$template->assign_vars(array(
 		'VERSION_INFO'	=> $version_info,

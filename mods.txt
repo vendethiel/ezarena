@@ -456,8 +456,9 @@ Ajoute un système de cuisine au mod Crafting.
 # ADR : Dynamic Town Maps for Zone 0.1.4 - Ozzie
 Permet de créer (et de modifier) dynamiquement des cartes
 Addons :
- - Addon pour Town Environment Enhanced into Zone Mod - Infomrpro
+ - Addon pour Town Environment Enhanced into Zone Mod - Informpro
  - Addon pour Enchant&Mine Links in header - Informpro
+ - Addon pour Level Required Zone - Informpro
  - Addon Assisted Cell Selection - Informpro
 
 # ADR : Items no sell 0.0.2 - Makien
