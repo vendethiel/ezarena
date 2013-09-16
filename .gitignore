@@ -2,4 +2,5 @@ config.php
 todo.txt
 todo_later.txt
 cache/*.php
-areabb/cache/squelette_*
+adr/cache/*.php
+areabb/cache/*.*
