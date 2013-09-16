@@ -3,4 +3,4 @@ todo.txt
 todo_later.txt
 cache/*.php
 adr/cache/*.php
-areabb/cache/*.*
+areabb/cache/*.{tpl,php}
