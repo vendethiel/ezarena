@@ -38,7 +38,7 @@ if ( ( time() - $board_config['adr_time_last_time'] ) > $board_config['adr_time'
 
 if ( $board_config['rabbitoshi_enable_cron'] && ( ( time() - $board_config['rabbitoshi_cron_last_time'] ) > $board_config['rabbitoshi_cron_time'] )) 
 { 
-   include_once($php_root_path . 'includes/functions_rabbitoshi_cron.'.$phpEx); 
+   include_once($php_root_path . 'rabbitoshi/includes/functions_rabbitoshi_cron.'.$phpEx); 
 } 
 // END RPG
 
