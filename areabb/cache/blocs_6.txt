@@ -1,0 +1,1 @@
+classvictoire|games|fiche_jeux|classement_jeu|podium_jeu
