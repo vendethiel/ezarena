@@ -2,6 +2,7 @@ config.php
 todo.txt
 todo_later.txt
 cache/*.php
+cache/*.phps
 adr/cache/*.php
 
 # REALLY?
