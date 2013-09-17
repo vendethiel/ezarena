@@ -33,6 +33,11 @@ include($phpbb_root_path . 'adr/includes/adr_global.'.$phpEx);
 $loc = 'town';
 $sub_loc = 'adr_TownMap_Clan';
 
+// V: note that this page is unused because
+// there's nothing in the FAQ about clans (which is the only reason this page
+//  with its 2 links is here)
+exit('PAGE CURRENTLY UNUSED. Move along ...');
+
 //
 // Start session management
 $userdata = session_pagestart($user_ip, PAGE_ADR); 
@@ -114,7 +119,7 @@ else
 		'U_TOWNBOUTONRETOUR' => append_sid("adr_zones.$phpEx"),
 		'U_TOWNMAP_CLAN' => append_sid("adr_TownMap_Clan.$phpEx"),
 		// 'U_CLAN' => append_sid("adr_clans.$phpEx"),
-		'U_CLAN' => append_sid("adr_guilds.$phpEx"),
+		'U_CLAN' => append_sid("adr_clans.$phpEx"),
 		'U_FAQ' => append_sid("adr_character_faq.$phpEx"),
 		'U_TOWNMAPCOPYRIGHT' => append_sid("TownMap_Copyright.$phpEx"),
 		'S_CHARACTER_ACTION' => append_sid("adr_TownMap_Clan.$phpEx"),

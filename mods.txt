@@ -447,18 +447,23 @@ Ajoute un système avancé de forge au mod Crafting.
 # ADR : Brewing 0.5.3 - Himmelweiss
 Ajoute un système de fabrication de brevages à ADR. (ressemble à l'alchimie, mais est bien plus évolué)
 
-# ADR : Crafting 0.5.3 - Himmelweiss
+# ADR : (Brewing) Crafting 0.5.3 - Himmelweiss
 Transforme le Mod Brewing en système de crafting avancé, permet de créer des objets de tout type.
 
-# ADR : Cooking 0.3.5 - Himmelweiss
+# ADR : (Brewing+Crafting) Cooking 0.3.5 - Himmelweiss
 Ajoute un système de cuisine au mod Crafting.
+
+# ADR : Clans Mod
+Ajoute un système de clans avancé.
+(note : sert de remplacement au mod "Guild Alliances")
+Addons :
+ - Addon Clan Restriction for Party Mod - Informpro
 
 # ADR : Dynamic Town Maps for Zone 0.1.4 - Ozzie
 Permet de créer (et de modifier) dynamiquement des cartes
 Addons :
  - Addon pour Town Environment Enhanced into Zone Mod - Informpro
  - Addon pour Enchant&Mine Links in header - Informpro
- - Addon pour Level Required Zone - Informpro
  - Addon Assisted Cell Selection - Informpro
 
 # ADR : Items no sell 0.0.2 - Makien
@@ -468,6 +473,7 @@ Permet de rendre des objets non vendables (objets rares, par exemple).
 Permet de limiter l'accès à une zone pour les personnes d'un certain niveau
 Addons :
  - Addon pour NSEW Navigation - Informpro
+ - Addon pour Dynamic Town Maps - Informpro
 
 # ADR : Monster Abilities 0.4.2 - egdcltd
 Permet aux monstres de draîner, voire transférer, de la vie / du mana chaque tour.
@@ -505,7 +511,7 @@ Ajoute pêche, l'Herboristerie, bûcheronnage, chasse, alchemie et le métier de
 
 # ADR : Town Environment Enhanced into Zone Mod - Informpro
 Intègre le mod Town Environment dans le Zone mod, et modifie l'interface de la page des zones pour retirer les informations inutiles et libérer de l'espace (remplace la map du Zone Mod par celles du Town Env tout en gérant les bâtiments inaccessibles, modifie les pages du Town Env pour utiliser les saisons du Zone Mod).
-Intègre aussi différents mods ensemble (comme le quest book) et fixe certaines parties manquantes du Town Env (page des clans remplacé par une page des guildes).
+Intègre aussi différents mods ensemble (comme le quest book).
 
 # ADR : Weapon Proficiency 1.0.0-beta3 - Dyrwnyn
 Ajoute les maitrises d'armes : plus vous utiliser un type d'arme, plus vous ferez de dégâts avec.
@@ -527,10 +533,6 @@ Ajoute un système de Temple et de Lac auxquels vous pouvez faire des offrandes.
 
 # ADR (ST) : Graphical Battles 0.1.5 - Seteo-Bloke
 Permet d'ajouter des meilleurs graphismes aux combats.
-
-# ADR (ST) : Guild Alliances 0.0.5 - Seteo-Bloke
-Permet de faire des alliances
-(mis à jour depuis la version 0.0.3 de la prémode ADR. La version 0.0.4 n'est *PAS* installée).
 
 # ADR (ST) : Jobs 0.2.0 - Seteo-Bloke
 Ajoute un système complet de métiers à ADR.
@@ -588,11 +590,14 @@ Addons :
 # Group ModeratorZ 1.0.2 - Ptirhiik
 Ajoute la notion de "possesseur de groupe" (choisi depuis l'ACP) et permet d'avoir plusieurs modérateurs pour chaque groupe, permettant de faciliter la gestion de ceux-ci.
 
+# Installation with transactions - Informpro
+Ajoute des transactions à l'installation (change aussi le time limit et ajoute des infos de debug si une requête échoue).
+
 # Instant Post Redirect - afterlife_69
 Redirige automatiquement après un envoi de message/mp/édition/etc
 
-# JS Reducer for Recent Topics & Shoutbox 0.0.1 - Informpro
-Ajoute un bouton pour dé/re plier les blocs "sujets récents" et "shoutbox"
+# JS Reducer for Recent Topics & Shoutbox 0.0.2 - Informpro
+Ajoute un bouton pour dé/re plier les blocs "sujets récents" et "shoutbox" (avec un cookie).
 
 # Mini Profile 2.3.2 - crewstyle
 Ajoute un bouton pour avoir un aperçu du profil de l'utilisateur
@@ -602,12 +607,13 @@ Addons :
  - Addon pour Birthday Event - Informpro
  - Addon pour Gender - crewstyle
 
-# phpBB Optimized 0.3.0 - Informpro
+# phpBB Optimized 0.4.0 - Informpro
 Ajoute de nombreuses optimisations à phpBB :
  - Caching sur beaucoup de requêtes
  - Changement de phpbb_realpath() pour utiliser realpath()
  - Caching des infos ADR
  - Suppression de la requête SQL de dss_rand()
+ - ... ainsi que d'autres optimisations ici et là ...
 
 # Quick Title Edit 1.6.1 - Xavier Olive, ABDev, PastisD
 Addons :

@@ -1122,9 +1122,6 @@ if ( $turn_check && ( $attack || ($spell2 && intval($HTTP_POST_VARS['item_spell2
                 $reward = floor( ( ( $opponent_level - $current_level ) * $adr_general['pvp_base_reward_modifier'] ) / 100 );
         }
 
-        //Guild Experience
-        $guild_exp = rand($adr_general['battle_guild_exp_min'], $adr_general['battle_guild_exp_max']);
-
         // Write the result in the db
         if ( $user_id == $battle_pvp['battle_challenger_id'] )
         {
@@ -1134,7 +1131,7 @@ if ( $turn_check && ( $attack || ($spell2 && intval($HTTP_POST_VARS['item_spell2
             AND battle_result = 3 ";
             if( !($result = $db->sql_query($sql)) )
             {
-                    message_die(GENERAL_ERROR, 'Could not update battle list', '', __LINE__, __FILE__, $sql);
+                message_die(GENERAL_ERROR, 'Could not update battle list', '', __LINE__, __FILE__, $sql);
             }
         }
         else
@@ -1145,7 +1142,7 @@ if ( $turn_check && ( $attack || ($spell2 && intval($HTTP_POST_VARS['item_spell2
             AND battle_result = 3 ";
             if( !($result = $db->sql_query($sql)) )
             {
-                    message_die(GENERAL_ERROR, 'Could not update battle list', '', __LINE__, __FILE__, $sql);
+                message_die(GENERAL_ERROR, 'Could not update battle list', '', __LINE__, __FILE__, $sql);
             }
         }
 

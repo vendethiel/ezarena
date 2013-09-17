@@ -256,9 +256,6 @@ if ( defined ( 'IN_ADR_CHARACTER' ))
    $lang['Adr_level_up_select']='Sélectionnez la caractéristique que vous souhaitez augmenter';
    $lang['Adr_level_up_perform']='Monter de niveau';
    $lang['Adr_level_up_congrats']='Félicitations ! Vous êtes maintenant de niveau %s !%s<br/>';
-   $lang['Adr_town_guilds_closed']='Le hall de guilde est actuelement fermé. <br /> Revenez plus tard';
-   $lang['Adr_character_guilds_delete_title']='Erreur de suppression de personnage';
-   $lang['Adr_character_guilds_delete']='Vous ne pouvez pas supprimer votr perssonnage tant qu\'il est associer a une Guilde.<br /><br />Quittez votre guilde et réessayé.';
 
    // Character creation
    $lang['Adr_races_bonus_might']='Bonus de force';
@@ -321,7 +318,7 @@ if ( defined ( 'IN_ADR_CHARACTER' ))
    $lang['Adr_character_delete_confirm']='Voulez-vous vraiment supprimer définitivement votre personnage actuel ?';
    $lang['Adr_no_access']='L\'accès à cette page est confidentiel';
    $lang['Adr_character_successful_deleted']='Votre personnage a été effacé';
-   $lang['Adr_character_active_loan']='Vous ne pouvez pas supprimer un personnage avec une detteavec la banque ou un membre d\'une guilde';
+   $lang['Adr_character_active_loan']='Vous ne pouvez pas supprimer un personnage avec une dette envers la banque';
    $lang['Adr_character_edit']='Mettre à jour votre biographie';
    $lang['Adr_character_bio_updated']='Votre biographie a été mise à jour avec succès';
 
@@ -1499,18 +1496,6 @@ if ( defined('IN_ADR_CHEAT'))
 }
 $lang['Adr_zone_no_monsters']='Tout est calme par ici ... Il n\'y a pas de monstre !';
 
-// that's how ezArena does it ...
-$lang['BUILDING_UNAV'] = 'Bâtiment indisponible';
-$lang['ADR_DUEL_LIST'] = 'Cliquez sur l\'image pour accéder à vos duels';
-$lang['NO_ZONE_AVAILABLE'] = 'Il n\'existe pas de zone, ou aucune pour votre niveau. Veuillez contacter l\'administrateur du forum';
-$lang['ADR_MOVED_BACK_TO_SAFE_ZONE'] = 'Suites à de mystérieuses circonstances, vous vous réveillez en zone sûre ...';
-$lang['ADR_CAULDRON_EXPLAIN'] = 'Bienvenue au Chaudron Magique.<br/>Ici, vous pouvez combiner des objets pour obtenir un autre objet encore plus puissant.<br/><br/>Attention ! Toutes les combinaisons ne marchent pas, et l\'ordre est important !';
-$lang['ADR_RECIPES_LIST'] = 'Cliquez sur l\'image pour pour voir les recettes que vous connaissez';
-$lang['ADR_ITEM_LOOTTABLES_EXPLAIN'] = 'Choisissez à quelles tables de butin cet objet appartient';
-$lang['ADR_SPELL_LIST'] = 'Cliquez sur l\'image pour accéder à la liste des sorts que vous connaissez';
-//'Welcome to the Alchemy Lab. Here you can combine some items to get another powerfull item. Warning ! The order of the items you put into the cauldron is important! You have to search and find good combinations.';
-// END ezArena
-
 if ( defined ('IN_ADR_QUESTBOOK'))
 {
    //Links
@@ -1853,3 +1838,18 @@ $lang['Adr_inventory_items_shop_fail_selled']='Vous ne pouvez pas ajouter cet ob
 $lang['Adr_items_sellable']='Objet vendable :';
 $lang['Adr_items_sellable_yes']='Oui';
 $lang['Adr_items_sellable_no']='Non';
+
+// that's how ezArena does it ...
+$lang['BUILDING_UNAV'] = 'Bâtiment indisponible';
+$lang['ADR_DUEL_LIST'] = 'Cliquez sur l\'image pour accéder à vos duels';
+$lang['NO_ZONE_AVAILABLE'] = 'Il n\'existe pas de zone, ou aucune pour votre niveau. Veuillez contacter l\'administrateur du forum';
+$lang['ADR_MOVED_BACK_TO_SAFE_ZONE'] = 'Suites à de mystérieuses circonstances, vous vous réveillez en zone sûre ...';
+$lang['ADR_CAULDRON_EXPLAIN'] = 'Bienvenue au Chaudron Magique.<br/>Ici, vous pouvez combiner des objets pour obtenir un autre objet encore plus puissant.<br/><br/>Attention ! Toutes les combinaisons ne marchent pas, et l\'ordre est important !';
+$lang['ADR_RECIPES_LIST'] = 'Cliquez sur l\'image pour pour voir les recettes que vous connaissez';
+$lang['ADR_ITEM_LOOTTABLES_EXPLAIN'] = 'Choisissez à quelles tables de butin cet objet appartient';
+$lang['ADR_SPELL_LIST'] = 'Cliquez sur l\'image pour accéder à la liste des sorts que vous connaissez';
+//'Welcome to the Alchemy Lab. Here you can combine some items to get another powerfull item. Warning ! The order of the items you put into the cauldron is important! You have to search and find good combinations.';
+// clan mod to party mod
+$lang['Adr_Must_be_in_clan_to_party'] = 'Vous devez faire parti d\'un clan pour rejoindre un groupe !';
+$lang['Adr_party_invite_only_clan'] = 'Vous ne pouvez inviter dans votre groupe que des gens du même clan que vous';
+$lang['Adr_clan_cant_leave_party'] = 'Vous ne pouvez pas quitter votre clan tant que vous êtes dans un groupe';

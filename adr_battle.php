@@ -2468,8 +2468,6 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 			{
 				$exp = floor((($monster['monster_level'] - $challenger['character_level']) * $adr_general['battle_base_exp_modifier']) / 100);
 			} //($monster['monster_level'] - $challenger['character_level']) > 1
-			//Guild Experience
-			$guild_exp = rand($adr_general['battle_guild_exp_min'], $adr_general['battle_guild_exp_max']);
 			
 			// Share EXP
 			$exp2 = round($exp / 10);
@@ -2543,15 +2541,6 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 			if (!($result = $db->sql_query($sql)))
 			{
 				message_die(GENERAL_ERROR, 'Could not update stolen item status', '', __LINE__, __FILE__, $sql);
-			} //!($result = $db->sql_query($sql))
-			
-			//Update the Guilds Experience
-			$sql = " UPDATE  " . ADR_GUILDS_TABLE . " 
-			SET guild_exp = guild_exp + $guild_exp
-			WHERE guild_id = '" . $challenger['character_guild_id'] . "' ";
-			if (!($result = $db->sql_query($sql)))
-			{
-				message_die(GENERAL_ERROR, 'Could not update guild', '', __LINE__, __FILE__, $sql);
 			} //!($result = $db->sql_query($sql))
 			
 			// Delete broken items from users inventory

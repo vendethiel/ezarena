@@ -4,6 +4,8 @@
 # $Id: mysql_schema.sql,v 1.35.2.12 2006/02/06 21:32:42 grahamje Exp $
 #
 
+START TRANSACTION;
+
 # --------------------------------------------------------
 #
 # Table structure for table 'phpbb_announcement_centre'
@@ -918,6 +920,17 @@ CREATE TABLE phpbb_users (
    user_use_rel_date TINYINT(1) UNSIGNED DEFAULT '1' NOT NULL,
    user_use_rel_time TINYINT(1) UNSIGNED DEFAULT '0' NOT NULL,
    user_unread_topics TEXT,
+
+   # ADR 0.4.4
+   user_adr_ban tinyint(1) default '0' NOT NULL,
+   user_cell_time INT(11) DEFAULT '0' NOT NULL,
+   user_cell_time_judgement INT(11) DEFAULT '0' NOT NULL,
+   user_cell_caution INT(8) DEFAULT '0' NOT NULL,
+   user_cell_sentence TEXT DEFAULT '',
+   user_cell_enable_caution INT(8) DEFAULT '0' NOT NULL,
+   user_cell_enable_free INT(8) DEFAULT '0' NOT NULL,
+   user_cell_celleds INT(8) DEFAULT '0' NOT NULL,
+   user_cell_punishment TINYINT(1) DEFAULT '0' NOT NULL,
    PRIMARY KEY (user_id),
    INDEX user_birthday (user_birthday),
    KEY user_session_time (user_session_time)
@@ -1211,6 +1224,18 @@ CREATE TABLE phpbb_adr_battle_monsters (
   monster_message_enable int(1) NOT NULL default '0',
   monster_message varchar(255) NOT NULL default '',
   monster_area_name varchar(255) NOT NULL default '0',
+
+
+  # ADR - Advanced Night & Day
+  monster_time int(8) UNSIGNED NOT NULL DEFAULT '0',
+
+  # ADR - Monster Abilities
+  monster_base_mp_drain int(8) UNSIGNED NOT NULL default '0',
+  monster_base_mp_transfer int(8) UNSIGNED NOT NULL default '0',
+  monster_base_hp_drain int(8) UNSIGNED NOT NULL default '0',
+  monster_base_hp_transfer int(8) UNSIGNED NOT NULL default '0',
+  monster_regeneration int(8) UNSIGNED NOT NULL default '0',
+  monster_mp_regeneration int(8) UNSIGNED NOT NULL default '0',
   PRIMARY KEY  (monster_id)
 ) ;
 
@@ -1362,12 +1387,6 @@ CREATE TABLE phpbb_adr_characters (
   character_job_times_employed smallint(5) NOT NULL default '0',
   character_job_completed int(8) NOT NULL default '0',
   character_job_incomplete int(8) NOT NULL default '0',
-  character_guild_id int(5) NOT NULL default '0',
-  character_guild_auth_id tinyint(1) NOT NULL default '0',
-  character_guild_approval int(8) NOT NULL default '0',
-  character_guild_hops int(5) NOT NULL default '0',
-  character_guild_join_date int(12) NOT NULL default '0',
-  character_guild_prefs_notify tinyint(1) NOT NULL default '1',
   character_job_end int(12) NOT NULL default '0',
   character_job_last_paid int(12) NOT NULL default '0',
   character_event_limit int(3) NOT NULL default '30',
@@ -1375,6 +1394,83 @@ CREATE TABLE phpbb_adr_characters (
   character_karma_bad int(10) NOT NULL default '0',
   character_area int(8) NOT NULL default '1',
   character_weather int(8) NOT NULL default '1',
+
+
+  # ADR 0.4.2
+  character_victories_pvp int(8) NOT NULL default '0',
+  character_defeats_pvp int(8) NOT NULL default '0',
+  character_flees_pvp int(8) NOT NULL default '0',
+  character_fp int(12) NOT NULL default '0',
+
+  # ADR - Weapon proficiency
+  character_skill_sword_level int(8) UNSIGNED NOT NULL default '1',
+  character_skill_dirk_level int(8) UNSIGNED NOT NULL default '1',
+  character_skill_ranged_level int(8) UNSIGNED NOT NULL default '1',
+  character_skill_magic_level int(8) UNSIGNED NOT NULL default '1',
+  character_skill_mace_level int(8) UNSIGNED NOT NULL default '1',
+  character_skill_fist_level int(8) UNSIGNED NOT NULL default '1',
+  character_skill_staff_level int(8) UNSIGNED NOT NULL default '1',
+  character_skill_axe_level int(8) UNSIGNED NOT NULL default '1',
+  character_skill_spear_level int(8) UNSIGNED NOT NULL default '1',
+  character_skill_sword_uses int(8) UNSIGNED NOT NULL default '0',
+  character_skill_dirk_uses int(8) UNSIGNED NOT NULL default '0',
+  character_skill_ranged_uses int(8) UNSIGNED NOT NULL default '0',
+  character_skill_mace_uses int(8) UNSIGNED NOT NULL default '0',
+  character_skill_fist_uses int(8) UNSIGNED NOT NULL default '0',
+  character_skill_staff_uses int(8) UNSIGNED NOT NULL default '0',
+  character_skill_axe_uses int(8) UNSIGNED NOT NULL default '0',
+  character_skill_spear_uses int(8) UNSIGNED NOT NULL default '0',
+  character_skill_magic_uses int(8) UNSIGNED NOT NULL default '0',
+
+  # ADR - ditto for spell
+  character_skill_defmagic_level int(8) UNSIGNED NOT NULL default '1',
+  character_skill_offmagic_level int(8) UNSIGNED NOT NULL default '1',
+  character_skill_defmagic_uses int(8) UNSIGNED NOT NULL default '0',
+  character_skill_offmagic_uses int(8) UNSIGNED NOT NULL default '0',
+
+  # brewing
+  `character_skill_brewing_uses` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ,
+  `character_skill_brewing` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ,
+  `character_pre_effects` TEXT DEFAULT '' NULL,
+
+  # cooking
+  `character_skill_cooking_uses` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ,
+  `character_skill_cooking` INT( 8 ) UNSIGNED DEFAULT '1' NOT NULL ,
+  # blacksmithing
+  `character_skill_blacksmithing_uses` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ,
+  `character_skill_blacksmithing` INT( 8 ) UNSIGNED DEFAULT '1' NOT NULL ,
+
+  # Advanced spell ->0.4.10
+  `character_spell_pre_effects` varchar(255) NOT NULL DEFAULT '',
+
+  # ADR - Party
+  character_party int(8) NOT NULL default'0',
+  character_leader int(1) NOT NULL default'0',
+  character_invites VARCHAR(255) NOT NULL,
+
+  # ADR 0.4.3
+  prefs_tax_pm_notify TINYINT(1) NOT NULL default '1',
+
+  # ADR - Advanced NPC System
+  `character_npc_check` TEXT NOT NULL,
+
+  # ADR - Advanced NPC System Expansion
+  `character_npc_visited` TEXT NOT NULL,
+
+  # ADR - Skills
+  `character_skill_alchemy_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
+  `character_skill_alchemy` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
+  `character_skill_fishing_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
+  `character_skill_fishing` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
+  `character_skill_herbalism_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
+  `character_skill_herbalism` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
+  `character_skill_lumberjack_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
+  `character_skill_lumberjack` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
+  `character_skill_tailoring_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
+  `character_skill_tailoring` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
+  `character_skill_hunting_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
+  `character_skill_hunting` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
+
   PRIMARY KEY  (character_id)
 ) ;
 
@@ -1435,6 +1531,19 @@ CREATE TABLE phpbb_adr_elements (
   element_oppose_same_dmg int(3) NOT NULL default '100',
   element_oppose_weak int(3) NOT NULL default '0',
   element_oppose_weak_dmg int(3) NOT NULL default '100',
+
+
+  # ADR - Cooking
+  `element_skill_cooking_bonus` INT( 8 ) DEFAULT '0' NOT NULL,
+
+  # ADR - Blacksmithing
+  `element_skill_blacksmithing_bonus` INT( 8 ) DEFAULT '0' NOT NULL,
+  `element_skill_hunting_bonus` INT( 8 ) DEFAULT '1' NOT NULL,
+  `element_skill_alchemy_bonus` INT( 8 ) DEFAULT '1' NOT NULL,
+  `element_skill_fishing_bonus` INT( 8 ) DEFAULT '1' NOT NULL,
+  `element_skill_herbalism_bonus` INT( 8 ) DEFAULT '1' NOT NULL,
+  `element_skill_lumberjack_bonus` INT( 8 ) DEFAULT '1' NOT NULL,
+  `element_skill_tailoring_bonus` INT( 8 ) DEFAULT '1' NOT NULL,
   PRIMARY KEY  (element_id)
 ) ;
 
@@ -1442,38 +1551,6 @@ CREATE TABLE phpbb_adr_general (
   config_name varchar(255) NOT NULL default '0',
   config_value int(15) NOT NULL default '0',
   PRIMARY KEY  (config_name)
-) ;
-
-CREATE TABLE phpbb_adr_guilds (
-  guild_id int(5) NOT NULL auto_increment,
-  guild_name varchar(32) NOT NULL default '',
-  guild_leader varchar(32) NOT NULL default '',
-  guild_leader_id int(5) NOT NULL default '0',
-  guild_date_created int(12) NOT NULL default '0',
-  guild_description varchar(100) NOT NULL default '',
-  guild_history mediumtext NOT NULL,
-  guild_logo varchar(255) NOT NULL default '',
-  guild_level int(5) NOT NULL default '1',
-  guild_exp int(10) NOT NULL default '0',
-  guild_exp_max int(10) NOT NULL default '1000',
-  guild_vault int(12) NOT NULL default '0',
-  guild_accept_new tinyint(1) NOT NULL default '0',
-  guild_approve tinyint(1) NOT NULL default '1',
-  guild_join_min_level int(5) NOT NULL default '1',
-  guild_join_min_money int(8) NOT NULL default '0',
-  guild_rank_leader varchar(25) NOT NULL default 'Guild Leader',
-  guild_rank_1 varchar(25) NOT NULL default 'Guild Co-Leader',
-  guild_rank_1_id int(5) NOT NULL default '0',
-  guild_rank_2 varchar(25) NOT NULL default 'Guild Co-Leader',
-  guild_rank_2_id int(5) NOT NULL default '0',
-  guild_rank_3 varchar(25) NOT NULL default 'Guild Rank 3',
-  guild_rank_3_id int(5) NOT NULL default '0',
-  guild_rank_4 varchar(25) NOT NULL default 'Guild Rank 4',
-  guild_rank_4_id int(5) NOT NULL default '0',
-  guild_rank_5 varchar(25) NOT NULL default 'Guild Rank 5',
-  guild_rank_5_id int(5) NOT NULL default '0',
-  guild_rank_member varchar(25) NOT NULL default 'Guild Member',
-  PRIMARY KEY  (guild_id)
 ) ;
 
 CREATE TABLE phpbb_adr_jail_users (
@@ -1583,6 +1660,16 @@ CREATE TABLE phpbb_adr_races (
   race_weight_per_level int(3) NOT NULL default '5',
   race_zone_begin int(8) NOT NULL default '1',
   race_zone_name varchar(255) NOT NULL default '',
+
+  # Skills
+  `race_skill_blacksmithing_bonus` INT( 8 ) DEFAULT '0' NOT NULL,
+  `race_skill_cooking_bonus` INT( 8 ) DEFAULT '0' NOT NULL,
+  `race_skill_alchemy_bonus` INT( 8 ) DEFAULT '0' NOT NULL,
+  `race_skill_fishing_bonus` INT( 8 ) DEFAULT '0' NOT NULL,
+  `race_skill_herbalism_bonus` INT( 8 ) DEFAULT '0' NOT NULL,
+  `race_skill_lumberjack_bonus` INT( 8 ) DEFAULT '0' NOT NULL,
+  `race_skill_tailoring_bonus` INT( 8 ) DEFAULT '0' NOT NULL,
+  `race_skill_hunting_bonus` INT( 8 ) DEFAULT '0' NOT NULL,
   PRIMARY KEY  (race_id)
 );
 
@@ -1625,6 +1712,39 @@ CREATE TABLE phpbb_adr_shops_items (
   item_thief_karma_fail int(5) NOT NULL default '0',
   item_zone int(8) NOT NULL default '0',
   item_zone_name varchar(255) NOT NULL default '0',
+
+  # ADR 0.4.4
+  item_restrict_align_enable tinyint(1) NOT NULL default '0',
+  item_restrict_align varchar(255) NOT NULL default '0',
+  item_restrict_class_enable tinyint(1) NOT NULL default '0',
+  item_restrict_class varchar(255) NOT NULL default '0',
+  item_restrict_element_enable tinyint(1) NOT NULL default '0',
+  item_restrict_element varchar(255) NOT NULL default '0',
+  item_restrict_race_enable tinyint(1) NOT NULL default '0',
+  item_restrict_race varchar(255) NOT NULL default '0',
+
+  item_restrict_level int(8) NOT NULL default '0',
+  item_restrict_str int(8) NOT NULL default '0',
+  item_restrict_dex int(8) NOT NULL default '0',
+  item_restrict_int int(8) NOT NULL default '0',
+  item_restrict_wis int(8) NOT NULL default '0',
+  item_restrict_cha int(8) NOT NULL default '0',
+  item_restrict_con int(8) NOT NULL default '0',
+  item_crit_hit smallint(3) NOT NULL default '20',
+  item_crit_hit_mod smallint(3) NOT NULL default '2',
+  item_stolen_timestamp int(12) NOT NULL default '0',
+  item_stolen_by varchar(255) NOT NULL default '',
+  item_donated_timestamp int(12) NOT NULL default '0',
+  item_donated_by varchar(255) NOT NULL default '',
+
+  # Brewing, etc
+  `item_brewing_recipe` INT( 1 ) DEFAULT '0' NOT NULL ,
+  `item_recipe_linked_item` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ,
+  `item_brewing_items_req` TEXT DEFAULT '' NOT NULL ,
+  `item_effect` TEXT DEFAULT '' NOT NULL ,
+  `item_original_recipe_id` INT( 8 ) DEFAULT '0' NOT NULL ,
+  `item_recipe_skill_id` INT( 8 ) DEFAULT '0' NOT NULL ,
+
   KEY item_id (item_id),
   KEY item_owner_id (item_owner_id)
 ) ;
@@ -1798,6 +1918,17 @@ CREATE TABLE phpbb_rabbitoshi_config (
   creature_experience_max int(8) NOT NULL default '100',
   creature_max_attack int(8) NOT NULL default '1',
   creature_max_magicattack int(8) NOT NULL default '1',
+  # pet specific levelup
+  `creature_health_levelup` int(8) NOT NULL DEFAULT '0',
+  `creature_hunger_levelup` int(8) NOT NULL DEFAULT '0',
+  `creature_thirst_levelup` int(8) NOT NULL DEFAULT '0',
+  `creature_hygiene_levelup` int(8) NOT NULL DEFAULT '0',
+  `creature_power_levelup` int(8) NOT NULL DEFAULT '0',
+  `creature_magicpower_levelup` int(8) NOT NULL DEFAULT '0',
+  `creature_armor_levelup` int(8) NOT NULL DEFAULT '0',
+  `creature_attack_levelup` int(8) NOT NULL DEFAULT '0',
+  `creature_magicattack_levelup` int(8) NOT NULL DEFAULT '0',
+  `creature_mp_levelup` int(8) NOT NULL DEFAULT '0',
   PRIMARY KEY  (creature_id)
 ) ;
 
@@ -1878,23 +2009,6 @@ ALTER TABLE phpbb_adr_shops_items ADD item_stolen tinyint(1) NOT NULL default '0
 ALTER TABLE phpbb_adr_shops_items ADD item_steal_dc smallint(3) NOT NULL default '0';
 ALTER TABLE phpbb_adr_shops ADD shop_last_updated int(12) NOT NULL default '0';
 
-
-ALTER TABLE phpbb_users ADD user_adr_ban tinyint(1) default '0' NOT NULL;
-ALTER TABLE phpbb_users ADD user_cell_time INT(11) DEFAULT '0' NOT NULL;
-ALTER TABLE phpbb_users ADD user_cell_time_judgement INT(11) DEFAULT '0' NOT NULL;
-ALTER TABLE phpbb_users ADD user_cell_caution INT(8) DEFAULT '0' NOT NULL;
-ALTER TABLE phpbb_users ADD user_cell_sentence TEXT DEFAULT '';
-ALTER TABLE phpbb_users ADD user_cell_enable_caution INT(8) DEFAULT '0' NOT NULL;
-ALTER TABLE phpbb_users ADD user_cell_enable_free INT(8) DEFAULT '0' NOT NULL;
-ALTER TABLE phpbb_users ADD user_cell_celleds INT(8) DEFAULT '0' NOT NULL;
-ALTER TABLE phpbb_users ADD user_cell_punishment TINYINT(1) DEFAULT '0' NOT NULL;
-
-# ADR 0.4.2
-ALTER TABLE phpbb_adr_characters ADD character_victories_pvp int(8) NOT NULL default '0';
-ALTER TABLE phpbb_adr_characters ADD character_defeats_pvp int(8) NOT NULL default '0';
-ALTER TABLE phpbb_adr_characters ADD character_flees_pvp int(8) NOT NULL default '0';
-ALTER TABLE phpbb_adr_characters ADD character_fp int(12) NOT NULL default '0';
-
 ALTER TABLE phpbb_adr_shops_items CHANGE `item_stolen` `item_stolen_id` INT(12) DEFAULT '0' NOT NULL;
 ALTER TABLE phpbb_adr_shops_items CHANGE `item_steal_dc` `item_steal_dc` TINYINT(2) DEFAULT '2' NOT NULL;
 ALTER TABLE phpbb_adr_shops_items ADD item_bought_timestamp int(12) NOT NULL default '0';
@@ -1931,31 +2045,7 @@ CREATE TABLE phpbb_adr_bug_fix(
   fix_installed_by varchar(255) NOT NULL default '',
   PRIMARY KEY(fix_id)
 );
-ALTER TABLE phpbb_adr_characters ADD prefs_tax_pm_notify TINYINT(1) NOT NULL default '1';
 
-# ADR 0.4.4
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_align_enable tinyint(1) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_align varchar(255) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_class_enable tinyint(1) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_class varchar(255) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_element_enable tinyint(1) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_element varchar(255) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_race_enable tinyint(1) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_race varchar(255) NOT NULL default '0';
-
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_level int(8) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_str int(8) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_dex int(8) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_int int(8) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_wis int(8) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_cha int(8) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_restrict_con int(8) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_crit_hit smallint(3) NOT NULL default '20';
-ALTER TABLE phpbb_adr_shops_items ADD item_crit_hit_mod smallint(3) NOT NULL default '2';
-ALTER TABLE phpbb_adr_shops_items ADD item_stolen_timestamp int(12) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_stolen_by varchar(255) NOT NULL default '';
-ALTER TABLE phpbb_adr_shops_items ADD item_donated_timestamp int(12) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_items ADD item_donated_by varchar(255) NOT NULL default '';
 
 CREATE TABLE phpbb_adr_stores_user_history(
   user_store_trans_id int(12) NOT NULL default '0',
@@ -1971,47 +2061,45 @@ CREATE TABLE phpbb_adr_stores_user_history(
 ALTER TABLE phpbb_adr_shops_items_type ADD item_type_order MEDIUMINT( 8 ) NOT NULL DEFAULT '1';
 ALTER TABLE `phpbb_adr_shops_items_type` ADD `item_type_category` VARCHAR( 50 ) NOT NULL DEFAULT '';
 
-# ADR - Advanced NPC System
-ALTER TABLE `phpbb_adr_characters` ADD `character_npc_check` TEXT NOT NULL;
-
+# NPC System
 CREATE TABLE `phpbb_adr_npc` (
   `npc_id` INT( 8 ) NOT NULL AUTO_INCREMENT,
-  `npc_zone` VARCHAR( 255 ) NOT NULL ,
+  `npc_zone` TEXT NOT NULL ,
   `npc_name` VARCHAR( 255 ) NOT NULL ,
   `npc_img` VARCHAR( 255 ) NOT NULL ,
   `npc_enable` INT( 8 ) DEFAULT '0' NOT NULL ,
   `npc_price` INT( 8 ) DEFAULT '0' NOT NULL ,
   `npc_message` TEXT NOT NULL ,
-  `npc_item` VARCHAR( 255 ) NOT NULL ,
+  `npc_item` TEXT NOT NULL ,
   `npc_message2` TEXT NOT NULL ,
   `npc_points` INT( 8 ) DEFAULT '0' NOT NULL ,
   `npc_exp` INT( 8 ) DEFAULT '0' NOT NULL ,
   `npc_sp` INT( 8 ) DEFAULT '0' NOT NULL ,
-  `npc_item2` VARCHAR( 255 ) NOT NULL ,
+  `npc_item2` TEXT NOT NULL ,
   `npc_times` INT( 4 ) DEFAULT '0' NOT NULL ,
+
+  # Advanced NPC  
+  `npc_message3` TEXT NOT NULL,
+  `npc_random` int(1) NOT NULL default '0',
+  `npc_random_chance` int(7) NOT NULL default '1',
+  `npc_user_level` int(1) NOT NULL default '0',
+  `npc_class` TEXT NOT NULL,
+  `npc_race` TEXT NOT NULL,
+  `npc_character_level` TEXT NOT NULL,
+  `npc_element` TEXT NOT NULL,
+  `npc_alignment` TEXT NOT NULL,
+  `npc_visit_prerequisite` TEXT NOT NULL,
+  `npc_quest_prerequisite` TEXT NOT NULL,
+  `npc_view` TEXT NOT NULL,
+  `npc_quest_hide` int(1) NOT NULL default '0',
+  `npc_quest_clue` int(1) NOT NULL default '0',
+  `npc_quest_clue_price` int(8) NOT NULL default '0',
+
+  # QuestBook
+  `npc_kill_monster` VARCHAR( 255 ) NOT NULL ,
+  `npc_monster_amount` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL,
   PRIMARY KEY ( `npc_id` )
 );
-
-# ADR - Advanced NPC System Expansion
-ALTER TABLE `phpbb_adr_characters` ADD `character_npc_visited` TEXT NOT NULL;
-ALTER TABLE `phpbb_adr_npc` ADD `npc_message3` TEXT NOT NULL;
-ALTER TABLE `phpbb_adr_npc` ADD `npc_random` int(1) NOT NULL default '0';
-ALTER TABLE `phpbb_adr_npc` ADD `npc_random_chance` int(7) NOT NULL default '1';
-ALTER TABLE `phpbb_adr_npc` ADD `npc_user_level` int(1) NOT NULL default '0';
-ALTER TABLE `phpbb_adr_npc` ADD `npc_class` TEXT NOT NULL;
-ALTER TABLE `phpbb_adr_npc` ADD `npc_race` TEXT NOT NULL;
-ALTER TABLE `phpbb_adr_npc` ADD `npc_character_level` TEXT NOT NULL;
-ALTER TABLE `phpbb_adr_npc` ADD `npc_element` TEXT NOT NULL;
-ALTER TABLE `phpbb_adr_npc` ADD `npc_alignment` TEXT NOT NULL;
-ALTER TABLE `phpbb_adr_npc` ADD `npc_visit_prerequisite` TEXT NOT NULL;
-ALTER TABLE `phpbb_adr_npc` ADD `npc_quest_prerequisite` TEXT NOT NULL;
-ALTER TABLE `phpbb_adr_npc` ADD `npc_view` TEXT NOT NULL;
-ALTER TABLE `phpbb_adr_npc` ADD `npc_quest_hide` int(1) NOT NULL default '0';
-ALTER TABLE `phpbb_adr_npc` ADD `npc_quest_clue` int(1) NOT NULL default '0';
-ALTER TABLE `phpbb_adr_npc` ADD `npc_quest_clue_price` int(8) NOT NULL default '0';
-ALTER TABLE `phpbb_adr_npc` CHANGE `npc_zone` `npc_zone` TEXT NOT NULL;
-ALTER TABLE `phpbb_adr_npc` CHANGE `npc_item` `npc_item` TEXT NOT NULL;
-ALTER TABLE `phpbb_adr_npc` CHANGE `npc_item2` `npc_item2` TEXT NOT NULL;
 
 CREATE TABLE `phpbb_adr_cheat_log` (
   `cheat_id` mediumint(8) NOT NULL auto_increment,
@@ -2028,10 +2116,6 @@ CREATE TABLE `phpbb_adr_cheat_log` (
 ALTER TABLE `phpbb_adr_battle_monsters` DROP `monster_area`;
 ALTER TABLE `phpbb_adr_battle_monsters` DROP `monster_area_name`;
 ALTER TABLE `phpbb_adr_zones` ADD `zone_monsters_list` TEXT NOT NULL;
-
-# ADR - Questbook
-ALTER TABLE `phpbb_adr_npc` ADD `npc_kill_monster` VARCHAR( 255 ) NOT NULL ;
-ALTER TABLE `phpbb_adr_npc` ADD `npc_monster_amount` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ;
 
 CREATE TABLE `phpbb_adr_character_quest_log` (
 `user_id` INT( 8 ) NOT NULL,
@@ -2074,19 +2158,10 @@ CREATE TABLE `phpbb_adr_loottables` (
 );
 
 # ADR - Brewing
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_brewing_uses` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_brewing` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_pre_effects` TEXT DEFAULT '' NULL;
 ALTER TABLE `phpbb_adr_battle_list` ADD `battle_effects` TEXT DEFAULT '' NULL;
 ALTER TABLE `phpbb_adr_battle_pvp` ADD `battle_effects` TEXT DEFAULT '' NULL;
 ALTER TABLE `phpbb_adr_elements` ADD `element_skill_brewing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
 ALTER TABLE `phpbb_adr_races` ADD `race_skill_brewing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_shops_items` ADD `item_brewing_recipe` INT( 1 ) DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_shops_items` ADD `item_recipe_linked_item` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_shops_items` ADD `item_brewing_items_req` TEXT DEFAULT '' NOT NULL ;
-ALTER TABLE `phpbb_adr_shops_items` ADD `item_effect` TEXT DEFAULT '' NOT NULL ;
-ALTER TABLE `phpbb_adr_shops_items` ADD `item_original_recipe_id` INT( 8 ) DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_shops_items` ADD `item_recipe_skill_id` INT( 8 ) DEFAULT '0' NOT NULL ;
 
 CREATE TABLE `phpbb_adr_recipebook` (
   `recipe_id` int(8) NOT NULL auto_increment,
@@ -2099,52 +2174,6 @@ CREATE TABLE `phpbb_adr_recipebook` (
   `recipe_skill_id` int(8) DEFAULT '0' NOT NULL,
   KEY `recipe_id` (`recipe_id`)
 );
-
-# ADR - Cooking
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_cooking_uses` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_cooking` INT( 8 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_elements` ADD `element_skill_cooking_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_races` ADD `race_skill_cooking_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
-
-# ADR - Blacksmithing
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_blacksmithing_uses` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_blacksmithing` INT( 8 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_elements` ADD `element_skill_blacksmithing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_races` ADD `race_skill_blacksmithing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
-
-# ADR - Skills
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_alchemy_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_alchemy` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_elements` ADD `element_skill_alchemy_bonus` INT( 8 ) DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_races` ADD `race_skill_alchemy_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_fishing_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_fishing` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_elements` ADD `element_skill_fishing_bonus` INT( 8 ) DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_races` ADD `race_skill_fishing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_herbalism_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_herbalism` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_elements` ADD `element_skill_herbalism_bonus` INT( 8 ) DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_races` ADD `race_skill_herbalism_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_lumberjack_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_lumberjack` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_elements` ADD `element_skill_lumberjack_bonus` INT( 8 ) DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_races` ADD `race_skill_lumberjack_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_tailoring_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_tailoring` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_elements` ADD `element_skill_tailoring_bonus` INT( 8 ) DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_races` ADD `race_skill_tailoring_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_hunting_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_characters` ADD `character_skill_hunting` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_elements` ADD `element_skill_hunting_bonus` INT( 8 ) DEFAULT '1' NOT NULL ;
-ALTER TABLE `phpbb_adr_races` ADD `race_skill_hunting_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
-
-# ADR - Monster Abilities
-ALTER TABLE phpbb_adr_battle_monsters ADD monster_base_mp_drain int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_battle_monsters ADD monster_base_mp_transfer int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_battle_monsters ADD monster_base_hp_drain int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_battle_monsters ADD monster_base_hp_transfer int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_battle_monsters ADD monster_regeneration int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_battle_monsters ADD monster_mp_regeneration int(8) UNSIGNED NOT NULL default '0';
 
 # ADR - Advanced Spells
 CREATE TABLE phpbb_adr_shops_spells (
@@ -2165,15 +2194,19 @@ CREATE TABLE phpbb_adr_shops_spells (
   spell_element_same_dmg int(4) NOT NULL default '100',
   spell_element_weak_dmg int(4) NOT NULL default '100',
   spell_original_id int(8) NOT NULL default '0',
+  
+  # ADR - Advanced Spells 0.4.5 upgrade
+  `spell_battle` int(1) NOT NULL default '0',
+  `spell_xtreme` text NOT NULL default '',
+  `spell_xtreme_battle` text NOT NULL default '',
+  `spell_xtreme_pvp` text NOT NULL default '',
+
+  # ditto 0.4.9
+  `spell_alignment` varchar(255) NOT NULL DEFAULT '0',
+  `spell_element_restrict` varchar(255) NOT NULL DEFAULT '0',
   KEY spell_id (spell_id),
   KEY spell_owner_id (spell_owner_id)
 ) ;
-
-# ADR - Party
-ALTER TABLE phpbb_adr_characters ADD character_party int(8) NOT NULL default'0';
-ALTER TABLE phpbb_adr_characters ADD character_leader int(1) NOT NULL default'0';
-ALTER TABLE phpbb_adr_characters ADD character_invites VARCHAR(255) NOT NULL;
-
 # ADR - Dynamic Town Maps
 CREATE TABLE phpbb_adr_zone_buildings (
   id int(10) unsigned NOT NULL auto_increment,
@@ -2237,56 +2270,47 @@ CREATE TABLE `phpbb_adr_library_learned` (
   INDEX  (`book_id`) 
 );
 
-# ADR - Advanced Spells 0.4.5 upgrade
-ALTER TABLE phpbb_adr_shops_spells ADD `spell_battle` int(1) NOT NULL default '0';
-ALTER TABLE phpbb_adr_shops_spells ADD `spell_xtreme` text NOT NULL default '';
-ALTER TABLE phpbb_adr_shops_spells ADD `spell_xtreme_battle` text NOT NULL default '';
-ALTER TABLE phpbb_adr_shops_spells ADD `spell_xtreme_pvp` text NOT NULL default '';
+# ADR - Clans Mod
+CREATE TABLE `phpbb_adr_clans` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `name` mediumtext NOT NULL,
+  `leader` mediumint(9) NOT NULL default '0',
+  `members` mediumtext NOT NULL,
+  `logo` mediumtext NOT NULL,
+  `description` mediumtext NOT NULL,
+  `approving` tinyint(1) NOT NULL default '0',
+  `approvelist` mediumtext NOT NULL,
+  `approve_fee` mediumtext NOT NULL,
+  `req_posts` mediumint(9) NOT NULL default '0',
+  `req_points` mediumint(9) NOT NULL default '0',
+  `req_level` mediumint(9) NOT NULL default '0',
+  `join_fee` mediumint(9) NOT NULL default '0',
+  `founded` int(11) NOT NULL default '0',
+  `founder` mediumint(9) NOT NULL default '0',
+  `news_orderby` mediumtext NOT NULL,
+  `news_order` tinyint(1) NOT NULL default '0',
+  `news_amount` int(5) NOT NULL default '10',
+  `stash_points` mediumint(9) NOT NULL default '0',
+  `stash_items` mediumtext NOT NULL,
+  PRIMARY KEY  (`id`)
+);
 
-# ditto 0.4.9
-ALTER TABLE phpbb_adr_shops_spells ADD `spell_alignment` varchar(255) NOT NULL DEFAULT '0';
-ALTER TABLE phpbb_adr_shops_spells ADD `spell_element_restrict` varchar(255) NOT NULL DEFAULT '0';
+CREATE TABLE `phpbb_adr_clans_news` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `clan` mediumint(9) NOT NULL default '0',
+  `poster` mediumint(9) NOT NULL default '0',
+  `title` mediumtext NOT NULL,
+  `text` mediumtext NOT NULL,
+  `date` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+);
 
-# ditto 0.4.10
-ALTER TABLE `phpbb_adr_characters` ADD `character_spell_pre_effects` varchar(255) NOT NULL DEFAULT '';
+CREATE TABLE `phpbb_adr_clans_shouts` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `clan` mediumint(9) NOT NULL default '0',
+  `poster` mediumint(9) NOT NULL default '0',
+  `text` mediumtext NOT NULL,
+  PRIMARY KEY  (`id`)
+);
 
-# ADR - Advanced Night & Day
-ALTER TABLE phpbb_adr_battle_monsters ADD monster_time int(8) UNSIGNED NOT NULL DEFAULT '0';
-
-# ADR - Weapon proficiency
-ALTER TABLE phpbb_adr_characters ADD character_skill_sword_level int(8) UNSIGNED NOT NULL default '1';
-ALTER TABLE phpbb_adr_characters ADD character_skill_dirk_level int(8) UNSIGNED NOT NULL default '1';
-ALTER TABLE phpbb_adr_characters ADD character_skill_ranged_level int(8) UNSIGNED NOT NULL default '1';
-ALTER TABLE phpbb_adr_characters ADD character_skill_magic_level int(8) UNSIGNED NOT NULL default '1';
-ALTER TABLE phpbb_adr_characters ADD character_skill_mace_level int(8) UNSIGNED NOT NULL default '1';
-ALTER TABLE phpbb_adr_characters ADD character_skill_fist_level int(8) UNSIGNED NOT NULL default '1';
-ALTER TABLE phpbb_adr_characters ADD character_skill_staff_level int(8) UNSIGNED NOT NULL default '1';
-ALTER TABLE phpbb_adr_characters ADD character_skill_axe_level int(8) UNSIGNED NOT NULL default '1';
-ALTER TABLE phpbb_adr_characters ADD character_skill_spear_level int(8) UNSIGNED NOT NULL default '1';
-ALTER TABLE phpbb_adr_characters ADD character_skill_sword_uses int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_characters ADD character_skill_dirk_uses int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_characters ADD character_skill_ranged_uses int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_characters ADD character_skill_mace_uses int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_characters ADD character_skill_fist_uses int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_characters ADD character_skill_staff_uses int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_characters ADD character_skill_axe_uses int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_characters ADD character_skill_spear_uses int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_characters ADD character_skill_magic_uses int(8) UNSIGNED NOT NULL default '0';
-
-# ADR - ditto for spell
-ALTER TABLE phpbb_adr_characters ADD character_skill_defmagic_level int(8) UNSIGNED NOT NULL default '1';
-ALTER TABLE phpbb_adr_characters ADD character_skill_offmagic_level int(8) UNSIGNED NOT NULL default '1';
-ALTER TABLE phpbb_adr_characters ADD character_skill_defmagic_uses int(8) UNSIGNED NOT NULL default '0';
-ALTER TABLE phpbb_adr_characters ADD character_skill_offmagic_uses int(8) UNSIGNED NOT NULL default '0';
-
-# Rabbitoshi - pet specific levelup
-ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_health_levelup` int(8) NOT NULL DEFAULT '0';
-ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_hunger_levelup` int(8) NOT NULL DEFAULT '0';
-ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_thirst_levelup` int(8) NOT NULL DEFAULT '0';
-ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_hygiene_levelup` int(8) NOT NULL DEFAULT '0';
-ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_power_levelup` int(8) NOT NULL DEFAULT '0';
-ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_magicpower_levelup` int(8) NOT NULL DEFAULT '0';
-ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_armor_levelup` int(8) NOT NULL DEFAULT '0';
-ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_attack_levelup` int(8) NOT NULL DEFAULT '0';
-ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_magicattack_levelup` int(8) NOT NULL DEFAULT '0';
-ALTER TABLE `phpbb_rabbitoshi_config` ADD `creature_mp_levelup` int(8) NOT NULL DEFAULT '0';
+COMMIT;

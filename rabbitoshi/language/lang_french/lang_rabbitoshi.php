@@ -291,7 +291,7 @@ $lang['Rabbitoshi_message_very_hygiene']='Je pense que j\'empeste. Ct endroit es
 //
 $lang['Rabbitoshi_general_message']='Pensées récentes';
 $lang['Rabbitoshi_general_message_very_bad']='Pourquoi?...Pourquoi moi?... Je meurs ... Je n\'ai plus aucune chance ... Que quelqu\'un m\'aide ...';
-$lang['Rabbitoshi_general_message_bad']='Mon maître reviendra-t\'il ? il ne s\'occupe jamais de moi . Ce type d\'Humains ne devrait pas être autorisé à posséder une créature !';
+$lang['Rabbitoshi_general_message_bad']='Mon maître reviendra-t\'il ? il ne s\'occupe jamais de moi. Ce type de personne ne devrait pas être autorisée à posséder une créature !!';
 $lang['Rabbitoshi_general_message_neutral']='Ma vie est sans intérêt !';
 $lang['Rabbitoshi_general_message_good']='*chante sa joie de vivre*';
 $lang['Rabbitoshi_general_message_very_good']='Je ne pourrais pas rêver d\'un meilleur maître ! Il est aux petits soins pour moi, je suis vraiment chanceux !';

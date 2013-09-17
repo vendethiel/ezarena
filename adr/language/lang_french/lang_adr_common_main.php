@@ -24,10 +24,6 @@ $lang['Adr_character_preferences']='Préférences';
 $lang['Adr_town_page_name']='Place du village';
 $lang['Adr_equipment_page_name']='Equipement';
 $lang['Adr_defy_page_name']='Défis';
-//GUILD
-$lang['Adr_guilds_page_name']='Maison de la guilde';
-$lang['Adr_guilds_personal_page_name']='Information de la guilde';
-//GUILD end
 
 // Often used language keys
 $lang['Adr_items_prefs']='Objets';

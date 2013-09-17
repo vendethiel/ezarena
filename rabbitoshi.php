@@ -260,9 +260,9 @@ else
 		
 		$vet_cost = $rabbit_general['vet_price'];
 		
-                if ($confirm_Vet)
+        if ($confirm_Vet)
 		{
-	                if ( $points > $rabbit_general['vet_price'] ) {
+	        if ( $points > $rabbit_general['vet_price'] ) {
 				$sql = "SELECT *
 					FROM  " . RABBITOSHI_USERS_TABLE . "
 					WHERE owner_id = ".$view_userdata['user_id'];
@@ -298,7 +298,7 @@ else
 				rabbitoshi_previous( Rabbitoshi_pet_vet_lack , rabbitoshi , '' );
 			}
 		}
-                else
+        else
 		{
 			rabbitoshi_template_file('rabbitoshi_confirm_body.tpl');
 

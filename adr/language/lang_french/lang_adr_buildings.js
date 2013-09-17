@@ -60,6 +60,8 @@ Text[54]=["Bibliothèque", "Effectuez vos recherches à la bibliothèque"]
 Text[55]=["Recherches effectuées", "Liste des connaissances que vous avez aquises dans les livres"]
 Text[56]=["Carte du monde", "Liste des zones du monde, téléportation possible si vous possédez un parchemin"]
 Text[57]=["Groupe", "Rejoignez d'autres joueurs pour former une équipe"]
+Text[58]=["Familier", "Feuille de votre familier, animalerie, progression de l'animal ..."]
+Text[59]=["Clans", "Page des clans"]
 // V: finished
 
 Text[100]=["Carte du Monde","Regardez toutes les Zones des Royaumes, et téléportez vous si vous possédez le bon parchemin"]

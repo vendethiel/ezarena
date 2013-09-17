@@ -52,8 +52,8 @@ if ( defined ('IN_TOWNMAP_INFOBOX'))
    $lang['Adr_TownMap_Combat_Infos']='La Sortie du Village sert à affronter des monstres.<br />En effet, vous n\'êtes en sécurité que lorsque vous êtes entre les murs du village. &Agrave; l\'extérieur, les monstres grouillent.<br /><br/>Si vous vous sentez l\'âme d\'un guerrier et que vous avez envie de tuer des monstres, vous n\'aurez qu\'à emprunter ce chemin.<br />(Pour faire un combat, cliquez sur les monstres en dehors du village)<br/><br />Tuer des monstres vous rapporte de l\'argent, de l\'expérience (nécessaire à la progression de votre personnage) et des points de spiritualité.';
    $lang['Adr_TownMap_Mine_Infos']='La Mine vous permet de vous enrichir.<br />Elle vous permet d\'aller creuser pour trouver des pierres précieuses.<br/>Pour creuser, il vous suffit d\'utiliser une pioche.<br /><br/>Vous pouvez directement vendre les pierres que vous trouvez dans la mine.<br/>Mais mieux, vous pouvez aussi les travailler en allant à la forge pour augmenter leur valeur !';
    $lang['Adr_TownMap_Enchantement_Infos']='La Pierre Runique détient un pouvoir fabuleux qui vous sera utile à 2 choses.<br />Premièrement, vous pourrez, à l\'aide de cette pierre, enchanter une de vos armes<br/>(vous devez utiliser un sort ou un parchemin pour cela. La Pierre Runique transfèrera le pouvoir de votre sort dans l\'arme. Cela ne marche bien sur pas à tous les coups).<br /><br/>Deuxièmement, elle vous permettra aussi de recharger ceraines catégories de vos pièces d\'armure : les anneaux et les amulettes.<br/>Lorsque celles-ci sont déchargées, vous pouvez utiliser le pouvoir de la Pierre Runique à l\'aide d\'un livre de sorts (ne marche pas non plus à tous les coups).';
-   $lang['Adr_TownMap_Clan_Infos']='La Taverne des guildes est un endroit bien spécial.<br />Vous pourrez y voir la liste des guildes ainsi que l\'historique des combats <abbr title="Guilde Versus Guilde">GvG</abbr>.<br/>Vous pourrez postuler pour une guilde, en créer une si vous répondez aux prérequis de niveau et de prix<br/>Et si vous êtes un chef de guilde au sang chaud, n\'hésitez pas à déclarer la guerre !<br/><b>Que le combat commence</b> !';
-   // $lang['Adr_TownMap_Clan_Infos']='La Taverne des clans est un endroit bien spécial.<br />Vous pourrez y rencontrer tous les chefs de clan ainsi que leurs partisans.<br/>Si vous désirez faire partie d\'un clan, c\'est là qu\'il faudra vous rendre pour faire votre demande.<br /><br/>Des tournois pourront ainsi être organisés entre les différents clans pour savoir lequel est le plus puissant ...<br/><b>Que le combat commence</b> !';
+   // $lang['Adr_TownMap_Clan_Infos']='La Taverne des guildes est un endroit bien spécial.<br />Vous pourrez y voir la liste des guildes ainsi que l\'historique des combats <abbr title="Guilde Versus Guilde">GvG</abbr>.<br/>Vous pourrez postuler pour une guilde, en créer une si vous répondez aux prérequis de niveau et de prix<br/>Et si vous êtes un chef de guilde au sang chaud, n\'hésitez pas à déclarer la guerre !<br/><b>Que le combat commence</b> !';
+   $lang['Adr_TownMap_Clan_Infos']='La Taverne des clans est un endroit bien spécial.<br />Vous pourrez y rencontrer tous les chefs de clan ainsi que leurs partisans.<br/>Si vous désirez faire partie d\'un clan, c\'est là qu\'il faudra vous rendre pour faire votre demande.<br /><br/>Des tournois pourront ainsi être organisés entre les différents clans pour savoir lequel est le plus puissant ...<br/><b>Que le combat commence</b> !';
 }
 
 if ( defined ('IN_TOWNMAP_COPYRIGHT'))
@@ -162,12 +162,10 @@ if ( defined ('IN_TOWNMAP_ENCHANTEMENT'))
 if ( defined ('IN_TOWNMAP_CLAN'))
 {
    $lang['TownMap_Clan_faq']='Accéder au Tutorial des Joueurs';
-   $lang['TownMap_Clan']='Taverne des Guildes';
-   $lang['TownMap_Clan_Entree']='Bienvenue à la Taverne des Guildes !<br/><br/>';
-   // V: needs clan mod - switch to guild
-   //Installez-vous donc et mettez vous à l\'aise.<b';
-   $lang['TownMap_Clan_Lien']='Accéder aux guildes';
-   // $lang['TownMap_Clan_Lien']='Accéder à la Taverne des Clans';
+   $lang['TownMap_Clan']='Taverne des Clans';
+   $lang['TownMap_Clan_Entree']='Bienvenue à la Taverne des Clans !<br/><br/>';
+   // $lang['TownMap_Clan_Lien']='Accéder aux guildes';
+   $lang['TownMap_Clan_Lien']='Accéder à la Taverne des Clans';
 }
 
 if ( defined ('IN_TOWNMAP_MONSTRE'))

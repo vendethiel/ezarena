@@ -3,7 +3,10 @@
 #
 # $Id: mysql_basic.sql,v 1.29.2.25 2006/03/09 21:55:09 grahamje Exp $
 
+START TRANSACTION;
+
 # -- Config
+# default lang and other stuff (forum start) are entered by the install process
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('config_id','1');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('board_disable','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('sitename','yourdomain.com');
@@ -20,7 +23,6 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_smilies','1'
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_sig','1');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_namechange','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_theme_create','0');
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('default_lang','french');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_avatar_local','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_avatar_remote','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_avatar_upload','0');
@@ -653,12 +655,6 @@ INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('battle_calc_t
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('job_salary_enable', 1);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('job_salary_cron_time', 1);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('job_salary_cron_last_time', 1104681333);
-INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_overall_allow', 1);
-INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_create_allow', 1);
-INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_join_allow', 1);
-INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_create_min_posts', 0);
-INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_create_min_level', 1);
-INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_create_min_money', 0);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_allow_retire_character', 1);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_minimum_retire_level', 8);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_retire_points_award', 5000);
@@ -968,10 +964,6 @@ INSERT INTO `phpbb_adr_general` VALUES ('npc_display_text', 1);
 INSERT INTO `phpbb_adr_general` VALUES ('npc_image_link', 1);
 INSERT INTO `phpbb_adr_general` VALUES ('npc_button_link', 1);
 
-# upgrade guild alliances
-INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('battle_guild_exp_min', 1);
-INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('battle_guild_exp_max', 100);
-
 # ADR - Brewing
 INSERT INTO phpbb_adr_skills (skill_id, skill_name, skill_desc, skill_img, skill_req, skill_chance) VALUES (7, 'Adr_brewing', 'Adr_skill_brewing_desc', 'skill_brewing.gif', 50, 5);
 
@@ -1123,3 +1115,5 @@ INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item
 
 # Rabbitoshi - levelup penalty
 INSERT INTO `phpbb_rabbitoshi_general` VALUES ('next_level_penalty', 10);
+
+COMMIT;
