@@ -426,6 +426,7 @@ Addons :
  - Addon pour RCS - Informpro
  - Addon Fix Bare Attacks (fix $dice's rand() ...) - Informpro
  - Addon Fix element colors - Informpro
+ - Addon anti SQL Injection for mods - Informpro
 
 # ADR : Advanced Loot System 1.0.3 - Himmelweiss
 Ajoute un système super-complet de butin pour les monstres, avec des catégories de butin, chance de drop, combien d'items il est possible de drop, etc ... à découvrir en jeu et dans l'admin !
@@ -440,6 +441,23 @@ Ajoute de nombreuses fonctionnalités au mod "Advanced NPC System", comme la pos
 Permet aux joueurs d'apprendre des sorts en montant de niveau. Les sorts peuvent être édités dans l'administration.
 Addons :
  - Addon Spells in PvP - Informpro
+
+# ADR : Advanced Zone Restrictions - Informpro
+Etend les restrictions de zones aux pages suivantes :
+ - beggar
+ - blacksmith
+ - brewing
+ - cauldron
+ - clans
+ - cooking
+ - fish
+ - herbal
+ - hunting
+ - jobs
+ - lake
+ - lumberjack
+ - research
+ - tailor
 
 # ADR : Blacksmithing 0.3.0 - Himmelweiss
 Ajoute un système avancé de forge au mod Crafting.
@@ -517,6 +535,7 @@ Intègre aussi différents mods ensemble (comme le quest book).
 Ajoute les maitrises d'armes : plus vous utiliser un type d'arme, plus vous ferez de dégâts avec.
 Addons :
  - Addon Spell Proficiency 0.2.1-alpha - egdcltd
+ - Addon Shield Proficiency 0.2.2 - egdcltd
 
 # ADR : Zone shoutbox & Battle Community Integration 1.0.0 - Informpro
 Permet d'utiliser la chatbox communautaire plutôt que la chatbox du zone_mod.
@@ -561,11 +580,15 @@ Parfaitement intégré à ADR.
 Addons :
  - Fix adr_battle not changing turn when rabbit's playing - Informpro
 
+# Rabbitoshi : Fix for vanishing Pets
+Empêche les familiers de disparaître lors du refus de resurrection. Vous devrez le ressuciter pour l'abandonner ou le vendre.
+
 # Rabbitoshi : Level Up Penalty 0.2.0 - egdcltd
 L'expérience nécessaire pour monter de niveau augmente avec le niveau (comme sur le RPG).
 
 # Rabbitoshi : Pet Specific Levelup 0.2.1 - egdcltd
 Permet de modifier les gains à la montée de niveau par familier.
+
 
 ---
 

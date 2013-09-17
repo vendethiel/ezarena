@@ -1883,6 +1883,11 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		
 		$battle_message .= sprintf($lang['Adr_battle_defend'], $challenger['character_name'], $monster['monster_name']) . '<br>';
 		
+		if ($armour_info[3] != '0')
+		{
+			adr_shield_skill_check($user_id);
+		}
+		
 		// Update the database
 		$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
 			SET battle_turn = 2,
@@ -3005,6 +3010,7 @@ $template->assign_vars(array(
 	'ALIGNMENT' => adr_get_lang($challenger_alignment['alignment_name']),
 	'ELEMENT' => adr_get_lang($challenger_element['element_name']),
 	'CLASS' => adr_get_lang($challenger_class['class_name']),
+	'MONSTER_LEVEL'=> $monster['monster_level'],
 	'M_ATT' => $bat['battle_challenger_magic_attack'],
 	'M_DEF' => $bat['battle_challenger_magic_resistance'],
 	'MONSTER_M_ATT' => $bat['battle_opponent_magic_attack'],

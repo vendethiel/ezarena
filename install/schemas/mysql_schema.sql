@@ -1471,6 +1471,10 @@ CREATE TABLE phpbb_adr_characters (
   `character_skill_hunting_uses` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
   `character_skill_hunting` INT( 3 ) UNSIGNED DEFAULT '1' NOT NULL,
 
+  # ADR - shields prof
+  character_skill_shield_level int(8) UNSIGNED NOT NULL default '1',
+  character_skill_shield_uses int(8) UNSIGNED NOT NULL default '0',
+
   PRIMARY KEY  (character_id)
 ) ;
 
@@ -1881,6 +1885,20 @@ CREATE TABLE phpbb_adr_zones (
   zone_prison int(1) NOT NULL default '0',
   zone_temple int(1) NOT NULL default '0',
   zone_bank int(1) NOT NULL default '0',
+  zone_beggar int(1) NOT NULL default '0',
+  zone_blacksmith int(1) NOT NULL default '0',
+  zone_brewing int(1) NOT NULL default '0',
+  zone_cauldron int(1) NOT NULL default '0',
+  zone_clans int(1) NOT NULL default '0',
+  zone_cooking int(1) NOT NULL default '0',
+  zone_fish int(1) NOT NULL default '0',
+  zone_herbal int(1) NOT NULL default '0',
+  zone_hunting int(1) NOT NULL default '0',
+  zone_jobs int(1) NOT NULL default '0',
+  zone_lake int(1) NOT NULL default '0',
+  zone_lumberjack int(1) NOT NULL default '0',
+  zone_research int(1) NOT NULL default '0',
+  zone_tailor int(1) NOT NULL default '0',
   zone_event1 int(1) NOT NULL default '0',
   zone_event2 int(1) NOT NULL default '0',
   zone_event3 int(1) NOT NULL default '0',

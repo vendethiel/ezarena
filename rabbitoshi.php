@@ -1091,12 +1091,12 @@ else
 		{
 			// Rebirth Disabled
 			if ( !$rabbit_general['evolution_enable']) {
-				rabbitoshi_delete_pet($user_id);
+				// rabbitoshi_delete_pet($user_id);
 				rabbitoshi_previous( Rabbitoshi_pet_dead , rabbitoshi , '' );
 			}
 			
 			// Rebirth Enabled
-                        if ( $rabbit_general['rebirth_enable'] == 1 ) {
+            if ( $rabbit_general['rebirth_enable'] == 1 ) {
 				if ( $points > $rabbit_general['rebirth_price'] )
 				{
 					if ( $resurrect_ok )
@@ -1134,7 +1134,8 @@ else
 
 					else if ( $resurrect_no )
 					{
-						rabbitoshi_delete_pet($user_id);
+						// why no ;(
+						// rabbitoshi_delete_pet($user_id);
 						rabbitoshi_previous( Rabbitoshi_pet_dead_rebirth_no , rabbitoshi , '' );
 					}
 

@@ -6,8 +6,8 @@
 // Translator: cedô l'immortel <http://cboyon.free.fr/>
 // Correction : Nienor <http://www.ambrelune.org>
 
-$lang['Adr_clans_page_name']='Clan Hall'; 
-$lang['clans_modtitle']='Clans MOD Avancé'; 
+$lang['Adr_clans_page_name']='Clans'; 
+$lang['clans_modtitle']='Clans'; 
 $lang['clans_title_clanslist']='Liste des Clans'; 
 $lang['clans_title_clanspage']='Page du Clan %s'; 
 $lang['clans_title_join']='Rejoindre %s'; 

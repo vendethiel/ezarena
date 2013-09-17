@@ -218,23 +218,20 @@
 	</tr>
 	<tr>
         <td align="center" class="row2"><a href="adr_blacksmithing.php">Forge</a></td>
-        <td align="center" class="row1"><a href="adr_brewing.php">Brassage</a></td>
-        <td align="center" class="row2" colspan="2"><a href="adr_cooking.php">Cuisine</a></td>
+        <td align="center" class="row2"><a href="adr_brewing.php">Brassage</a></td>
+        <td align="center" class="row1" colspan="2"><a href="adr_cooking.php">Cuisine</a></td>
     </tr>
     <tr>
-	    <td align="center" class="row1" colspan="1"><a href="adr_alchemy.php">Atelier d'alchimie</a></td>
-        <td align="center" class="row1" colspan="3"><a href="adr_tailor.php">Tailleur</a></td>
+	    <td align="center" class="row1"><a href="adr_alchemy.php">Atelier d'alchimie</a></td>
+        <td align="center" class="row1"><a href="adr_tailor.php">Tailleur</a></td>
+    	<td align="center" class="row2"><a href="adr_beggar.php">Parler à la mendiante</a></td>
+    	<td align="center" class="row2"><a href="adr_lake.php">Lac magique</a></td>
     </td>
 	<tr>
         <td align="center" class="row2"><a href="adr_fish.php">Pêche</a></td>
         <td align="center" class="row2"><a href="adr_herbal.php">Herboristerie</a></td>
         <td align="center" class="row1"><a href="adr_hunting.php">Chasse</a></td>
-        <td align="center" class="row2"><a href="adr_lumberjack.php">Bûcheron</a></td>
-    </tr>
-    <tr>
-    	<td align="center"><a href="adr_beggar.php">Parler à la mendiante</a></td>
-    	<td align="center"><a href="adr_lake.php">Lac magique</a></td>
-    	<td align="center" colspan="2"><a href="adr_party.php">Groupe</a></td>
+        <td align="center" class="row1"><a href="adr_lumberjack.php">Bûcheron</a></td>
     </tr>
 </table>
 <br clear="all" />

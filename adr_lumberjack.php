@@ -61,7 +61,7 @@ include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 $adr_general = adr_get_general_config();
 
 // Grab details for skill limit
-$sql = " SELECT character_skill_limit FROM " . ADR_CHARACTERS_TABLE . "
+$sql = " SELECT character_skill_limit, character_area FROM " . ADR_CHARACTERS_TABLE . "
 		WHERE character_id = $user_id ";
 if( !($result = $db->sql_query($sql)) ){
 	message_die(GENERAL_ERROR, 'Could not query skill limit value', '', __LINE__, __FILE__, $sql);}
@@ -75,6 +75,19 @@ if ( $adr_general['Adr_character_limit_enable'] != 0 && $limit_update['character
 {	
 	adr_previous ( Adr_skill_limit , adr_character , '' );
 }
+
+$actual_zone = $limit_update['character_area'];
+
+$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
+       WHERE zone_id = $actual_zone ";
+if( !($result = $db->sql_query($sql)) )
+        message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
+
+$info = $db->sql_fetchrow($result);
+$access = $info['zone_lumberjack'];
+
+if ( $access == '0' )
+	adr_previous( Adr_zone_building_noaccess , adr_zones , '' );
 
 if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
 {

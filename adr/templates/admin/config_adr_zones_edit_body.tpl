@@ -129,6 +129,12 @@
 		<td class="row1" width="60%"><b>{L_ZONE_ENCHANT} :</b><br />{L_ZONE_ENCHANT_EXPLAIN}</td>
 		<td class="row1" align="center" ><input type="checkbox" name="zone_enchant" value="1" {ZONE_ENCHANT} /></td>
 	</tr>
+	<!-- BEGIN extra_building -->
+	<tr>
+		<td class="row{extra_building.ROW_CLASS}" width="60%"><b>{extra_building.LANG} :</b><br />{extra_building.LANG_EXPLAIN}</td>
+		<td class="row{extra_building.ROW_CLASS}" align="center" ><input type="checkbox" name="zone_{extra_building.KEY}" value="1" {extra_building.ENABLED} /></td>
+	</tr>
+	<!-- END extra_building -->
 </table>
 
 <br clear="all" />

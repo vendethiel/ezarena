@@ -63,7 +63,7 @@ adr_ban_check($user_id);
 adr_character_created_check($user_id);
 
 // V: Clans Mod Integration
-// Get clans user belongs to!
+// Get clan user belongs to!
 $sql = "SELECT * FROM ". ADR_CLANS_TABLE ."
 		WHERE leader = '".$user_id."' OR members LIKE '%ß".$user_id."Þ%'
 		ORDER BY name,id";
@@ -167,7 +167,11 @@ if($action == 'invite')
 }
 if($action == 'join')
 {
-	$id = $_GET['party'];
+	$id = intval($_GET['party']);
+	if ($clan['leader'] != $id && false === strpos($clan['members'], "ß".$id."Þ"))
+	{
+		message_die(GENERAL_MESSAGE, 'Adr_party_invite_only_clan');
+	}
 	$sql = 'UPDATE '.ADR_CHARACTERS_TABLE.' SET character_party = '.$id.', character_invites = "", character_leader = 0 WHERE character_id = '.$user_id;
 	$re = $db->sql_query($sql) or die('SQL Error on line '.__LINE__);
 	$message = 'Bienvenue dans le groupe !';

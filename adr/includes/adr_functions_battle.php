@@ -1251,3 +1251,40 @@ function adr_weapon_skill_check($user_id , $bonus_hit)
 		return $bonus_hit;
 	}
 }
+
+
+function adr_shield_skill_check($user_id)
+{
+	global $db , $lang , $adr_general , $item;
+	$char = adr_get_user_infos($user_id);
+	$sql = "SELECT * FROM " . ADR_CHARACTERS_TABLE . "
+		WHERE character_id = $user_id ";
+	if ( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, 'Could not obtain user list', '', __LINE__, __FILE__, $sql);
+	}
+
+	if ( ( $char['character_skill_shield_uses'] +1 ) >= ($adr_general['weapon_prof']* $char['character_skill_shield_level']) )
+	{
+		$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+			SET character_skill_shield_uses = 0 , 
+				character_skill_shield_level = character_skill_shield_level + 1
+			WHERE character_id = $user_id ";
+		$result = $db->sql_query($sql);
+		if( !$result )
+		{
+			message_die(GENERAL_ERROR, 'Could not obtain skill information', "", __LINE__, __FILE__, $sql);
+		}
+	}
+	else
+	{
+		$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+			SET character_skill_shield_uses = character_skill_shield_uses + 1
+			WHERE character_id = $user_id ";
+		$result = $db->sql_query($sql);
+		if( !$result )
+		{
+			message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+		}
+	}
+}

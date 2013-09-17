@@ -263,6 +263,7 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 		adr_use_item($armor, $user_id);
 		$armour_name = adr_get_lang($item['item_name']);
 	}
+	$def = ($def + ($adr_general['shield_bonus'] * $char['character_skill_shield_level']));
 
 	if($buckler)
 	{

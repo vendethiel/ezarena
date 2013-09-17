@@ -67,6 +67,19 @@ if( !($result = $db->sql_query($sql)) )
 }
 $character = $db->sql_fetchrow($result);
 
+$actual_zone = $character['character_area'];
+
+$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
+       WHERE zone_id = $actual_zone ";
+if( !($result = $db->sql_query($sql)) )
+        message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
+
+$info = $db->sql_fetchrow($result);
+$access = $info['zone_jobs'];
+
+if ( $access == '0' )
+	adr_previous( Adr_zone_building_noaccess , adr_zones , '' );
+
 if( $apply )
 {
 	$apply_id = intval($HTTP_POST_VARS['apply_select']);

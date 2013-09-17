@@ -61,7 +61,7 @@ $user_id = $userdata['user_id'];
 $adr_general = adr_get_general_config();
 
 // Grab details for skill limit and brewing skill
-$sql = " SELECT character_skill_limit, character_skill_brewing, character_level FROM " . ADR_CHARACTERS_TABLE . "
+$sql = " SELECT character_skill_limit, character_skill_brewing, character_level, character_area FROM " . ADR_CHARACTERS_TABLE . "
 		WHERE character_id = $user_id ";
 if( !($result = $db->sql_query($sql)) )
 {
@@ -72,6 +72,19 @@ $char = $db->sql_fetchrow($result);
 adr_enable_check();
 adr_ban_check($user_id);
 adr_character_created_check($user_id);
+
+$actual_zone = $char['character_area'];
+
+$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
+       WHERE zone_id = $actual_zone ";
+if( !($result = $db->sql_query($sql)) )
+        message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
+
+$info = $db->sql_fetchrow($result);
+$access = $info['zone_brewing'];
+
+if ( $access == '0' )
+	adr_previous( Adr_zone_building_noaccess , adr_zones , '' );
 
 //set colors
 $color_impossible = '#dd02eb'; //Impossible

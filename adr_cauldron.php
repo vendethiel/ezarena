@@ -50,21 +50,34 @@ adr_ban_check($user_id);
 adr_character_created_check($user_id);
 
 // Deny access if the user is into a battle
-	$sql = "SELECT * 
-			FROM  ". ADR_BATTLE_LIST_TABLE ." 
-			WHERE battle_challenger_id = '$user_id'
-			AND battle_result = '0'
-			AND battle_type = '1'";
-		if( !($result = $db->sql_query($sql)) )
-			message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
-	
-	$bat = $db->sql_fetchrow($result);
-	
-	if (is_numeric($bat['battle_id']))
-		adr_previous( Adr_battle_progress , adr_battle , '' );
+$sql = "SELECT * 
+		FROM  ". ADR_BATTLE_LIST_TABLE ." 
+		WHERE battle_challenger_id = '$user_id'
+		AND battle_result = '0'
+		AND battle_type = '1'";
+	if( !($result = $db->sql_query($sql)) )
+		message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
+
+$bat = $db->sql_fetchrow($result);
+
+if (is_numeric($bat['battle_id']))
+	adr_previous( Adr_battle_progress , adr_battle , '' );
 
 include($phpbb_root_path . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr.'.$phpEx);
 
+$zone_user = adr_get_user_infos($user_id);
+$actual_zone = $zone_user['character_area'];
+
+$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
+       WHERE zone_id = $actual_zone ";
+if( !($result = $db->sql_query($sql)) )
+        message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
+
+$info = $db->sql_fetchrow($result);
+$access = $info['zone_cauldron'];
+
+if ( $access == '0' )
+	adr_previous( Adr_zone_building_noaccess , adr_zones , '' );
 //
 //Begin Item Choice List
 //

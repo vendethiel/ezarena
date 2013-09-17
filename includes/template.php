@@ -840,10 +840,11 @@ class Template {
 		$filename = str_replace('{ROOT}', defined('IN_ADMIN') ? '../../templates/' . $this->tpldef . '/' : '', $filename);
 		$filename = str_replace('{T_TEMPLATE_NAME}', $this->tpl, $filename);
 		$can_cache = $this->use_cache;
+		/* V: I think we can work this out ;-).
 		if(strpos($filename, '..') !== false)
 		{
 			$can_cache = false;
-		}
+		}*/
 		$this->files[$handle] = $this->make_filename($filename, $xs_include);
 		$this->files_cache[$handle] = '';
 		$this->files_cache2[$handle] = '';
@@ -917,7 +918,7 @@ class Template {
 			$cache_time = @filemtime($this->files_cache[$handle]);
 			if(@filemtime($this->files[$handle]) > $cache_time || $board_config['xs_template_time'] > $cache_time)
 			{	
-				// file was changed. don't use cache file (will be recompled if configuration allowes it)
+				// file was changed. don't use cache file (will be recompiled if configuration allowes it)
 				$this->files_cache[$handle] = '';
 			}
 		}

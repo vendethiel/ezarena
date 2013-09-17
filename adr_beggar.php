@@ -88,6 +88,19 @@ if($userdata['user_cell_time']){
 // Get the user infos
 $adr_char = adr_get_user_infos($user_id);
 
+$actual_zone = $adr_char['character_area'];
+
+$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
+       WHERE zone_id = $actual_zone ";
+if( !($result = $db->sql_query($sql)) )
+        message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
+
+$info = $db->sql_fetchrow($result);
+$access = $info['zone_beggar'];
+
+if ( $access == '0' )
+	adr_previous( Adr_zone_building_noaccess , adr_zones , '' );
+
 // Fix the values
 
 

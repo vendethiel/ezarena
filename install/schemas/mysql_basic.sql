@@ -1057,7 +1057,7 @@ INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zo
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (311, 'Home1', '', 'Character Home', 0, '', 'adr_TownMap_Maison', '', 4, 1);
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (312, 'Home2', '', 'Character Home 2', 0, '', 'adr_TownMap_Maison', '', 4, 1);
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (327, 'Rune1', '', 'Rune Stone', 0, '', 'adr_TownMap_pierrerunique', '', 12, 1);
-INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (334, 'Tavern1', '', 'Taverne des guildes', 0, '', 'adr_TownMap_Clan', '', 0, 1);
+INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (334, 'Tavern1', '', 'Clans', 0, '', 'adr_clans', '', 59, 1);
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (340, 'Training1', '', 'Training Grounds', 0, '', 'adr_TownMap_Entrainement', '', 16, 1);
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (341, 'Training2', '', 'Training Grounds2', 0, '', 'adr_TownMap_Entrainement', '', 16, 1);
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (345, 'warehouse1', '', 'Character Warehouse', 0, '', 'adr_TownMap_Entrepot', '', 42, 1);
@@ -1076,6 +1076,7 @@ INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zo
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (357, 'lumberjack', '', 'Lumberjacking', 0, '', 'adr_lumberjack', '', 39, 1);
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (358, 'party', '', 'Party', 0, '', 'adr_party', '', 40, 1);
 INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (359, 'tailor', '', 'Tailoring', 0, '', 'adr_tailor', '', 41, 1);
+INSERT INTO phpbb_adr_zone_buildings (id, name, shop, sdesc, record_id, type, zone_link, zone_name_tag, zone_building_tag_no, zone_building_type) VALUES (359, 'Headquarters', '', 'Headquarters', 0, '', 'adr_clans', '', 59, 1);
 
 INSERT INTO phpbb_adr_zone_maps (zone_id, zonemap_type, zone_world, zonemap_buildings) VALUES (1, 1, 1, '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~zone 1~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Castle~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 INSERT INTO phpbb_adr_zone_maps (zone_id, zonemap_type, zone_world, zonemap_buildings) VALUES (2, 2, 0, '~~~~~~~~~~~~~~Temple~~~Mines~~~~~Town Bank~~~~~~~~~Trees 3~~~Shop~~Battle Arena 2~~~~~Character Warehouse~Trees 2~~Statue~Taverne~~~~~~~Forge~~~~Character Home~~~~~~~~~Pond~Mountain-Left Top~Mountain-Right Top~~~~Trees 1~Village Inn~~~~Mountain-Left Bottom~Mountain-Right Bottom~Magical Cauldron~~~~~~Exit Tower~~Tower of Knowledge~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
@@ -1112,6 +1113,10 @@ INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item
 INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (44, 2000, 'Adr_items_type_fist');
 INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (45, 2000, 'Adr_items_type_axe');
 INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (46, 2000, 'Adr_items_type_spear');
+
+# ADR - Shield prof
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('weapon_prof', 100);
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('shield_bonus', 10);
 
 # Rabbitoshi - levelup penalty
 INSERT INTO `phpbb_rabbitoshi_general` VALUES ('next_level_penalty', 10);

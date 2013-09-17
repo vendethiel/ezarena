@@ -150,6 +150,14 @@ function setCheckboxes(theForm, elementName, isChecked)
 		<td align="center" class="row2"><span class="gen"><input type="post" name="character_thief_limit" value="{THIEF_LIMIT}" size="5"></span></td>
 	</tr>
 	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_FIST} : <input type="post" class="post" name="character_skill_fist_uses" value="{FIST_MIN}" size="5"> / {FIST_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_fist_level" value="{FIST}" size="5"></td>
+	</tr>
+	<tr>
+		<td align="center" class="row1"><span class="gensmall">{L_SHIELD} : <input type="post" class="post" name="character_skill_shield_uses" value="{SHIELD_MIN}" size="5"> / {SHIELD_MAX}</td>
+		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_shield_level" value="{SHIELD}" size="5"></td>
+	</tr>
+	<tr>
 		<td align="center" class="row1"><span class="gensmall">{L_SWORD} : <input type="post" class="post" name="character_skill_sword_uses" value="{SWORD_MIN}" size="5"> / {SWORD_MAX}</td>
 		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_sword_level" value="{SWORD}" size="5"></td>
 	</tr>
@@ -168,10 +176,6 @@ function setCheckboxes(theForm, elementName, isChecked)
 	<tr>
 		<td align="center" class="row1"><span class="gensmall">{L_MACE} : <input type="post" class="post" name="character_skill_mace_uses" value="{MACE_MIN}" size="5"> / {MACE_MAX}</td>
 		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_mace_level" value="{MACE}" size="5"></td>
-	</tr>
-	<tr>
-		<td align="center" class="row1"><span class="gensmall">{L_FIST} : <input type="post" class="post" name="character_skill_fist_uses" value="{FIST_MIN}" size="5"> / {FIST_MAX}</td>
-		<td align="center" class="row2"><span class="gensmall">{L_LEVEL} : <input type="post" class="post" name="character_skill_fist_level" value="{FIST}" size="5"></td>
 	</tr>
 	<tr>
 		<td align="center" class="row1"><span class="gensmall">{L_STAFF} : <input type="post" class="post" name="character_skill_staff_uses" value="{STAFF_MIN}" size="5"> / {STAFF_MAX}</td>

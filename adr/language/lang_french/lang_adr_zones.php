@@ -6,7 +6,7 @@ if ( defined ('IN_ADR_ZONES_ADMIN'))
    $lang['Adr_Zone_acp_title_explain']='Ici vous pouvez créer, editer et supprimer les zones';
    $lang['Adr_Zone_acp_settings_title']='Configurations de base';
    $lang['Adr_Zone_acp_name']='Nom de la zone';
-   $lang['Adr_Zone_acp_name_explain']='Mettez ici le nom de votre zone<br \>Attention les apostrophes causent des erreurs !';
+   $lang['Adr_Zone_acp_name_explain']='Mettez ici le nom de votre zone';
    $lang['Adr_Zone_acp_desc']='Description de la zone';
    $lang['Adr_Zone_acp_desc_explain']='Ajoutez une description à votre zone qui renseignera les personnages du milieu dans lequel ils se trouvent.';
    $lang['Adr_Zone_acp_img']='Image de la zone';

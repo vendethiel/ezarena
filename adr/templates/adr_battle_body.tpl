@@ -88,7 +88,8 @@
 			</td>
                 <td class="row1" width="50%" valign="top">
 			<span class="gensmall"><b>Alignement:</b> {MONSTER_ALIGNMENT}</span><br />
-			<span class="gensmall"><b>&Eacute;lément:</b> {MONSTER_ELEMENT}</span>
+			<span class="gensmall"><b>&Eacute;lément:</b> {MONSTER_ELEMENT}</span><br />
+			<span class="gensmall"><b>Niveau:</b> {MONSTER_LEVEL}</span>
 			</td>
               </tr>
               </table>

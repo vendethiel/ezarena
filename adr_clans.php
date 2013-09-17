@@ -66,6 +66,20 @@ adr_enable_check();
 adr_ban_check($user_id);
 adr_character_created_check($user_id);
 
+$zone_user = adr_get_user_infos($user_id);
+$actual_zone = $zone_user['character_area'];
+
+$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
+       WHERE zone_id = $actual_zone ";
+if( !($result = $db->sql_query($sql)) )
+        message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
+
+$info = $db->sql_fetchrow($result);
+$access = $info['zone_clans'];
+
+if ( $access == '0' )
+	adr_previous( Adr_zone_building_noaccess , adr_zones , '' );
+
 // Clan list
 if((!isset($_GET['action'])) OR ($_GET['action'] == "list")) {
 	$this_title = $lang['clans_title_clanslist'];

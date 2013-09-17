@@ -66,4 +66,5 @@ $lang['Adr_building_Magic Lake'] = 'Lac magique';
 $lang['Adr_building_Jobs'] = 'Tour des métiers';
 $lang['Adr_building_Lumberjacking'] = 'Bûcheronnage';
 $lang['Adr_building_Party'] = 'Groupe';
-$lang['Adr_building_Taillor'] = 'Couture';
+$lang['Adr_building_Tailor'] = 'Couture';
+$lang['Adr_building_Headquarters'] = 'Clans #2';
