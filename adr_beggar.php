@@ -136,7 +136,10 @@ if ($donate)
 	$message = '<img src="adr/images/misc/gift01.jpg"><br /><br />';
 	$message .= sprintf($lang['Adr_beggar_donation_successful'], number_format($donation_amount), $board_config['points_name']).'<br />';
 
-	if($donation_amount >= $adr_general['beggar_min_donation'])
+	$sql = "SELECT item_id FROM " . ADR_BEGGAR_DONATIONS;
+	$result = $db->sql_query($sql);
+
+	if($db->sql_numrows($result) && $donation_amount >= $adr_general['beggar_min_donation'])
 	{
 		$min_chance = round($donation_amount / $adr_general['beggar_chance_increase']);
 		

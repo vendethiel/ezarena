@@ -29,7 +29,6 @@ $zone_extra_buildings = array(
 	'blacksmith' => 'le Forgeron (fabrication)',
 	'brewing' => 'le Brassage',
 	'cauldron' => 'le Chaudron',
-	'clans' => 'les Clans',
 	'cooking' => 'la Cuisine',
 	'fish' => 'la Pêche',
 	'herbal' => 'l\'Herborisme',

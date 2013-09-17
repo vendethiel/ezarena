@@ -443,7 +443,7 @@ Addons :
  - Addon Spells in PvP - Informpro
 
 # ADR : Advanced Zone Restrictions - Informpro
-Etend les restrictions de zones aux pages suivantes :
+Etend les restrictions de zones aux pages suivantes (configurable depuis l'ACP) :
  - beggar
  - blacksmith
  - brewing

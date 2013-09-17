@@ -1889,7 +1889,6 @@ CREATE TABLE phpbb_adr_zones (
   zone_blacksmith int(1) NOT NULL default '0',
   zone_brewing int(1) NOT NULL default '0',
   zone_cauldron int(1) NOT NULL default '0',
-  zone_clans int(1) NOT NULL default '0',
   zone_cooking int(1) NOT NULL default '0',
   zone_fish int(1) NOT NULL default '0',
   zone_herbal int(1) NOT NULL default '0',

@@ -93,6 +93,9 @@ function createReducerFor(elId) {
 .gradualfader:hover {
 	opacity: 1;
 }
+td.disabled {
+	opacity: 0;
+}
 </style>
 <DIV id="TipLayer" style="visibility:hidden;position:absolute;z-index:1000;top:-100;"></DIV>
 </head>

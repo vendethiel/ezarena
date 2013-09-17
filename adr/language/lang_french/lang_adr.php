@@ -18,6 +18,10 @@ $lang['Adr_zone_maps_close_window']='Fermer';
 $lang['Adr_zone_maps_yes'] ='Oui';
 $lang['Adr_zone_maps_no'] ='Non';
 // General language keys
+
+$lang['Adr_TownMap_Beggar_Infos'] = 'La mendiante est une pauvre orpheline n\'ayant eu que peu de chance dans la vie, même si elle était autre fois une prêtresse reconnue.<br/>Essayez de lui donner de l\'argent, vous pourriez vous attirer la grâce des dieux ...';
+$lang['Adr_beggar_donation_successful'] = 'Merci pour votre don, jeune aventurier !';
+
 //ZONE
 $lang['Adr_shops_user_money']='Votre argent';
 $lang['Adr_zone_building_noaccess']='Cette zone ne possède pas ce bâtiment.';

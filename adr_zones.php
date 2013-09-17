@@ -128,6 +128,29 @@ $zone_pointloss1 = $zone['zone_pointloss1'];
 $zone_pointloss2 = $zone['zone_pointloss2'];
 $zone_chance = $zone['zone_chance'];
 
+$has_actions = false;
+$extra_buildings = array(
+	'beggar',
+	'blacksmith',
+	'brewing',
+	'cooking',
+	'fish',
+	'herbal',
+	'hunting',
+	'jobs',
+	'lake',
+	'lumberjack',
+	'research',
+	'tailor',
+);
+foreach ($extra_buildings as $k) {
+	$template->assign_var('ZONE_'.strtoupper($k), $building_enabled = $zone['zone_'.$k]);
+	if ($building_enabled) {
+		$has_actions = true;
+	}
+}
+$template->assign_var('ZONE_HAS_ACTIONS', $has_actions);
+
 // Begin NSEW Nav
 $cost_goto1 = $zone['cost_goto1'];
 $cost_goto2 = $zone['cost_goto2'];
