@@ -224,7 +224,8 @@ function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, 
 	$item_crit_mod = (intval($item_data['item_crit_hit_mod'])) ? intval(2) : intval($item_data['item_crit_hit_mod']);
 
 	// We need to check if this insert is for a stolen item or not
-	if(($type = '1') && ($shop_id > '0')){
+	// V: lol typo.
+	if(($type == '1') && ($shop_id > '0')){
 		$adr_user = adr_get_user_infos($user_id);
 		$stolen_id = $shop_id;
 		$stolen_by = str_replace("\'", "''", $adr_user['character_name']);
@@ -244,6 +245,8 @@ function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, 
 	$result = $db->sql_query($sql);
 	if(!$result){
 		message_die(GENERAL_ERROR, "Couldn't insert new item", "", __LINE__, __FILE__, $sql);}
+
+	return $item_data;
 }
 
 function adr_buy_item($user_id , $item_id , $shop_owner_id , $shop_id , $direct , $nav )

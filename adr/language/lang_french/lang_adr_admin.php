@@ -748,6 +748,15 @@ $lang['Adr_zones_all_stores']='-Toutes les zones-';
 # Loots
 if ( defined ('IN_ADR_LOOTTABLES'))
 {
+    $lang['Adr_admin_loot'] = 'Réglages des objets à obtenir'; 
+    $lang['Adr_admin_mine'] = 'Objets à obtenir à la mine'; 
+    $lang['Adr_admin_fish'] = 'Objets à obtenir à la pêche';
+    $lang['Adr_admin_hunt'] = 'Objets à obtenir à la chasse';
+    $lang['Adr_admin_herb'] = 'Objets à obtenir en herborisme';
+    $lang['Adr_admin_lumber'] = 'Objets à obtenir en bûcheronnage';
+    $lang['Adr_admin_tailor'] = 'Objets à obtenir en couture';
+    $lang['Adr_admin_alchemy'] = 'Objets à obtenir en alchimie';
+
     $lang['Adr_items_loottables_title']='Table de butin';   
     $lang['Adr_items_loottables']='Tables de butin';
     $lang['Adr_items_loottables_explain']='Choisissez les tables de butin auxquelles vous voulez ajouter l\'objet';

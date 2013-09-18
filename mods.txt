@@ -511,6 +511,9 @@ Basé sur le mod de ShadowTek.
 # ADR : Party 1.1 - Spikez
 Ajoute un système de groupe au RPG, avec des bonus configurables.
 
+# ADR : Pet auto-summon 1.0 - Informpro
+Invoque automatiquement votre familier pour le combat.
+
 # ADR : QuestBook System v1.0.2 - Himmelweiss
 Ajoute un système pour garder la liste des quêtes en cours, incluant le nom du PNJ, sa zone, son message, quel objet il vous faut encore ou quel monstre vous devez toujours tuer.
 
@@ -518,6 +521,9 @@ Ajoute un système pour garder la liste des quêtes en cours, incluant le nom du
 Permet aux joueurs de découvrir des informations dans des livres, le tout configurable dans l'ACP.
 Addons :
  - Addon Research Crafting - egdcltd
+
+# ADR : Restrict Char Names against XSS 1.0 - Informpro
+Empêche les joueurs d'utiliser "<", ">" ou "&" dans leur nom d'utilisateur.
 
 # ADR : Shops in multiple zones 1.0-beta - Makien
 Vous permet de choisir dans quelles zones seront les magasins, avec la possibilité d'en choisir plusieurs.
@@ -539,6 +545,12 @@ Addons :
 
 # ADR : Zone shoutbox & Battle Community Integration 1.0.0 - Informpro
 Permet d'utiliser la chatbox communautaire plutôt que la chatbox du zone_mod.
+
+# ADR : Zone Loottable for Gather Skills 1.1-beta - St Gryphon
+
+Addons :
+ - Addon Fix Zone infos - Informpro
+ - Addon pour Tailor + Alchemy - Informpro
 
 # ADR (ST) : Armor Sets 0.1.5 - Seteo-Bloke
 Permet de créer des panoplies d'armures à équiper.
@@ -579,6 +591,7 @@ Parfaitement intégré à ADR.
 (mis à jour depuis la version 2.0 de la prémode ADR)
 Addons :
  - Fix adr_battle not changing turn when rabbit's playing - Informpro
+ - Addon adr_battle display enhancement - Informpro
 
 # Rabbitoshi : Fix for vanishing Pets
 Empêche les familiers de disparaître lors du refus de resurrection. Vous devrez le ressuciter pour l'abandonner ou le vendre.

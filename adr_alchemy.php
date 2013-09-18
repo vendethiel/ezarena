@@ -127,26 +127,22 @@ if ( $mode != "" )
 			}
 			else
 			{	
-				$new_item_id = adr_use_skill_alchemy($user_id , $tool);
+			    //Tool gets used even if character doesn't find anything
+			    adr_use_item($tool , $user_id);
+				$item = drop_gather_loot($area_id, $user_id, 'herbalism', #N#);
 
-				if ( !$new_item_id )
+				if ( !$item )
 				{
-					adr_previous ( Adr_forge_alchemy_failure , adr_alchemy , "mode=alchemy" );
-				}
-				else
-				{
-					$sql = " SELECT item_name , item_price FROM " . ADR_SHOPS_ITEMS_TABLE . "
-						WHERE item_owner_id = $user_id 
-						AND item_in_warehouse = 0
-						AND item_id = $new_item_id ";
-					if ( !($result = $db->sql_query($sql)))	{
-						message_die(GENERAL_ERROR, 'Could not check user tools',"", __LINE__, __FILE__, $sql); }
-					$new_item = $db->sql_fetchrow($result);
-
+					include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
 					$direction = append_sid("adr_alchemy.$phpEx?mode=alchemy");
-					$message = sprintf($lang['Adr_forge_alchemy_success'] , adr_get_lang($new_item['item_name']) , $new_item['item_price'] , get_reward_name() );
+					$message .= "Vous n'avez rien trouvé.";
 					$message .= '<br /><br />'.sprintf($lang['Adr_return'],"<a href=\"" . $direction . "\">", "</a>") ;
 
+					message_die ( GENERAL_MESSAGE , $message );
+				}
+				else{
+					include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
+					$message = $item . '<br /><br />'.sprintf($lang['Adr_return'],"<a href=\"" . $direction . "\">", "</a>") ;								
 					message_die ( GENERAL_MESSAGE , $message );
 				}
 			}

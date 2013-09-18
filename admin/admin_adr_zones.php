@@ -172,10 +172,37 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 			'ROW_CLASS' => $row_class == 2 ? $row_class = 1 : $row_class = 2,
 		));
 	}
+
+	//Loottables list
+	$mine_loottables_list = adr_create_gather_list($zones, 'mining');
+	$fish_loottables_list = adr_create_gather_list($zones, 'fishing');
+	$herb_loottables_list = adr_create_gather_list($zones, 'herbal');
+	$hunt_loottables_list = adr_create_gather_list($zones, 'hunting');
+	$lumber_loottables_list = adr_create_gather_list($zones, 'lumberjack');	
+	$tailor_loottables_list = adr_create_gather_list($zones, 'tailor');	
+	$alchemy_loottables_list = adr_create_gather_list($zones, 'alchemy');	
+
 	//
 	//END lists
 	//	
+
 	$template->assign_vars(array(
+		"ZONE_MINE_LOOT" => $mine_loottables_list,
+		"ZONE_FISH_LOOT" => $fish_loottables_list,
+		"ZONE_HUNT_LOOT" => $hunt_loottables_list,
+		"ZONE_HERB_LOOT" => $herb_loottables_list,		
+		"ZONE_LUMBER_LOOT" => $lumber_loottables_list,		
+		"ZONE_TAILOR_LOOT" => $tailor_loottables_list,		
+		"ZONE_ALCHEMY_LOOT" => $alchemy_loottables_list,		
+		"L_ZONE_MINE_LOOT" => $lang['Adr_admin_mine'],
+		"L_ZONE_FISH_LOOT" => $lang['Adr_admin_fish'],
+		"L_ZONE_HUNT_LOOT" => $lang['Adr_admin_hunt'],
+		"L_ZONE_HERB_LOOT" => $lang['Adr_admin_herb'],
+		"L_ZONE_LUMBER_LOOT" => $lang['Adr_admin_lumber'],
+		"L_ZONE_TAILOR_LOOT" => $lang['Adr_admin_lumber'],
+		"L_ZONE_ALCHEMY_LOOT" => $lang['Adr_admin_lumber'],
+		"L_ZONE_LOOT" => $lang['Adr_admin_loot'],		
+		"L_ZONE_MULTI" => $lang['Adr_admin_maps_zonemap_cell_ctrl'],
 		// V: set defaults ...
 		'ZONE_COSTRETURN' => 0,
 		'ZONE_COSTDESTINATION2' => 0,
@@ -447,10 +474,6 @@ else if ( $mode != "" )
 			}
 			$monsters_list .= '</select>';
 
-			//
-			//END lists
-			//
-
 			// V: Advanced building restrictions
 			$row_class = 1;
 			foreach ($zone_extra_buildings as $k => $lang_key)
@@ -464,7 +487,36 @@ else if ( $mode != "" )
 				));
 			}
 
+			//Loottables list
+			$mine_loottables_list = adr_create_gather_list($zones, 'mining');
+			$fish_loottables_list = adr_create_gather_list($zones, 'fishing');
+			$herb_loottables_list = adr_create_gather_list($zones, 'herbal');
+			$hunt_loottables_list = adr_create_gather_list($zones, 'hunting');
+			$lumber_loottables_list = adr_create_gather_list($zones, 'lumberjack');	
+			$tailor_loottables_list = adr_create_gather_list($zones, 'tailor');	
+			$alchemy_loottables_list = adr_create_gather_list($zones, 'alchemy');	
+
+			//
+			//END lists
+			//	
+
 			$template->assign_vars(array(
+				"ZONE_MINE_LOOT" => $mine_loottables_list,
+				"ZONE_FISH_LOOT" => $fish_loottables_list,
+				"ZONE_HUNT_LOOT" => $hunt_loottables_list,
+				"ZONE_HERB_LOOT" => $herb_loottables_list,		
+				"ZONE_LUMBER_LOOT" => $lumber_loottables_list,		
+				"ZONE_TAILOR_LOOT" => $tailor_loottables_list,		
+				"ZONE_ALCHEMY_LOOT" => $alchemy_loottables_list,		
+				"L_ZONE_MINE_LOOT" => $lang['Adr_admin_mine'],
+				"L_ZONE_FISH_LOOT" => $lang['Adr_admin_fish'],
+				"L_ZONE_HUNT_LOOT" => $lang['Adr_admin_hunt'],
+				"L_ZONE_HERB_LOOT" => $lang['Adr_admin_herb'],
+				"L_ZONE_LUMBER_LOOT" => $lang['Adr_admin_lumber'],
+				"L_ZONE_TAILOR_LOOT" => $lang['Adr_admin_lumber'],
+				"L_ZONE_ALCHEMY_LOOT" => $lang['Adr_admin_lumber'],
+				"L_ZONE_LOOT" => $lang['Adr_admin_loot'],		
+				"L_ZONE_MULTI" => $lang['Adr_admin_maps_zonemap_cell_ctrl'],
 				"ZONE_LEVEL" => $zones['zone_level'],
 
 				"ZONE_NAME" => $zones['zone_name'],
@@ -647,6 +699,22 @@ else if ( $mode != "" )
 					$monsters_list .= ( $monsters_list == '' ) ? $monsters[$a] : ", ".$monsters[$a];
 			}
 
+			$mine_loottables = $db->sql_escape($HTTP_POST_VARS['mineing_loottables']);
+			$fish_loottables = $db->sql_escape($HTTP_POST_VARS['fishing_loottables']);
+			$herb_loottables = $db->sql_escape($HTTP_POST_VARS['herbal_loottables']);
+			$hunt_loottables = $db->sql_escape($HTTP_POST_VARS['hunting_loottables']);
+			$lumber_loottables = $db->sql_escape($HTTP_POST_VARS['lumberjack_loottables']);
+			$tailor_loottables = $db->sql_escape($HTTP_POST_VARS['tailor_loottables']);
+			$alchemy_loottables = $db->sql_escape($HTTP_POST_VARS['alchemy_loottables']);
+			
+			$mine_loottables_list = adr_save_gather_list($mine_loottables);
+			$fish_loottables_list = adr_save_gather_list($fish_loottables);
+			$herb_loottables_list = adr_save_gather_list($herb_loottables);
+			$hunt_loottables_list = adr_save_gather_list($hunt_loottables);
+			$lumber_loottables_list = adr_save_gather_list($lumber_loottables);
+			$tailor_loottables_list = adr_save_gather_list($tailor_loottables);
+			$alchemy_loottables_list = adr_save_gather_list($alchemy_loottables);
+
 			// || $goto1 == ''  || $cost1 == ''
 			if ( $name == '' || $description == '' || $element == '' || $cost2 == '' || $cost3 == '' || $cost4 == '' || $costreturn == '' || $pointwin1 == '' || $pointwin2 == '' || $pointloss1 == '' || $pointloss2 == '' || $chance == '' )
 				adr_previous( Fields_empty , admin_adr_zones , '' );
@@ -694,6 +762,13 @@ else if ( $mode != "" )
 				zone_pointloss1 = '$pointloss1',
 				zone_pointloss2 = '$pointloss2',
 				zone_chance = '$chance',
+				zone_mining_table = '" . $mine_loottables_list . "',
+				zone_herbal_table = '" . $herb_loottables_list . "',
+				zone_hunting_table = '" . $hunt_loottables_list . "',
+				zone_fishing_table = '" . $fish_loottables_list . "',
+				zone_lumberjack_table = '" . $lumber_loottables_list . "',
+				zone_tailor_table = '" . $tailor_loottables_list . "',
+				zone_alchemy_table = '" . $alchemy_loottables_list . "',
 				$extra_buildings_sql
 				zone_level = '$level'
 				WHERE zone_id = '$zone_id'";
@@ -768,6 +843,22 @@ else if ( $mode != "" )
 					$monsters_list .= ( $monsters_list == '' ) ? $monsters[$a] : ", ".$monsters[$a];
 			}
 
+			$mine_loottables = $db->sql_escape($HTTP_POST_VARS['mineing_loottables']);
+			$fish_loottables = $db->sql_escape($HTTP_POST_VARS['fishing_loottables']);
+			$herb_loottables = $db->sql_escape($HTTP_POST_VARS['herbal_loottables']);
+			$hunt_loottables = $db->sql_escape($HTTP_POST_VARS['hunting_loottables']);
+			$lumber_loottables = $db->sql_escape($HTTP_POST_VARS['lumberjack_loottables']);
+			$tailor_loottables = $db->sql_escape($HTTP_POST_VARS['tailor_loottables']);
+			$alchemy_loottables = $db->sql_escape($HTTP_POST_VARS['alchemy_loottables']);
+			
+			$mine_loottables_list = adr_save_gather_list($mine_loottables);
+			$fish_loottables_list = adr_save_gather_list($fish_loottables);
+			$herb_loottables_list = adr_save_gather_list($herb_loottables);
+			$hunt_loottables_list = adr_save_gather_list($hunt_loottables);
+			$lumber_loottables_list = adr_save_gather_list($lumber_loottables);
+			$tailor_loottables_list = adr_save_gather_list($tailor_loottables);
+			$alchemy_loottables_list = adr_save_gather_list($alchemy_loottables);
+
 			//$goto1 == '' || $cost1 == ''
 			if ( $name == '' || $description == '' || $element == '' || $cost2 == '' || $cost3 == '' || $cost4 == '' || $costreturn == '' || $pointwin1 == '' || $pointwin2 == '' || $pointloss1 == '' || $pointloss2 == '' || $chance == '' )
 				adr_previous( Fields_empty , admin_adr_zones , '' );
@@ -780,8 +871,8 @@ else if ( $mode != "" )
 			}
 
 			$sql = "INSERT INTO " . ADR_ZONES_TABLE . " 
-				( zone_id , zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto2, cost_goto3, cost_goto4, cost_return, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, zone_mine, zone_enchant, zone_monsters_list , zone_level $extra_buildings_keys )
-				VALUES ( '$zone_id' ,'" . str_replace("\'", "''", $name) . "','" . str_replace("\'", "''", $description) . "', '" . str_replace("\'", "''", $image) . "' , '" . str_replace("\'", "''", $element) . "', '" . str_replace("\'", "''", $item) . "' , '$cost2' , '$cost3' , '$cost4' , '$costreturn' , '" . str_replace("\'", "''", $goto2) . "' , '" . str_replace("\'", "''", $goto3) . "' , '" . str_replace("\'", "''", $goto4) . "' , '" . str_replace("\'", "''", $return) . "', '$shops' , '$forge' , '$prison' , '$temple' , '$bank' , '$event1' , '$event2' , '$event3' , '$event4' , '$event5' , '$event6' , '$event7' , '$event8' , '$pointwin1' , '$pointwin2' , '$pointloss1' , '$pointloss2' , '$chance' , '$mine' , '$enchant', '" . $monsters_list . "' , '$level' $extra_buildings_values )";
+				( zone_id , zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto2, cost_goto3, cost_goto4, cost_return, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, zone_mine, zone_enchant, zone_monsters_list , zone_level $extra_buildings_keyszone_mining_table, zone_fishing_table, zone_hunting_table, zone_herbal_table, zone_lumberjack_table, zone_tailor_table, zone_alchemy_table )
+				VALUES ( '$zone_id' ,'" . str_replace("\'", "''", $name) . "','" . str_replace("\'", "''", $description) . "', '" . str_replace("\'", "''", $image) . "' , '" . str_replace("\'", "''", $element) . "', '" . str_replace("\'", "''", $item) . "' , '$cost2' , '$cost3' , '$cost4' , '$costreturn' , '" . str_replace("\'", "''", $goto2) . "' , '" . str_replace("\'", "''", $goto3) . "' , '" . str_replace("\'", "''", $goto4) . "' , '" . str_replace("\'", "''", $return) . "', '$shops' , '$forge' , '$prison' , '$temple' , '$bank' , '$event1' , '$event2' , '$event3' , '$event4' , '$event5' , '$event6' , '$event7' , '$event8' , '$pointwin1' , '$pointwin2' , '$pointloss1' , '$pointloss2' , '$chance' , '$mine' , '$enchant', '" . $monsters_list . "' , '$level' $extra_buildings_values, '" . $mine_loottables . "', '" . $fish_loottables . "', '" . $hunt_loottables . "', '" . $herbal_loottables . "', '" . $lumberjack_loottables . "', '$tailor_loottables', '$alchemy_loottables' )";
 			$result = $db->sql_query($sql);
 			if( !$result )
 				message_die(GENERAL_ERROR, "Couldn't insert new zones", "", __LINE__, __FILE__, $sql);
@@ -858,4 +949,48 @@ else
 	include_once('./page_footer_admin.'.$phpEx);
 }
 
-?>
+function adr_save_gather_list ($loottables){
+	$selected_loottables = count($loottables);
+	if ( $selected_loottables == 0 )
+		$loottables_list = '';
+	elseif ( in_array('0',$loottables) )
+		$loottables_list = '0';
+	else
+	{
+		sort($loottables);
+		$loottables_list = '';
+		for ($a = 0; $a < $loottables; $a++)
+			$loottables_list .= ( $loottables_list == '' ) ? $loottables[$a] : ":".$loottables[$a];
+	}	
+	return $loottables_list;
+}
+
+function adr_create_gather_list($zones, $type)
+{
+	global $db;
+	//Loottables list
+	$sql = "SELECT * FROM " . ADR_LOOTTABLES_TABLE."
+		ORDER BY loottable_name ASC";
+	$result = $db->sql_query($sql); 
+	if( !$result ) 
+	{ 
+		message_die(GENERAL_ERROR, 'Could not obtain loottables information', "", __LINE__, __FILE__, $sql); 
+	} 
+	$the_loottables = $db->sql_fetchrowset($result); 
+
+	$existing_loottables = explode(":",$zones[$i]['zone_' . $type . '_table']);
+
+	$the_loottables_list = '<select name="' . $type .'_loottables[]" size="15" multiple>'; 
+	if( in_array('0',$existing_loottables) )
+		$selected_no_loottables = 'selected';
+	$the_loottables_list .= '<option value = "0" '.$selected_no_loottables.'>'.$lang['Adr_no_loottable'].'</option>'; 
+	for( $q = 0; $q < count($the_loottables); $q++ ) 
+	{ 
+		if( in_array($the_loottables[$q]['loottable_id'], $existing_loottables) && !isset($selected_no_loottables) )
+		$selected_loottables = 'selected';
+		$the_loottables_list .= '<option value = "'.$the_loottables[$q]['loottable_id'].'" '.$selected_loottables.'>'.adr_get_lang($the_loottables[$q]['loottable_name']).'</option>'; 
+		$selected_loottables = '';
+	}
+	$the_loottables_list .= '</select>';
+	return $the_lootables_list;
+}

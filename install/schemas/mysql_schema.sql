@@ -1880,11 +1880,15 @@ CREATE TABLE phpbb_adr_zones (
   goto3_name varchar(255) NOT NULL default '',
   goto4_name varchar(255) NOT NULL default '',
   return_name varchar(255) NOT NULL default '',
+
   zone_shops int(1) NOT NULL default '0',
   zone_forge int(1) NOT NULL default '0',
   zone_prison int(1) NOT NULL default '0',
   zone_temple int(1) NOT NULL default '0',
   zone_bank int(1) NOT NULL default '0',
+  zone_mine int(1) NOT NULL default '0',
+  zone_enchant int(1) NOT NULL default '0',
+
   zone_beggar int(1) NOT NULL default '0',
   zone_blacksmith int(1) NOT NULL default '0',
   zone_brewing int(1) NOT NULL default '0',
@@ -1898,6 +1902,7 @@ CREATE TABLE phpbb_adr_zones (
   zone_lumberjack int(1) NOT NULL default '0',
   zone_research int(1) NOT NULL default '0',
   zone_tailor int(1) NOT NULL default '0',
+
   zone_event1 int(1) NOT NULL default '0',
   zone_event2 int(1) NOT NULL default '0',
   zone_event3 int(1) NOT NULL default '0',
@@ -1911,8 +1916,14 @@ CREATE TABLE phpbb_adr_zones (
   zone_pointloss1 int(8) NOT NULL default '0',
   zone_pointloss2 int(8) NOT NULL default '0',
   zone_chance int(8) NOT NULL default '0',
-  zone_mine int(1) NOT NULL default '0',
-  zone_enchant int(1) NOT NULL default '0',
+
+  `zone_mining_table` TEXT NOT NULL,
+  `zone_fishing_table` TEXT NOT NULL,
+  `zone_hunting_table` TEXT NOT NULL,
+  `zone_herbal_table` TEXT NOT NULL,
+  `zone_lumberjack_table` TEXT NOT NULL,
+  `zone_tailor_table` TEXT NOT NULL,
+  `zone_alchemy_table` TEXT NOT NULL,
   PRIMARY KEY  (zone_id)
 ) ;
 

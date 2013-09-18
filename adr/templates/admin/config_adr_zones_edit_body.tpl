@@ -136,7 +136,41 @@
 	</tr>
 	<!-- END extra_building -->
 </table>
+<br clear="all" />
 
+<table class="forumline" cellspacing="1" cellpadding="4" border="0" align="center" width="100%">
+	<tr>
+		<th align="center" colspan="10" ><u>{L_ZONE_LOOT}</u></td>
+	</tr>
+ 	<tr>
+		<td class="row1" width="60%" ><b>{L_ZONE_MINE_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row1" align="center" ><span class="gen">{ZONE_MINE_LOOT}</span></td>
+	</tr>
+	<tr>
+		<td class="row2" width="60%" ><b>{L_ZONE_FISH_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row2" align="center" ><span class="gen">{ZONE_FISH_LOOT}</span></td>
+	</tr>
+	<tr>
+		<td class="row1" width="60%" ><b>{L_ZONE_HUNT_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row1" align="center" ><span class="gen">{ZONE_HUNT_LOOT}</span></td>
+	</tr>
+	<tr>
+		<td class="row2" width="60%" ><b>{L_ZONE_HERB_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row2" align="center" ><span class="gen">{ZONE_HERB_LOOT}</span></td>
+	</tr>
+	<tr>
+		<td class="row1" width="60%" ><b>{L_ZONE_LUMBER_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row1" align="center" ><span class="gen">{ZONE_LUMBER_LOOT}</span></td>
+	</tr>
+	<tr>
+		<td class="row2" width="60%" ><b>{L_ZONE_TAILOR_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row2" align="center" ><span class="gen">{ZONE_TAILOR_LOOT}</span></td>
+	</tr>
+	<tr>
+		<td class="row1" width="60%" ><b>{L_ZONE_ALCHEMY_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row1" align="center" ><span class="gen">{ZONE_ALCHEMY_LOOT}</span></td>
+	</tr>
+</table>
 <br clear="all" />
 
 <table class="forumline" cellspacing="1" cellpadding="4" border="0" align="center" width="100%">
