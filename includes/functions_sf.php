@@ -296,7 +296,7 @@ function _sf_display_nav($forum_id, $tpl_switch='')
 					AND f.cat_id = c.cat_id
 					AND f.forum_order <= fo.forum_order
 				ORDER BY f.forum_order DESC';
-	if ( !($result = $db->sql_query($sql)) )
+	if ( !($result = $db->sql_query($sql, false, 'forums')) )
 	{
 		message_die(GENERAL_ERROR, 'Could not query forums data', '', __LINE__, __FILE__, $sql);
 	}

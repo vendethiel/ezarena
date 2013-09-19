@@ -917,6 +917,12 @@ function drop_gather_loot($zone_id, $user_id, $type, $skill_number)
 	//build zone check from table 
 	$loot_to_find = 'zone_' .$type . '_table';
 
+	// V: return early
+	if ($zone[$loot_to_find] == '' || $zone[$loot_to_find] == '0')
+	{ // return empty
+		return null;
+	}
+
 	$zone_loottables = explode(':',$zone[$loot_to_find]);
 
 	$sql = "SELECT * FROM " . ADR_SKILLS_TABLE ."

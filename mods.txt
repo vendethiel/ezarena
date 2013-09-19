@@ -547,8 +547,9 @@ Addons :
 Permet d'utiliser la chatbox communautaire plutôt que la chatbox du zone_mod.
 
 # ADR : Zone Loottable for Gather Skills 1.1-beta - St Gryphon
-
+Permet d'assigner des tables de butin pour les compétences de zone (pêche, chasse, etc).
 Addons :
+ - Addon Fix Admin (several typos + inf. loop + lang keys) - Informpro
  - Addon Fix Zone infos - Informpro
  - Addon pour Tailor + Alchemy - Informpro
 
@@ -590,7 +591,7 @@ Ajoute un système d'animalerie complet, intégré à ADR.
 Parfaitement intégré à ADR.
 (mis à jour depuis la version 2.0 de la prémode ADR)
 Addons :
- - Fix adr_battle not changing turn when rabbit's playing - Informpro
+ - Addon Fix adr_battle not changing turn when rabbit's playing - Informpro
  - Addon adr_battle display enhancement - Informpro
 
 # Rabbitoshi : Fix for vanishing Pets

@@ -13,6 +13,8 @@ if ( !defined ('IN_ADR_ADMIN') )
     return;
 }
 
+$lang['ADR_THIS_IS_LOOTTABLES'] = 'Note : cette liste est la liste des <b>tables de butin</b>.<br/>Vous pouvez les modifier dans l\'onglet "Objet" puis "Tables de butin".<br/>';
+
 if ( defined ('IN_ADR_CHARACTER'))
 {
     //ZONE
@@ -748,6 +750,7 @@ $lang['Adr_zones_all_stores']='-Toutes les zones-';
 # Loots
 if ( defined ('IN_ADR_LOOTTABLES'))
 {
+    $lang['Adr_no_loottable'] = 'Pas de table de butin';
     $lang['Adr_admin_loot'] = 'Réglages des objets à obtenir'; 
     $lang['Adr_admin_mine'] = 'Objets à obtenir à la mine'; 
     $lang['Adr_admin_fish'] = 'Objets à obtenir à la pêche';

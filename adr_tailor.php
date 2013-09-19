@@ -89,6 +89,11 @@ if ( $adr_general['Adr_character_limit_enable'] != 0 && $limit_update['character
 	adr_previous ( Adr_skill_limit , adr_character , '' );
 }
 
+$InfoTailor = $HTTP_POST_VARS['InfoTailor'];
+
+if ( $InfoTailor ){
+	adr_previous( Adr_Tailor_Infos , adr_tailor , '' );}
+
 if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
 {
 	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
@@ -170,12 +175,7 @@ else
 {
 	$template->assign_block_vars('main',array());
 }
-// Fix the values
 
-$InfoTailor = $HTTP_POST_VARS['InfoTailor'];
-
-if ( $InfoTailor ){
-	adr_previous( Adr_Tailor_Infos , adr_tailor , '' );}
 $template->assign_vars(array(
 	'L_CREATE_ITEM' => $lang['Adr_tailoring_create'],
 	'L_TAILORING' => $lang['Adr_forge_tailoring'],

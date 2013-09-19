@@ -188,8 +188,11 @@ $order_sql = (!$post_id) ? '' : "GROUP BY p.post_id, t.topic_id, t.topic_title, 
 
 $sql = "SELECT t.topic_id, t.topic_title, t.topic_attribute, t.topic_poster, t.topic_status, t.topic_replies, t.topic_time, t.topic_type, t.topic_vote, t.topic_last_post_id,
 		f.forum_name, f.forum_status, f.forum_password, f.forum_id, f.auth_view, f.auth_read, f.auth_post, f.auth_reply, f.auth_edit, f.auth_delete, f.auth_sticky, f.auth_announce, f.auth_pollcreate, f.auth_vote, f.auth_attachments, f.auth_ban, f.auth_greencard, f.auth_bluecard
+		" . ($userdata['session_logged_in'] ? ', tw.notify_status' : '') . "
 		" . $count_sql . "
-	FROM " . TOPICS_TABLE . " t, " . FORUMS_TABLE . " f" . $join_sql_table . "
+	FROM " . TOPICS_TABLE . " t,
+		" . FORUMS_TABLE . " f " . $join_sql_table . "
+		" . ($userdata['session_logged_in'] ? "LEFT JOIN " . TOPICS_WATCH_TABLE . " tw ON tw.topic_id = $topic_id AND tw.user_id = ".$userdata['user_id']:'')."
 	WHERE $join_sql
 		AND f.forum_id = t.forum_id
 		$order_sql";
@@ -208,6 +211,7 @@ if ( !($forum_topic_data = $db->sql_fetchrow($result)) )
 {
 	message_die(GENERAL_MESSAGE, 'Topic_post_not_exist');
 }
+$notify_status = $forum_topic_data['notify_status'];
 
 $forum_id = intval($forum_topic_data['forum_id']);
 
@@ -325,57 +329,43 @@ if ( $phpbb_seo->do_redir || ( $postorder_redir &&  strpos($uri, 'watch=') === F
 //
 if( $userdata['session_logged_in'] )
 {
-	$can_watch_topic = TRUE;
-
-	$sql = "SELECT notify_status
-		FROM " . TOPICS_WATCH_TABLE . "
-		WHERE topic_id = $topic_id
-			AND user_id = " . $userdata['user_id'];
-	if ( !($result = $db->sql_query($sql)) )
+	if ( isset($HTTP_GET_VARS['unwatch']) )
 	{
-		message_die(GENERAL_ERROR, "Could not obtain topic watch information", '', __LINE__, __FILE__, $sql);
-	}
-
-	if ( $row = $db->sql_fetchrow($result) )
-	{
-		if ( isset($HTTP_GET_VARS['unwatch']) )
+		if ( $HTTP_GET_VARS['unwatch'] == 'topic' )
 		{
-			if ( $HTTP_GET_VARS['unwatch'] == 'topic' )
-			{
-				$is_watching_topic = 0;
+			$is_watching_topic = 0;
 
-				$sql_priority = (SQL_LAYER == "mysql") ? "LOW_PRIORITY" : '';
-				$sql = "DELETE $sql_priority FROM " . TOPICS_WATCH_TABLE . "
-					WHERE topic_id = $topic_id
-						AND user_id = " . $userdata['user_id'];
-				if ( !($result = $db->sql_query($sql)) )
-				{
-					message_die(GENERAL_ERROR, "Could not delete topic watch information", '', __LINE__, __FILE__, $sql);
-				}
+			$sql_priority = (SQL_LAYER == "mysql") ? "LOW_PRIORITY" : '';
+			$sql = "DELETE $sql_priority FROM " . TOPICS_WATCH_TABLE . "
+				WHERE topic_id = $topic_id
+					AND user_id = " . $userdata['user_id'];
+			if ( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, "Could not delete topic watch information", '', __LINE__, __FILE__, $sql);
 			}
-
-			$template->assign_vars(array(
-				'META' => '<meta http-equiv="refresh" content="3;url=' . append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;start=$start") . '">')
-			);
-
-			$message = $lang['No_longer_watching'] . '<br /><br />' . sprintf($lang['Click_return_topic'], '<a href="' . append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;start=$start") . '">', '</a>');
-			message_die(GENERAL_MESSAGE, $message);
 		}
-		else
-		{
-			$is_watching_topic = TRUE;
 
-			if ( $row['notify_status'] )
+		$template->assign_vars(array(
+			'META' => '<meta http-equiv="refresh" content="3;url=' . append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;start=$start") . '">')
+		);
+
+		$message = $lang['No_longer_watching'] . '<br /><br />' . sprintf($lang['Click_return_topic'], '<a href="' . append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;start=$start") . '">', '</a>');
+		message_die(GENERAL_MESSAGE, $message);
+	}
+	else if ($notify_status != NULL)
+	{
+		$is_watching_topic = TRUE;
+
+		if ( $notify_status )
+		{
+			$sql_priority = (SQL_LAYER == "mysql") ? "LOW_PRIORITY" : '';
+			$sql = "UPDATE $sql_priority " . TOPICS_WATCH_TABLE . "
+				SET notify_status = 0
+				WHERE topic_id = $topic_id
+					AND user_id = " . $userdata['user_id'];
+			if ( !($result = $db->sql_query($sql)) )
 			{
-				$sql_priority = (SQL_LAYER == "mysql") ? "LOW_PRIORITY" : '';
-				$sql = "UPDATE $sql_priority " . TOPICS_WATCH_TABLE . "
-					SET notify_status = 0
-					WHERE topic_id = $topic_id
-						AND user_id = " . $userdata['user_id'];
-				if ( !($result = $db->sql_query($sql)) )
-				{
-					message_die(GENERAL_ERROR, "Could not update topic watch information", '', __LINE__, __FILE__, $sql);
-				}
+				message_die(GENERAL_ERROR, "Could not update topic watch information", '', __LINE__, __FILE__, $sql);
 			}
 		}
 	}
@@ -426,8 +416,8 @@ else
 }
 //-- mod : addon hide for bbcbxr -----------------------------------------------
 //-- add
-$valid = FALSE;
-if( $userdata['session_logged_in'] )
+$valid = $is_auth['auth_mod'];
+if( $userdata['session_logged_in'] && !$is_auth['auth_mod'] )
 {
   $sql = "SELECT p.poster_id, p.topic_id
     FROM " . POSTS_TABLE . " p

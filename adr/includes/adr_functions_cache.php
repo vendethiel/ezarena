@@ -112,6 +112,7 @@ function adr_update_posters_infos()
 	global $db, $lang, $phpEx, $userdata, $phpbb_root_path, $table_prefix;
 
 	define('IN_ADR_CHARACTER', 1);
+	$db->clear_cache('adr_chars');
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 
 	$template = new Template($phpbb_root_path);
@@ -153,7 +154,7 @@ function adr_update_posters_infos()
 		));
 		$x = ($x + 1);
 	}
-
+	$db->clear_cache('adr_chars');
 	$template->assign_var_from_handle('cache', 'cache');
 	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?>";
 
@@ -248,7 +249,7 @@ function adr_update_skills()
 
 	$sql = "SELECT * FROM  " . ADR_SKILLS_TABLE . "
 		ORDER BY skill_id";
-	if (!$result = $db->sql_query($sql))
+	if (!$result = $db->sql_query($sql, false))
 	{
 		message_die(GENERAL_ERROR, 'Unable to query skill infos (updating cache)', '', __LINE__, __FILE__, $sql);
 	}
@@ -278,6 +279,7 @@ function adr_update_skills()
 		// $x = ($x + 1);
 	}
 
+	$db->sql_freeresult($result);
 	$template->assign_var_from_handle('cache', 'cache');
 	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?>";
 

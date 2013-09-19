@@ -27,7 +27,7 @@ define('IN_ADR_CHARACTER', 1);
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);
-	$module['Adr_battle']['Loottable_Categories'] = $filename;
+	$module['Adr_Items']['Loottable_Categories'] = $filename;
 	// $module['ADR_Loot_System']['Loottable_Categories'] = $filename;
 
 	return;

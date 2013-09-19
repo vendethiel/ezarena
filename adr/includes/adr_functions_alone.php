@@ -183,8 +183,9 @@ function adr_get_posters_char_info()
 	include_once($phpbb_root_path .'adr/includes/adr_constants.'. $phpEx);
 
 	$q = "SELECT * FROM ". ADR_CHARACTERS_TABLE;
-	$r = $db->sql_query($q, false);
+	$r = $db->sql_query($q, false, 'adr_chars');
 	$char = $db->sql_fetchrowset($r);
+	$db->sql_freeresult($r);
 
 	return $char;
 }
@@ -250,15 +251,20 @@ function character_rank_info()
 	include_once($phpbb_root_path .'adr/includes/adr_constants.'. $phpEx);
 	define('IN_ADR_CHARACTER', 1);
 
-	$q = "SELECT character_id, SUM(character_victories + character_defeats + character_flees) AS most_active
-		  FROM ". ADR_CHARACTERS_TABLE ."
-		  GROUP BY character_id
-		  ORDER BY most_active DESC";
-	if (!$r = $db->sql_query($q))
-		message_die(GENERAL_ERROR, 'Error Sorting ADR Ranks.', '', __LINE__, __FILE__, $q);
-	$ranks = $db->sql_fetchrowset($r);
+	static $r;
+	if ($r === null)
+	{
+		$sql = "SELECT character_id, SUM(character_victories + character_defeats + character_flees) AS most_active
+			  FROM ". ADR_CHARACTERS_TABLE ."
+			  GROUP BY character_id
+			  ORDER BY most_active DESC";
+		if (!$result = $db->sql_query($sql, false, 'adr_chars'))
+			message_die(GENERAL_ERROR, 'Error Sorting ADR Ranks.', '', __LINE__, __FILE__, $q);
+		$r = $db->sql_fetchrowset($result);
+		$db->sql_freeresult($result);
+	}
 
-	return $ranks;
+	return $r;
 }
 
 function adr_display_poster_infos($poster_id, $character_info, $race_info, $element_info, $class_info, $alignment_info, $pvp_info, $adr_con_info, $job_info, $user_cell_time)

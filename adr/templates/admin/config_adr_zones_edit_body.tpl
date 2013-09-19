@@ -22,11 +22,11 @@
 		<td class="row1" align="center" ><input type="text" name="zone_img" value="{ZONE_IMG}" size="63" maxlength="255" /></td>
 	</tr>
 	<tr>
-		<td class="row2" width="60%" ><b>{L_ZONE_ELEMENT} :</b><br \>{L_ZONE_ELEMENT_EXPLAIN}</td>
+		<td class="row2" width="60%" ><b>{L_ZONE_ELEMENT} :</b><br />{L_ZONE_ELEMENT_EXPLAIN}</td>
 		<td class="row2" align="center" ><span class="gen">{ZONE_ELEMENT}</span></td>
 	</tr>
 	<tr>
-		<td class="row1" width="60%" ><b>{L_ZONE_ITEM} :</b><br \>{L_ZONE_ITEM_EXPLAIN}</td>
+		<td class="row1" width="60%" ><b>{L_ZONE_ITEM} :</b><br />{L_ZONE_ITEM_EXPLAIN}</td>
 		<td class="row1" align="center" ><span class="gen">{ZONE_ITEM}</span></td>
 	</tr>
 	<tr>
@@ -42,7 +42,7 @@
 		<th align="center" colspan="10" ><u>{L_ZONE_CONFIG}</u></td>
 	</tr>
 	<tr>
-		<td class="row2" width="60%" ><b>{L_ZONE_RETURN} :</b><br \>{L_ZONE_RETURN_EXPLAIN}</td>
+		<td class="row2" width="60%" ><b>{L_ZONE_RETURN} :</b><br />{L_ZONE_RETURN_EXPLAIN}</td>
 		<td class="row2" align="center" ><span class="gen">{ZONE_RETURN}</span></td>
 	</tr>
 	<tr>
@@ -50,7 +50,7 @@
 		<td class="row1" align="center" ><input type="text" name="zone_costreturn" value="{ZONE_COSTRETURN}" size="10" maxlength="255" /></td>
 	</tr>
 	<tr>
-		<td class="row2" width="60%" ><b>{L_ZONE_DESTINATION2} :</b><br \>{L_ZONE_DESTINATION2_EXPLAIN}</td>
+		<td class="row2" width="60%" ><b>{L_ZONE_DESTINATION2} :</b><br />{L_ZONE_DESTINATION2_EXPLAIN}</td>
 		<td class="row2" align="center" ><span class="gen">{ZONE_DESTINATION2}</span></td>
 	</tr>
 	<tr>
@@ -58,7 +58,7 @@
 		<td class="row1" align="center" ><input type="text" name="zone_cost2" value="{ZONE_COSTDESTINATION2}" size="10" maxlength="255" /></td>
 	</tr>
 	<tr>
-		<td class="row2" width="60%" ><b>{L_ZONE_DESTINATION3} :</b><br \>{L_ZONE_DESTINATION3_EXPLAIN}</td>
+		<td class="row2" width="60%" ><b>{L_ZONE_DESTINATION3} :</b><br />{L_ZONE_DESTINATION3_EXPLAIN}</td>
 		<td class="row2" align="center" ><span class="gen">{ZONE_DESTINATION3}</span></td>
 	</tr>
 	<tr>
@@ -66,7 +66,7 @@
 		<td class="row1" align="center" ><input type="text" name="zone_cost3" value="{ZONE_COSTDESTINATION3}" size="10" maxlength="255" /></td>
 	</tr>
 	<tr>
-		<td class="row2" width="60%" ><b>{L_ZONE_DESTINATION4} :</b><br \>{L_ZONE_DESTINATION4_EXPLAIN}</td>
+		<td class="row2" width="60%" ><b>{L_ZONE_DESTINATION4} :</b><br />{L_ZONE_DESTINATION4_EXPLAIN}</td>
 		<td class="row2" align="center" ><span class="gen">{ZONE_DESTINATION4}</span></td>
 	</tr>
 	<tr>
@@ -75,7 +75,7 @@
 	</tr>
 <!-- V: no idea what that's supposed to be, but it sucks so ... REMOVED
 	<tr>
-		<td class="row2" width="60%" ><b>{L_ZONE_DESTINATION1} :</b><br \>{L_ZONE_DESTINATION1_EXPLAIN}</td>
+		<td class="row2" width="60%" ><b>{L_ZONE_DESTINATION1} :</b><br />{L_ZONE_DESTINATION1_EXPLAIN}</td>
 		<td class="row2" align="center" ><span class="gen">{ZONE_DESTINATION1}</span></td>
 	</tr>
 	<tr>
@@ -91,7 +91,7 @@
 		<th align="center" colspan="10" ><u>{L_ZONE_BATTLE}</u></td>
 	</tr>
 	<tr>
-		<td class="row1" width="60%" ><b>{L_ZONE_MONSTER_LIST} :</b><br \>{L_ZONE_MONSTER_LIST_EXPLAIN}</td>
+		<td class="row1" width="60%" ><b>{L_ZONE_MONSTER_LIST} :</b><br />{L_ZONE_MONSTER_LIST_EXPLAIN}</td>
 		<td class="row1" align="center" ><span class="gen">{ZONE_MONSTER_LIST}</span></td>
 	</tr>
 </table>
@@ -143,31 +143,31 @@
 		<th align="center" colspan="10" ><u>{L_ZONE_LOOT}</u></td>
 	</tr>
  	<tr>
-		<td class="row1" width="60%" ><b>{L_ZONE_MINE_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row1" width="60%" ><b>{L_ZONE_MINE_LOOT} :</b><br />{L_ADR_THIS_IS_LOOTTABLES}<br />{L_ZONE_MULTI}</td>
 		<td class="row1" align="center" ><span class="gen">{ZONE_MINE_LOOT}</span></td>
 	</tr>
 	<tr>
-		<td class="row2" width="60%" ><b>{L_ZONE_FISH_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row2" width="60%" ><b>{L_ZONE_FISH_LOOT} :</b><br />{L_ZONE_MULTI}</td>
 		<td class="row2" align="center" ><span class="gen">{ZONE_FISH_LOOT}</span></td>
 	</tr>
 	<tr>
-		<td class="row1" width="60%" ><b>{L_ZONE_HUNT_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row1" width="60%" ><b>{L_ZONE_HUNT_LOOT} :</b><br />{L_ZONE_MULTI}</td>
 		<td class="row1" align="center" ><span class="gen">{ZONE_HUNT_LOOT}</span></td>
 	</tr>
 	<tr>
-		<td class="row2" width="60%" ><b>{L_ZONE_HERB_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row2" width="60%" ><b>{L_ZONE_HERB_LOOT} :</b><br />{L_ZONE_MULTI}</td>
 		<td class="row2" align="center" ><span class="gen">{ZONE_HERB_LOOT}</span></td>
 	</tr>
 	<tr>
-		<td class="row1" width="60%" ><b>{L_ZONE_LUMBER_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row1" width="60%" ><b>{L_ZONE_LUMBER_LOOT} :</b><br />{L_ZONE_MULTI}</td>
 		<td class="row1" align="center" ><span class="gen">{ZONE_LUMBER_LOOT}</span></td>
 	</tr>
 	<tr>
-		<td class="row2" width="60%" ><b>{L_ZONE_TAILOR_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row2" width="60%" ><b>{L_ZONE_TAILOR_LOOT} :</b><br />{L_ZONE_MULTI}</td>
 		<td class="row2" align="center" ><span class="gen">{ZONE_TAILOR_LOOT}</span></td>
 	</tr>
 	<tr>
-		<td class="row1" width="60%" ><b>{L_ZONE_ALCHEMY_LOOT} :</b><br \>{L_ZONE_MULTI}</td>
+		<td class="row1" width="60%" ><b>{L_ZONE_ALCHEMY_LOOT} :</b><br />{L_ZONE_MULTI}</td>
 		<td class="row1" align="center" ><span class="gen">{ZONE_ALCHEMY_LOOT}</span></td>
 	</tr>
 </table>

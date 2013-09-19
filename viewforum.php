@@ -516,7 +516,7 @@ if($cached1 || $cached2)
 	{
 		$sql = "SELECT topic_id, topic_views FROM " . TOPICS_TABLE . " WHERE topic_id IN (" . implode(', ', $update_list) . ")";
 		$list = array();
-		$result = $db->sql_query($sql);
+		$result = $db->sql_query($sql, false, 'posts_');
 		while( $row = $db->sql_fetchrow($result) )
 		{
 			$list[$row['topic_id']] = $row['topic_views'];
