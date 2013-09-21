@@ -1118,7 +1118,11 @@ INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('weapon_prof', 100);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('shield_bonus', 10);
 
+# ADR - Togglable World Map
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('adr_world_map', 0);
+
 # Rabbitoshi - levelup penalty
 INSERT INTO `phpbb_rabbitoshi_general` VALUES ('next_level_penalty', 10);
+
 
 COMMIT;

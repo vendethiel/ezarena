@@ -153,7 +153,7 @@ function adr_update_store_user_trans($user_id, $shop_owner_id, $items, $sum)
 }
 
 // New sql insert function introduced into v0.4.4 for ease
-function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, $type=0, $shop_id=0)
+function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, $type=0, $shop_id=0, $search_col = 'item_id')
 {
 	global $db;
 
@@ -168,7 +168,7 @@ function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, 
 	$shop_more_sql = ($shop_owner_id != '1') ? 'AND item_in_shop = 1' : ''; // Prevents users from buying items not in shops
 	$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
 		WHERE item_owner_id = '$shop_owner_id'
-		AND item_id = '$item_id'
+		AND $search_col = '$item_id'
 		$shop_more_sql";
 	$result = $db->sql_query($sql);
 	if(!$result){

@@ -827,9 +827,10 @@ function generate_pagination($base_url, $num_items, $per_page, $start_item, $add
 
 		if ( $total_pages > 3 )
 		{
+			$yada = ' <span onclick=\'paginationPrompt("' . append_sid($base_url . "&amp;start=PAGEHERE") . '", ' . $per_page . '); return false;\'>...</span> ';
 			if ( $on_page > 1  && $on_page < $total_pages )
 			{
-				$page_string .= ( $on_page > 5 ) ? ' ... ' : ', ';
+				$page_string .= ( $on_page > 5 ) ? $yada : ', ';
 
 				$init_page_min = ( $on_page > 4 ) ? $on_page : 5;
 				$init_page_max = ( $on_page < $total_pages - 4 ) ? $on_page : $total_pages - 4;
@@ -843,11 +844,11 @@ function generate_pagination($base_url, $num_items, $per_page, $start_item, $add
 					}
 				}
 
-				$page_string .= ( $on_page < $total_pages - 4 ) ? ' ... ' : ', ';
+				$page_string .= ( $on_page < $total_pages - 4 ) ? $yada : ', ';
 			}
 			else
 			{
-				$page_string .= ' ... ';
+				$page_string .= $yada;
 			}
 
 			for($i = $total_pages - 2; $i < $total_pages + 1; $i++)

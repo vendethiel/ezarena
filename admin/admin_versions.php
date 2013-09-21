@@ -26,7 +26,7 @@ if ( !empty($setmodules) )
 // load default header
 $phpbb_root_path = './../';
 $phpEx = substr(strrchr(__FILE__, '.'), 1);
-$requester = 'admin_versions';
+$requester = 'admin/admin_versions';
 require('./pagestart.' . $phpEx);
 
 class acp_versions
@@ -321,6 +321,6 @@ $template->assign_vars(array(
 // send the display
 $template->set_filenames(array('body' => 'admin/versions_body.tpl'));
 $template->pparse('body');
-include($get->url('page_footer_admin'));
+include($get->url('admin/page_footer_admin'));
 
 ?>

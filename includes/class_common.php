@@ -338,7 +338,7 @@ class common_get
 	*/
 	function url($basename, $parms='', $add_sid=false, $fragments='', $force=false)
 	{
-		global $SID;
+		global $SID, $phpbb_root_path;
 
 		$url_parms = '';
 		$parms = empty($parms) ? array() : $parms;
@@ -364,7 +364,7 @@ class common_get
 			$url_parms .= (empty($url_parms) ? '?#' : '#') . $fragments;
 		}
 
-		$url = $basename . '.' . $this->ext . $url_parms;
+		$url = $phpbb_root_path . $basename . '.' . $this->ext . $url_parms;
 		return $add_sid ? append_sid($url) : $url;
 	}
 }

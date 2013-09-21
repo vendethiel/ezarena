@@ -92,7 +92,7 @@
 <!-- BEGIN apply -->
 	<tr>
 		<td class="catBottom" align="right" colspan="4">
-			<input type="submit" name="apply" value="Apply" class="mainoption" >&nbsp;&nbsp;
+			<input type="submit" name="apply" value="Postuler" class="mainoption" >&nbsp;&nbsp;
 		</td>
 	</tr>
 <!-- END apply -->

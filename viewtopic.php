@@ -427,6 +427,7 @@ if( $userdata['session_logged_in'] && !$is_auth['auth_mod'] )
   $valid = $db->sql_numrows($resultat) || $is_auth['auth_mod'];
 }
 //-- fin mod : addon hide for bbcbxr -------------------------------------------
+
 //
 // Generate a 'Show posts in previous x days' select box. If the postdays var is POSTed
 // then get it's value, find the number of topics with dates newer than it (to properly
@@ -1192,16 +1193,14 @@ $adr_topic_info_adr		= adr_get_posters_adr_info();
 // Okay, let's do the loop, yeah come on baby let's do the loop
 // and it goes like this ...
 //
-//-- mod : topics enhanced -----------------------------------------------------
+
 //-- topics nav buttons
 $num_row = 0;
-//-- fin mod : topics enhanced -------------------------------------------------
 for($i = 0; $i < $total_posts; $i++)
 {
 	$post_number = $i+$start;
 	$post_number = $post_number+1;
 	$post_id = $postrow[$i]['post_id'];
-//-- mod : topics enhanced -----------------------------------------------------
 //-- topics nav buttons
 	$num_row++;
 
@@ -1211,21 +1210,17 @@ for($i = 0; $i < $total_posts; $i++)
 	$nav_buttons .= ($i != $total_posts - 1) ? '<a href="#' . ($num_row + 1) . '"><img alt="" src="' . $images['nav_next_post'] . '" title="' . $lang['View_next_post'] . '" border="0" /></a>' : '';
 	$nav_buttons .= (empty($i)) ? '<a href="#bot"><img alt="" src="' . $images['nav_bot'] . '" title="' . $lang['Go_to_bottom'] . '" border="0" /></a>' : '';
 	$nav_buttons .= (empty($i)) ? '<a href="' . append_sid('viewtopic.' . $phpEx . '?' . POST_TOPIC_URL . '=' . $topic_id . '&amp;view=next') . '"><img alt="" src="' . $images['nav_next'] . '" title="' . $lang['View_next_topic'] . '" border="0" /></a>' : '';
-//-- fin mod : topics enhanced -------------------------------------------------
 	$poster_id = $postrow[$i]['user_id'];
 	$poster = ( $poster_id == ANONYMOUS ) ? $lang['Guest'] : $postrow[$i]['username'];
 //-- mod : flags ---------------------------------------------------------------
 	$poster_flag = ( $postrow[$i]['user_id'] != ANONYMOUS ) ? $postrow[$i]['user_flag'] : '';
-//-- fin mod : flags -----------------------------------------------------------	
 //-- mod : birthday ------------------------------------------------------------
 	$poster_birthday = ( $postrow[$i]['user_id'] != ANONYMOUS ) ? $postrow[$i]['user_birthday'] : '';
 	$poster_zodiac = ( $postrow[$i]['user_id'] != ANONYMOUS ) ? $postrow[$i]['user_zodiac'] : '';
-//-- fin mod : birthday --------------------------------------------------------	
 
 	$post_date = create_date2($board_config['default_dateformat'], $postrow[$i]['post_created'], $board_config['board_timezone']);
 
    // DEBUT MOD Postographie d'un membre depuis viewtopic 
-   // Delete
    // $poster_posts = ( $postrow[$i]['user_id'] != ANONYMOUS ) ? $lang['Posts'] . ': ' . $postrow[$i]['user_posts'] : ''; 
    $poster_posts = ( $postrow[$i]['user_id'] != ANONYMOUS ) ? $lang['Posts'] . ' : <a href="' . append_sid("search.$phpEx?user_id" . "=" . $poster_id) . '" title="' . sprintf($lang['Search_user_posts'], $poster) . '" class="gensmall">' . $postrow[$i]['user_posts'] . '</a>': ''; 
    // FIN MOD Postographie d'un membre depuis viewtopic

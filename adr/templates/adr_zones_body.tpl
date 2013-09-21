@@ -42,13 +42,14 @@
 				<br />
 				<!-- IF ZONE_LEVEL_RETURN > CHARACTER_LEVEL -->
 				<b>{L_REQ_LEVEL}</b> {ZONE_LEVEL_RETURN}
-				<!-- ELSE -->
+				<!-- ELSEIF CAN_TRAVEL -->
 				<br /><input type="submit" name="return" value="{L_GOTO}" class="mainoption" />
 				<!-- ENDIF -->
 				<br /><br /></span></td>
 			</tr>
 			<!-- ENDIF -->
 		</table>
+
 		<!-- IF HAS_GOTO_2 -->
 		<table width="100%" align="center" border="1">
 			<tr>
@@ -59,13 +60,14 @@
 				<br />
 				<!-- IF ZONE_LEVEL2 > CHARACTER_LEVEL -->
 				<b>{L_REQ_LEVEL}</b> {ZONE_LEVEL2}
-				<!-- ELSE -->
+				<!-- ELSEIF CAN_TRAVEL -->
 				<br /><input type="submit" name="goto2" value="{L_GOTO}" class="mainoption" />
 				<!-- ENDIF -->
 				<br /><br /></span></td>
 			</tr>
 		</table>
 		<!-- ENDIF -->
+
 		<!-- IF HAS_GOTO_3 -->
 		<table width="100%" align="center" border="1">
 			<tr>
@@ -76,13 +78,14 @@
 				<br />
 				<!-- IF ZONE_LEVEL3 > CHARACTER_LEVEL -->
 				<b>{L_REQ_LEVEL}</b> {ZONE_LEVEL3}
-				<!-- ELSE -->
+				<!-- ELSEIF CAN_TRAVEL -->
 				<br /><input type="submit" name="goto3" value="{L_GOTO}" class="mainoption" />
 				<!-- ENDIF -->
 				<br /><br /></span></td>
 			</tr>
 		</table>
 		<!-- ENDIF -->
+
 		<!-- IF HAS_GOTO_4 -->
 		<table width="100%" align="center" border="1">
 			<tr>
@@ -93,15 +96,15 @@
 				<br />
 				<!-- IF ZONE_LEVEL4 > CHARACTER_LEVEL -->
 				<b>{L_REQ_LEVEL}</b> {ZONE_LEVEL4}<br/>
-				<!-- ELSE -->
+				<!-- ELSEIF CAN_TRAVEL -->
 				<br /><input type="submit" name="goto4" value="{L_GOTO}" class="mainoption" />
 				<!-- ENDIF -->
 				<br /><br /></span></td>
 			</tr>
 		</table>
 		<!-- ENDIF -->
-		<br clear="all" />
 
+		<br clear="all" />
 		<table width="100%" align="center" border="1">
 			<tr>
 			<th align="center" colspan="4">{L_POINTS}</td>
@@ -110,16 +113,18 @@
 				<td align="center" class="row2" ><span class="gen"><b>{POINTS}</b><br /><br /></span></td>	
 			</tr>
 		</table>
-		<br clear="all" />
 
+		<!-- IF WORLD_MAP -->
+		<br clear="all" />
 		<table width="100%" align="center" border="1">
 			<tr>
-				<th align="center" colspan="4" >Cartographie</th>
+				<th align="center" colspan="4">Cartographie</th>
 			</tr>
 			<tr>
 				<td align="center" class="row2" ><span class="gen"><br /><b>{MAP_NAME}</b><br /><br /><a href="adr_maps.php"><img src="adr/images/zones/townmap/World_small.gif" border="0" onMouseOver="stm(Text[100],Style[0])" onMouseOut="htm()" /><br /><br /></a></span></td>
 			</tr>
 		</table>
+		<!-- ENDIF -->
 
 		</form>
 		</td>
@@ -209,10 +214,10 @@
 		<!-- END switch_Adr_zone_townmap_disable -->
 	</tr>
 </table>
-<br clear="all" />
 
 <!-- BEGIN switch_Adr_zone_townmap_disable -->
 <!-- IF ZONE_HAS_ACTIONS -->
+<br clear="all" />
 <table width="100%" align="center" border="1">
 	<tr>
 		<th align="center" colspan="10">Actions</td>
@@ -236,12 +241,11 @@
         <td <!-- IF ! ZONE_LUMBERJACK -->class="disabled"<!-- ENDIF --> align="center" class="row2"><!-- IF ZONE_LUMBERJACK --><a href="adr_lumberjack.php"><!-- ENDIF -->Bûcheronnage<!-- IF ZONE_LUMBERJACK --></a><!-- ENDIF --></td>
     </tr>
 </table>
-<br clear="all" />
 <!-- ENDIF -->
 <!-- END switch_Adr_zone_townmap_disable -->
+<br clear="all" />
 
 <!-- BEGIN npc_display_enable -->
-<br clear="all" />
 <table width="100%" align="center" border="1">
 	<tr>
 		<th align="center" colspan="{NPC_SPAN}" >{L_ZONE_NPC}</td>
@@ -258,6 +262,7 @@
 	{npc_display_enable.npc_end.TR_END}
 	<!-- END npc_end -->
 </table>
+<br clear="all" />
 <!-- END npc_display_enable -->
 
 <table width="100%" align="center" border="1">

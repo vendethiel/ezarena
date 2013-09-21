@@ -92,8 +92,8 @@ if ( defined ('IN_ADR_ZONES_ADMIN'))
    $lang['Adr_zone_acp_general_explain']='Configurez ici les options générales pour les zones';
    $lang['Adr_zone_acp_dead_travel']='Cocher pour empecher les voyages en étant mort';
    $lang['Adr_zone_acp_bonus_stat']='Cocher pour activer les bonus sur une zone du même élément que le personnage';
-   $lang['Adr_zone_acp_bonus_att']='Bonus en Attaque';
-   $lang['Adr_zone_acp_bonus_def']='Bonus en Défense';
+   $lang['Adr_zone_acp_bonus_att']='Bonus en Attaque pour une zone du même élément';
+   $lang['Adr_zone_acp_bonus_def']='Bonus en Défense pour une zone du même élément';
    $lang['Adr_zone_acp_submit']='Envoyer';
    $lang['Adr_zone_general_change_successful']='Configurations générales changées avec succès';
    $lang['Adr_zone_acp_race_zone']='Choisissez la zone de départ pour cette race';
@@ -252,7 +252,7 @@ $lang['Adr_zone_acp_world_map_name']='Le nom de votre carte du Monde (laisser vi
 $lang['Adr_zone_acp_picture_link']='Activer les liens images à la place des liens textes dans l\'header et l\'affichage des zones.';
 $lang['Adr_zone_acp_zone_dynamic_maps_current_zone']='Zone actuellement assignée en tant que "World Map" (mapmonde)';
 $lang['Adr_zone_acp_zone_dynamic_maps_config_zone']='Zone actuellement <b>dans la configuration</b> en tant que "World Map" (mapmonde).<br/><span class="gensmall">Si cette valeur ne correspond pas à celle ci-dessus, votre mapmonde n\'affichera pas.</span>';
-$lang['Adr_zone_acp_zone_dynamic_maps_display_required']='Display the Required Item and Points on Teleport Popup';
+$lang['Adr_zone_acp_zone_dynamic_maps_display_required']='Afficher les objets/points/niveau nécessaires dans la pop-up de téléportation';
 
 // Day & Night
 $lang['Adr_zone_time_title']='Heure de la journée';

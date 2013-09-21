@@ -1,7 +1,9 @@
 /**
- * V: contaisn
+ * V: contains
+ *  - pagination
  *  - ajax
  *
+ * vendors :
  *  - dom_menu
  *  - dom_toggle
  *  - tooltips
@@ -10,9 +12,13 @@
  *  - collapsible_forum_index
  */
 
-/**
- * @author Informpro
- */
+var paginationPrompt = function (url, per) {
+   var page = Number(prompt('Aller à la page'));
+   if (!isNaN(page) && page != '') {
+      document.location = url.replace('.html', '-' + ((page - 1) * per) + '.html');
+   }
+}
+
 var ajax = function() {
    /**
     * @param string url URL to query

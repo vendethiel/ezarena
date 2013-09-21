@@ -129,7 +129,7 @@ if ( $mode != "" )
 			{	
 			    //Tool gets used even if character doesn't find anything
 			    adr_use_item($tool , $user_id);
-				$item = drop_gather_loot($area_id, $user_id, 'herbalism', #N#);
+				$item = drop_gather_loot($area_id, $user_id, 'alchemy', 14);
 
 				if ( !$item )
 				{

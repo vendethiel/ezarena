@@ -49,7 +49,7 @@ if ($submit)
 	$att_bonus = $HTTP_POST_VARS['att_bonus'];
 	$def_bonus = $HTTP_POST_VARS['def_bonus'];
 	$zone_townmap_enable = intval($HTTP_POST_VARS['Adr_zone_townmap_enable']);
-	$zone_townmap_name = $HTTP_POST_VARS['Adr_zone_townmap_name'];
+	$zone_townmap_name = $db->sql_escape($HTTP_POST_VARS['Adr_zone_townmap_name']);
 	$zone_picture_link_enable = intval($HTTP_POST_VARS['Adr_zone_picture_link_enable']);
 	$zone_worldmap_zone = intval($HTTP_POST_VARS['Adr_zone_worldmap_zone']);
 	$zone_townmap_display_required = intval($HTTP_POST_VARS['Adr_zone_townmap_display_required']);
@@ -89,9 +89,18 @@ if ($submit)
 	$zone_cheat_auto_cautionable = intval($HTTP_POST_VARS['cheat_auto_cautionable']);
 	$zone_cheat_auto_punishment = intval($HTTP_POST_VARS['cheat_auto_punishment']);
 	$zone_cheat_auto_public = intval($HTTP_POST_VARS['cheat_auto_public']);
+
+	$zone_world_map = intval($_POST['Adr_zone_world_map_enable']);
 	// verify empty fields
 	if ( $att_bonus == '' || $att_bonus == '' )
 		adr_previous( Field_empty , admin_adr_zone_general , '' );
+
+	// update world map
+	$sql= "UPDATE ". CONFIG_TABLE . " 
+		SET config_value = '$zone_world_map' 
+		WHERE config_name = 'adr_world_map' ";
+	if ( !($result = $db->sql_query($sql)) ) 
+		message_die(GENERAL_ERROR, "Could not toggle zone world map.", '', __LINE__, __FILE__, $sql);
 
 	// update travel
 	$sql= "UPDATE ". CONFIG_TABLE . " 
@@ -120,6 +129,7 @@ if ($submit)
 		WHERE config_name = 'zone_bonus_def' ";
 	if ( !($result = $db->sql_query($sql)) ) 
 		message_die(GENERAL_ERROR, "Could not update def bonus table.", '', __LINE__, __FILE__, $sql);
+
 	// Update Zone Cheat Member PM Setting
 	$sql = "UPDATE " . CONFIG_TABLE . "
 			SET config_value = '$zone_cheat_member_pm'
@@ -342,6 +352,7 @@ for($i = 0; $i < count($chars); $i++)
 $zone_moderators_list .= '</select>';
 
 $template->assign_vars(array(
+	"ZONE_WORLD_MAP" => $board_config['adr_world_map'] ? 'CHECKED' : '',
 	"ZONE_DEAD_TRAVEL" => ($board_config['zone_dead_travel'] ? 'CHECKED' : ''),
 	"ZONE_BONUS_STAT" => ($board_config['zone_bonus_enable'] ? 'CHECKED' : ''),
 	"ZONE_BONUS_ATT" => $board_config['zone_bonus_att'],

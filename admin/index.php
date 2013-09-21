@@ -165,7 +165,6 @@ if( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'left' )
 }
 elseif( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'right' )
 {
-
 	include('./page_header_admin.'.$phpEx);
 
 	$template->set_filenames(array(
@@ -825,7 +824,7 @@ MOD-*/
 	
 MOD-*/
 //-- add
-	$version_info = sprintf($lang['click_check_versions'], '<a href="' . $get->url('admin_versions', '', true) . '">', '</a>');
+	$version_info = sprintf($lang['click_check_versions'], '<a href="' . $get->url('admin/admin_versions', '', true) . '">', '</a>');
 //-- fin mod : rank color system -----------------------------------------------
 	$template->assign_vars(array(
 		'VERSION_INFO'	=> $version_info,

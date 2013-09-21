@@ -483,6 +483,7 @@ Addons :
  - Addon pour Town Environment Enhanced into Zone Mod - Informpro
  - Addon pour Enchant&Mine Links in header - Informpro
  - Addon Assisted Cell Selection - Informpro
+ - Addon Togglable Zone Map - Informpro
 
 # ADR : Items no sell 0.0.2 - Makien
 Permet de rendre des objets non vendables (objets rares, par exemple).
@@ -552,6 +553,9 @@ Addons :
  - Addon Fix Admin (several typos + inf. loop + lang keys) - Informpro
  - Addon Fix Zone infos - Informpro
  - Addon pour Tailor + Alchemy - Informpro
+
+# ADR : Zone Movement Battle Restriction 0.1.0 - Informpro
+Empêche de changer de zone pendant un combat. Basé sur l'idée du mod d'egdcltd
 
 # ADR (ST) : Armor Sets 0.1.5 - Seteo-Bloke
 Permet de créer des panoplies d'armures à équiper.
