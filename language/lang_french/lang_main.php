@@ -1312,3 +1312,10 @@ $lang['Rabbitoshi_topic']='Voir le familier du membre';
 // Mini profile
 $lang['Read_mini_profile'] = 'Mini profil de l\'utilisateur';
 $lang['Viewing_user_mini_profile'] = 'Mini profil de %s'; // %s is username
+
+// presentation required
+$lang['Presentation_Message'] = 'Vous devez vous présenter sur le forum prévu à cet effet avant de pouvoir poster';
+$lang['Presentation_Forum_Link'] = 'Cliquez %sici%s';
+
+// sub title
+$lang['Sub_title'] = 'Description du sujet';

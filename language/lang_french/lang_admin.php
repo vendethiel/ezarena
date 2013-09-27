@@ -1077,6 +1077,7 @@ $lang['Max_url_length'] = 'Nombre maximal de caractères pour les URLs';//Autosho
 
 $lang['Overall_Permissions'] = 'Permissions interactives';
 
+// ADR stuff
 $lang['Rabbitoshi_Pets_Management']='Gestions créatures'; 
 $lang['Rabbitoshi_Shop']='Animalerie'; 
 $lang['Rabbitoshi_settings']='Configurations générales'; 
@@ -1084,3 +1085,10 @@ $lang['Rabbitoshi_owners']='Propriétaires';
 
 $lang['User_adr_ban']='Ban RPG ADR ?'; 
 $lang['User_adr_ban_explain']='Permet de bannir l\'utilisateur de toutes les fonctionnalités du RPG (Advanced Dungeons & Rabbits)'; 
+
+// presentation required
+$lang['Presentation_Required'] = 'Obliger les membres à se présenter';
+$lang['Presentation_Forum'] = 'Sélectionnez le forum de présentation';
+// sub title
+$lang['Sub_title_length'] = 'Longueur du sous-titre (description) du sujet';
+$lang['Sub_title_length_explain'] = 'Choisissez la longueur en nombre de caractères des sous-titres (description) des messages. Renseignez cette valeur à 0 si vous ne désirez pas afficher les sous-titres.';

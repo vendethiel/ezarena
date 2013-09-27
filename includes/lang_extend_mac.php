@@ -27,6 +27,7 @@ $phpExLen = strlen($phpEx);
 $t = microtime();
 if ( !empty($board_config['default_lang']) )
 {
+	/* V: OPTIMIZE §§
 	$dir = @opendir($lang_dir = $phpbb_root_path . 'language/lang_' . $board_config['default_lang']);
 	while( $file = @readdir($dir) )
 	{
@@ -34,7 +35,17 @@ if ( !empty($board_config['default_lang']) )
 		{
 			include $lang_dir . '/' . $file;
 		}
-	}
+	}*/
+	// yes it's static, fuck you
+	$extend_lang_path = $phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_extend_';
+	include($extend_lang_path . 'attributes.' . $phpEx);
+	include($extend_lang_path . 'birthday.' . $phpEx);
+	include($extend_lang_path . 'ezarena.' . $phpEx);
+	include($extend_lang_path . 'flags.' . $phpEx);
+	include($extend_lang_path . 'group_moderatorz.' . $phpEx);
+	include($extend_lang_path . 'onlinelist.' . $phpEx);
+	include($extend_lang_path . 'qpes.' . $phpEx);
+	include($extend_lang_path . 'rcs.' . $phpEx);
 
 	// include the customizations
 	if ( @file_exists(@phpbb_realpath($lang_dir . '/lang_extend' . $phpEx)) )

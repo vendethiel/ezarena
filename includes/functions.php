@@ -491,11 +491,6 @@ function init_userprefs($userdata)
 		}
 	}
 
-	/* V: TODO !
-	 * MG told me the biggest lag is for-eaching for _extend files
-	 * Need to cache that list (if I didn't do it yet)
-	 */
-
 	// If we've had to change the value in any way then let's write it back to the database
 	// before we go any further since it means there is something wrong with it
 	if ( $userdata['user_id'] != ANONYMOUS && $userdata['user_lang'] !== $default_lang )
@@ -550,10 +545,6 @@ function init_userprefs($userdata)
 //-- fin mod : language settings -----------------------------------------------
 	// Disable board if needed
 	board_disable();
-//-- mod : language settings ---------------------------------------------------
-//-- add
-	include($phpbb_root_path . 'includes/lang_extend_mac.' . $phpEx);
-//-- fin mod : language settings -----------------------------------------------
 	if (!defined('NO_ATTACH_MOD'))
 	{
 		include_attach_lang();
