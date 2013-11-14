@@ -32,7 +32,9 @@ if ( ( time() - $board_config['adr_time_last_time'] ) > $board_config['adr_lengt
 		message_die(GENERAL_ERROR, "Could not access time table.", '', __LINE__, __FILE__, $sql);
 
 	//define the new period
-	$new_time = $board_config['adr_time_last_time'] +  $board_config['adr_length_time'];
+	//$board_config['adr_time_last_time'] +  $board_config['adr_length_time'];
+	// V: except that ... no
+	$new_time = time();
 
 	$sql= "UPDATE ". CONFIG_TABLE . " 
 		SET config_value = '$new_time' 
