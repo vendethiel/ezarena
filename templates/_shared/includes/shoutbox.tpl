@@ -4,7 +4,7 @@
       </tr> 
       <tr>
          <td> 
-          <iframe src="{U_SHOUTBOX}" scrolling="NO" width="100%" height="250" frameborder="0" marginheight="0" marginwidth="0" allowtransparency="true" id="shoutbox"></iframe> 
+          <iframe src="{U_SHOUTBOX}" scrolling="NO" width="100%" height="210" frameborder="0" marginheight="0" marginwidth="0" allowtransparency="true" id="shoutbox"></iframe> 
          </td> 
   </tr> 
 </table>

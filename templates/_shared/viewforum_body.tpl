@@ -30,6 +30,7 @@ function show_topicmod(id)
 	</tr>
 	<tr> 
 	  <td align="left" valign="middle" width="50"><a href="{U_POST_NEW_TOPIC}"><img src="{POST_IMG}" border="0" alt="{L_POST_NEW_TOPIC}" /></a></td>
+	  <!-- @TODO COPYPASTED BELOW -->
 	  <td align="left" valign="middle" class="nav" width="100%"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="{U_INDEX}" class="nav">{L_INDEX}</a>
 	  <!-- BEGIN nav -->
 		-&gt; <a class="nav" href="{nav.U_NAV}" title="{nav.L_NAV_DESC_HTML}">{nav.L_NAV}</a>
@@ -94,7 +95,15 @@ function show_topicmod(id)
   <table width="100%" cellspacing="2" border="0" align="center" cellpadding="2">
 	<tr> 
 	  <td align="left" valign="middle" width="50"><a href="{U_POST_NEW_TOPIC}"><img src="{POST_IMG}" border="0" alt="{L_POST_NEW_TOPIC}" /></a></td>
-	  <td align="left" valign="middle" width="100%"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="{U_INDEX}" class="nav">{L_INDEX}</a> -> <a class="nav" href="{U_VIEW_FORUM}">{FORUM_NAME}</a></span></td>
+	  <!-- @TODO HERE COPYPASTED -->
+	  <td align="left" valign="middle" class="nav" width="100%"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="{U_INDEX}" class="nav">{L_INDEX}</a>
+	  <!-- BEGIN nav -->
+		-&gt; <a class="nav" href="{nav.U_NAV}" title="{nav.L_NAV_DESC_HTML}">{nav.L_NAV}</a>
+		<!-- END nav -->
+	  </span></td>
+	  <!-- BEGIN toolbar -->
+	  <td align="right" valign="bottom" nowrap="nowrap"><span class="gensmall">{toolbar.S_TOOLBAR}</span></td>
+	  <!-- END toolbar -->
 	</tr>
   </table>
 </form>
