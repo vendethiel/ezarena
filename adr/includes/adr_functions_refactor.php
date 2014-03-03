@@ -14,7 +14,7 @@
 
 function zone_goto($goto_name, $cost_goto)
 {
-	global $board_config, $adr_user, $db, $adr_user;
+	global $board_config, $adr_user, $db, $adr_user, $phpEx, $user_id, $lang;
 
 	if ( ( $board_config['zone_dead_travel'] == '1' ) && ( $adr_user['character_hp'] < '1' ) )
 		adr_previous( Adr_zone_change_dead , adr_zones , '' );
@@ -41,6 +41,7 @@ function zone_goto($goto_name, $cost_goto)
 
 	if( $adr_user['character_level'] < $required_level )
 	{ adr_previous( adr_zone_change_level , adr_zones , '' ); }
+
 
  	// Check if user has the required item
 	$sql = " SELECT * FROM  " . ADR_SHOPS_ITEMS_TABLE . "
@@ -71,7 +72,7 @@ function zone_goto($goto_name, $cost_goto)
 	}
 	else
 	{
-		$message = '' . $lang['Adr_zone_item_lack'] . ' : ' . $required_item . '<br /><br />' . $lang['Adr_zone_event_return'] . '<br /><br />';
+		$message = $lang['Adr_zone_item_lack'] . ' : ' . $required_item . '<br /><br />' . $lang['Adr_zone_event_return'] . '<br /><br />';
 		message_die(GENERAL_ERROR, $message , Zones , '' );
 		break;
 	}
@@ -79,7 +80,7 @@ function zone_goto($goto_name, $cost_goto)
 
 function zone_events($zone)
 {
-	global $db, $userdata;
+	global $db, $userdata, $lang, $user_id, $phpEx;
 
 	$event_1 = $zone['zone_event1'];
 	$event_2 = $zone['zone_event2'];
@@ -599,7 +600,7 @@ function zone_npc_actions()
 
 function zone_npc_item_quest_check($npc_row)
 {
-	global $user_id, $npc_id, $db, $lang;
+	global $user_id, $npc_id, $db, $lang, $phpEx;
 
 	//[QUEST] Check if the NPC needs an item(s)
 	if ( $npc_row['npc_item'] != "0" || $npc_row['npc_item'] != "" || $npc_row['npc_quest_clue'] )
