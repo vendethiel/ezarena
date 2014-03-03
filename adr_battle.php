@@ -226,7 +226,7 @@ $battle_message = '';
 if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff || $attack || $spell || $potion || $defend || $flee || $equip || $spell2))
 {
 	// Prefix challenger battle message
-	$battle_message .= '<font color="blue">[' . $lang['Adr_battle_msg_check'] . htmlspecialchars($challenger['character_name']) . ']: </font>';
+	$battle_message .= '<span style="color: blue">[' . $lang['Adr_battle_msg_check'] . htmlspecialchars($challenger['character_name']) . ']: </span>';
 	if (($bat['battle_round'] == '0') && ($bat['battle_turn'] == '2'))
 	{ // V: this is the early beginning.
 		$battle_message .= $monster['monster_name'] . ' ' . $lang['Adr_battle_msg_monster_start'] . '<br>';
@@ -465,7 +465,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 			// Here we apply text colour if set
 			if ($element_name['element_colour'] != '')
 			{
-				$item['item_name'] = '<font color="' . $element_name['element_colour'] . '">' . $item['item_name'] . '</font>';
+				$item['item_name'] = '<span style="color: ' . $element_name['element_colour'] . '">' . $item['item_name'] . '</span>';
 			} //$element_name['element_colour'] != ''
 			else
 			{
@@ -693,7 +693,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 
 			// Here we apply text colour if set
 			if($element_name['element_colour'] != ''){
-				$item['spell_name'] = '<font color="'.$element_name['element_colour'].'">'.adr_get_lang($item['spell_name']).'</font>';}
+				$item['spell_name'] = '<span style="color: '.$element_name['element_colour'].'">'.adr_get_lang($item['spell_name']).'</span>';}
 			else{
 				$item['spell_name'] = adr_get_lang($item['spell_name']);
 			}
@@ -1811,7 +1811,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				// Here we apply text colour if set
 				if ($element_name['element_colour'] != '')
 				{
-					$item['item_name'] = '<font color="' . $element_name['element_colour'] . '">' . $item['item_name'] . '</font>';
+					$item['item_name'] = '<span style="color: ' . $element_name['element_colour'] . '">' . $item['item_name'] . '</span>';
 				} //$element_name['element_colour'] != ''
 				else
 				{
@@ -1918,7 +1918,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		// V: commented out as I don't know if this is needed
 		//$challenger['character_mp'] += $mp_regen;
 		
-		$battle_message .= '<span class="gensmall"><font color="#FF0000">'; // prefix new span class
+		$battle_message .= '<span class="gensmall" style="color: #FF0000">'; // prefix new span class
 		if ((($hp_regen > '0') && ($mp_regen == '0')) || (($mp_regen > '0') && ($hp_regen == '0')))
 		{
 			if ($hp_regen > '0')
@@ -1934,7 +1934,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		{
 			$battle_message .= '&nbsp;&nbsp;>&nbsp;' . sprintf($lang['Adr_battle_regen_both'], $challenger['character_name'], intval($hp_regen), intval($mp_regen)) . '<br />';
 		} //($hp_regen > '0') && ($mp_regen > '0')
-		$battle_message .= '</font></span>'; // reset span class to default
+		$battle_message .= '</span>'; // reset span class to default
 	} //($bat['battle_turn'] == '1') && ($petstuff || $attack || $item_spell || $item_potion || $defend || $flee || $equip || $item_spell2)
 	##=== END: additional status checks on user ===##
 	
@@ -2200,7 +2200,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 			
 			// Prefix monster message
 			// V: should use sprintf() here (and the other occurence for the player)
-			$battle_message .= '<font color="orange">[' . $lang['Adr_battle_msg_check'] . $monster_name . ']: </font>';
+			$battle_message .= '<span style="color: orange">[' . $lang['Adr_battle_msg_check'] . $monster_name . ']: </span>';
 			
 			if ($def != TRUE)
 				$power = ceil($monster['monster_level'] * rand(1, 3));
