@@ -72,7 +72,7 @@ if ( defined ('IN_TOWNMAP_TEMPLE'))
    $lang['TownMap_Temple_PrixGuerison']='Coûts des Soins';
    $lang['TownMap_Temple_PrixResurrection']='Coûts de la Résurrection';
    $lang['TownMap_Temple_Guerir']='Soigner';
-   $lang['TownMap_Temple_Resussiter']='Réssuciter';
+   $lang['TownMap_Temple_Resussiter']='Ressuciter';
    $lang['TownMap_Temple_Entree']='Bienvenue dans le Temple de la Foi, Noble Etranger(e). Que la lumière du Saint Royaume vous apporte grâce et prospérité !';
    $lang['TownMap_Temple_Pretresse1']='Bienvenue dans le Temple de Meiisen, Prêtresse de la Guérison !';
    $lang['TownMap_Temple_Pretresse2']='Bienvenue dans le Temple de Karla, Grande prêtresse de la Résurrection !';

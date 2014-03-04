@@ -16,7 +16,7 @@ define('IN_PHPBB', 1);
 if (!empty($setmodules))
 {
 	$file = basename(__FILE__);
-	$module['Users']['Points_Configuration'] = $file;
+	$module['ADR-Points']['Points_Configuration'] = $file;
 	return;
 }
 

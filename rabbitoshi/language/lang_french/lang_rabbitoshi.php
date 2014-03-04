@@ -183,7 +183,7 @@ $lang['Rabbitoshi_pet_is_dead']='Votre créature est morte';
 $lang['Rabbitoshi_pet_has_died']='Votre créature est morte.';
 $lang['Rabbitoshi_pet_is_dead_cost']='Pour la revoir il vous en coutera';
 $lang['Rabbitoshi_pet_is_dead_cost_explain']='Désirez vous payer ceci pour ressuciter votre créature ?';
-$lang['Rabbitoshi_pet_dead_rebirth_no']='Votre créature est morte, revenez quand vous serez prêt à la réssuciter.<br /><br />Cliquez <a href="'.append_sid("adr_zones.$phpEx").'">ici</a> pour retourner au RPG<br /><br /> Cliquez <a href="'.append_sid("index.$phpEx").'">ici</a> pour retourner à l\'index du forum';
+$lang['Rabbitoshi_pet_dead_rebirth_no']='Votre créature est morte, revenez quand vous serez prêt à la ressuciter.<br /><br />Cliquez <a href="'.append_sid("adr_zones.$phpEx").'">ici</a> pour retourner au RPG<br /><br /> Cliquez <a href="'.append_sid("index.$phpEx").'">ici</a> pour retourner à l\'index du forum';
 //Vous avez laissé mourrir votre créature .
 $lang['Rabbitoshi_pet_dead_rebirth_ok']='Votre créature a ressucité !<br /><br /> Cliquez <a href="'.append_sid("rabbitoshi.$phpEx").'">ici</a> pour retourner vous en occuper<br /><br /> Cliquez <a href="'.append_sid("index.$phpEx").'">ici</a> pour retourner à l\'index du forum';
 $lang['Rabbitoshi_pet_dead_lack']='Vous n\'avez pas les moyens de ressuciter votre créature';
