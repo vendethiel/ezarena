@@ -181,39 +181,38 @@
 			</table>
 			<!-- END switch_Adr_zone_townmap_enable -->
         </td>
-        <!-- BEGIN switch_Adr_zone_townmap_disable -->
+	</tr>
+</table>
+
+<br />
+<!-- BEGIN switch_Adr_zone_townmap_disable -->
+<table width="100%" align="center" border="1">
+	<tr>
+		<th align="center" colspan="6">Bâtiments</th>
+	</tr>
+	<tr>
 		<td align="center" class="row2" width="20%" valign="top"><span class="gen">
 			<form method="post" action="{S_CHARACTER_ACTION}">
 			<table><tr>
 				<td><img src="adr/images/TownMap/{SAISON}/Icone_Prison.gif" /><br /><input type="submit" name="InfoPrison" value="{L_TOWNBOUTONINFO1}" class="mainoption" /></td>
 				<td><img src="adr/images/TownMap/{SAISON}/Icone_Banque.gif" /><br /><input type="submit" name="InfoBanque" value="{L_TOWNBOUTONINFO2}" class="mainoption" /></td>
-			</tr>
-			<tr>
 				<td><img src="adr/images/TownMap/{SAISON}/Icone_Maison.gif" /><br /><input type="submit" name="InfoMaison" value="{L_TOWNBOUTONINFO3}" class="mainoption" /></td>
 				<td><img src="adr/images/TownMap/{SAISON}/Icone_Forge.gif" /><br /><input type="submit" name="InfoForge" value="{L_TOWNBOUTONINFO4}" class="mainoption" /></td>
-			</tr>
-			<tr>
 				<td><img src="adr/images/TownMap/{SAISON}/Icone_Temple.gif" /><br /><input type="submit" name="InfoTemple" value="{L_TOWNBOUTONINFO5}" class="mainoption" /></td>
 				<td><img src="adr/images/TownMap/{SAISON}/Icone_Boutique.gif" /><br /><input type="submit" name="InfoBoutique" value="{L_TOWNBOUTONINFO6}" class="mainoption" /></td>
-			</tr>
-			<tr>
 				<td><img src="adr/images/TownMap/{SAISON}/Icone_Combat.gif" /><br /><input type="submit" name="InfoCombat" value="{L_TOWNBOUTONINFO9}" class="mainoption" /></td>
 				<td><img src="adr/images/TownMap/{SAISON}/Icone_Mine.gif" /><br /><input type="submit" name="InfoMine" value="{L_TOWNBOUTONINFO10}" class="mainoption" /></td>
-			</tr>
-			<tr>
 				<td><img src="adr/images/TownMap/{SAISON}/Icone_Enchantement.gif" /><br /><input type="submit" name="InfoEnchantement" value="{L_TOWNBOUTONINFO11}" class="mainoption" /></td>
 				<td><img src="adr/images/TownMap/{SAISON}/Icone_Clan.gif" /><br /><input type="submit" name="InfoClan" value="{L_TOWNBOUTONINFO12}" class="mainoption" /></td>
-			</tr>
-			<tr>
 				<td align="center"><img src="adr/images/TownMap/{SAISON}/Icone_Entrainement.gif" /><br /><input type="submit" name="InfoEntrainement" value="{L_TOWNBOUTONINFO7}" class="mainoption" /></td>
 				<td><img src="adr/images/TownMap/{SAISON}/Icone_Entrepot.gif" /><br /><input type="submit" name="InfoEntrepot" value="de garde" class="mainoption" /></td>
 			</tr>
 			</table>
 			</form>
 		</span></td>
-		<!-- END switch_Adr_zone_townmap_disable -->
 	</tr>
 </table>
+<!-- END switch_Adr_zone_townmap_disable -->
 
 <!-- BEGIN switch_Adr_zone_townmap_disable -->
 <!-- IF ZONE_HAS_ACTIONS -->
