@@ -1710,13 +1710,9 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 			$monster_def_dice = rand(1, 20);
 			$monster_modifier = rand(1, 10); // this is temp. until proper monster characteristics are added to ADR
 										     // V: temporary modified to 10 -- see below
-			// $crit_roll        = rand(1, 20);
-			// V: stupid mistake ... earlier the rand is 1, 5 -_-
 			$bare_dice = rand(1, 20);
-			// V: TODO this is not supposed to be rand, but I can't find where it's supposed to be defined
-			//    also, monster_def_dice+monster_modifier might be TOO much (upto 40)
-			//    (see $monster_modifier comment)
-			$bare_power = rand(1, 20);
+	        // Grab modifers
+	        $bare_power = adr_modifier_calc($challenger['character_might'])
 
 			if ((($bare_dice + $bare_power > $monster_def_dice + $monster_modifier) && ($bare_dice != '1')) || ($bare_dice == '20'))
 			{
