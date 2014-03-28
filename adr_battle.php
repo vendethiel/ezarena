@@ -1712,7 +1712,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 										     // V: temporary modified to 10 -- see below
 			$bare_dice = rand(1, 20);
 	        // Grab modifers
-	        $bare_power = adr_modifier_calc($challenger['character_might'])
+	        $bare_power = adr_modifier_calc($challenger['character_might']);
 
 			if ((($bare_dice + $bare_power > $monster_def_dice + $monster_modifier) && ($bare_dice != '1')) || ($bare_dice == '20'))
 			{
