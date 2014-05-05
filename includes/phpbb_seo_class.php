@@ -33,7 +33,8 @@ class phpbb_seo {
 	// --> Zero Dupe
 	var	$do_redir = FALSE;
 	var	$seo_opt = array();
-	var	$encoding = "iso-8859-1";	
+	var	$encoding = "iso-8859-1";
+	var $disabled = true;
 	/**
 	* constuctor
 	*/
@@ -102,7 +103,8 @@ class phpbb_seo {
 		// --> Meta tags
 		$this->seo_meta_tags();
 
-		return;
+		// V: add the ability to disable stuff
+		$this->disabled = !empty($board_config['disable_rewrite']);
 	}
 
 	// --> URL rewriting functions <--
@@ -125,15 +127,18 @@ class phpbb_seo {
 	* regular phpBB URL rewritting without slowing up the process.
 	*/
 	function url_rewrite($url, $non_html_amp = FALSE) {
+		if ($this->disabled)
+			return $url;
+
 		global $phpEx;
 		$this->url = $this->url_in = $url;
 		if ( strpos($this->url, ".$phpEx") === FALSE || defined('IN_ADMIN') || defined('IN_LOGIN') ) {
 			return $url;
 		}
-		// Grabb params
+		// Grab params
 		$this->url = str_replace('&amp;', '&', $this->url);
 		$parsed_url = @parse_url($this->url);
-		// V: OMG HOW DID THIS MOD GOT RELEASED WITHOUT THAT
+		// V: OMG HOW DID THIS MOD GET RELEASED WITHOUT THAT
 		$this->get_vars = array();
 		if (isset($parsed_url['query']))
 		{

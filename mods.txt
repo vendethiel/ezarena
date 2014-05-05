@@ -228,6 +228,7 @@ Addons :
  - Addon Zero Duplicate (version avancée) 0.2.2 - dcz
   Redirige en utilisant des redirections HTTP 301 pratiquement tous les duplicates possibles de phpBB. 
  - Addon FIX bug get_vars not erased between rewrites - Informpro
+ - Addon Disable Rewriting - Informpro
 
 # MultiVote_Mod 1.4.2 - vilaras
 Permet les choix multiples sur un sondage : 

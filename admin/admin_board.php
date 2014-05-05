@@ -610,6 +610,12 @@ $template->assign_vars(array(
 // FIN MOD Logo aléatoire	
 	"COPPA_FAX" => $new['coppa_fax'],
 
+// Addon Disable Rewriting for SEO
+	'L_DISABLE_REWRITE' => $lang['Disable_rewrite'],
+	'L_DISABLE_REWRITE_EXPLAIN' => $lang['Disable_rewrite_explain'],
+	'DISABLE_REWRITE_YES' => $new['Disable_rewrite'] ? 'checked="checked"' : '',
+	'DISABLE_REWRITE_NO' => !$new['Disable_rewrite'] ? 'checked="checked"' : '', 
+
 	'L_BOARD_DISABLE' => $lang['Board_disable'],
 	'L_BOARD_DISABLE_EXPLAIN' => $lang['Board_disable_explain'],
 	'BOARD_DISABLE_YES' => $board_disable_yes,

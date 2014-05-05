@@ -259,6 +259,9 @@ INSERT INTO phpbb_ggs_config VALUES ('yahoo_exclude_mx', '');
 INSERT INTO phpbb_ggs_config VALUES ('ggs_c_info', '(C) 2006 dcz - http://www.phpbb-seo.com/');
 INSERT INTO phpbb_ggs_config VALUES ('ggs_ver', 'v1.2.0RC4');
 
+# -- Addon "disable phpBB SEO"
+INSERT INTO phpbb_config VALUES ('disable_rewrite', 1);
+
 # -- AreaBB
 INSERT INTO phpbb_areabb_blocs VALUES (1,1,6,'PHP'),(2,1,2,'PHP'),(3,1,7,'PHP'),(4,1,0,''),(5,1,0,''),(6,1,3,'PHP'),(7,1,4,'PHP'),(8,1,5,'PHP'),(9,1,0,''),(10,1,0,'');
 INSERT INTO phpbb_areabb_blocs VALUES (11,1,0,''),(12,2,2,'PHP'),(13,2,4,'PHP'),(14,2,6,'PHP'),(15,2,5,'PHP'),(16,2,7,'PHP'),(17,2,0,''),(18,2,0,''),(19,2,0,''),(20,2,0,'');

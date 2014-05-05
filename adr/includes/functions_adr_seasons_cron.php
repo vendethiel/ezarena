@@ -33,7 +33,7 @@ if ( ( time() - $board_config['adr_seasons_last_time'] ) > $board_config['adr_se
 
 	//define the new period
 	$new_time = $board_config['adr_seasons_last_time'] +  $board_config['adr_seasons_time'];
-
+	
 	$sql= "UPDATE ". CONFIG_TABLE . " 
 		SET config_value = '$new_time' 
 		WHERE config_name = 'adr_seasons_last_time' ";

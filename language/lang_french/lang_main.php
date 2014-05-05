@@ -1319,3 +1319,7 @@ $lang['Presentation_Forum_Link'] = 'Cliquez %sici%s';
 
 // sub title
 $lang['Sub_title'] = 'Description du sujet';
+
+// phpBB SEO - Addon disable rewrite
+$lang['Disable_rewrite'] = 'Désactiver la réecriture d\'adresses';
+$lang['Disable_rewrite_explain'] = 'La ré-écriture d\'adresses peut être désactivée si votre serveur ne le permet pas (demande le <i>rewrite_module</i> d\'Apache)';

@@ -87,6 +87,15 @@
 		<td class="row2" colspan="2"></td>
 	</tr>
 	<tr>
+		<td class="row1">{L_DISABLE_REWRITE}<br /><span class="gensmall">{L_DISABLE_REWRITE_EXPLAIN}</span></td>
+		<td class="row2">
+		<input type="radio" name="disable_rewrite" value="1" {DISABLE_REWRITE_YES} />
+		<span class="genmed">{L_YES}</span>&nbsp;
+		<input type="radio" name="disable_rewrite" value="0" {DISABLE_REWRITE_NO} />
+		<span class="genmed">{L_NO}</span>
+		</td>
+	</tr>
+	<tr>
 		<td class="row1">{L_SITE_NAME}<br /><span class="gensmall">{L_SITE_NAME_EXPLAIN}</span></td>
 		<td class="row2"><input class="post" type="text" size="25" maxlength="100" name="sitename" value="{SITENAME}" /></td>
 	</tr>
