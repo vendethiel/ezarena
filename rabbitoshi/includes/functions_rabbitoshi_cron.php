@@ -249,7 +249,7 @@ if ( ( time() - $board_config['rabbitoshi_cron_last_time'] ) > $board_config['ra
 		}
 	}
 
-	$new_time = $board_config['rabbitoshi_cron_last_time'] +  $board_config['rabbitoshi_cron_time'];
+	$new_time = time();
 
 	$lsql= "UPDATE ". CONFIG_TABLE . " SET config_value = $new_time WHERE config_name = 'rabbitoshi_cron_last_time' ";
 	if ( !($lresult = $db->sql_query($lsql)) ) 

@@ -104,7 +104,7 @@ class phpbb_seo {
 		$this->seo_meta_tags();
 
 		// V: add the ability to disable stuff
-		$this->disabled = !empty($board_config['disable_rewrite']);
+		$this->disabled = $board_config['disable_rewrite'] == '1';
 	}
 
 	// --> URL rewriting functions <--

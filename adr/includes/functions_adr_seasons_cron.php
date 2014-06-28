@@ -24,15 +24,15 @@ if ( ( time() - $board_config['adr_seasons_last_time'] ) > $board_config['adr_se
 	if ( $actual_season == '3' ) $new_season = '4';
 	if ( $actual_season == '4' ) $new_season = '1';
 
+	//define the new period
+	$new_time = time();
+
 	// update seasons
 	$sql= "UPDATE ". CONFIG_TABLE . " 
 		SET config_value = '$new_season' 
 		WHERE config_name = 'adr_seasons' "; 
 	if ( !($result = $db->sql_query($sql)) ) 
 		message_die(GENERAL_ERROR, "Could not access seasons table.", '', __LINE__, __FILE__, $sql);
-
-	//define the new period
-	$new_time = $board_config['adr_seasons_last_time'] +  $board_config['adr_seasons_time'];
 	
 	$sql= "UPDATE ". CONFIG_TABLE . " 
 		SET config_value = '$new_time' 
