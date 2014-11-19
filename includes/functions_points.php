@@ -129,23 +129,22 @@ function user_is_authed($user_id)
 			{
 				$valid_ids[] = $id;
 			}
-
-			$valid_ids_sql = implode(',', $valid_ids);
-
-			$sql = "SELECT group_id
-				FROM " . USER_GROUP_TABLE . "
-				WHERE group_id IN ($valid_ids_sql)
-					AND user_id = $user_id
-					AND user_pending = 0";
-			$result = $db->sql_query($sql);
-
-			if ($row = $db->sql_fetchrow($result))
-			{
-				$is_authed = true;
-				break;
-			}
-			$db->sql_freeresult($result);
 		}
+
+		$valid_ids_sql = implode(',', $valid_ids);
+
+		$sql = "SELECT group_id
+			FROM " . USER_GROUP_TABLE . "
+			WHERE group_id IN ($valid_ids_sql)
+				AND user_id = $user_id
+				AND user_pending = 0";
+		$result = $db->sql_query($sql);
+
+		if ($row = $db->sql_fetchrow($result))
+		{
+			$is_authed = true;
+		}
+		$db->sql_freeresult($result);
 	}
 
 	return $is_authed;
