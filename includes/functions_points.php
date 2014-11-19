@@ -108,6 +108,9 @@ function user_is_authed($user_id)
 {
 	global $db, $board_config;
 
+	if ($user_id == ANONYMOUS)
+		return false;
+
 	static $is_authed;
 
 	if (!isset($is_authed))
@@ -139,7 +142,9 @@ function user_is_authed($user_id)
 			if ($row = $db->sql_fetchrow($result))
 			{
 				$is_authed = true;
+				break;
 			}
+			$db->sql_freeresult($result);
 		}
 	}
 
