@@ -987,7 +987,7 @@ if ( isset($HTTP_POST_VARS['submit']) )
 				message_die(GENERAL_ERROR, 'Could not insert data into user_group table', '', __LINE__, __FILE__, $sql);
 			}
 
-			$sql->clear_cache('users_');
+			$db->clear_cache('users_');
 
 			if ( $coppa )
 			{
