@@ -71,38 +71,6 @@ if (isset($HTTP_SESSION_VARS) && !is_array($HTTP_SESSION_VARS))
 	die("Hacking attempt");
 }
 
-if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'off')
-{
-	// PHP4+ path
-	$not_unset = array('HTTP_GET_VARS', 'HTTP_POST_VARS', 'HTTP_COOKIE_VARS', 'HTTP_SERVER_VARS', 'HTTP_SESSION_VARS', 'HTTP_ENV_VARS', 'HTTP_POST_FILES', 'phpEx', 'phpbb_root_path');
-
-	// Not only will array_merge give a warning if a parameter
-	// is not an array, it will actually fail. So we check if
-	// HTTP_SESSION_VARS has been initialised.
-	if (!isset($HTTP_SESSION_VARS) || !is_array($HTTP_SESSION_VARS))
-	{
-		$HTTP_SESSION_VARS = array();
-	}
-
-	// Merge all into one extremely huge array; unset
-	// this later
-	$input = array_merge($HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS, $HTTP_SERVER_VARS, $HTTP_SESSION_VARS, $HTTP_ENV_VARS, $HTTP_POST_FILES);
-
-	unset($input['input']);
-	unset($input['not_unset']);
-
-	while (list($var,) = @each($input))
-	{
-		if (in_array($var, $not_unset,TRUE)) 
-		{ 
-			die('Hacking attempt!'); 
-		} 
-		unset($$var);
-	}
-
-	unset($input);
-}
-
 //
 // addslashes to vars if magic_quotes_gpc is off
 // this is a security precaution to prevent someone
@@ -261,6 +229,7 @@ while ( $row = $db->sql_fetchrow($result) )
 	$board_config[$row['config_name']] = $row['config_value'];
 }
 
+// Informpro: little bit better perfs...
 if (!defined('NO_ATTACH_MOD'))
 {
 	include $phpbb_root_path . 'attach_mod/attachment_mod.'.$phpEx;
@@ -285,8 +254,8 @@ $birthday = new birthday_class();
 // www.phpBB-SEO.com SEO TOOLKIT BEGIN
 include $phpbb_root_path . 'includes/phpbb_seo_class.'.$phpEx;
 $phpbb_seo = new phpbb_seo();
-
 // www.phpBB-SEO.com SEO TOOLKIT END
+
 if (!DEBUG && (file_exists('install') || file_exists('contrib')))
 {
 	message_die(GENERAL_MESSAGE, 'Please_remove_install_contrib');

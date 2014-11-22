@@ -245,16 +245,6 @@ $gender = ( isset($HTTP_POST_VARS['gender']) ) ? intval ($HTTP_POST_VARS['gender
 	}
 
 	$user_timezone = ( isset($HTTP_POST_VARS['timezone']) ) ? doubleval($HTTP_POST_VARS['timezone']) : $board_config['board_timezone'];
-
-	$sql = "SELECT config_value
-		FROM " . CONFIG_TABLE . "
-		WHERE config_name = 'default_dateformat'";
-	if ( !($result = $db->sql_query($sql)) )
-	{
-		message_die(GENERAL_ERROR, 'Could not select default dateformat', '', __LINE__, __FILE__, $sql);
-	}
-	$row = $db->sql_fetchrow($result);
-	$board_config['default_dateformat'] = $row['config_value'];
 	$user_dateformat = ( !empty($HTTP_POST_VARS['dateformat']) ) ? trim(htmlspecialchars($HTTP_POST_VARS['dateformat'])) : $board_config['default_dateformat'];
 	$user_colortext = ( $board_config['allow_colortext'] ) ? $HTTP_POST_VARS['colortext'] : '';	
 
