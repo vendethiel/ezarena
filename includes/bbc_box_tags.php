@@ -79,7 +79,7 @@ if ($board_config['bbc_box_on'])
 			'HELPLINE' => $bbc_tag_data['helpline'],
 			'LANG_HELP' => $lang['bbcbxr_help'][$bbc_tag_data['helpline']],
 			'BBSTYLE' => $bbc_tag_data['bbstyle'],
-			'IMG' => $basepath . $images[$bbc_tag_data['img']],
+			'IMG' => $phpbb_root_path . $images[$bbc_tag_data['img']],
 			'BBC_BG_IMG' => $images['bbc_bg'],
 			'DIVIDER' => ($bbc_tag_data['divider']) ? $separator : '',
 		));
@@ -147,7 +147,7 @@ if ($board_config['bbc_box_on'])
 					'HELPLINE' => $bbc_tagsrow_box[$offset]['helpline'],
 					'LANG_HELP' => sprintf( (isset($lang['bbcbxr_help'][$bbc_tagsrow_box[$offset]['helpline']]) ? $lang['bbcbxr_help'][$bbc_tagsrow_box[$offset]['helpline']] : $lang['bbcbxr_help_none'] ), $bbc_tagsrow_box[$offset]['before'], $bbc_tagsrow_box[$offset]['after']),
 					'BBSTYLE' => $val,
-					'IMG' => $basepath . $images[$bbc_tagsrow_box[$offset]['img']],
+					'IMG' => $phpbb_root_path . $images[$bbc_tagsrow_box[$offset]['img']],
 					'BBC_BG_IMG' => $images['bbc_bg'],
 					'DIVIDER' => ($bbc_tagsrow_box[$offset]['divider']) ? $separator : '',
 				));

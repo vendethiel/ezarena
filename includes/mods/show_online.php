@@ -5,15 +5,20 @@ class show_online
 	{
 		global $template, $db, $get, $rcs, $lang;
 
-		if( !($result = $db->sql_query($this->getFetchSql())) )
+		$time_period = 300 * floor(time() / 300); // reset "who's online" list every 5 minutes
+		$cachename = 'show_online_' . $time_period;
+		if (!isset($_SESSION['is_in_viewonline']))
 		{
-			message_die(GENERAL_ERROR, 'Could not obtain user/online information', '', __LINE__, __FILE__, $sql);
+			// V: it's our first time viewing the viewonline, so we need to be extract careful
+			// and make sure we appear
+			$_SESSION['is_in_viewonline'] = true;
+			$db->clear_cache($cachename);
 		}
 
 		$logged_visible_online = 0;
 		$logged_hidden_online = 0;
 		$bot_count = 0;
-		$guests_online = 0;
+		$guests_online = $this->countGuests($time_period);
 		$online_userlist = '';
 		$l_online_users = '';
 		$gender_image = '';
@@ -25,68 +30,48 @@ class show_online
 		$prev_user_id = 0;
 		$prev_user_ip = $prev_session_ip = '';
 		
+		$sql = $this->getFetchSql($time_period);
+		if( !($result = $db->sql_query($sql, false, $cachename)) )
+		{
+			message_die(GENERAL_ERROR, 'Could not obtain user/online information', '', __LINE__, __FILE__, $sql);
+		}
+
 		while ($row = $db->sql_fetchrow($result))
 		{
-			// User is logged in and therefor not a guest
-			if ( $row['session_logged_in'] )
+			var_dump($row);exit;
+			$agent = strtolower($row['session_agent']);
+			$browser = $this->getBrowserIcon($agent);	
+			// Skip multiple sessions for one user
+			if ( $row['user_id'] != $prev_user_id )
 			{
-				$agent = strtolower($row['session_agent']);
-				$browser = $this->getBrowserIcon($agent);		
-				// Skip multiple sessions for one user
-				if ( $row['user_id'] != $prev_user_id )
+				$style_color = $rcs->get_colors($row);
+				if ( $row['user_allow_viewonline'] )
 				{
-					$style_color = $rcs->get_colors($row);
-					if ( $row['user_allow_viewonline'] )
+					$user_online_link = '<a href="' . $get->url('userlist', array('mode' => 'viewprofile', POST_USERS_URL => $row['user_id']), true) . '"' . $style_color . '>' . $row['username'] . '</a>'. $browser . '';
+					$logged_visible_online++;
+					if ( $dta_flag = display_flag($row['user_flag'], true) )
 					{
-						$user_online_link = '<a href="' . $get->url('userlist', array('mode' => 'viewprofile', POST_USERS_URL => $row['user_id']), true) . '"' . $style_color . '>' . $row['username'] . '</a>'. $browser . '';
-						$logged_visible_online++;
-						if ( $dta_flag = display_flag($row['user_flag'], true) )
-						{
-							$i_online_flag = '&nbsp;<img class="gensmall" src="' . $dta_flag['img'] . '" alt="' . $dta_flag['name'] . '" title="' . $dta_flag['name'] . '" style="vertical-align:text-bottom; border:0;" />';
-							$user_online_link = $user_online_link . $i_online_flag;
-						}
-					}
-					else
-					{
-						$user_online_link = '<a href="' . $get->url('userlist', array('mode' => 'viewprofile', POST_USERS_URL => $row['user_id']), true) . '"' . $style_color . '><i>' . $row['username'] . '</i></a>'. $browser . '';
-						$logged_hidden_online++;
-					}
-
-					if ( $row['user_allow_viewonline'] || $userdata['user_level'] == ADMIN )
-					{
-						$online_userlist .= ( $online_userlist != '' ) ? ', ' . $user_online_link : $user_online_link;
-						switch ($row['user_gender'])
-						{
-							case 1 : $online_userlist .= " <img src=\"" . $images['icon_minigender_male'] . "\" alt=\"" . $lang['Gender'].  ":".$lang['Male']."\" title=\"" . $lang['Gender'] . ":".$lang['Male']. "\" border=\"0\" />"; break;
-							case 2 : $online_userlist .= " <img src=\"" . $images['icon_minigender_female'] . "\" alt=\"" . $lang['Gender']. ":".$lang['Female']. "\" title=\"" . $lang['Gender'] . ":".$lang['Female']. "\" border=\"0\" />"; break;
-						}					
+						$i_online_flag = '&nbsp;<img class="gensmall" src="' . $dta_flag['img'] . '" alt="' . $dta_flag['name'] . '" title="' . $dta_flag['name'] . '" style="vertical-align:text-bottom; border:0;" />';
+						$user_online_link = $user_online_link . $i_online_flag;
 					}
 				}
-				$prev_user_id = $row['user_id'];
-			}
-			else
-			{
-				// Skip multiple sessions for one user
-				if ( $row['session_ip'] != $prev_session_ip )
+				else
 				{
-					$guests_online++;
-					$bot_id = is_bot(decode_ip($row['session_ip']));
-					if ($bot_id >=0)
+					$user_online_link = '<a href="' . $get->url('userlist', array('mode' => 'viewprofile', POST_USERS_URL => $row['user_id']), true) . '"' . $style_color . '><i>' . $row['username'] . '</i></a>'. $browser . '';
+					$logged_hidden_online++;
+				}
+
+				if ( $row['user_allow_viewonline'] || $userdata['user_level'] == ADMIN )
+				{
+					$online_userlist .= ( $online_userlist != '' ) ? ', ' . $user_online_link : $user_online_link;
+					switch ($row['user_gender'])
 					{
-						$guests_online--;
-						$bot_count++;
-						if (!array_key_exists($bot_to_style[$bot_id], $bots_online))
-						{
-							$bots_online[$bot_to_style[$bot_id]] = 1;
-						}
-						else
-						{
-							$bots_online[$bot_to_style[$bot_id]] ++;
-						}
-					}
+						case 1 : $online_userlist .= " <img src=\"" . $images['icon_minigender_male'] . "\" alt=\"" . $lang['Gender'].  ":".$lang['Male']."\" title=\"" . $lang['Gender'] . ":".$lang['Male']. "\" border=\"0\" />"; break;
+						case 2 : $online_userlist .= " <img src=\"" . $images['icon_minigender_female'] . "\" alt=\"" . $lang['Gender']. ":".$lang['Female']. "\" title=\"" . $lang['Gender'] . ":".$lang['Female']. "\" border=\"0\" />"; break;
+					}					
 				}
 			}
-
+			$prev_user_id = $row['user_id'];
 			$prev_session_ip = $row['session_ip'];
 		}
 		$db->sql_freeresult($result);
@@ -245,16 +230,40 @@ class show_online
         return ' ?';
 	}
 
-	private function getFetchSql()
+	private function getFetchSql($time_period)
 	{
 		global $forum_id;
+
 		$user_forum_sql = ( !empty($forum_id) ) ? "AND s.session_page = " . intval($forum_id) : '';
+
 		return "SELECT u.username, u.user_flag, u.user_color, u.user_group_id, u.user_id, u.user_allow_viewonline, u.user_level, u.user_gender,
 				s.session_logged_in, s.session_ip, s.session_agent
 			FROM ".USERS_TABLE." u, ".SESSIONS_TABLE." s
 			WHERE u.user_id = s.session_user_id
-				AND s.session_time >= ".( time() - 300 ) . "
+				AND s.session_time >= ". $time_period . "
 				$user_forum_sql
 			ORDER BY u.username ASC, s.session_ip ASC";	
+	}
+
+	private function countGuests($time_period)
+	{
+		global $db;
+
+		$sql = 'SELECT SUM(guest_visit) AS count
+				FROM ' . GUESTS_VISIT_TABLE . '
+				WHERE guest_time >= ' . intval($time_period);
+		if( !($result = $db->sql_query($sql, false, 'show_online_guests_')) )
+		{
+			message_die(GENERAL_ERROR, 'Could not obtain guests visit data', '', __LINE__, __FILE__, $sql);
+		}
+
+		if ($row = $db->sql_fetchrow($result, false, 'show_online_guest_'.$time_period)) {
+			$guests_online = $row['count'];
+		} else {
+			$guests_online = 0;
+		}
+		$db->sql_freeresult($result);
+
+		return $guests_online;
 	}
 }

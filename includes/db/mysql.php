@@ -28,28 +28,28 @@ define("SQL_LAYER","mysql");
 
 class sql_db
 {
-
-	var $db_connect_id;
-	var $query_result;
-	var $row = array();
-	var $rowset = array();
-	var $queries;
-	var $num_queries = 0;
-	var $caching = false;
-	var $cached = false;
-	var $cache = array();	
-	var $in_transaction = 0;
+	public $db_connect_id;
+	public $num_queries = 0;
+	public $queries;
+	protected $query_result;
+	protected $row = array();
+	protected $rowset = array();
+	protected $caching = false;
+	protected $cached = false;
+	protected $cache = array();	
+	protected $in_transaction = 0;
 
 	//
 	// Constructor
 	//
-	function sql_db($sqlserver, $sqluser, $sqlpassword, $database, $persistency = true)
+	public function __construct($sqlserver, $sqluser, $sqlpassword, $database, $persistency = true)
 	{
 		$this->persistency = $persistency;
 		$this->user = $sqluser;
 		$this->password = $sqlpassword;
 		$this->server = $sqlserver;
 		$this->dbname = $database;
+		$this->query_result = null;
 
 		$this->db_connect_id = ($this->persistency) ? mysql_pconnect($this->server, $this->user, $this->password) : mysql_connect($this->server, $this->user, $this->password);
 
@@ -101,7 +101,7 @@ class sql_db
 	//
 	// Base query method
 	//
-	function sql_query($query = "", $transaction = FALSE, $cache = false)
+	public function sql_query($query = "", $transaction = FALSE, $cache = false)
 	{
 		//
 		// Remove any pre-existing queries
@@ -377,7 +377,7 @@ class sql_db
 		return ( $this->db_connect_id ) ? mysql_insert_id($this->db_connect_id) : false;
 	}
 
-	function sql_freeresult($query_id = 0)
+	public function sql_freeresult($query_id = 0)
 	{
 		if($query_id === 'cache')
 		{

@@ -77,17 +77,14 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 			// If the last login is more than x minutes ago, then reset the login tries/time
 				if ($row['user_last_login_try'] && $board_config['login_reset_time'] && $row['user_last_login_try'] < (time() - ($board_config['login_reset_time'] * 60)))
 				{
-					/**
-					 *	Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
-					 *	@ Author	: (1) Afterlife_69
-					 *	@ Website	: http://www.afterlife69.com
-					 */
+					// Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
 					/* --- REMOVE ---
 					// Reset login tries
 					$db->sql_query('UPDATE ' . USERS_TABLE . ' SET user_login_tries = 0, user_last_login_try = 0 WHERE user_id = ' . $row['user_id']);
 					--- REPLACE --- */
 					$db->sql_query('UPDATE ' . USERS_TABLE . ' SET user_login_tries = 0, user_last_login_try = 0, user_allow_viewonline = ' . (int) $hideonline . ' WHERE user_id = ' . $row['user_id']);
 					/* --- END --- */
+
 					$row['user_last_login_try'] = $row['user_login_tries'] = 0;
 				}
 				
@@ -100,11 +97,7 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 				if( md5($password) == $row['user_password'] && $row['user_active'] )
 				{
 					$autologin = ( isset($HTTP_POST_VARS['autologin']) ) ? TRUE : 0;
-					/**
-					 *	Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
-					 *	@ Author	: (1) Afterlife_69
-					 *	@ Website	: http://www.afterlife69.com
-					 */
+					// Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
 					/* --- ADD --- */
 					$hideonline = ( isset ( $HTTP_POST_VARS['hideonline'] ) ) ? FALSE : TRUE;
 					/* --- END --- */
@@ -116,21 +109,17 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 
 					if( $session_id )
 					{
-						/**
-						 *	Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
-						 *	@ Author	: (1) Afterlife_69
-						 *	@ Website	: http://www.afterlife69.com
-						 */
-
+						$_SESSION['logged_in'] = true;
+						// Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
 						/* --- REMOVE ---
 						$url = ( !empty($HTTP_POST_VARS['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($HTTP_POST_VARS['redirect'])) : "index.$phpEx";
 						redirect(append_sid($url, true));
 						--- REPLACE --- */
 						$redirect = ( !empty($HTTP_POST_VARS['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($HTTP_POST_VARS['redirect'])) : "index.$phpEx";
 	
-				if (strstr(urldecode($redirect), "\n") || strstr(urldecode($redirect), "\r") || strstr(urldecode($redirect), ';url'))
+						if (strstr(urldecode($redirect), "\n") || strstr(urldecode($redirect), "\r") || strstr(urldecode($redirect), ';url'))
 						{
-								message_die(GENERAL_ERROR, $lang['Olympus_redirect_insecure']);
+							message_die(GENERAL_ERROR, $lang['Olympus_redirect_insecure']);
 						}
 						
 						if ( ! isset ( $HTTP_POST_VARS['admin'] ) )
@@ -144,9 +133,11 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 
 								$message = $lang['Olympus_login_logged_in'] . '<br /><br />' . sprintf($lang['Olympus_login_click_return'], '<a href="' . append_sid($redirect) . '">', '</a>');
 							}
+
 							
 							// Output 'You have sucessfully been logged in' message.
 							message_die(GENERAL_MESSAGE, $message);
+							break;
 						}
 						else
 						{
@@ -160,18 +151,14 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 						message_die(CRITICAL_ERROR, "Couldn't start session : login", "", __LINE__, __FILE__);
 					}
 				}
-				/**
-				 *	Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
-				 *	@ Author	: (1) Afterlife_69
-				 *	@ Website	: http://www.afterlife69.com
-				 */
+				// Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
 				/* --- ADD --- */
 				// Split message for inactive users
 				else if ( ! $row['user_active'] )
 				{
 					$redirect = ( !empty($HTTP_POST_VARS['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($HTTP_POST_VARS['redirect'])) : "index.$phpEx";
 	
-			if (strstr(urldecode($redirect), "\n") || strstr(urldecode($redirect), "\r") || strstr(urldecode($redirect), ';url'))
+					if (strstr(urldecode($redirect), "\n") || strstr(urldecode($redirect), "\r") || strstr(urldecode($redirect), ';url'))
 					{
 							message_die(GENERAL_ERROR, $lang['Olympus_redirect_insecure']);
 					}
@@ -183,6 +170,7 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 					$message = $lang['Olympus_login_account_inactive'] . '<br /><br />' . sprintf($lang['Olympus_login_resend_activation'], "<a href=\"profile.$phpEx?mode=resendactivation\">", '</a>') . '<br /><br />' .  sprintf($lang['Click_return_login'], '<a href="' . append_sid("login.$phpEx") . '">', '</a>');
 
 					message_die(GENERAL_MESSAGE, $message);
+					break;
 				}
 				// Split message for invalid password
 				else if ( md5($password) != $row['user_password'] && $row['user_active'] )
@@ -201,12 +189,13 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 					$message = $lang['Olympus_login_invalid_password'] . '<br /><br />' . sprintf($lang['Olympus_login_reset_password'], "<a href=\"profile.$phpEx?mode=sendpassword\">", '</a>') . '<br /><br />' .  sprintf($lang['Click_return_login'], '<a href="' . append_sid("login.$phpEx") . '">', '</a>');
 
 					message_die(GENERAL_MESSAGE, $message);
+					break;
 				}
 				/* --- END --- */				
 				// Only store a failed login attempt for an active user - inactive users can't login even with a correct password
 				elseif( $row['user_active'] )
 				{
-				// Save login tries and last login
+					// Save login tries and last login
 					if ($row['user_id'] != ANONYMOUS)
 					{
 						$sql = 'UPDATE ' . USERS_TABLE . '
@@ -214,13 +203,9 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 							WHERE user_id = ' . $row['user_id'];
 						$db->sql_query($sql);
 					}
-					}				
+				}				
 					
-				/**
-				*	Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
-				*	@ Author	: (1) Afterlife_69
-				*	@ Website	: http://www.afterlife69.com
-				*/
+				// Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
 				/* --- REMOVE ---
 				$redirect = ( !empty($HTTP_POST_VARS['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($HTTP_POST_VARS['redirect'])) : '';
 				$redirect = str_replace('?', '&', $redirect);
@@ -254,11 +239,7 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 				'META' => "<meta http-equiv=\"refresh\" content=\"3;url=login.$phpEx?redirect=$redirect\">")
 			);
 
-			/**
-			 *	Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
-			 *	@ Author	: (1) Afterlife_69
-			 *	@ Website	: http://www.afterlife69.com
-			 */
+			///	Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
 			/* --- REMOVE ---
 			$message = $lang['Error_login'] . '<br /><br />' . sprintf($lang['Click_return_login'], "<a href=\"login.$phpEx?redirect=$redirect\">", '</a>') . '<br /><br />' .  sprintf($lang['Click_return_index'], '<a href="' . append_sid("index.$phpEx") . '">', '</a>');
 
@@ -310,11 +291,7 @@ else
 		$page_title = $lang['Login'];
 		include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
-		/**
-		 *	Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
-		 *	@ Author	: (1) Afterlife_69
-		 *	@ Website	: http://www.afterlife69.com
-		 */
+		///	Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
 		 /* --- REMOVE ---
 		$template->set_filenames(array(
 			'body' => 'login_body.tpl')
@@ -369,11 +346,7 @@ else
 
 			'L_ENTER_PASSWORD' => (isset($HTTP_GET_VARS['admin'])) ? $lang['Admin_reauthenticate'] : $lang['Enter_password'],
 			'L_SEND_PASSWORD' => $lang['Forgotten_password'],
-						/**
-			 *	Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
-			 *	@ Author	: (1) Afterlife_69
-			 *	@ Website	: http://www.afterlife69.com
-			 */
+						///	Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
 			 /* --- ADD --- */
 			'L_LOGIN_REGISTER'	=> $lang['Olympus_login_register'],
 			'L_LOGIN_INFO'		=> $lang['Olympus_login_info'],
@@ -391,11 +364,7 @@ else
 			'S_HIDDEN_FIELDS' => $s_hidden_fields)
 		);
 
-		/**
-		 *	Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
-		 *	@ Author	: (1) Afterlife_69
-		 *	@ Website	: http://www.afterlife69.com
-		 */
+		///	Olympus Style Login Screen 3.0.0, Afterlife(69) of www.afterlife69.com
 		/* --- ADD --- */
 		if ( isset( $HTTP_GET_VARS['admin'] ) )
 		{

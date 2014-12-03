@@ -642,11 +642,16 @@ if ($total_categories = count($category_rows))
 					$row_color = $_sf_rowcolor ? $theme['td_color1'] : $theme['td_color2'];
 					$row_class = $_sf_rowcolor ? $theme['td_class1'] : $theme['td_class2'];
 
+					// V: this is used by KUF's code, but it's been commented by subforums+
+					// there's nothing to worry about, though, because we overrided
+					// "_sf_check_unread" in functions_sf.php
+					$unread_topic = $forum_data[$j]['unread'];
+					
 					// recompute the front icons
 					// V: NOTE ! use 'unread' here because it's from _sf_stack
 					$_sf_folder = _sf_get_folder($_sf_is_sub ? 'mini' : 'standard', ($_sf_last_sub_id[$forum_id] == $forum_id ? 'std' : 'has_sub') .
 					 ($forum_data[$j]['forum_status'] == FORUM_LOCKED ? '_locked' : '') .
-					 ($forum_data[$j]['unread'] ? '_new' : '') .
+					 ($unread_topic ? '_new' : '') .
 					 (intval($forum_data[$j]['forum_posts']) ? '' : '_empty'));
 					$folder_image = $images[ $_sf_folder['img'] ];
 					$folder_alt = $lang[ $_sf_folder['txt'] ];
@@ -709,7 +714,7 @@ if ($total_categories = count($category_rows))
 								$last_post_sub = '<img src="' . $images['icon_subforum_locked'] . '" border="0" alt="' . $lang['Forum_is_locked'] . '" title="' . $lang['Forum_is_locked'] . '" />';
 							}
 
-							if ( count($forum_moderators[$forum_id]) > 0 )
+							if ( isset($forum_moderators[$forum_id]) && count($forum_moderators[$forum_id]) > 0 )
 							{
 								$l_moderators = $lang['Moderator' . (count($forum_moderators[$forum_id]) == 1 ? 's' : '')] . ':';
 								$moderator_list = implode(', ', $forum_moderators[$forum_id]);
@@ -774,7 +779,7 @@ if ($total_categories = count($category_rows))
 								 ? '&nbsp;&nbsp;<a href="#" onclick="window.open(\'admin/admin_forums.'. $phpEx .'?mode=editforum&in_from=index&'
 								 . POST_FORUM_URL .'='. $forum_id .'&sid='. $userdata['session_id'] .'\',\'popup\',\'width=600,height=800,scrollbars=yes,resizable=no,toolbar=no,directories=no,location=no,menubar=no,status=no\'); return false;"><img src="images/forum_edit.gif" border="0"></a>' : '',
 								'FORUM_FOLDER_IMG' => $folder_image,
-								'HYPERCELL_CLASS' => get_hypercell_class($forum_data[$j]['forum_status'], ($unread_topics || $unread_topic)),
+								'HYPERCELL_CLASS' => get_hypercell_class($forum_data[$j]['forum_status'], $unread_topic),
 								'FORUM_ICON_IMG' => ($icon) ? '<img src="' . $phpbb_root_path . $board_config['forum_icon_path'] . '/' . $icon . '" />' : '', // Forum Icon Mod
 								'FORUM_NAME' => $forum_data[$j]['forum_name'],
 								'FORUM_DESC' => $forum_data[$j]['forum_desc'],

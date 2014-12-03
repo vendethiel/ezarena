@@ -132,7 +132,8 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 		$sql = 'SELECT *
 			FROM ' . USERS_TABLE . '
 			WHERE user_id = ' . (int) $user_id;
-		if (!($result = $db->sql_query($sql)))
+		$do_cache = (int)$user_id == ANONYMOUS ? 'session_guest_' : false;
+		if (!($result = $db->sql_query($sql, false, $do_cache)))
 		{
 			message_die(CRITICAL_ERROR, 'Error doing DB query userdata row fetch', '', __LINE__, __FILE__, $sql);
 		}
@@ -170,36 +171,36 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 			}
 		}
 	}
-	
-	//
-	// Create or update the session
-	//
-	$sql_ip = $user_id == ANONYMOUS ? " AND session_ip = '$user_ip'" : '';	
-	$sql = "UPDATE " . SESSIONS_TABLE . "
-		SET session_ip = '$user_ip', session_start = $current_time, session_time = $current_time, session_page = $page_id, session_agent = $agent, session_logged_in = $login, session_admin = $admin
-		WHERE session_id = '" . $session_id . "' $sql_ip 
-			AND session_user_id = '$user_id'";
-	if ( !$db->sql_query($sql) || !$db->sql_affectedrows() )
-	{
-		$session_id = dss_rand();
-
-		$sql = "INSERT INTO " . SESSIONS_TABLE . "
-			(session_id, session_user_id, session_start, session_time, session_ip, session_page, session_agent, session_logged_in, session_admin)
-			VALUES ('$session_id', $user_id, $current_time, $current_time, '$user_ip', $page_id, $agent, $login, $admin)";
-		
-		$sql2 = "DELETE FROM " . SESSIONS_TABLE . " WHERE session_logged_in = 0;";
-		if (!$db->sql_query($sql2))
-		{
-			message_die(CRITICAL_ERROR, 'Error clearing session table', '', __LINE__, __FILE__, $sql2);
-		}
-		if ( !$db->sql_query($sql) )
-		{
-			message_die(CRITICAL_ERROR, 'Error creating new session', '', __LINE__, __FILE__, $sql);
-		}
-	}
 
 	if ( $user_id != ANONYMOUS )
 	{
+		//
+		// Create or update the session
+		//
+		$sql = "UPDATE " . SESSIONS_TABLE . "
+			SET session_ip = '$user_ip', session_start = $current_time, session_time = $current_time, session_page = $page_id, session_agent = $agent, session_logged_in = $login, session_admin = $admin
+			WHERE session_id = '" . $session_id . "'
+				AND session_ip = '$user_ip' 
+				AND session_user_id = '$user_id'";
+		if ( !$db->sql_query($sql) || !$db->sql_affectedrows() )
+		{
+			$session_id = dss_rand();
+
+			$sql = "INSERT INTO " . SESSIONS_TABLE . "
+				(session_id, session_user_id, session_start, session_time, session_ip, session_page, session_agent, session_logged_in, session_admin)
+				VALUES ('$session_id', $user_id, $current_time, $current_time, '$user_ip', $page_id, $agent, $login, $admin)";
+			
+			$sql2 = "DELETE FROM " . SESSIONS_TABLE . " WHERE session_logged_in = 0;";
+			if (!$db->sql_query($sql2))
+			{
+				message_die(CRITICAL_ERROR, 'Error clearing session table', '', __LINE__, __FILE__, $sql2);
+			}
+			if ( !$db->sql_query($sql) )
+			{
+				message_die(CRITICAL_ERROR, 'Error creating new session', '', __LINE__, __FILE__, $sql);
+			}
+		}
+
 		$last_visit = ( $userdata['user_session_time'] > 0 ) ? $userdata['user_session_time'] : $current_time; 
 
 		if (!$admin)
@@ -261,10 +262,10 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 	$userdata['session_agent'] = $agent;
 	$userdata['session_admin'] = $admin;
 	$userdata['session_key'] = $sessiondata['autologinid'];
-//-- mod : today userlist ------------------------------------------------------
-//-- add
-	record_guests_visit($userdata);
-//-- fin mod : today userlist --------------------------------------------------	
+
+	//V: removed here for more accurate "online" tracking.
+	// We're basically only using the "guest record" to count people online in the last X minutes
+	//record_guests_visit($userdata);
 
 	setcookie($cookiename . '_data', serialize($sessiondata), $current_time + 31536000, $cookiepath, $cookiedomain, $cookiesecure);
 	setcookie($cookiename . '_sid', $session_id, 0, $cookiepath, $cookiedomain, $cookiesecure);
@@ -287,8 +288,7 @@ if ( isset($sessiondata['autologinid']) && $sessiondata['autologinid'] != '' )
 function session_pagestart($user_ip, $thispage_id)
 {
 	global $db, $lang, $board_config;
-	global $HTTP_COOKIE_VARS, $HTTP_GET_VARS, $SID;
-	global $HTTP_SERVER_VARS;
+	global $SID, $HTTP_COOKIE_VARS, $HTTP_GET_VARS, $HTTP_SERVER_VARS;
 
 	$cookiename = $board_config['cookie_name'];
 	$cookiepath = $board_config['cookie_path'];
@@ -312,7 +312,6 @@ function session_pagestart($user_ip, $thispage_id)
 		$sessionmethod = SESSION_METHOD_GET;
 	}
 
-	// 
 	if (!preg_match('/^[A-Za-z0-9]*$/', $session_id))
 	{
 		$session_id = '';
@@ -323,7 +322,7 @@ function session_pagestart($user_ip, $thispage_id)
 	//
 	// Does a session exist?
 	//
-	if ( !empty($session_id) )
+	if ( !empty($_SESSION['logged_in']) && !empty($session_id) )
 	{
 		//
 		// session_id exists so go ahead and attempt to grab all
@@ -390,40 +389,34 @@ function session_pagestart($user_ip, $thispage_id)
 					setcookie($cookiename . '_sid', $session_id, 0, $cookiepath, $cookiedomain, $cookiesecure);
 				}
 
+
+				record_guests_visit($userdata);
 				return $userdata;
 			}
 		}
 	}
-	elseif(empty($sessiondata))
+	elseif (empty($sessiondata))
 	{
 		// try to login guest
-		$sql = "SELECT u.*, s.*
-			FROM " . SESSIONS_TABLE . " s, " . USERS_TABLE . " u
-			WHERE s.session_ip = '$user_ip' 
-				AND s.session_user_id = " . ANONYMOUS . "
-				AND u.user_id = s.session_user_id 
+		$sql = "SELECT u.*
+			FROM " . USERS_TABLE . " u
+			WHERE u.user_id = " . ANONYMOUS . "
 					LIMIT 0, 1";
-		if ( !($result = $db->sql_query($sql)) )
+		if ( !($result = $db->sql_query($sql, false, 'session_guest_')) )
 		{
 			message_die(CRITICAL_ERROR, 'Error doing DB query userdata row fetch', '', __LINE__, __FILE__, $sql);
 		}
 
 		$userdata = $db->sql_fetchrow($result);
-
-		if ( isset($userdata['user_id']) )
+		if (!$userdata)
 		{
-			if ( $current_time - $userdata['session_time'] > 60 )
-			{
-				$sql = "UPDATE " . SESSIONS_TABLE . " 
-					SET session_time = $current_time, session_start = $current_time, session_page = 0
-					WHERE session_id = '" . $userdata['session_id'] . "'";
-				if ( !$db->sql_query($sql) )
-				{
-					message_die(CRITICAL_ERROR, 'Error updating sessions table', '', __LINE__, __FILE__, $sql);
-				}
-			}
-			return $userdata;
+			message_die(CRITICAL_ERROR, 'Missing ANONYMOUS (#'.ANONYMOUS.') user', __LINE__, __FILE__, $sql);
 		}
+		$db->sql_freeresult($result);
+		
+		$userdata['session_logged_in'] = false;
+		record_guests_visit($userdata);
+		return $userdata;
 	}
 	//
 	// If we reach here then no (valid) session exists. So we'll create a new one,
@@ -435,7 +428,7 @@ function session_pagestart($user_ip, $thispage_id)
 	{
 		message_die(CRITICAL_ERROR, 'Error creating user session', '', __LINE__, __FILE__, $sql);
 	}
-
+	record_guests_visit($userdata);
 	return $userdata;
 
 }
@@ -462,6 +455,7 @@ function session_end($session_id, $user_id)
 		return;
 	}
 	
+	$_SESSION['logged_in'] = false;
 	//
 	// Delete existing session
 	//
@@ -604,56 +598,49 @@ function session_reset_keys($user_id, $user_ip)
 		unset($auto_login_key);
 	}
 }
+
 //-- mod : today userlist ------------------------------------------------------
 //-- add
 function record_guests_visit(&$userdata)
 {
 	global $db;
 
-	$guest_id = $userdata['session_user_id'];
+	$guest_id = isset($userdata['session_user_id']) ? $userdata['session_user_id'] : $userdata['user_id'];
 
 	// check if the same ip exists in last five minutes for anonymous user
 	$guest_visited = true;
-	if ( $guest_id == ANONYMOUS )
-	{
-		// escape some vars
-		$common = new common();
-		$guest_se = $common->sql_escape_string($userdata['session_id']);
-		$guest_ip = $common->sql_escape_string($userdata['session_ip']);
-		unset($common);
+	$timer_diff = 300; // V: 5 minutes, see below
 
-		$sql = 'SELECT session_id
-				FROM ' . SESSIONS_TABLE . '
-				WHERE session_user_id = ' . ANONYMOUS . '
-					AND session_id <> \'' . $guest_se . '\'
-					AND session_time >= ' . (time() - 300) . '
-					AND session_ip = \'' . $guest_ip . '\'
-				LIMIT 1';
-		if ( !($result = $db->sql_query($sql)) )
-		{
-			message_die(CRITICAL_ERROR, 'Error reading guest session', '', __LINE__, __FILE__, $sql);
-		}
-		$guest_visited = $db->sql_numrows($result);
-		$db->sql_freeresult($result);
-	}
-
-	if ( !$guest_visited )
+	if ($guest_id == ANONYMOUS &&
+		(empty($_SESSION['last_recorded_visit']) || $_SESSION['last_recorded_visit'] < time() - $timer_diff))
 	{
-		$current_hour = 3600 * floor(time() / 3600); // div to get the current hour
+		//$current_hour = 3600 * floor(time() / 3600); // div to get the current hour
+		// V: use last 5 minutes to remove the need for guest sessions (see mods/show_online)
+		$current_5mins = $timer_diff * floor(time() / $timer_diff);
 		$sql = 'UPDATE ' . GUESTS_VISIT_TABLE . '
 				SET guest_visit = guest_visit + 1
-				WHERE guest_time = ' . intval($current_hour);
-		if ( !$db->sql_query($sql) || !$db->sql_affectedrows() )
+				WHERE guest_time = ' . intval($current_5mins);
+		if ( !($result = $db->sql_query($sql)) || !$db->sql_affectedrows() )
 		{
 			$sql = 'INSERT INTO ' . GUESTS_VISIT_TABLE . '
-					(guest_time, guest_visit) VALUES (' . intval($current_hour) . ', 1)';
-			if ( !$db->sql_query($sql) )
+					(guest_time, guest_visit) VALUES (' . intval($current_5mins) . ', 1)';
+			if ( !($result = $db->sql_query($sql)) )
 			{
 				message_die(CRITICAL_ERROR, 'Error creating new guest visit stat', '', __LINE__, __FILE__, $sql);
 			}
+			$db->sql_freeresult($result);
 		}
+		if ($result) {
+			$db->sql_freeresult($result);
+		}
+
+		// V: if we had to update, reset it so we can update again
+		//  (in another $timer_diff seconds)
+		$db->clear_cache('show_online_guest');
+		$_SESSION['last_recorded_visit'] = time();
 	}
 }
+
 //-- fin mod : today userlist --------------------------------------------------
 //
 // Append $SID to a url. Borrowed from phplib and modified. This is an
@@ -669,7 +656,8 @@ function append_sid($url, $non_html_amp = false)
 	$url = $phpbb_seo->url_rewrite($url, $non_html_amp);
 	// www.phpBB-SEO.com SEO TOOLKIT END
 
-	if ( !empty($SID) && !preg_match('#sid=#', $url) )
+	// don't append sid if it's already there, if we're a guest, or if we don't have a sid (wut?)
+	if ( !empty($SID) && !empty($_SESSION['logged_in']) && !preg_match('#sid=#', $url) )
 	{
 		$url .= ( ( strpos($url, '?') !== false ) ?  ( ( $non_html_amp ) ? '&' : '&amp;' ) : '?' ) . $SID;
 	}

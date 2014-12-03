@@ -166,7 +166,6 @@ if ( $board_config['presentation_required'] )
 	{
 		$message = $lang['Presentation_Message'] . '<br /><br />' . sprintf($lang['Presentation_Forum_Link'], '<a href="' . $get->url('viewforum', array('f' => $board_config['presentation_forum']), true) . '">', '</a> ');
 		message_die(GENERAL_MESSAGE, $message);
-		break;
 	}
 }
 //-- fin mod : presentation required -------------------------------------------
@@ -776,7 +775,11 @@ else if ( $submit || $confirm )
 
 			if ( ($mode == 'reply') && ($userdata['user_id'] != ANONYMOUS) )
 			{
-				$sql = "SELECT post_id, poster_id, post_created FROM " . POSTS_TABLE . " WHERE topic_id = $topic_id ORDER  BY post_time DESC LIMIT 1";
+				$sql = "SELECT post_id, poster_id, post_created
+						FROM " . POSTS_TABLE . "
+						WHERE topic_id = $topic_id
+						ORDER  BY post_time DESC
+						LIMIT 1";
 				$result = $db->sql_query($sql) or message_die(GENERAL_ERROR, 'Could not obtain last post information', '', __LINE__, __FILE__, $sql);
 		
 				$last_post_data = $db->sql_fetchrow($result);
@@ -829,7 +832,7 @@ else if ( $submit || $confirm )
 			{
 				$error_msg = '';
 				submit_merged_post($last_post_id, $forum_id, $subject, $message, $return_message, $return_meta);
-			}			
+			}
 			break;
 
 		case 'delete':
@@ -837,7 +840,7 @@ else if ( $submit || $confirm )
 			if ($error_msg != '')
 			{
 				message_die(GENERAL_MESSAGE, $error_msg);
-			}		
+			}
 			delete_post($mode, $post_data, $return_message, $return_meta, $forum_id, $topic_id, $post_id, $poll_id);
 			break;
 	}
@@ -1116,24 +1119,26 @@ else
 	// User default entry point
 	//
 	$postreport=(isset($HTTP_GET_VARS['postreport']))? intval( $HTTP_GET_VARS['postreport']) : 0;
-if ($postreport)
-{
-	$sql = 'SELECT topic_id FROM '.POSTS_TABLE.' WHERE post_id="'.$postreport.'"';
-	if( !($result = $db->sql_query($sql) )) 
-		message_die(GENERAL_ERROR, "Couldn't get post subject information"); 
-	$post_details = $db->sql_fetchrow($result);
-	$post_topic_id=$post_details['topic_id'];
-	$sql = 'SELECT pt.post_subject FROM '.POSTS_TEXT_TABLE.' pt, '.POSTS_TABLE.' p WHERE p.topic_id="'.$post_topic_id.'" AND pt.post_id=p.post_id ORDER BY p.post_time ASC LIMIT 1';
-	if( !($result = $db->sql_query($sql) )) 
-		message_die(GENERAL_ERROR, "Couldn't get topic subject information".$sql); 
-	$post_details = $db->sql_fetchrow($result);
-	$subject='('.$postreport.')'.$post_details['post_subject'];
-	$lock_subject=$postreport;
-} else
-{
-	$subject = '';
-	$lock_subject='';
-}
+	if ($postreport)
+	{
+		$sql = 'SELECT topic_id FROM '.POSTS_TABLE.' WHERE post_id="'.$postreport.'"';
+		if( !($result = $db->sql_query($sql) )) 
+			message_die(GENERAL_ERROR, "Couldn't get post subject information"); 
+		$post_details = $db->sql_fetchrow($result);
+		$post_topic_id=$post_details['topic_id'];
+		$sql = 'SELECT pt.post_subject FROM '.POSTS_TEXT_TABLE.' pt, '.POSTS_TABLE.' p WHERE p.topic_id="'.$post_topic_id.'" AND pt.post_id=p.post_id ORDER BY p.post_time ASC LIMIT 1';
+		if( !($result = $db->sql_query($sql) )) 
+			message_die(GENERAL_ERROR, "Couldn't get topic subject information".$sql); 
+		$post_details = $db->sql_fetchrow($result);
+		$subject='('.$postreport.')'.$post_details['post_subject'];
+		$lock_subject=$postreport;
+	}
+	else
+	{
+		$subject = '';
+		$lock_subject='';
+	}
+	
 	if ( $mode == 'newtopic' )
 	{
 		$user_sig = ( $userdata['user_sig'] != '' ) ? $userdata['user_sig'] : '';

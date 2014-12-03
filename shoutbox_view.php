@@ -97,6 +97,7 @@ obtain_word_list($orig_word, $replacement_word);
 	{
 		message_die(GENERAL_ERROR, 'Could not get shoutbox information', '', __LINE__, __FILE__, $sql);
 	}
+	$i = 0;
 	while ($shout_row = $db->sql_fetchrow($result))
 	{
 		$i++;

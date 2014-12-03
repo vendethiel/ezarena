@@ -376,13 +376,6 @@ function Calendar($params) {
 	// MAIN LOOP
 	// 
 	
-	// In the case of JavaScript integration with session, we create the session.
-	// We are allowed to do that because in JavaScript integration this PHP script
-	// is not included in any custom page.
-	if ($JS && $USE_SESSION) {
-		session_start();
-	}
-	
 	// Today's date
 	$today = date("dmY");
 	

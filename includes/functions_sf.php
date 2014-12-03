@@ -58,7 +58,7 @@ function _sf_get_folder($size, $status)
 	);
 
 	return array(
-		'img' => $folders_def[$size][$status]['sf_img'] && isset($images[ $folders_def[$size][$status]['sf_img'] ]) ? $folders_def[$size][$status]['sf_img'] : $folders_def[$size][$status]['img'],
+		'img' => !empty($folders_def[$size][$status]['sf_img']) && isset($images[ $folders_def[$size][$status]['sf_img'] ]) ? $folders_def[$size][$status]['sf_img'] : $folders_def[$size][$status]['img'],
 		'txt' => $folders_def[$size][$status]['txt'],
 	);
 }

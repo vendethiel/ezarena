@@ -116,6 +116,9 @@ function submit_merged_post($post_id, $forum_id, $subject, $message, &$return_me
 	$sql = "UPDATE " . FORUMS_TABLE . " SET forum_last_post_id = $post_id WHERE forum_id = $forum_id";
 	$result = $db->sql_query($sql) or message_die(GENERAL_ERROR, 'Could not update forum last post id', '', __LINE__, __FILE__, $sql);
 
+	$db->clear_cache('topics_recent_');
+	$db->clear_cache('posts_');
+
 	// Search routines
 	remove_search_post($post_id);
 	add_search_words('single', $post_id, stripslashes($message), stripslashes($subject));
@@ -507,6 +510,7 @@ function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_
 	$meta = '<meta http-equiv="refresh" content="3;url=' . append_sid("viewtopic.$phpEx?" . POST_POST_URL . "=" . $post_id) . '#' . $post_id . '">';
 	$message = $lang['Stored'] . '<br /><br />' . sprintf($lang['Click_view_message'], '<a href="' . append_sid("viewtopic.$phpEx?" . POST_POST_URL . "=" . $post_id) . '#' . $post_id . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_forum'], '<a href="' . append_sid("viewforum.$phpEx?" . POST_FORUM_URL . "=$forum_id") . '">', '</a>');
 	$db->clear_cache('posts_');
+	$db->clear_cache('topics_recent_');
 
 	return false;
 }
@@ -634,6 +638,7 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
 	}
 
 	$db->clear_cache('posts_');
+	$db->clear_cache('topics_recent_');
 	return;
 }
 
@@ -744,6 +749,7 @@ function delete_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_
 	$message .=  '<br /><br />' . sprintf($lang['Click_return_forum'], '<a href="' . append_sid("viewforum.$phpEx?" . POST_FORUM_URL . "=$forum_id") . '">', '</a>');
 	
 	$db->clear_cache('posts_');
+	$db->clear_cache('topics_recent_');
 
 	return;
 }

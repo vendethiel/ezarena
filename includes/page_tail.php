@@ -28,17 +28,17 @@ if ( !defined('IN_PHPBB') )
 // BEGIN RPG
 if ( ( time() - $board_config['adr_seasons_last_time'] ) > $board_config['adr_seasons_time'] ) 
 { 
-   include_once($php_root_path . 'adr/includes/functions_adr_seasons_cron.'.$phpEx); 
+   include_once($phpbb_root_path . 'adr/includes/functions_adr_seasons_cron.'.$phpEx); 
 } 
 
 if ( ( time() - $board_config['adr_time_last_time'] ) > $board_config['adr_time'] )
 {
-	include_once($php_root_path . 'adr/includes/functions_adr_time_cron.'.$phpEx);
+	include_once($phpbb_root_path . 'adr/includes/functions_adr_time_cron.'.$phpEx);
 }
 
 if ( $board_config['rabbitoshi_enable_cron'] && ( ( time() - $board_config['rabbitoshi_cron_last_time'] ) > $board_config['rabbitoshi_cron_time'] )) 
 { 
-   include_once($php_root_path . 'rabbitoshi/includes/functions_rabbitoshi_cron.'.$phpEx); 
+   include_once($phpbb_root_path . 'rabbitoshi/includes/functions_rabbitoshi_cron.'.$phpEx); 
 } 
 // END RPG
 
@@ -72,6 +72,9 @@ $template->pparse('overall_footer');
 //
 $db->sql_close();
 
+// update the last visit time
+$_SESSION['last_visit_time'] = time();
+
 //
 // Compress buffered output if required and send to browser
 //
@@ -94,7 +97,7 @@ if ( $do_gzip_compress )
 	echo pack('V', $gzip_crc);
 	echo pack('V', $gzip_size);
 }
-if (DEBUG)
+if (DEBUG && $db->queries)
 {
 	echo '<h1>Queries : </h1><pre>';
 	foreach ($db->queries as $dummy)

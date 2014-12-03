@@ -29,7 +29,10 @@ date_default_timezone_set(@date_default_timezone_get());
 error_reporting  (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
 
 // V: ok no, far too many errors :'(
-// error_reporting(-1);
+error_reporting(-1);
+
+// V: we modern now
+session_start();
 
 @set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
 @ini_set('register_globals',0); 
@@ -229,7 +232,7 @@ while ( $row = $db->sql_fetchrow($result) )
 	$board_config[$row['config_name']] = $row['config_value'];
 }
 
-// Informpro: little bit better perfs...
+// V: little bit better perfs...
 if (!defined('NO_ATTACH_MOD'))
 {
 	include $phpbb_root_path . 'attach_mod/attachment_mod.'.$phpEx;

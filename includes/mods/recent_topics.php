@@ -10,9 +10,9 @@ class recent_topics
 			'MARQUEE_TOPIC' => str_replace("%s",$board_config['topics_on_index'],$lang['marquee_topic']) ) 
 		);
 
-		if ( !($result = $db->sql_query($a = $this->getFetchSql())) ) 
+		if ( !($result = $db->sql_query($this->getFetchSql(), false, 'topics_recent_')) ) 
 		{ 
-			message_die(GENERAL_ERROR, 'Could not query recent posts marquee information', '', __LINE__, __FILE__, $sql); 
+			message_die(GENERAL_ERROR, 'Could not query recent posts marquee information', '', __LINE__, __FILE__); 
 		} 
 
 		if ($rows = $db->sql_fetchrowset($result)) 

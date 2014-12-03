@@ -185,9 +185,9 @@ if (
 
 	$signature = (isset($signature)) ? str_replace('<br />', "\n", $signature) : '';
 	$signature_bbcode_uid = '';
-// Start add - Gender MOD
-$gender = ( isset($HTTP_POST_VARS['gender']) ) ? intval ($HTTP_POST_VARS['gender']) : 0;
-// End add - Gender MOD	
+	// Start add - Gender MOD
+	$gender = ( isset($HTTP_POST_VARS['gender']) ) ? intval ($HTTP_POST_VARS['gender']) : 0;
+	// End add - Gender MOD	
 
 	// Run some validation on the optional fields. These are pass-by-ref, so they'll be changed to
 	// empty strings if they fail.

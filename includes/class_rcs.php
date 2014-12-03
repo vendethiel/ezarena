@@ -431,7 +431,10 @@ class rcs extends rcs_setup
 
 		// get user colour
 		$user_color = !empty($_user) ? '<span' : '';
-		$user_color .= $this->get_user_class($_var[$_level], $_var[$_color], $_var[$_id]);
+		$level = isset($_var[$_level]) ? $_var[$_level] : null;
+		$color = isset($_var[$_color]) ? $_var[$_color] : null;
+		$id = isset($_var[$_id]) ? $_var[$_id] : null;
+		$user_color .= $this->get_user_class($level, $color, $id);
 		$user_color .= !empty($_user) ? '>' . $_user . '</span>' : '';
 
 		return $user_color;

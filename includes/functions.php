@@ -253,7 +253,7 @@ function phpbb_rtrim($str, $charlist = false)
 * With thanks to Anthrax101 for the inspiration on this one
 * Added in phpBB 2.0.20
 *
-* NOTE: actually, I totally removed the function from phpBB 2.0.20
+* V: actually, I totally removed the function from phpBB 2.0.20
 *  because it was using SQL for no reason, so now we just using
 *  okay-entropy crap (md5 of microtime + random data, here online record date as salt)
 * so ... Added in ezArena 1.0.0.
@@ -262,7 +262,7 @@ function dss_rand()
 {
 	global $db, $board_config;
 
-	$seed = $board_config['rand_seed'];
+	$seed = isset($board_config['rand_seed']) ? $board_config['rand_seed'] : null;
 	if ($seed === null)
 	{
 		$seed = md5(microtime() . '@foo:' . $board_config['record_online_date']);
@@ -408,10 +408,10 @@ function make_jumpbox($action, $match_forum_id = 0)
 	}
 
 	// Let the jumpbox work again in sites having additional session id checks.
-//	if ( !empty($SID) )
-//	{
+	if ( !empty($_SESSION['logged_in']) )
+	{
 		$boxstring .= '<input type="hidden" name="sid" value="' . $userdata['session_id'] . '" />';
-//	}
+	}
 
 	$template->set_filenames(array(
 		'jumpbox' => 'jumpbox.tpl')
@@ -1830,18 +1830,24 @@ function read_cookies($userdata)
 	// get the anonymous last visit date
 	if ( !$userdata['session_logged_in'] )
 	{
-		$board_config['guest_lastvisit'] = intval($HTTP_COOKIE_VARS[$base_name . '_lastvisit']);
-		if ( $board_config['guest_lastvisit'] < (time()-300) )
+		if (empty($_COOKIE[$base_name . '_lastvisit']))
 		{
-			$board_config['guest_lastvisit'] = time();
-			setcookie($base_name . '_lastvisit', intval($board_config['guest_lastvisit']), $current_time + 31536000, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+			$userdata['user_lastvisit'] = time();
 		}
-  		$userdata['user_lastvisit'] = $board_config['guest_lastvisit'];
+		else
+		{
+			$userdata['user_lastvisit'] = intval($_COOKIE[$base_name . '_lastvisit']);
+			if ( $userdata['user_lastvisit'] < (time()-300) )
+			{
+				$userdata['user_lastvisit'] = time();
+			}
+		}
 	}
+	setcookie($base_name . '_lastvisit', intval($userdata['user_lastvisit']), time() + 31536000, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
 
 	//Assume old system: data in cookie
-	$board_config['tracking_time']		= isset($HTTP_COOKIE_VARS[$base_name . '_tt']) ? intval($HTTP_COOKIE_VARS[$base_name . '_tt']) : $userdata['user_lastvisit'];
-	$board_config['tracking_forums']	= isset($HTTP_COOKIE_VARS[$base_name . '_f']) ? unserialize($HTTP_COOKIE_VARS[$base_name . '_f']) : array();
+	$board_config['tracking_time']		= isset($_COOKIE[$base_name . '_tt']) ? intval($_COOKIE[$base_name . '_tt']) : $userdata['user_lastvisit'];
+	$board_config['tracking_forums']	= isset($_COOKIE[$base_name . '_f']) ? unserialize($_COOKIE[$base_name . '_f']) : array();
 	$board_config['tracking_unreads'] = array();
 	if ( $board_config['keep_unreads'] )
 	{
@@ -2037,6 +2043,7 @@ function list_new_unreads(&$forum_unread, $check_auth = 0)
 
 	//get list of remembered topic id's
 	@reset($board_config['tracking_unreads']); //Mark whole forum as read records
+	$list_unreads = '';
 	while ( list($id, $time) = @each($board_config['tracking_unreads']) )
 	{
 		if ($id) $list_unreads .= ($list_unreads ? ',':'') . $id;
@@ -2085,30 +2092,28 @@ function list_new_unreads(&$forum_unread, $check_auth = 0)
 	// since the user will not be shown any unreads, and that's what the next if statement is for
 	if ($auth_list)
 	{
-		// let's try to make it one query, shall we :-) ?
-		//for ( $i = 0; $i < count($sql_and); $i++)
+		// V: made that into one unique query
+		$sql = "SELECT t.forum_id, t.topic_id, p.post_time
+				FROM " . TOPICS_TABLE . " t, " . POSTS_TABLE . " p
+				WHERE p.post_id = t.topic_last_post_id
+				AND (" . implode(') OR (', $sql_and) . ")
+				$check_auth_sql
+				AND t.topic_moved_id = 0";
+
+		// this gets cached along with the posts
+		if ( !($result = $db->sql_query($sql, false, 'posts_')) )
 		{
-			$sql = "SELECT t.forum_id, t.topic_id, p.post_time
-					FROM " . TOPICS_TABLE . " t, " . POSTS_TABLE . " p
-					WHERE p.post_id = t.topic_last_post_id
-					AND (" . implode(') OR (', $sql_and) . ")
-					$check_auth_sql
-					AND t.topic_moved_id = 0";
+			message_die(GENERAL_ERROR, 'Could not query new topic information', '', __LINE__, __FILE__, $sql);
+		}
 
-			if ( !($result = $db->sql_query($sql)) )
+		while( $topic_data = $db->sql_fetchrow($result) ) //Keep the valid unread topics
+		{
+			$id = $topic_data['topic_id'];
+			$topic_last_read = topic_last_read($topic_data['forum_id'], $id);
+			if ( $topic_data['post_time'] > $topic_last_read)
 			{
-				message_die(GENERAL_ERROR, 'Could not query new topic information', '', __LINE__, __FILE__, $sql);
-			}
-
-			while( $topic_data = $db->sql_fetchrow($result) ) //Keep the valid unread topics
-			{
-				$id = $topic_data['topic_id'];
-				$topic_last_read = topic_last_read($topic_data['forum_id'], $id);
-				if ( $topic_data['post_time'] > $topic_last_read)
-				{
-					$new_unreads[$id] = $topic_last_read;
-					$forum_unread[$topic_data['forum_id']]=true;
-				}
+				$new_unreads[$id] = $topic_last_read;
+				$forum_unread[$topic_data['forum_id']]=true;
 			}
 		}
 		$db->sql_freeresult($result);

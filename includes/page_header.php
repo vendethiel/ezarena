@@ -110,7 +110,7 @@ else
 	$l_login_logout = $lang['Login'];
 }
 
-$t = $userdata['session_logged_in'] ? $userdata['user_lastvisit'] :	$board_config['guest_lastvisit'];
+$t = isset($userdata['session_logged_in']) ? $userdata['user_lastvisit'] : null;
 $s_last_visit = create_date($board_config['default_dateformat'], $t, $board_config['board_timezone']);
 
 if (defined('SHOW_ONLINE'))
