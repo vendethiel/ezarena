@@ -88,7 +88,7 @@ if( !($result = $db->sql_query($sql)) )
 $zone = $db->sql_fetchrow($result);
 // V: let's make sure nothing bad happened for some reason
 //  i.e. somebody deleted the zone.
-//  of course, it's still gonna fail it race's start zone got ERASED
+//  of course, it's still gonna fail its race's start zone got ERASED
 if (!$zone)
 {
 	$sql = "SELECT race_zone_begin FROM " . ADR_RACES_TABLE . "
