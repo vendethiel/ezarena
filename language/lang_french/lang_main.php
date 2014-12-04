@@ -57,7 +57,7 @@ $lang['DATE_FORMAT'] =  'd M Y'; // This should be changed to the default date f
 //
 //$lang['TRANSLATION'] = 'Traduction par : <a href="http://www.phpbbfrance.org/" target="_blank" class="copyright" title="Traduction de phpBB en français par phpBB France">phpBB France</a>';
 $lang['TRANSLATION_INFO'] = 'Traduction par : <a href="http://www.phpbbfrance.org/" target="_blank" class="copyright" title="Traduction de phpBB en français par phpBB France">phpBBFrance.org</a>';
-$lang['Premod'] = 'Prémod <a href="http://ezcom-fr.com">ezArena par EzCom</a> %s basée sur l\'Ultimarena';
+$lang['Premod'] = 'Prémod <a href="http://github.com/vendethiel/ezarena">ezArena</a> %s basée sur l\'Ultimarena';
 
 $lang['Login_attempts_exceeded'] = 'Vous avez dépassé le nombre maximal de tentatives de connexions (%s). Vous ne pourrez ainsi plus vous connecter pendant %s minutes.';
 $lang['Please_remove_install_contrib'] = 'Afin de terminer l\'installation, veuillez supprimer le dossier <strong>install/</strong> présent à la racine de votre forum.';

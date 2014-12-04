@@ -104,9 +104,9 @@ class acp_versions
 //-- fin premod : ultimarena ---------------------------------------------			
 			'ezarena' => array(
 				'author' => 'Informpro',
-				'author_url' => 'http://ezcom-fr.com',
-				'host' => 'ezcom-fr.com',
-				'file' => '/files/versions/ezarena.dta',
+				'author_url' => 'http://github.com/vendethiel/ezarena',
+				'host' => '',
+				'file' => '', ///files/versions/ezarena.dta',
 				'protocol' => 'multiple',
 				'mods' => array(
 					'ezarena_version' => array('name' => 'ezarena', 'desc' => '', 'page' => 'http://ezcom-fr.com')
