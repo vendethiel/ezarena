@@ -32,7 +32,7 @@ include_once($phpbb_root_path . 'rabbitoshi/language/lang_' . $board_config['def
 
 function rabbitoshi_template_file($file)
 {
-	global $db , $template , $board_config , $userdata , $theme;
+	global $db , $template , $board_config , $userdata , $theme, $phpbb_root_path;
 
 	$template_path = 'templates/' ;
 	$template_name = $theme['template_name'];
@@ -144,10 +144,13 @@ function rabbitoshi_get_pet_value()
 	$status = 0;
 	$prize = $rabbit_stats['creature_prize'];
 	
+	$message = '';
+	$pet_dead = false;
+
 	//
 	// Pets Hunger
 	//
-        if ( $hunger_status < 0 || $rabbit_user['creature_hunger'] == '0')
+    if ( $hunger_status < 0 || $rabbit_user['creature_hunger'] == '0')
 	{
 		$pet_dead = true;
 	}

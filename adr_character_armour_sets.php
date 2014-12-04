@@ -210,7 +210,7 @@ $template->assign_vars(array(
 	'PAGE_NUMBER' 		=> sprintf($lang['Page_of'], ( floor( $start / $board_config['topics_per_page'] ) + 1 ), ceil( $total_users / $board_config['topics_per_page'] )), 
 	'L_GOTO_PAGE' 		=> $lang['Goto_page'],
 	"S_LIST_ACTION" 		=> append_sid("adr_character_armour_sets.$phpEx?".POST_USERS_URL."=$searchid&amp;mode2=$mode2&amp;order=$sort_order"),
-	"S_HIDDEN_FIELDS" 		=> $s_hidden_fields, 
+	"S_HIDDEN_FIELDS" 		=> isset($s_hidden_fields) ? $s_hidden_fields : '', 
 ));
 
 

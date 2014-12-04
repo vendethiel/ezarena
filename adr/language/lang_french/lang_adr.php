@@ -1857,3 +1857,6 @@ $lang['ADR_SPELL_LIST'] = 'Cliquez sur l\'image pour accéder à la liste des sort
 $lang['Adr_Must_be_in_clan_to_party'] = 'Vous devez faire parti d\'un clan pour rejoindre un groupe !';
 $lang['Adr_party_invite_only_clan'] = 'Vous ne pouvez inviter dans votre groupe que des gens du même clan que vous';
 $lang['Adr_clan_cant_leave_party'] = 'Vous ne pouvez pas quitter votre clan tant que vous êtes dans un groupe';
+
+//character_armour_sets
+$lang['Adr_set_img_explain'] = 'Image de la panoplie d\'objets';

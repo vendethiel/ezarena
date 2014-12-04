@@ -47,28 +47,28 @@ if ( !$board_config['rabbitoshi_enable']) {
 }
 
 // Actions
-$yourpet_name = $HTTP_POST_VARS['yourpet_name'];
-$purchacing_pet = $HTTP_POST_VARS['purchacing_pet'];
-$Buypet = $HTTP_POST_VARS['Buypet'];
-$Vet = $HTTP_POST_VARS['Vet'];
-$confirm_Vet = $HTTP_POST_VARS['confirm_Vet'];
-$Feed = $HTTP_POST_VARS['Feed'];
-$Shop = $HTTP_POST_VARS['Shop'];
-$Drink = $HTTP_POST_VARS['Drink'];
-$Clean = $HTTP_POST_VARS['Clean'];
-$Owner_list = $HTTP_POST_VARS['Owner_list'];
-$Hotel = $HTTP_POST_VARS['Hotel'];
-$Hotel_out = $HTTP_POST_VARS['Hotel_out'];
-$Hotel_in = $HTTP_POST_VARS['Hotel_in'];
-$Evolution = $HTTP_POST_VARS['Evolution'];
-$Evolution_exec = $HTTP_POST_VARS['Evolution_exec'];
-$Evolution_pet = intval($HTTP_POST_VARS['evolution_pet']);
-$resurrect_ok = $HTTP_POST_VARS['resurrect_ok'];
-$resurrect_no = $HTTP_POST_VARS['resurrect_no'];
-$Sellpet = $HTTP_POST_VARS['Sellpet'];
-$confirm_sell = $HTTP_POST_VARS['confirm_sell'];
-$prefs = $HTTP_POST_VARS['prefs'];
-$prefs_exec = $HTTP_POST_VARS['prefs_exec'];
+$yourpet_name = isset($_POST['yourpet_name']) ? $_POST['yourpet_name'] : null;
+$purchacing_pet = isset($_POST['purchacing_pet']) ? $_POST['purchacing_pet'] : null;
+$Buypet = isset($_POST['Buypet']) ? $_POST['Buypet'] : null;
+$Vet = isset($_POST['Vet']) ? $_POST['Vet'] : null;
+$confirm_Vet = isset($_POST['confirm_Vet']) ? $_POST['confirm_Vet'] : null;
+$Feed = isset($_POST['Feed']) ? $_POST['Feed'] : null;
+$Shop = isset($_POST['Shop']) ? $_POST['Shop'] : null;
+$Drink = isset($_POST['Drink']) ? $_POST['Drink'] : null;
+$Clean = isset($_POST['Clean']) ? $_POST['Clean'] : null;
+$Owner_list = isset($_POST['Owner_list']) ? $_POST['Owner_list'] : null;
+$Hotel = isset($_POST['Hotel']) ? $_POST['Hotel'] : null;
+$Hotel_out = isset($_POST['Hotel_out']) ? $_POST['Hotel_out'] : null;
+$Hotel_in = isset($_POST['Hotel_in']) ? $_POST['Hotel_in'] : null;
+$Evolution = isset($_POST['Evolution']) ? $_POST['Evolution'] : null;
+$Evolution_exec = isset($_POST['Evolution_exec']) ? $_POST['Evolution_exec'] : null;
+$Evolution_pet = isset($_POST['evolution_pet']) ? intval($HTTP_POST_VARS['evolution_pet']) : null;
+$resurrect_ok = isset($_POST['resurrect_ok']) ? $_POST['resurrect_ok'] : null;
+$resurrect_no = isset($_POST['resurrect_no']) ? $_POST['resurrect_no'] : null;
+$Sellpet = isset($_POST['Sellpet']) ? $_POST['Sellpet'] : null;
+$confirm_sell = isset($_POST['confirm_sell']) ? $_POST['confirm_sell'] : null;
+$prefs = isset($_POST['prefs']) ? $_POST['prefs'] : null;
+$prefs_exec = isset($_POST['prefs_exec']) ? $_POST['prefs_exec'] : null;
 
 $start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
 
@@ -1129,14 +1129,14 @@ else
 						if (!$db->sql_query($sql)) {
 							message_die(GENERAL_ERROR, 'Unable to deduct user points.', '', __LINE__, __FILE__, $sql);
 						}
-						rabbitoshi_previous( Rabbitoshi_pet_dead_rebirth_ok , rabbitoshi , '' );
+						rabbitoshi_previous( 'Rabbitoshi_pet_dead_rebirth_ok' , 'rabbitoshi' , '' );
 					}
 
 					else if ( $resurrect_no )
 					{
 						// why no ;(
 						// rabbitoshi_delete_pet($user_id);
-						rabbitoshi_previous( Rabbitoshi_pet_dead_rebirth_no , rabbitoshi , '' );
+						rabbitoshi_previous( 'Rabbitoshi_pet_dead_rebirth_no' , 'rabbitoshi' , '' );
 					}
 
 					else
@@ -1157,7 +1157,7 @@ else
 					}
 				}
 				else {
-					rabbitoshi_previous( Rabbitoshi_pet_dead_lack , rabbitoshi , '' );
+					rabbitoshi_previous( 'Rabbitoshi_pet_dead_lack' , 'rabbitoshi' , '' );
 				}
 			}
 		}
@@ -1366,7 +1366,7 @@ else
 			'U_PET_SHOP' => append_sid("rabbitoshi_shop.$phpEx"),
 			'U_PET_PROGRESS' => append_sid("rabbitoshi_progress.$phpEx"),
 			'U_PET_INVENTORY' => append_sid("rabbitoshi_inventory.$phpEx"),
-			'S_HIDDEN_FIELDS' => $s_hidden_fields,
+			'S_HIDDEN_FIELDS' => isset($s_hidden_fields) ? $s_hidden_fields : '',
 		));
 	}
 	else
@@ -1426,7 +1426,7 @@ $template->assign_vars(array(
 	'L_PET_SHOP' 	        => $lang['Rabbitoshi_Shop'],
 	'L_PET_INVENTORY'       => $lang['Rabbitoshi_inventory'],
 	'L_PET_PROGRESS' 	=> $lang['Rabbitoshi_progress'],
-	'L_TRANSLATOR'          => $lang['Rabbitoshi_translation'],
+	//'L_TRANSLATOR'          => $lang['Rabbitoshi_translation'],
 	'L_PET_GENERAL_MESSAGE' => $lang['Rabbitoshi_general_message'],
 	'L_PET_MESSAGE'         => $lang['Rabbitoshi_message'],
 	'L_PET_SERVICES'        => $lang['Rabbitoshi_services'],

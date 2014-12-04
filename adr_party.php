@@ -53,7 +53,8 @@ include_once($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
 
 // Who is looking at this page ?
 $user_id = $userdata['user_id'];
-$searchid = $view_userdata['user_id'];
+//V: wtf is $searchid?? or $view_userdata??
+//$searchid = $view_userdata['user_id'];
 $points = $userdata['user_points'];
 $char = adr_get_user_infos($user_id);
 
@@ -82,7 +83,7 @@ if (!$clan)
 <tr><td class="row2" align="center" valign="center">
 <?php
 // Actions
-$action = $_GET['action'];
+$action = !empty($_GET['action']) ? $_GET['action'] : '';
 if($action == 'leave')
 {
 	$can = 1;
@@ -108,7 +109,6 @@ if($action == 'leave')
 	}
 
 }
-$action = $_GET['action'];
 if($action == 'disband')
 {
 	// User is a Leader?
@@ -233,11 +233,15 @@ if($action == 'kick')
 	}
 }
 // Message Table
+if (!empty($message))
+{
 ?>
 <table width=100% border=0 bordercolor=black cellpadding="0" cellspacing="0">
 <tr><td class=row2><a name=party></a><span class=gen><center><b><?=$message?></td></tr>
 </table>
 <?php
+}//end message table
+
 // User is in a party?
 if($char['character_party'] == 0)
 {
@@ -261,30 +265,31 @@ if($char['character_party'] != 0)
 $sql = 'SELECT character_name, character_id, character_leader, character_level FROM '.ADR_CHARACTERS_TABLE.' WHERE character_party = '.$char['character_party'].' ORDER BY character_leader DESC';
 $re = $db->sql_query($sql);
 $rowset = $db->sql_fetchrowset($re);
-for($i=0;$i<count($rowset);$i++)
+$party_level = 0; // sum of all the members level
+$party_count = count($rowset);
+for($i=0;$i<$party_count;$i++)
 {
-$party_level = $party_level + $rowset[$i]['character_level'];
-$party_count++;
-if($char['character_leader'] > 0 && $char['character_leader'] > $rowset[$i]['character_leader']  && $char['character_leader'] > 0)
-{
-	$kick = '<td class="row1"><center><span class=gen><input type=button class=liteoption value="Renvoyer" onClick="window.location.href=\'./adr_party.php?action=kick&id='.$rowset[$i]['character_id'].'#party\'"></td>';
-}
-else if($char['character_leader'] > 0)
-{
-	$kick = '<td class="row1"><center><span class=gen>&nbsp;</td>';
-}
-if($char['character_leader'] >= $rowset[$i]['character_leader'] && $rowset[$i]['character_leader'] < 2  && $char['character_leader'] > 0)
-{
-	$promote = '<td class="row1"><center><span class=gen><input class=liteoption type=button value="Promouvoir" onClick="window.location.href=\'./adr_party.php?action=promote&id='.$rowset[$i]['character_id'].'#party\'"></td>';
-}
-else if($char['character_leader'] > 0)
-{
-	$promote = '<td class="row1"><center><span class=gen>&nbsp;</td>';
-}
+	$party_level = $party_level + $rowset[$i]['character_level'];
+	if($char['character_leader'] > 0 && $char['character_leader'] > $rowset[$i]['character_leader']  && $char['character_leader'] > 0)
+	{
+		$kick = '<td class="row1"><center><span class=gen><input type=button class=liteoption value="Renvoyer" onClick="window.location.href=\'./adr_party.php?action=kick&id='.$rowset[$i]['character_id'].'#party\'"></td>';
+	}
+	else if($char['character_leader'] > 0)
+	{
+		$kick = '<td class="row1"><center><span class=gen>&nbsp;</td>';
+	}
+	if($char['character_leader'] >= $rowset[$i]['character_leader'] && $rowset[$i]['character_leader'] < 2  && $char['character_leader'] > 0)
+	{
+		$promote = '<td class="row1"><center><span class=gen><input class=liteoption type=button value="Promouvoir" onClick="window.location.href=\'./adr_party.php?action=promote&id='.$rowset[$i]['character_id'].'#party\'"></td>';
+	}
+	else if($char['character_leader'] > 0)
+	{
+		$promote = '<td class="row1"><center><span class=gen>&nbsp;</td>';
+	}
 
-if($rowset[$i]['character_leader'] == 0){$rank = '<span class=gen> (Membre)';}
-if($rowset[$i]['character_leader'] == 1){$rank = '<span class=gen><i> (Officier)';}
-if($rowset[$i]['character_leader'] == 2){$rank = '<span class=gen><b> (Chef)';}
+	if($rowset[$i]['character_leader'] == 0){$rank = '<span class=gen> (Membre)';}
+	if($rowset[$i]['character_leader'] == 1){$rank = '<span class=gen><i> (Officier)';}
+	if($rowset[$i]['character_leader'] == 2){$rank = '<span class=gen><b> (Chef)';}
 ?>
 <tr><td class="row1"><span class=gen><center><?=$rowset[$i]['character_name']?> - Niveau: <?=$rowset[$i]['character_level']?>  <?=$rank?></td><?=$kick?><?=$promote?></tr>
 <?php
@@ -336,5 +341,4 @@ $party_leader = $row['character_name'];
 }
 ?>
 </td></tr>
-<tr><td class="row1" colspan=3><span class="gen"><a href="http://spikez.exocrew.com">MOD Written By: Spikez</a></span></td></tr>
 </table>

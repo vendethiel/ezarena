@@ -14,8 +14,10 @@
  *
  ***************************************************************************/
 
-if(!defined('IN_PHPBB')){
-	die("Hacking attempt");}
+if(!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
 
 function adr_update_all_cache_infos()
 {
@@ -45,7 +47,7 @@ function adr_get_poster_infos($poster_id)
 {
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config, $table_prefix;
 
-	define('IN_ADR_CHARACTER', 1);
+	redefine('IN_ADR_CHARACTER', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 
 	$poster_id = intval($poster_id);
@@ -111,7 +113,7 @@ function adr_update_posters_infos()
 {
 	global $db, $lang, $phpEx, $userdata, $phpbb_root_path, $table_prefix;
 
-	define('IN_ADR_CHARACTER', 1);
+	redefine('IN_ADR_CHARACTER', 1);
 	$db->clear_cache('adr_chars');
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 
@@ -171,10 +173,7 @@ function adr_get_skill_data($target_skill)
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config;
 
 	$target_skill = intval($target_skill);
-	if (!defined('IN_ADR_CHARACTER'))
-	{
-		define('IN_ADR_CHARACTER', 1);
-	}
+	redefine('IN_ADR_CHARACTER', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 	$cache_config = explode('-', $board_config['Adr_use_cache_system']);
 
@@ -242,7 +241,7 @@ function adr_update_skills()
 {
 	global $db, $lang, $phpEx, $userdata, $phpbb_root_path;
 
-	define('IN_ADR_CHARACTER', 1);
+	redefine('IN_ADR_CHARACTER', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 
 	$template = new Template($phpbb_root_path);
@@ -297,7 +296,7 @@ function adr_get_item_quality($item, $type)
 {
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config, $table_prefix;
 
-	define('IN_ADR_SHOPS', 1);
+	redefine('IN_ADR_SHOPS', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 	$cache_config = explode('-', $board_config['Adr_use_cache_system']);
 
@@ -390,7 +389,7 @@ function adr_update_item_quality()
 	global $db, $lang, $phpEx, $userdata, $phpbb_root_path, $table_prefix;
 
 	$template = new Template($phpbb_root_path);
-	define('IN_ADR_SHOPS', 1);
+	redefine('IN_ADR_SHOPS', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 
 	$template->set_filenames(array(
@@ -443,7 +442,7 @@ function adr_get_item_type($type, $mode)
 	global $db, $lang, $phpEx, $userdata, $phpbb_root_path, $board_config;
 
 	$type = intval($type);
-	define('IN_ADR_SHOPS', 1);
+	redefine('IN_ADR_SHOPS', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 	$cache_config = explode('-', $board_config['Adr_use_cache_system']);
 
@@ -538,7 +537,7 @@ function adr_update_item_type()
 	global $db, $lang, $phpEx, $userdata, $phpbb_root_path, $table_prefix;
 
 	$template = new Template($phpbb_root_path);
-	define('IN_ADR_SHOPS', 1);
+	redefine('IN_ADR_SHOPS', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 
 	$template->set_filenames(array(
@@ -588,9 +587,7 @@ function adr_get_element_infos($element_id)
 {
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config, $table_prefix;
 
-	if (!defined('IN_ADR_CHARACTER')){
-		define('IN_ADR_CHARACTER', 1);
-	}
+	redefine('IN_ADR_CHARACTER', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 	$element_id = intval($element_id);
 	$cache_config = explode('-', $board_config['Adr_use_cache_system']);
@@ -633,7 +630,7 @@ function adr_update_element_infos()
 {
 	global $db, $lang, $phpEx, $userdata, $phpbb_root_path, $table_prefix;
 
-	define('IN_ADR_CHARACTER', 1);
+	redefine('IN_ADR_CHARACTER', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 
 	$template = new Template($phpbb_root_path);
@@ -683,9 +680,7 @@ function adr_get_alignment_infos($alignment_id)
 {
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config, $table_prefix;
 
-	if (!defined('IN_ADR_CHARACTER')){
-		define('IN_ADR_CHARACTER', 1);
-	}
+	redefine('IN_ADR_CHARACTER', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 	$alignment_id = intval($alignment_id);
 	$cache_config = explode('-', $board_config['Adr_use_cache_system']);
@@ -728,9 +723,7 @@ function adr_update_alignment_infos()
 {
 	global $db, $lang, $phpEx, $userdata, $phpbb_root_path, $table_prefix;
 
-	if (!defined('IN_ADR_CHARACTER')){
-		define('IN_ADR_CHARACTER', 1);
-	}
+	redefine('IN_ADR_CHARACTER', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 
 	$template = new Template($phpbb_root_path);
@@ -780,9 +773,7 @@ function adr_get_class_infos($class_id)
 {
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config, $table_prefix;
 
-	if (!defined('IN_ADR_CHARACTER')){
-		define('IN_ADR_CHARACTER', 1);
-	}
+	redefine('IN_ADR_CHARACTER', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 	$cache_config = explode('-', $board_config['Adr_use_cache_system']);
 
@@ -824,7 +815,7 @@ function adr_update_class_infos()
 {
 	global $db, $lang, $phpEx, $userdata, $phpbb_root_path, $table_prefix;
 
-	define('IN_ADR_CHARACTER', 1);
+	redefine('IN_ADR_CHARACTER', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 
 	$template = new Template($phpbb_root_path);
@@ -874,7 +865,7 @@ function adr_get_race_infos($race_id)
 {
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config, $table_prefix;
 
-	define('IN_ADR_CHARACTER', 1);
+	redefine('IN_ADR_CHARACTER', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 	$cache_config = explode('-', $board_config['Adr_use_cache_system']);
 
@@ -916,7 +907,7 @@ function adr_update_race_infos()
 {
 	global $db, $lang, $phpEx, $userdata, $phpbb_root_path, $table_prefix;
 
-	define('IN_ADR_CHARACTER', 1);
+	redefine('IN_ADR_CHARACTER', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 
 	$template = new Template($phpbb_root_path);
@@ -966,9 +957,7 @@ function adr_get_monster_infos($monster_id)
 {
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config, $table_prefix;
 
-	if (!defined('IN_ADR_CHARACTER')){
-		define('IN_ADR_CHARACTER', 1);
-	}
+	redefine('IN_ADR_CHARACTER', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 	$cache_config = explode('-', $board_config['Adr_use_cache_system']);
 
@@ -1010,7 +999,7 @@ function adr_update_monster_infos()
 {
 	global $db, $lang, $phpEx, $userdata, $phpbb_root_path, $table_prefix;
 
-	define('IN_ADR_BATTLE', 1);
+	redefine('IN_ADR_BATTLE', 1);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 
 	$template = new Template($phpbb_root_path);
@@ -1152,8 +1141,12 @@ function adr_get_item_type_categories($category = 'none'){
 			$category = explode(",",$category);
 			for($a=0;$a<=count($category);$a++) $category_list .= "'".$category[$a]."',";
 			$where = " AND item_type_category IN (".$category_list." 0)";
-		
 		}
+		else
+		{
+			$where = '';
+		}
+
 		// Get and display all the items type
 		$sql = "SELECT * FROM  " . ADR_SHOPS_ITEMS_TYPE_TABLE . "
 			WHERE item_type_id <> 0 $where

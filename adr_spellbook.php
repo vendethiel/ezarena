@@ -51,12 +51,12 @@ if ( !$userdata['session_logged_in'] )
 adr_template_file('adr_spellbook_body.tpl');
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
+// Get userdata
+$user_id = $userdata['user_id'];
+
 // Get the general config
 $adr_general = adr_get_general_config();
 $adr_user = adr_get_user_infos($user_id);
-
-// Get userdata
-$user_id = $userdata['user_id'];
 
 //adr_battle_cell_check($user_id, $userdata);
 

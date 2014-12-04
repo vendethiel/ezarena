@@ -595,3 +595,8 @@ $lang['Adr_battle_pet_newstatut_4']='Votre créature est furieuse';
 
 $lang['Rabbitoshi_level_up_penalty']='Pénalité d\'xp pour la montée de niveau';
 $lang['Rabbitoshi_level_up_penalty_explain']='Pourcentage d\'expérience nécessaire pour monter de niveau (plus un familier est haut niveau, plus il a besoin d\'expérience pour passer le prochain niveau)';
+
+// V: seems those were left out... completed by hand
+$lang['Rabbitoshi_creature_characteristics'] = 'Caractéristiques du familier';
+$lang['Rabbitoshi_creature_attacks'] = 'Attaques du familier';
+$lang['Rabbitoshi_shop_return'] = 'Revenir au magasin';

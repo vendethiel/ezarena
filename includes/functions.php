@@ -21,6 +21,18 @@
  *
  ***************************************************************************/
 
+/**
+ * V: function to avoid re-defining constants over and over again
+ *  (mainly for ADR)
+ */
+function redefine($name, $val)
+{
+	if (!defined($name))
+	{
+		define($name, $val);
+	}
+}
+
 //-- mod : topic display order ---------------------------------------------------------------------
 //-- add
 // build a list of the sortable fields or return field name
