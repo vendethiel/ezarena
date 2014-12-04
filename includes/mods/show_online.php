@@ -38,7 +38,6 @@ class show_online
 
 		while ($row = $db->sql_fetchrow($result))
 		{
-			var_dump($row);exit;
 			$agent = strtolower($row['session_agent']);
 			$browser = $this->getBrowserIcon($agent);	
 			// Skip multiple sessions for one user

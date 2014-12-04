@@ -80,7 +80,7 @@ function zone_goto($goto_name, $cost_goto)
 
 function zone_events($zone)
 {
-	global $db, $userdata, $lang, $user_id, $phpEx;
+	global $db, $userdata, $lang, $user_id, $phpEx, $zone_events;
 
 	$event_1 = $zone['zone_event1'];
 	$event_2 = $zone['zone_event2'];
@@ -226,14 +226,12 @@ function zone_events($zone)
 // Zone - NPCs
 function zone_npc_actions()
 {
-	global $db, $userdata, $area_id, $user_id, $lang;
+	global $db, $userdata, $area_id, $user_id, $lang, $adr_user, $user_npc_visit_array, $user_npc_quest_array;
 
 	if ( isset($_GET['npc']) || isset($_POST['npc']) )
 		$npc_action = ( isset($_POST['npc']) ) ? intval($_POST['npc']) : intval($_GET['npc']);
 
-	$npc_give_action = $_POST['npc_give'];
-	$user_npc_visit_array = explode( ',' , $adr_user['character_npc_visited'] );
-	$user_npc_quest_array = explode( ';' , $adr_user['character_npc_check'] );
+	$npc_give_action = isset($_POST['npc_give']) ? $_POST['npc_give'] : null;
 
 	if( isset($npc_action) )
 	{

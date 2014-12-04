@@ -364,6 +364,9 @@ $row = $db->sql_fetchrowset($result);
 $npc_count1 = 0;
 for ( $i = 0 ; $i < count( $row ) ; $i++ )
 {
+	$user_npc_visit_array = explode( ',' , $adr_user['character_npc_visited'] );
+	$user_npc_quest_array = explode( ';' , $adr_user['character_npc_check'] );
+
 	$npc_zone_array = explode( ',' , $row[$i]['npc_zone'] );
 	$npc_race_array = explode( ',' , $row[$i]['npc_race'] );
 	$npc_class_array = explode( ',' , $row[$i]['npc_class'] );
@@ -760,24 +763,24 @@ if ( $board_config['Adr_zone_townmap_enable'] && $uhrow['zonemap_type'] > 0 )
 if ( $board_config['Adr_zone_picture_link'] )
 {
 	$picture_link = 1;
-	( $zone_temple == '1' ) ? $temple_link = '<a href="'.append_sid("adr_temple.$phpEx").'">' : '';
-	( $zone_prison == '1' ) ? $prison_link = '<a href="'.append_sid("adr_courthouse.$phpEx").'">' : '';
-	( $zone_shops == '1' ) ? $shops_link = '<a href="'.append_sid("adr_shops.$phpEx").'">' : '';
-	( $zone_forge == '1' ) ? $forge_link = '<a href="'.append_sid("adr_forge.$phpEx").'">' : '';
-	( $zone_bank == '1' ) ? $bank_link = '<a href="'.append_sid("adr_vault.$phpEx").'">' : '';
-	( $zone_enchant == '1' ) ? $enchant_link = '<a href="'.append_sid("adr_enchant.$phpEx").'">' : '';
-	( $zone_mine == '1' ) ? $mine_link = '<a href="'.append_sid("adr_mine.$phpEx").'">' : '';
+	$temple_link = ( $zone_temple == '1' ) ? '<a href="'.append_sid("adr_temple.$phpEx").'">' : '';
+	$prison_link = ( $zone_prison == '1' ) ? '<a href="'.append_sid("adr_courthouse.$phpEx").'">' : '';
+	$shops_link = ( $zone_shops == '1' ) ? '<a href="'.append_sid("adr_shops.$phpEx").'">' : '';
+	$forge_link = ( $zone_forge == '1' ) ? '<a href="'.append_sid("adr_forge.$phpEx").'">' : '';
+	$bank_link = ( $zone_bank == '1' ) ? '<a href="'.append_sid("adr_vault.$phpEx").'">' : '';
+	$enchant_link = ( $zone_enchant == '1' ) ? '<a href="'.append_sid("adr_enchant.$phpEx").'">' : '';
+	$mine_link = ( $zone_mine == '1' ) ? '<a href="'.append_sid("adr_mine.$phpEx").'">' : '';
 }
 else
 {
 	$picture_link = 0;
-	( $zone_temple == '1' ) ? $temple_link = '<a href="'.append_sid("adr_temple.$phpEx").'">'. $lang['Adr_zone_goto_temple'] .'</a>' : $temple_link = $lang['Adr_zone_building_disable'];
-	( $zone_prison == '1' ) ? $prison_link = '<a href="'.append_sid("adr_courthouse.$phpEx").'">'. $lang['Adr_zone_goto_prison'] .'</a>' : $prison_link = $lang['Adr_zone_building_disable'];
-	( $zone_shops == '1' ) ? $shops_link = '<a href="'.append_sid("adr_shops.$phpEx").'">'. $lang['Adr_zone_goto_shops'] .'</a>' : $shops_link = $lang['Adr_zone_building_disable'];
-	( $zone_forge == '1' ) ? $forge_link = '<a href="'.append_sid("adr_forge.$phpEx").'">'. $lang['Adr_zone_goto_forge'] .'</a>' : $forge_link = $lang['Adr_zone_building_disable'];
-	( $zone_bank == '1' ) ? $bank_link = '<a href="'.append_sid("adr_vault.$phpEx").'">'. $lang['Adr_zone_goto_bank'] .'</a>' : $bank_link = $lang['Adr_zone_building_disable'];
-	( $zone_enchant == '1' ) ? $enchant_link = '<a href="'.append_sid("adr_enchant.$phpEx").'">'. $lang['Adr_zone_goto_enchant'] .'</a>' : $enchant_link = $lang['Adr_zone_building_disable'];
-	( $zone_mine == '1' ) ? $mine_link = '<a href="'.append_sid("adr_mine.$phpEx").'">'. $lang['Adr_zone_goto_mine'] .'</a>' : $mine_link = $lang['Adr_zone_building_disable'];
+	$temple_link = ( $zone_temple == '1' ) ? '<a href="'.append_sid("adr_temple.$phpEx").'">'. $lang['Adr_zone_goto_temple'] .'</a>' : $lang['Adr_zone_building_disable'];
+	$prison_link = ( $zone_prison == '1' ) ? '<a href="'.append_sid("adr_courthouse.$phpEx").'">'. $lang['Adr_zone_goto_prison'] .'</a>' : $lang['Adr_zone_building_disable'];
+	$shops_link = ( $zone_shops == '1' ) ? '<a href="'.append_sid("adr_shops.$phpEx").'">'. $lang['Adr_zone_goto_shops'] .'</a>' : $lang['Adr_zone_building_disable'];
+	$forge_link = ( $zone_forge == '1' ) ? '<a href="'.append_sid("adr_forge.$phpEx").'">'. $lang['Adr_zone_goto_forge'] .'</a>' : $lang['Adr_zone_building_disable'];
+	$bank_link = ( $zone_bank == '1' ) ? '<a href="'.append_sid("adr_vault.$phpEx").'">'. $lang['Adr_zone_goto_bank'] .'</a>' : $lang['Adr_zone_building_disable'];
+	$enchant_link = ( $zone_enchant == '1' ) ? '<a href="'.append_sid("adr_enchant.$phpEx").'">'. $lang['Adr_zone_goto_enchant'] .'</a>' : $lang['Adr_zone_building_disable'];
+	$mine_link = ( $zone_mine == '1' ) ? '<a href="'.append_sid("adr_mine.$phpEx").'">'. $lang['Adr_zone_goto_mine'] .'</a>' : $lang['Adr_zone_building_disable'];
 }
 if ( ( $zone_temple == '1' || $zone_prison == '1' || $zone_shops == '1' || $zone_forge == '1' || $zone_bank =='1' || $zone_enchant == '1' || $zone_mine = '1' ) && $picture_link )
 {
@@ -833,8 +836,8 @@ $template->assign_vars(array(
 	'ENCHANT_LINK' => $enchant_link,
 	'BANK_LINK' => $bank_link,
 	'PRISON_LINK' => $prison_link,
-	'SHOWMAP' => $showmap,
-	'MAP_NAME' => $map_name,
+	'SHOWMAP' => isset($showmap) ? $showmap : '',
+	'MAP_NAME' => isset($map_name) ? $map_name : '',
 	'L_TEMPLE_NAME' => $lang['Adr_zone_goto_temple'],
 	'L_FORGE_NAME' => $lang['Adr_zone_goto_forge'],
 	'L_MINE_NAME' => $lang['Adr_zone_goto_mine'],
