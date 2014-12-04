@@ -43,6 +43,13 @@ if (!empty($userdata['user_qp_settings']))
 	list($user_qp, $user_qp_show, $user_qp_subject, $user_qp_bbcode, $user_qp_smilies, $user_qp_more) = explode('-', $userdata['user_qp_settings']);
 }
 
+if (!isset($submit)) {
+	$submit = false;
+}
+if (!isset($refresh)) {
+	$refresh = false;
+}
+
 // set toggles for various options
 $html_on = ( !$board_config['allow_html'] ) ? 0 : ( ( $submit || $refresh ) ? ( ( !empty($HTTP_POST_VARS['disable_html']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_html'] : $userdata['user_allowhtml'] ) );
 $bbcode_on = ( !$board_config['allow_bbcode'] ) ? 0 : ( ( $submit || $refresh ) ? ( ( !empty($HTTP_POST_VARS['disable_bbcode']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_bbcode'] : $userdata['user_allowbbcode'] ) );

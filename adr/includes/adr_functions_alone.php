@@ -34,7 +34,10 @@ function adr_delete_character($user_id)
 	define('IN_ADR_VAULT', 1);
 	define('IN_ADR_BATTLE', 1);
 	define('IN_ADR_TEMPLE', 1);
-	define('IN_ADR_CHARACTER', 1);
+	if (!defined('IN_ADR_CHARACTER'))
+	{
+		define('IN_ADR_CHARACTER', 1);
+	}
 
 	include_once($phpbb_root_path . 'includes/constants.'.$phpEx);
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
@@ -193,7 +196,10 @@ function adr_get_posters_char_info()
 function adr_get_posters_alignment_info()
 {
 	global $db, $phpbb_root_path, $phpEx, $table_prefix;
-	define('IN_ADR_CHARACTER', 1);
+	if (!defined('IN_ADR_CHARACTER'))
+	{
+		define('IN_ADR_CHARACTER', 1);
+	}
 	include_once($phpbb_root_path .'adr/includes/adr_constants.'. $phpEx);
 
 	$q = "SELECT * FROM ". ADR_ALIGNMENTS_TABLE;
@@ -206,7 +212,11 @@ function adr_get_posters_alignment_info()
 function adr_get_posters_class_info()
 {
 	global $db, $phpbb_root_path, $phpEx, $table_prefix;
-	define('IN_ADR_CHARACTER', 1);
+
+	if (!defined('IN_ADR_CHARACTER'))
+	{
+		define('IN_ADR_CHARACTER', 1);
+	}
 	include_once($phpbb_root_path .'adr/includes/adr_constants.'. $phpEx);
 
 	$q = "SELECT * FROM ". ADR_CLASSES_TABLE;
@@ -219,7 +229,10 @@ function adr_get_posters_class_info()
 function adr_get_posters_races_info()
 {
 	global $db, $phpbb_root_path, $phpEx, $table_prefix;
-	define('IN_ADR_CHARACTER', 1);
+	if (!defined('IN_ADR_CHARACTER'))
+	{
+		define('IN_ADR_CHARACTER', 1);
+	}
 	include_once($phpbb_root_path .'adr/includes/adr_constants.'. $phpEx);
 
 	$q = "SELECT * FROM ". ADR_RACES_TABLE;
@@ -232,7 +245,10 @@ function adr_get_posters_races_info()
 function adr_get_posters_elements_info()
 {
 	global $db, $phpbb_root_path, $phpEx, $table_prefix;
-	define('IN_ADR_CHARACTER', 1);
+	if (!defined('IN_ADR_CHARACTER'))
+	{
+		define('IN_ADR_CHARACTER', 1);
+	}
 	include_once($phpbb_root_path .'adr/includes/adr_constants.'. $phpEx);
 
 	$q = "SELECT *
@@ -249,7 +265,10 @@ function character_rank_info()
 	global $db, $phpbb_root_path, $phpEx, $table_prefix;
 
 	include_once($phpbb_root_path .'adr/includes/adr_constants.'. $phpEx);
-	define('IN_ADR_CHARACTER', 1);
+	if (!defined('IN_ADR_CHARACTER'))
+	{
+		define('IN_ADR_CHARACTER', 1);
+	}
 
 	static $r;
 	if ($r === null)
@@ -267,11 +286,17 @@ function character_rank_info()
 	return $r;
 }
 
-function adr_display_poster_infos($poster_id, $character_info, $race_info, $element_info, $class_info, $alignment_info, $pvp_info, $adr_con_info, $job_info, $user_cell_time)
+function adr_display_poster_infos($poster_id, $character_info, $race_info, $element_info, $class_info, $alignment_info, $pvp_info, $adr_con_info, $user_cell_time)
 {
 	global $db, $phpbb_root_path, $lang, $board_config, $phpEx, $table_prefix, $userdata;
-	define('IN_ADR_CHARACTER', 1);
-	define('IN_ADR_BATTLE', 1);
+	if (!defined('IN_ADR_CHARACTER'))
+	{
+		define('IN_ADR_CHARACTER', 1);
+	}
+	if (!defined('IN_ADR_BATTLE'))
+	{
+		define('IN_ADR_BATTLE', 1);
+	}
 	include_once($phpbb_root_path .'adr/includes/adr_constants.'. $phpEx);
 	include_once($phpbb_root_path .'adr/includes/adr_global.'. $phpEx);
 	include_once($phpbb_root_path .'adr/includes/adr_functions_battle.'. $phpEx);
@@ -310,20 +335,20 @@ function adr_display_poster_infos($poster_id, $character_info, $race_info, $elem
 			}
 
 			#==== Show character_name
-			if ($topic_config[5])
+			if (!empty($topic_config[5]))
 				$adr_topic_box .= '&nbsp;<a href="'. append_sid('adr_character.'. $phpEx .'?u='. $character_info[$adr]['character_id']) .'">'. $character_info[$adr]['character_name'] .'</a><br>';
 
 			#==== Show current rank
-			if ($topic_config[7])
-			$adr_topic_box .= '&nbsp;&nbsp;'. $rank .'<br>';
+			if (!empty($topic_config[7]))
+				$adr_topic_box .= '&nbsp;&nbsp;'. $rank .'<br>';
 
 			##=== Show character level
-			if ($topic_config[0])
+			if (!empty($topic_config[0]))
 				$adr_topic_box .= '&nbsp;&nbsp;'. $lang['Adr_topics_level'] .':&nbsp;'. $character_info[$adr]['character_level'] .'<br />';
 
 			#==== Show PvP link where applicable
 //				if(($topic_config[6]) && ($character_info[$adr]['prefs_pvp_allow'] == '1') && ($character_info[$adr]['character_prefs_active'] == '1') && ($character_info[$adr]['character_id'] != '0') && ($userdata['user_id'] > '0'))
-			if(($topic_config[6]) && ($character_info[$adr]['prefs_pvp_allow'] == '1') && ($character_info[$adr]['character_id'] != '0') && ($userdata['user_id'] > '0'))
+			if(!empty($topic_config[6]) && ($character_info[$adr]['prefs_pvp_allow'] == '1') && ($character_info[$adr]['character_id'] != '0') && ($userdata['user_id'] > '0'))
 			{
 				#==== Check if the user hasn't already exceeded his maximum number of defies allowed
 				$total_battles = 0;
@@ -388,7 +413,7 @@ function adr_display_poster_infos($poster_id, $character_info, $race_info, $elem
 					} #==== Close 2nd if statement
 				} #==== End of pvp check
 
-			if ($topic_config[8]){
+			if (!empty($topic_config[8])){
 				$adr_topic_box .= '<br>'.$lang['Adr_character_battle_stats_title'].':<br>';
 				$adr_topic_box .= '&nbsp;&nbsp;'.$lang['Adr_monster_list_hp'].': '.$character_info[$adr]['character_hp'].'/'.$character_info[$adr]['character_hp_max'].'<br>';
 				$adr_topic_box .= '&nbsp;&nbsp;'.$lang['Adr_monster_list_mp'].': '.$character_info[$adr]['character_mp'].'/'.$character_info[$adr]['character_mp_max'].'<br>';

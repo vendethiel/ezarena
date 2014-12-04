@@ -50,28 +50,30 @@ class sql_db
 		$this->server = $sqlserver;
 		$this->dbname = $database;
 		$this->query_result = null;
+	}
+
+	/**
+	 * V: lazily connect to the db, only if needed
+	 */
+	private function connect()
+	{
+		if ($this->db_connect_id) {
+			return;
+		}
 
 		$this->db_connect_id = ($this->persistency) ? mysql_pconnect($this->server, $this->user, $this->password) : mysql_connect($this->server, $this->user, $this->password);
 
-		if( $this->db_connect_id )
-		{
-			if( $database != "" )
-			{
-				$this->dbname = $database;
-				$dbselect = mysql_select_db($this->dbname);
+		if( $this->db_connect_id ) {
+			$dbselect = mysql_select_db($this->dbname);
 
-				if( !$dbselect )
-				{
-					mysql_close($this->db_connect_id);
-					$this->db_connect_id = $dbselect;
-				}
+			if( !$dbselect ) {
+				mysql_close($this->db_connect_id);
+				$this->db_connect_id = $dbselect;
 			}
 
 			return $this->db_connect_id;
-		}
-		else
-		{
-			return false;
+		} else {
+			message_die(CRITICAL_ERROR, "Could not connect to the database");
 		}
 	}
 
@@ -132,6 +134,8 @@ class sql_db
 			$this->caching = $hash;
 		}		
 
+		// now, connect, since it's not cached
+		$this->connect();
 		if( $query != "" )
 		{
 			$this->num_queries++;

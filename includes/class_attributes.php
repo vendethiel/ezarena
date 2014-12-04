@@ -82,8 +82,15 @@ class qte
 		global $board_config, $lang, $db, $userdata;
 
 		$combo = '<select name="attribute_id"><option value="-1" style="font-weight: bold;">' . $lang['No_Attribute'] . '</option>';
-		list($attr_id, $user_id) = explode(',', $topic_attribute);
-		
+		if ($topic_attribute)
+		{
+			list($attr_id, $user_id) = explode(',', $topic_attribute);
+		}
+		else
+		{
+			$attr_id = $user_id = null;
+		}
+
 		foreach ($this->attr as $attr)
 		{
 			if (($attr['attribute_author'] && $userdata['user_level'] == USER && $userdata['user_id'] == $topic_poster) || ($attr['attribute_moderator'] && $userdata['user_level'] == MOD) || ($attr['attribute_administrator'] && $userdata['user_level'] == ADMIN))

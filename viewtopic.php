@@ -62,15 +62,17 @@ if ( !empty($post_id) )
 }
 else if ( !empty($topic_id) )
 {
-	$sql = "SELECT t.forum_id, t.topic_id, t.topic_last_post_id
-		FROM " . TOPICS_TABLE . " t
+	$sql = "SELECT t.forum_id, t.topic_id, t.topic_last_post_id, p.post_time
+		FROM " . TOPICS_TABLE . " t, " . POSTS_TABLE . " p
 		WHERE t.topic_moved_id = 0
-		AND t.topic_id = $topic_id";
+		AND t.topic_id = $topic_id
+		AND p.post_id = t.topic_last_post_id";
 }
 else
 {
 	message_die(GENERAL_MESSAGE, 'Topic_post_not_exist');
 }
+
 if ( !$result = $db->sql_query($sql, false, 'movetopic_') )
 {
 	message_die(GENERAL_ERROR, 'Could not obtain topic information', '', __LINE__, __FILE__, $sql);
@@ -256,11 +258,11 @@ if( !$is_auth['auth_mod'] && $userdata['user_level'] != ADMIN )
 {
 	$redirect = str_replace("&amp;", "&", preg_replace('#.*?([a-z]+?\.' . $phpEx . '.*?)$#i', '\1', htmlspecialchars($HTTP_SERVER_VARS['REQUEST_URI'])));
 
-	if( $HTTP_POST_VARS['cancel'] )
+	if( !empty($HTTP_POST_VARS['cancel']) )
 	{
 		redirect(append_sid("index.$phpEx"));
 	}
-	else if( $HTTP_POST_VARS['pass_login'] )
+	else if( !empty($HTTP_POST_VARS['pass_login']) )
 	{
 		if( $forum_topic_data['topic_password'] != '' )
 		{
@@ -272,7 +274,7 @@ if( !$is_auth['auth_mod'] && $userdata['user_level'] != ADMIN )
 		}
 	}
 
-	if( $forum_topic_data['topic_password'] != '' )
+	if( !empty($forum_topic_data['topic_password']) )
 	{
 		$passdata = ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_tpass']) ) ? unserialize(stripslashes($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_tpass'])) : '';
 		if( $passdata[$topic_id] != md5($forum_topic_data['topic_password']) )
@@ -313,7 +315,8 @@ if ( !isset($phpbb_seo->seo_url['topic'][$topic_id]) ) {
 }
 $uri = $phpbb_seo->seo_req_uri();
 $postorder_redir = empty($_POST['postorder']) && empty($_GET['postorder']);
-if ($_GET['postorder'] == 'asc'  || $_POST['postorder'] == 'asc' ) {
+if ((!empty($_GET['postorder']) && $_GET['postorder'] == 'asc')
+	|| (!empty($_POST['postorder']) && $_POST['postorder'] == 'asc')) {
 	$postorder_redir = TRUE;
 }
 $phpbb_seo->seo_start( $start, $board_config['posts_per_page'] );
@@ -768,12 +771,14 @@ $phpbb_seo->seo_meta['keywords'] = $phpbb_seo->make_keywords("$m_kewrd " . $phpb
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 //-- mod : toolbar -------------------------------------------------------------
 //-- add
-if ( $can_watch_topic )
-{
+if ( $can_watch_topic ) {
 	$uw_parm = $is_watching_topic ? 'unwatch' : 'watch';
 	$tlbr_more = array(
 		'watch' => array('link_pgm' => 'viewtopic', 'link_parms' => array(POST_TOPIC_URL => intval($topic_id), $uw_parm => 'topic', 'start' => intval($start)), 'txt' => $is_watching_topic ? 'Stop_watching_topic' : 'Start_watching_topic', 'img' => $is_watching_topic ? 'tlbr_un_watch' : 'tlbr_watch'),
 	);
+}
+else {
+	$tlbr_more = array();
 }
 build_toolbar('viewtopic', $l_privmsgs_text, $s_privmsg_new, $forum_id, $tlbr_more);
 //-- fin mod : toolbar ---------------------------------------------------------
@@ -816,7 +821,7 @@ if ( $is_auth['auth_mod'] )
 
 //-- mod : quick title edition -------------------------------------------------
 //-- add
-if ( ( ($userdata['user_id'] == $postrow[$row_id]['topic_poster']) && ($userdata['user_level'] == USER) ) || ($userdata['user_level'] == MOD) || ($userdata['user_level'] == ADMIN) )
+if ( ( ($userdata['user_id'] == $postrow[0]['topic_poster']) && ($userdata['user_level'] == USER) ) || ($userdata['user_level'] == MOD) || ($userdata['user_level'] == ADMIN) )
 {
 	$get->assign_switch('switch_attribute', true);
 }
@@ -891,11 +896,11 @@ $template->assign_vars(array(
 	'S_AUTH_LIST' => $s_auth_can,
 	'S_TOPIC_ADMIN' => $topic_mod,
 	'S_WATCH_TOPIC' => $s_watching_topic,
-	'S_WATCH_TOPIC_IMG' => $s_watching_topic_img,
+	'S_WATCH_TOPIC_IMG' => $can_watch_topic ? $s_watching_topic_img : '',
 //-- mod : quick title edition -------------------------------------------------
 //-- add
 	'S_ATTRIBUTE_SELECTOR' => $qte->combo($forum_topic_data['topic_attribute'], $forum_topic_data['topic_poster']),
-	'F_ATTRIBUTE_URL' => $get->url('modcp', array('sid' => $userdata['session_id']), true),
+	'F_ATTRIBUTE_URL' => $userdata['user_id'] == ANONYMOUS ? '' : $get->url('modcp', array('sid' => $userdata['session_id']), true),
 	'L_ATTRIBUTE_APPLY' => $lang['Attribute_apply'],
 	'I_MINI_SUBMIT' => $images['cmd_mini_submit'],
 //-- fin mod : quick title edition ---------------------------------------------
@@ -1286,7 +1291,7 @@ for($i = 0; $i < $total_posts; $i++)
 		{
 			if ( $postrow[$i]['user_rank'] == $ranksrow[$j]['rank_id'] && $ranksrow[$j]['rank_special'] )
 			{
-				$rank_tags = ($ranksrow[$j]['rank_tags']) ? explode("\n", $ranksrow[$j]['rank_tags']) : '';
+				$rank_tags = ($ranksrow[$j]['rank_tags']) ? explode("\n", $ranksrow[$j]['rank_tags']) : array();
 				$poster_rank = $ranksrow[$j]['rank_title'];
 				$poster_rank = ( sizeof ( $rank_tags ) ) ? $rank_tags[0] . $poster_rank . $rank_tags[1] : $poster_rank;
 				$rank_image = ( $ranksrow[$j]['rank_image'] ) ? '<img src="' . $ranksrow[$j]['rank_image'] . '" alt="' . $poster_rank . '" title="' . $poster_rank . '" border="0" /><br />' : '';
@@ -1469,54 +1474,56 @@ MOD-*/
 		}
 	}
 	if($poster_id != ANONYMOUS && $postrow[$i]['user_level'] != ADMIN) 
-{ 
-	$current_user = str_replace("'","\'",$postrow[$i]['username']);
-	if ($is_auth['auth_greencard']) 
-	{ 
-	      $g_card_img = ' <input type="image" name="unban" value="unban" onClick="return confirm(\''.sprintf($lang['Green_card_warning'],$current_user).'\')" src="'. $images['icon_g_card'] . '" alt="' . $lang['Give_G_card'] . '" >'; 
-	} 
-	else 
 	{
-		$g_card_img = ''; 
-	}
-	$user_warnings = $postrow[$i]['user_warnings'];
-	$card_img = ($user_warnings) ? (( $user_warnings < $board_config['max_user_bancard']) ? sprintf($lang['Warnings'], $user_warnings) : $lang['Banned'] ) : '';
-// these lines will make a icon apear beside users post, if user have warnings or ar banned
-// used instead of the previous line of code, witch shows the status as a text
-//  ------ From here --- do not include this line
-// $card_img = ($user_warnings) ? '<img src="'.(( $user_warnings < $board_config['max_user_bancard']) ? 
-//		$images['icon_y_card'] . '" alt="'. sprintf($lang['Warnings'], $user_warnings) .'">' : 
-//		$images['icon_r_card'] . '" alt="'. $lang['Banned'] .'">') : '';
-//  ----- To this line --- Do not included this line
-// 
-// You may also included several images, instead of only one yellow, these lines below will produce several yellow images, depending on mumber of yellow cards
-//  ------ From here --- do not include this line
-$card_img = ($user_warnings >= $board_config['max_user_bancard'])  ? '<img src="'.$images['icon_r_card'] . '" alt="'. $lang['Banned'] .'">' : '';
-for ($n=0 ; $n<$user_warnings && $user_warnings < $board_config['max_user_bancard'];$n++)
-{
-$card_img .= ($user_warnings) ? '<img src="'.(( $user_warnings < $board_config['max_user_bancard']) ? 
-$images['icon_y_card'] . '" alt="'. sprintf($lang['Warnings'], $user_warnings) .'">' : 
-$images['icon_r_card'] . '" alt="'. $lang['Banned'] .'">') : '';
-}
-//  ----- To this line --- Do not included this line
+		$current_user = str_replace("'","\'",$postrow[$i]['username']);
+		if ($is_auth['auth_greencard']) 
+		{ 
+		      $g_card_img = ' <input type="image" name="unban" value="unban" onClick="return confirm(\''.sprintf($lang['Green_card_warning'],$current_user).'\')" src="'. $images['icon_g_card'] . '" alt="' . $lang['Give_G_card'] . '" >'; 
+		} 
+		else 
+		{
+			$g_card_img = ''; 
+		}
+		$user_warnings = $postrow[$i]['user_warnings'];
+		$card_img = ($user_warnings) ? (( $user_warnings < $board_config['max_user_bancard']) ? sprintf($lang['Warnings'], $user_warnings) : $lang['Banned'] ) : '';
+		// these lines will make a icon apear beside users post, if user have warnings or ar banned
+		// used instead of the previous line of code, witch shows the status as a text
+		//  ------ From here --- do not include this line
+		// $card_img = ($user_warnings) ? '<img src="'.(( $user_warnings < $board_config['max_user_bancard']) ? 
+		//		$images['icon_y_card'] . '" alt="'. sprintf($lang['Warnings'], $user_warnings) .'">' : 
+		//		$images['icon_r_card'] . '" alt="'. $lang['Banned'] .'">') : '';
+		//  ----- To this line --- Do not included this line
+		// 
+		// You may also included several images, instead of only one yellow, these lines below will produce several yellow images, depending on mumber of yellow cards
+		//  ------ From here --- do not include this line
+		$card_img = ($user_warnings >= $board_config['max_user_bancard'])  ? '<img src="'.$images['icon_r_card'] . '" alt="'. $lang['Banned'] .'">' : '';
+		for ($n=0 ; $n<$user_warnings && $user_warnings < $board_config['max_user_bancard'];$n++)
+		{
+			$card_img .= ($user_warnings) ? '<img src="'.(( $user_warnings < $board_config['max_user_bancard']) ? 
+			$images['icon_y_card'] . '" alt="'. sprintf($lang['Warnings'], $user_warnings) .'">' : 
+			$images['icon_r_card'] . '" alt="'. $lang['Banned'] .'">') : '';
+		}
+		//  ----- To this line --- Do not included this line
 
-	if ($user_warnings<$board_config['max_user_bancard'] && $is_auth['auth_ban'] )
-	{ 
-		$y_card_img = ' <input type="image" name="warn" value="warn" onClick="return confirm(\''.sprintf($lang['Yellow_card_warning'],$current_user).'\')" src="'. $images['icon_y_card'] . '" alt="' . sprintf($lang['Give_Y_card'],$user_warnings+1) . '" >'; 
-     		$r_card_img = ' <input type="image" name="ban" value="ban"  onClick="return confirm(\''.sprintf($lang['Red_card_warning'],$current_user).'\')" src="'. $images['icon_r_card'] . '" alt="' . $lang['Give_R_card'] . '" >'; 
+		if ($user_warnings<$board_config['max_user_bancard'] && $is_auth['auth_ban'] )
+		{ 
+			$y_card_img = ' <input type="image" name="warn" value="warn" onClick="return confirm(\''.sprintf($lang['Yellow_card_warning'],$current_user).'\')" src="'. $images['icon_y_card'] . '" alt="' . sprintf($lang['Give_Y_card'],$user_warnings+1) . '" >'; 
+	     		$r_card_img = ' <input type="image" name="ban" value="ban"  onClick="return confirm(\''.sprintf($lang['Red_card_warning'],$current_user).'\')" src="'. $images['icon_r_card'] . '" alt="' . $lang['Give_R_card'] . '" >'; 
+		}
+		else
+		{
+			$y_card_img = '';
+			$r_card_img = ''; 
+		} 
 	}
 	else
 	{
+		$user_warnings = '';
+		$card_img = '';
+		$g_card_img = '';
 		$y_card_img = '';
-		$r_card_img = ''; 
-	} 
-} else
-{
-	$card_img = '';
-	$g_card_img = '';
-	$y_card_img = '';
-	$r_card_img = '';
-}
+		$r_card_img = '';
+	}
 
 	if ($is_auth['auth_bluecard']) 
 	{ 
@@ -1554,7 +1561,7 @@ $card_hidden = ($g_card_img || $r_card_img || $y_card_img || $b_card_img) ? '<in
 	#==== Removed By aUsTiN
 	#$adr_topic_box = adr_display_poster_infos($postrow[$i]['user_id'], $userdata['user_id']);
 	if(($postrow[$i]['user_id'] != ANONYMOUS) && ($postrow[$i]['user_adr_ban'] != '1'))
-		$adr_topic_box = adr_display_poster_infos($postrow[$i]['user_id'], $adr_topic_info_char, $adr_topic_info_race, $adr_topic_info_elem, $adr_topic_info_clas, $adr_topic_info_alig, $adr_topic_info_pvp, $adr_topic_info_adr, $adr_topic_info_jobs, $postrow[$i]['user_cell_time']);
+		$adr_topic_box = adr_display_poster_infos($postrow[$i]['user_id'], $adr_topic_info_char, $adr_topic_info_race, $adr_topic_info_elem, $adr_topic_info_clas, $adr_topic_info_alig, $adr_topic_info_pvp, $adr_topic_info_adr, $postrow[$i]['user_cell_time']);
 	#==== Added By aUsTiN
 	$rabbitoshi_link = append_sid("rabbitoshi.$phpEx?" . POST_USERS_URL . "=" . $postrow[$i]['user_id']);
 	if ($poster_id != ANONYMOUS)
@@ -1668,9 +1675,11 @@ $card_hidden = ($g_card_img || $r_card_img || $y_card_img || $b_card_img) ? '<in
 		}
 		while ( $row = $db->sql_fetchrow($result) );
 	}
-	if (count($quicklink_word)) {
+
+	if (!empty($quicklink_word))
+	{
 		$message = str_replace('\"', '"', substr(preg_replace('#(\µ(((?>([^µ§]+|(?R)))*)\§))#se', "preg_replace(\$quicklink_word, \$quicklink_url, '\\0')", 'µ' . $message . '§'), 1, -1));
-	}	
+	}
 
 	//
 	// Replace naughty words
