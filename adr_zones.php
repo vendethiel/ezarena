@@ -671,17 +671,12 @@ if ( $board_config['Adr_zone_townmap_enable'] && $uhrow['zonemap_type'] > 0 )
 				$brow = $adr_buildings[$buildingarray[$ia]];
 				$buildinglist2[$iv][$ih] = $brow['name'];
 				// V: go for it
-				if (true || $brow['zone_name_tag'] =='' )
-				{
-					$desc = isset($lang['Adr_building_'.$irow['sdesc']]) ? $lang['Adr_building_'.$irow['sdesc']] : ucfirst($irow['sdesc']);
-	   				$building_name_tag1[$iv][$ih] = 'alt="' . $desc . '" ';
-	   				$building_name_tag2[$iv][$ih] = 'name="' . $desc . '" ';
-	   			}
-	   			else
-	   			{
-		   			// $building_name_tag1[$iv][$ih] = 'alt="'.$brow['zone_name_tag'].'"';
-	   				// $building_name_tag2[$iv][$ih] = 'name="'.$brow['zone_name_tag'].'"';
-	   			}
+				//if (true || $brow['zone_name_tag'] =='' )
+				$desc = isset($lang['Adr_building_'.$irow['sdesc']]) ? $lang['Adr_building_'.$irow['sdesc']] : ucfirst($irow['sdesc']);
+	   			$building_name_tag1[$iv][$ih] = 'alt="' . $desc . '" ';
+	   			$building_name_tag2[$iv][$ih] = 'name="' . $desc . '" ';
+	   			//}
+
 				if ( $brow['zone_link'] == '' )
 				{
 					$building_link[$iv][$ih] = '';
