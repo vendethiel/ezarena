@@ -70,7 +70,7 @@ $bat = $db->sql_fetchrow($result);
 
 if ( is_numeric($bat['battle_id']) )
 {
-	adr_previous( Adr_battle_progress , adr_battle , '' );
+	adr_previous( 'Adr_battle_progress' , 'adr_battle' , '' );
 }
 
 
@@ -82,17 +82,17 @@ adr_ban_check($user_id);
 adr_character_created_check($user_id);
 // Deny access if user is imprisioned
 if($userdata['user_cell_time']){
-	adr_previous(Adr_shops_no_thief, adr_cell, '');}
+	adr_previous('Adr_shops_no_thief', 'adr_cell', '');}
 // Get the user infos
 $adr_char = adr_get_user_infos($user_id);
 
 // Fix the values
 
-$InfoBoutique = $HTTP_POST_VARS['InfoBoutique'];
+$InfoBoutique = isset($HTTP_POST_VARS['InfoBoutique']) ? $HTTP_POST_VARS['InfoBoutique'] : null;
 
 if ( $InfoBoutique )
 {
-	adr_previous( Adr_TownMap_Boutique_Infos , adr_TownMap_Boutique , '' );
+	adr_previous( 'Adr_TownMap_Boutique_Infos' , 'adr_TownMap_Boutique' , '' );
 }
 
 else
