@@ -113,7 +113,7 @@ function adr_battle_make_crit_roll($att, $level, $opp_def, $item_type_use=0, $po
 		$crit_result = (((($att + $quality + $crit_die + $level + $party_bonus) > ($opp_def + $level)) && ($crit_die != '1')) || ($crit_die >= $threat_range)) ? TRUE : FALSE;
 		$power = ($crit_result == TRUE) ? ($power *$item['item_crit_hit_mod']) : $power;
 	}
-	return $crit_result.'-'.intval($power);
+	return array($crit_result, intval($power));
 }
 
 function adr_battle_quota_check($user_id)
@@ -928,7 +928,7 @@ function drop_loot($monster_id,$user_id,$dropped_loot_list)
 	return $message;
 }
 
-function adr_weapon_skill_check($user_id , $bonus_hit)
+function adr_weapon_skill_check($user_id)
 {
 	global $db , $lang , $adr_general , $item;
 	$char = adr_get_user_infos($user_id);

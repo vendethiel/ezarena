@@ -573,7 +573,7 @@ if ( $turn_check && ( $attack || ($spell2 && intval($HTTP_POST_VARS['item_spell2
             }
 
             $attbonus = 0;
-            $attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+            $attbonus = adr_weapon_skill_check($user_id);
 
             if((($diff === TRUE) && ($dice != '1')) || ($dice == '20'))
             {
@@ -652,7 +652,7 @@ if ( $turn_check && ( $attack || ($spell2 && intval($HTTP_POST_VARS['item_spell2
         if ( $item['item_type_use'] == 108 )
         {
             $attbonus = 0;
-            $attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+            $attbonus = adr_weapon_skill_check($user_id);
             $power = ceil($power * $attbonus);
 
             if($code = $item['spell_xtreme_pvp'])
@@ -698,14 +698,13 @@ if ( $turn_check && ( $attack || ($spell2 && intval($HTTP_POST_VARS['item_spell2
         else if ( $item['item_type_use'] == 109 )
         {
             $attbonus = 0;
-            $attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+            $attbonus = adr_weapon_skill_check($user_id);
             $power = ceil($power * $attbonus);
 
+            // V: todo remove?
             if($code = $item['spell_xtreme_pvp'])
             {
-
                 eval($code);
-
             }
             else
             {
@@ -880,7 +879,7 @@ if ( $turn_check && ( $attack || ($spell2 && intval($HTTP_POST_VARS['item_spell2
 
     	##=== START: Critical hit code
     	$threat_range = ($item['item_type_use'] == '6') ? '19' : '20'; // magic weaps get slightly better threat range
-    	$crit_result = adr_battle_make_crit_roll($current_att, $current_infos['character_level'], $opponent_def, $item['item_type_use'], $power, $quality, $threat_range);
+    	list($crit_result, $power) = adr_battle_make_crit_roll($current_att, $current_infos['character_level'], $opponent_def, $item['item_type_use'], $power, $quality, $threat_range);
     	##=== END: Critical hit code
 
     	// Bare hands strike!

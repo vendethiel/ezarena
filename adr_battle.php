@@ -474,7 +474,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 			
 			##=== START: Critical hit code
 			$threat_range = ($item['item_type_use'] == '6') ? '19' : '20'; // magic weaps get slightly better threat range
-			$crit_result  = adr_battle_make_crit_roll($bat['battle_challenger_att'], $challenger['character_level'], $bat['battle_opponent_def'], $item['item_type_use'], $power, $quality, $threat_range);
+			list($crit_result, $power) = adr_battle_make_crit_roll($bat['battle_challenger_att'], $challenger['character_level'], $bat['battle_opponent_def'], $item['item_type_use'], $power, $quality, $threat_range);
 			##=== END: Critical hit code
 			
 			// Check if pet have regeneration ability
@@ -498,8 +498,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				} //!$result = $db->sql_query($sql)
 			} //$rabbit_user['creature_ability'] == '1'
 			
-			$attbonus = 0;
-			$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+			$attbonus = adr_weapon_skill_check($user_id);
 
 			if ((($diff === TRUE) && ($dice != '1')) || ($dice == '20'))
 			{
@@ -575,7 +574,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		else if ($item['item_type_use'] == 12)
 		{
 			$attbonus = 0;
-			$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+			$attbonus = adr_weapon_skill_check($user_id);
 			$power = ceil($power * $attbonus);
 			// Check if pet have regeneration ability
 			$mp_consumned = '0';
@@ -699,7 +698,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 			}
 
 			$attbonus = 0;
-			$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+			$attbonus = adr_weapon_skill_check($user_id);
 
 			if((($diff === TRUE) && ($dice != '1')) || ($dice == '20')){
 				$damage = 1;
@@ -759,7 +758,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		if ( $item['item_type_use'] == 108 )
 		{
 			$attbonus = 0;
-			$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+			$attbonus = adr_weapon_skill_check($user_id);
 			$power = ceil($power * $attbonus);
 
 			if($code = $item['spell_xtreme_battle'])
@@ -818,7 +817,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		else if ( $item['item_type_use'] == 109 )
 		{
 			$attbonus = 0;
-			$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+			$attbonus = adr_weapon_skill_check($user_id);
 			$power = ceil($power * $attbonus);
 
 			if($code = $item['spell_xtreme_battle'])
@@ -1692,7 +1691,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 			adr_use_item($weap, $user_id);
 		} // end if weapon
 		// Grab modifers
-		// $attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+		// $attbonus = adr_weapon_skill_check($user_id);
 		
 		// Let's sort out the weapon animations...
 		// Make table for start battle sequence...
@@ -1702,7 +1701,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		$attack_img         = $item['item_name'];
 		$attackwith_overlay = ((file_exists("adr/images/battle/spells/" . $attack_img . ".gif"))) ? '<img src="adr/images/battle/spells/' . $attack_img . '.gif" width="256" height="96" border="0">' : '';
 
-		$crit_result = adr_battle_make_crit_roll($bat['battle_challenger_att'], $challenger['character_level'], $bat['battle_opponent_def'], $item['item_type_use'], $power, $quality, 20);
+		list($crit_result, $power) = adr_battle_make_crit_roll($bat['battle_challenger_att'], $challenger['character_level'], $bat['battle_opponent_def'], $item['item_type_use'], $power, $quality, 20);
 
 		// Bare fist strike
 		if ($item['item_name'] == '')
@@ -1714,6 +1713,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 	        // Grab modifers
 	        $bare_power = adr_modifier_calc($challenger['character_might']);
 
+			$attbonus = adr_weapon_skill_check($user_id);
 			if ((($bare_dice + $bare_power > $monster_def_dice + $monster_modifier) && ($bare_dice != '1')) || ($bare_dice == '20'))
 			{
 				// Check if pet have regeneration ability
@@ -1764,20 +1764,19 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 				// V: sigh.
 				$damage = $damage < 1 ? 1 : $damage;
 				$damage = ($damage > $bat['battle_opponent_hp']) ? $bat['battle_opponent_hp'] : $damage;
-				
+
 				$battle_message .= $crit_result ? $lang['Adr_battle_critical_hit'] . "<br>" : '';
 				$battle_message .= sprintf($lang['Adr_battle_attack_bare'], $challenger['character_name'], floor($attbonus), $damage, $monster['monster_name']) . "<br>";
 			} //(($bare_dice + $bare_power > $monster_def_dice + $monster_modifier) && ($bare_dice != '1')) || ($bare_dice == '20')
 			else
 			{
-				$damage = 0;
 				$battle_message .= sprintf($lang['Adr_battle_attack_bare_fail'], $challenger['character_name'], $monster['monster_name']) . "<br>";
 			}
 		} // end if item_name is empty
 		else
 		{
 			// weaprof
-			$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+			$attbonus = adr_weapon_skill_check($user_id);
 			if ((($diff === TRUE) && ($dice != '1')) || ($dice >= $threat_range))
 			{
 				// Prefix msg if crit hit
@@ -1843,18 +1842,22 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1) && ($petstuff ||
 		} //($item['item_duration'] < '2') && ($item['item_name'] != '')
 
 		// Update the database
-		$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
-			SET battle_opponent_hp = battle_opponent_hp - $damage ,
-				battle_turn = 2 , 
-				battle_round = (battle_round + 1),
-				battle_challenger_dmg = $damage
-			WHERE battle_challenger_id = $user_id
-			AND battle_result = 0
-			AND battle_type = 1 ";
-		if (!($result = $db->sql_query($sql)))
+		// V: check if there are damage (i.e. unless we fail)
+		if ($damage)
 		{
-			message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
-		} //!($result = $db->sql_query($sql))
+			$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+				SET battle_opponent_hp = battle_opponent_hp - $damage ,
+					battle_turn = 2 , 
+					battle_round = (battle_round + 1),
+					battle_challenger_dmg = $damage
+				WHERE battle_challenger_id = $user_id
+				AND battle_result = 0
+				AND battle_type = 1 ";
+			if (!($result = $db->sql_query($sql)))
+			{
+				message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+			} //!($result = $db->sql_query($sql))
+		}
 	} // end of attack
 	else if ($defend && $bat['battle_turn'] == 1)
 	{

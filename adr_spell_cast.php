@@ -169,7 +169,7 @@ if ( $cast_spell )
 	if($spell_skill == '108')
 	{
 		$attbonus = 0;
-		$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+		$attbonus = adr_weapon_skill_check($user_id);
 		$power = ceil($power * $attbonus);
 
 		if($code = $item['spell_xtreme'])
@@ -215,7 +215,7 @@ if ( $cast_spell )
 	else if($spell_skill == '109')
 	{
 		$attbonus = 0;
-		$attbonus = adr_weapon_skill_check($user_id , $bonus_hit);
+		$attbonus = adr_weapon_skill_check($user_id);
 		$power = ceil($power * $attbonus);
 
 		if($code = $item['spell_xtreme'])
