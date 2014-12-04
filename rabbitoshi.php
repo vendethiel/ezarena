@@ -112,12 +112,7 @@ $user_id = intval($user_id);
 $searchid = intval($searchid);
 $points = intval($points);
 
-$sql = "SELECT * 
-	FROM  " . RABBITOSHI_USERS_TABLE . " 
-        WHERE owner_id = '$searchid' ";
-if ( !($result = $db->sql_query($sql)) )
-{ message_die(CRITICAL_ERROR, 'Unable to aquire pet owner.'); }
-$row = $db->sql_fetchrow($result);
+$row = rabbitoshi_get_user_stats($searchid);
 
 if ( $board_config['rabbitoshi_enable'] && (!(is_numeric($row['owner_creature_id'])) && $searchid != $user_id )) {
 	rabbitoshi_previous( Rabbitoshi_owner_pet_lack , index , '' );
@@ -229,15 +224,6 @@ else
 
 	if ( $rabbit_user['owner_hide'] && $rabbit_user['owner_id'] != $user_id && ( $userdata['user_level'] != ADMIN ) ) {
 		message_die(GENERAL_MESSAGE, $lang['Rabbitoshi_hidden'] );
-	}
-
-	$sql = "SELECT * FROM  " . RABBITOSHI_GENERAL_TABLE ; 
-	if (!$result = $db->sql_query($sql)) {
-		message_die(GENERAL_MESSAGE, $lang['Rabbitoshi_owner_pet_lack']);
-	}
-	while( $row = $db->sql_fetchrow($result) )
-	{
-		$rabbit_general[$row['config_name']] = $row['config_value'];
 	}
 	
 	$experience_points_req = $rabbit_user['creature_experience_level_limit'];
@@ -1029,16 +1015,7 @@ else
 	}
 
 	$rabbit_user = rabbitoshi_get_user_stats($view_userdata['user_id']);
-
-	$sql = "SELECT * 
-        	FROM  " . RABBITOSHI_GENERAL_TABLE ;
-	if (!$result = $db->sql_query($sql)) {
-		message_die(GENERAL_MESSAGE, $lang['Rabbitoshi_owner_pet_lack']);
-	}
-	while( $row = $db->sql_fetchrow($result) )
-	{
-		$rabbit_general[$row['config_name']] = $row['config_value'];
-	}
+	$rabbit_general = rabbitoshi_get_general();
 
 	if ( $searchid == $user_id ) 
 	{

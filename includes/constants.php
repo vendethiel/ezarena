@@ -231,3 +231,4 @@ define('RABBITOSHI_GENERAL_TABLE',$table_prefix.'rabbitoshi_general');
 define('RABBITOSHI_SHOP_TABLE',$table_prefix.'rabbitoshi_shop'); 
 define('RABBITOSHI_SHOP_USERS_TABLE',$table_prefix.'rabbitoshi_shop_users'); 
 define('RABBITOSHI_USERS_TABLE',$table_prefix.'rabbitoshi_users'); 
+define('PAGE_RAB',9901);

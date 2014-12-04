@@ -263,50 +263,48 @@ function rabbitoshi_get_pet_value()
 	$sql = "SELECT item_prize , item_id
 		FROM " . RABBITOSHI_SHOP_TABLE ."
 		ORDER by item_id ";
-	if( !$result = $db->sql_query($sql) )
+	if( !$result = $db->sql_query($sql, false, 'rabbitoshi_shop') )
 	{
 		message_die(GENERAL_ERROR, 'Could not obtain items pets information', "", __LINE__, __FILE__, $sql);
 	}
 	$items = $db->sql_fetchrowset($result);
-	for ($i=0; $i < count($items) ; $i++)
+	// V: use an $item_ids array instead of N+1 queries...
+	$item_ids = array();
+	foreach ($items as $row)
 	{
-		$item_id = $items[$i]['item_id'];
-		$usql = "SELECT item_amount
+		$item_ids[] = $row['item_id'];
+	}
+	$db->sql_freeresult($result);
+
+	$value = 0;
+	if ($item_ids)
+	{
+		$sql = "SELECT item_amount
 			FROM " . RABBITOSHI_SHOP_USERS_TABLE . "
 			WHERE user_id = $user_id
-			AND item_id =  $item_id ";
-		if( !$uresult = $db->sql_query($usql))
+			AND item_id IN (" . implode(', ', $item_ids) . ")";
+		if( !$result = $db->sql_query($sql))
 		{
 			message_die(GENERAL_ERROR, 'Could not obtain items pets information', "", __LINE__, __FILE__, $usql);
 		}
-		$item_data = $db->sql_fetchrow($uresult);
-		$price = (( $item_data['item_amount'] ) * ( $items[$i]['item_prize'] ));
-		$itemsum = $itemsum + $price ;
+
+		while ($item = $db->sql_fetchrow($result))
+		{
+			$item_data = $db->sql_fetchrow($uresult);
+			$price = (( $item_data['item_amount'] ) * ( $items[$i]['item_prize'] ));
+			$itemsum = $itemsum + $price ;
+		}
+		$db->sql_freeresult($result);
+		$value = floor ( $value + ( $value * $bonus ) + $itemsum );
 	}
-	$value = floor ( $value + ( $value * $bonus ) + $itemsum );
 
 	return array( $value , $thought , $message , $pet_dead );
 }
 
-function rabbitoshi_get_user_stats($user_id)
-{
-	global $db , $view_userdata , $lang ;
-
-	$user_id = intval($user_id);
-	$sql = "SELECT * FROM  " . RABBITOSHI_USERS_TABLE . " 
-	WHERE owner_id = ".$user_id;	
-	if (!$result = $db->sql_query($sql)) 
-	{
-		message_die(GENERAL_MESSAGE, $lang['Rabbitoshi_owner_pet_lack']);
-	}
-	$rabbit_user = $db->sql_fetchrow($result);
-
-	return $rabbit_user;
-}
-
 function get_rabbitoshi_config($creature_id) 
 { 
-	global $db; 
+	global $db;
+	static $cache = array();
 
 	$creature_id = ( is_numeric($creature_id) ? $creature_id : FALSE); 
 	if ( $creature_id == FALSE ) 
@@ -314,22 +312,30 @@ function get_rabbitoshi_config($creature_id)
 		$sql = "SELECT * FROM " . RABBITOSHI_CONFIG_TABLE . " 
 		WHERE creature_buyable = 1
 		ORDER by creature_prize"; 
-		if (!$result = $db->sql_query($sql)) 
+		if (!($result = $db->sql_query($sql))) 
 		{ 
 			message_die(CRITICAL_ERROR, 'Error Getting Rabbitishi Config!'); 
 		} 
 		$rabbit_config = $db->sql_fetchrowset($result); 
 	} 
 	else 
-	{ 
+	{
+		// V: add cache
+		if (isset($cache[$creature_id]))
+		{
+			return $cache[$creature_id];
+		}
+
 		$sql = "SELECT * FROM " . RABBITOSHI_CONFIG_TABLE . " 
 		WHERE creature_id = ".$creature_id; 
-		if (!$result = $db->sql_query($sql)) 
+		if (!($result = $db->sql_query($sql))) 
 		{ 
 			message_die(CRITICAL_ERROR, 'Error Getting Rabbitishi Config!'); 
 		} 
-		$rabbit_config = $db->sql_fetchrow($result); 
-	} 
+		$rabbit_config = $db->sql_fetchrow($result);
+		$cache[$creature_id] = $rabbit_config;
+	}
+	$db->sql_freeresult($result);
 	return $rabbit_config;
 }
 
@@ -339,20 +345,28 @@ function rabbitoshi_get_hotel()
 
 	$rabbit_user = rabbitoshi_get_user_stats($view_userdata['user_id']);
 	$hotel_time = $rabbit_user['creature_hotel'] - time() ;
-	if ( $hotel_time > 0 )
+	// V: first, check if currently in hotel... before doing stupid sql...
+	if ($rabbit_user['creature_hotel'])
 	{
-		$is_in_hotel = TRUE ;
+		if ( $hotel_time > 0 )
+		{
+			$is_in_hotel = TRUE ;
+		}
+		else
+		{
+			$is_in_hotel = FALSE ;
+			$sql = " UPDATE " . RABBITOSHI_USERS_TABLE . " 
+				SET creature_hotel = 0
+				WHERE owner_id = ".$view_userdata['user_id'];
+			if (!$result = $db->sql_query($sql)) 
+			{ 
+				message_die(CRITICAL_ERROR, 'Error Getting Rabbitishi Config!'); 
+			} 
+		}
 	}
 	else
 	{
-		$is_in_hotel = FALSE ;
-		$sql = " UPDATE " . RABBITOSHI_USERS_TABLE . " 
-			SET creature_hotel = 0
-			WHERE owner_id = ".$view_userdata['user_id'];
-		if (!$result = $db->sql_query($sql)) 
-		{ 
-			message_die(CRITICAL_ERROR, 'Error Getting Rabbitishi Config!'); 
-		} 
+		$is_in_hotel = false;
 	}
 	return array( $is_in_hotel , $hotel_time );
 }
@@ -392,6 +406,54 @@ function rabbitoshi_make_time($stamp_age)
 		$time .= $minutes.'&nbsp;'.$lang['Minute'].'&nbsp;';
 	}
 	return $time;
+}
+
+// V: added cache
+function rabbitoshi_get_user_stats($user_id)
+{
+	global $db;
+
+	static $cache = array();
+	if (isset($cache[$user_id]))
+	{
+		return $cache[$user_id];
+	}
+
+	$sql = "SELECT * 
+	FROM  " . RABBITOSHI_USERS_TABLE . " 
+        WHERE owner_id = '" . intval($user_id) . "' ";
+	if ( !($result = $db->sql_query($sql)) )
+	{
+		message_die(CRITICAL_ERROR, 'Unable to aquire pet owner.');
+	}
+	$row = $db->sql_fetchrow($result);
+	$db->sql_freeresult($result);
+
+	return $cache[$user_id] = $row;
+}
+
+function rabbitoshi_get_general()
+{
+	global $db;
+
+	static $general;
+	if ($general)
+	{
+		return $general;
+	}
+
+	$general = array();
+	$sql = "SELECT * 
+        	FROM  " . RABBITOSHI_GENERAL_TABLE ;
+	if (!$result = $db->sql_query($sql, false, 'rabbitoshi_general')) {
+		message_die(GENERAL_MESSAGE, $lang['Rabbitoshi_owner_pet_lack']);
+	}
+	while( $row = $db->sql_fetchrow($result) )
+	{
+		$general[$row['config_name']] = $row['config_value'];
+	}
+	$db->sql_freeresult($result);
+	return $general;
 }
 
 ?>
