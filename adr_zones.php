@@ -23,7 +23,6 @@ define('IN_ADR_TOWN', true);
 define('IN_ADR_SHOPS', true);
 define('IN_ADR_CHARACTER', true);
 define('IN_ADR_ZONES', true);
-define('IN_ADR_TOWNMAP', true); 
 define('IN_ADR_BATTLE', true); 
 define('IN_ADR_NPC_ADMIN', true); // V: lang keys and shit
 
