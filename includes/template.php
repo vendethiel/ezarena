@@ -1888,7 +1888,11 @@ class Template {
 				default:
 					if (preg_match('#^(([a-z0-9\-_]+?\.)+?)?(\$)?([A-Z]+[A-Z0-9\-_]+)$#s', $token, $varrefs))
 					{
-						$token = (!empty($varrefs[1])) ? $this->generate_block_data_ref(substr($varrefs[1], 0, -1), true, $varrefs[3]) . '[\'' . $varrefs[4] . '\']' : (($varrefs[3]) ? '$this->_tpldata[\'DEFINE\'][\'.\'][\'' . $varrefs[4] . '\']' : '$this->vars[\'' . $varrefs[4] . '\']');
+						$token = (!empty($varrefs[1]))
+							? $this->generate_block_data_ref(substr($varrefs[1], 0, -1), true, $varrefs[3]) . '[\'' . $varrefs[4] . '\']'
+							: (($varrefs[3])
+								? '$this->_tpldata[\'DEFINE\'][\'.\'][\'' . $varrefs[4] . '\']'
+								: '(isset($this->vars[\'' . $varrefs[4] . '\']) && $this->vars[\'' . $varrefs[4] . '\'])');
 					}
 					break;
             }

@@ -171,7 +171,10 @@ function adr_get_skill_data($target_skill)
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config;
 
 	$target_skill = intval($target_skill);
-	define('IN_ADR_CHARACTER', 1);
+	if (!defined('IN_ADR_CHARACTER'))
+	{
+		define('IN_ADR_CHARACTER', 1);
+	}
 	include_once($phpbb_root_path . 'adr/includes/adr_constants.'.$phpEx);
 	$cache_config = explode('-', $board_config['Adr_use_cache_system']);
 

@@ -183,6 +183,7 @@ $template->assign_vars(array(
 if ( $goto2_name == '' )
 {
 	$goto2_name = $lang['Adr_zone_destination_none'];
+	$template->assign_var('HAS_GOTO_2', false);
 }
 else
 {
@@ -192,6 +193,7 @@ else
 if ( $goto3_name == '' )
 {
 	$goto3_name = $lang['Adr_zone_destination_none'];
+	$template->assign_var('HAS_GOTO_3', false);
 }
 else
 {
@@ -201,6 +203,7 @@ else
 if ( $goto4_name == '' )
 {
 	$goto4_name = $lang['Adr_zone_destination_none'];
+	$template->assign_var('HAS_GOTO_4', false);
 }
 else
 {
@@ -210,6 +213,7 @@ else
 if ( $return_name == '' )
 {
 	$return_name = $lang['Adr_zone_destination_none'];
+	$template->assign_var('HAS_GOTO_RETURN', false);
 }
 else
 {
