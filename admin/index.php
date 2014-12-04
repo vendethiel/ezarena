@@ -400,7 +400,8 @@ elseif( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'right' )
 					$dbsize = 0;
 					for($i = 0; $i < count($tabledata_ary); $i++)
 					{
-						if( $tabledata_ary[$i]['Type'] != "MRG_MyISAM" )
+						$type = isset($tabledata_ary[$i]['Type']) ? $tabledata_ary[$i]['Type'] : $tabledata_ary[$i]['Engine'];
+						if( $type != "MRG_MyISAM" && $type != "MyISAM" )
 						{
 							if( $table_prefix != "" )
 							{

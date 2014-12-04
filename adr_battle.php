@@ -205,14 +205,14 @@ $battle_round       = $bat['battle_round'];
 // array info: 0=helm, 1=armour, 2=gloves, 3=buckler, 4=amulet, 5=ring, 6=hp_regen, 7=mp_regen
 // V: 8 greave, 9 boot
 $armour_info             = explode('-', $bat['battle_challenger_equipment_info']);
-$helm_equip              = ($armour_info[0] != '') ? $armour_info[0] : 0;
-$armour_equip            = ($armour_info[1] != '') ? $armour_info[1] : 0;
-$gloves_equip            = ($armour_info[2] != '') ? $armour_info[2] : 0;
-$buckler_equip           = ($armour_info[3] != '') ? $armour_info[3] : 0;
-$amulet_equip            = ($armour_info[4] != '') ? $armour_info[4] : 0;
-$ring_equip              = ($armour_info[5] != '') ? $armour_info[5] : 0;
-$greave_equip            = ($armour_info[8] != '') ? $armour_info[8] : 0;
-$boot_equip              = ($armour_info[9] != '') ? $armour_info[9] : 0;
+$helm_equip              = !empty($armour_info[0]) ? $armour_info[0] : 0;
+$armour_equip            = !empty($armour_info[1]) ? $armour_info[1] : 0;
+$gloves_equip            = !empty($armour_info[2]) ? $armour_info[2] : 0;
+$buckler_equip           = !empty($armour_info[3]) ? $armour_info[3] : 0;
+$amulet_equip            = !empty($armour_info[4]) ? $armour_info[4] : 0;
+$ring_equip              = !empty($armour_info[5]) ? $armour_info[5] : 0;
+$greave_equip            = !empty($armour_info[8]) ? $armour_info[8] : 0;
+$boot_equip              = !empty($armour_info[9]) ? $armour_info[9] : 0;
 ### END armour info arrays ###
 ### START restriction checks ###
 $item_sql                = adr_make_restrict_sql($challenger);
@@ -2775,7 +2775,7 @@ for ($i = 0, $count_items = count($items); $i < $count_items; $i++)
 {
 	$item_name  = adr_get_lang($items[$i]['item_name']);
 	$item_power = ($adr_general['item_power_level'] == '1') ? ($items[$i]['item_power'] + $items[$i]['item_add_power']) : $items[$i]['item_power'];
-	
+
 	
 	if ( ( $items[$i]['item_type_use'] ==  5 || $items[$i]['item_type_use'] ==  6 ||
 		// weap prof mod : 40-46
@@ -2783,7 +2783,8 @@ for ($i = 0, $count_items = count($items); $i < $count_items; $i++)
 		|| $items[$i]['item_type_use'] ==  44 || $items[$i]['item_type_use'] ==  45 || $items[$i]['item_type_use'] ==  46 )
 	 && ( $items[$i]['item_mp_use'] <= $challenger['character_mp'] ) )
 	{
-		$weapon_selected = ($HTTP_POST_VARS['item_weapon'] == $items[$i]['item_id']) ? 'selected' : '';
+		$item_weapon = isset($HTTP_POST_VARS['item_weapon']) ? $HTTP_POST_VARS['item_weapon'] : null;
+		$weapon_selected = ($item_weapon == $items[$i]['item_id']) ? 'selected' : '';
 		$weapon_list .= '<option value = "' . $items[$i]['item_id'] . '" ' . $weapon_selected . '>' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )' . '</option>';
 	}
 	else if (($items[$i]['item_type_use'] == 11 || $items[$i]['item_type_use'] == 12) && (($items[$i]['item_power'] + $items[$i]['item_mp_use']) <= $challenger['character_mp']))

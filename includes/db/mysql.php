@@ -61,13 +61,13 @@ class sql_db
 			return;
 		}
 
-		$this->db_connect_id = ($this->persistency) ? mysql_pconnect($this->server, $this->user, $this->password) : mysql_connect($this->server, $this->user, $this->password);
+		$this->db_connect_id = ($this->persistency) ? @mysql_pconnect($this->server, $this->user, $this->password) : @mysql_connect($this->server, $this->user, $this->password);
 
 		if( $this->db_connect_id ) {
-			$dbselect = mysql_select_db($this->dbname);
+			$dbselect = @mysql_select_db($this->dbname);
 
 			if( !$dbselect ) {
-				mysql_close($this->db_connect_id);
+				@mysql_close($this->db_connect_id);
 				$this->db_connect_id = $dbselect;
 			}
 

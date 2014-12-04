@@ -1892,7 +1892,7 @@ class Template {
 							? $this->generate_block_data_ref(substr($varrefs[1], 0, -1), true, $varrefs[3]) . '[\'' . $varrefs[4] . '\']'
 							: (($varrefs[3])
 								? '$this->_tpldata[\'DEFINE\'][\'.\'][\'' . $varrefs[4] . '\']'
-								: '(isset($this->vars[\'' . $varrefs[4] . '\']) && $this->vars[\'' . $varrefs[4] . '\'])');
+								: '$this->vars[\'' . $varrefs[4] . '\']');
 					}
 					break;
             }
