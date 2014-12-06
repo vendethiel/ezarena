@@ -48,15 +48,7 @@ include_once($phpbb_root_path .'includes/page_header.'. $phpEx);
 // Grab info
 adr_template_file('adr_battle_chatbox_body.tpl');
 
-// Select the battle text again
-$sql = "SELECT battle_id, battle_text, battle_challenger_id, battle_opponent_id
-	FROM  " . ADR_BATTLE_LIST_TABLE . "
-	WHERE battle_challenger_id = '$user_id'
-	AND battle_result = '0'
-	AND battle_type = '1'";
-if(!($result = $db->sql_query($sql)))
-	message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
-$battle = $db->sql_fetchrow($result);
+$battle = adr_get_battle($user_id);
 
 /* Start: Format chat - Credit to aUsTiN*/
 $format_chat = str_replace('%END%', '<tr><td class="row2"><span class="genmed"><i>', $battle['battle_text']);
