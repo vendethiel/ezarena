@@ -894,7 +894,6 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('stock_last_change'
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_experience_for_new', '10');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_experience_for_reply', '5');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_experience_for_edit', '1');
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_use_cache_system', '0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_topics_display', '1-1-0-0-0-1');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_profile_display', '1');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_time_start', 'time()');
