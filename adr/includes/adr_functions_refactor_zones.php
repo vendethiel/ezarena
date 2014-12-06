@@ -23,7 +23,7 @@ function zone_get($zone_id)
 	return $zone_cache[$zone_id] = $zone;
 }
 
-function zone_goto($goto_name, $cost_goto)
+function zone_goto($goto_id, $cost_goto)
 {
 	global $board_config, $adr_user, $db, $adr_user, $phpEx, $user_id, $lang;
 
@@ -31,11 +31,11 @@ function zone_goto($goto_name, $cost_goto)
 		adr_previous( Adr_zone_change_dead , adr_zones , '' );
 
 	//Prevent blank destination error
-	if ( $goto_name . '' == $lang['Adr_zone_destination_none'] )
+	if ( $goto_id . '' == $lang['Adr_zone_destination_none'] )
 		adr_previous( Adr_zone_change_unavaible , adr_zones , '' );
 
 	//Select the zone destination
-	$zone_id = zone_get($goto_name);
+	$zone_id = zone_get($goto_id);
 	if (!$zone_id)
 	{
 		adr_previous('Adr_zone_change_unavaible', 'adr_zones');

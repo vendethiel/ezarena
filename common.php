@@ -29,7 +29,7 @@ date_default_timezone_set(@date_default_timezone_get());
 error_reporting  (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
 
 // V: ok no, far too many errors :'(
-error_reporting(-1);
+//error_reporting(-1);
 
 // V: we modern now
 session_start();

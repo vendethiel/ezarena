@@ -78,13 +78,8 @@ $adr_user = adr_get_user_infos($user_id);
 
 // Get Zone infos
 $area_id = $adr_user['character_area'];
+$zone = zone_get($area_id);
 
-$sql = "SELECT * FROM  " . ADR_ZONES_TABLE . "
-       WHERE zone_id = '$area_id' ";
-if( !($result = $db->sql_query($sql)) )
-        message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
-
-$zone = $db->sql_fetchrow($result);
 // V: let's make sure nothing bad happened for some reason
 //  i.e. somebody deleted the zone.
 //  of course, it's still gonna fail its race's start zone got ERASED
@@ -107,7 +102,6 @@ $zone_name = $zone['zone_name'];
 $zone_img = $zone['zone_img'];
 $zone_desc = $zone['zone_desc'];
 $zone_element = $zone['zone_element'];
-$return_name = $zone['return_name'];
 $zone_shops = $zone['zone_shops'];
 $zone_forge = $zone['zone_forge'];
 $zone_mine = $zone['zone_mine'];
@@ -145,16 +139,16 @@ $cost_goto1 = $zone['cost_goto1'];
 $cost_goto2 = $zone['cost_goto2'];
 $cost_goto3 = $zone['cost_goto3'];
 $cost_goto4 = $zone['cost_goto4'];
-$goto1_name = $zone['goto1_name'];
-$goto2_name = $zone['goto2_name'];
-$goto3_name = $zone['goto3_name'];
-$goto4_name = $zone['goto4_name'];
-$gotoreturn_name = $zone['return_name'];
+$goto1_id = $zone['goto1_id'];
+$goto2_id = $zone['goto2_id'];
+$goto3_id = $zone['goto3_id'];
+$goto4_id = $zone['goto4_id'];
+$gotoreturn_id = $zone['return_id'];
 $cost_return = $zone['cost_return'];
 
 // V: let's check for neighborhood level
-$sql = "SELECT zone_name, zone_level FROM " . ADR_ZONES_TABLE . "
-	WHERE " . $db->sql_in_set('zone_name', array($goto1_name, $goto2_name, $goto3_name, $goto4_name));
+$sql = "SELECT zone_id, zone_name, zone_level FROM " . ADR_ZONES_TABLE . "
+	WHERE " . $db->sql_in_set('zone_id', array($gotoreturn_id, $goto2_id, $goto3_id, $goto4_id));
 if (!$result = $db->sql_query($sql))
 	message_die(GENERAL_ERROR, 'Unable to query neighborhood zones');
 $level_goto1 = $level_goto2 = $level_goto3 = $level_goto4 = $level_return = 0;
@@ -162,8 +156,11 @@ while ($row = $db->sql_fetchrow($result))
 {
 	foreach (array(2, 3, 4, 'return') as $i)
 	{
-		if ($row['zone_name'] == ${'goto'.$i.'_name'})
+		if ($row['zone_id'] == ${'goto'.$i.'_id'})
+		{
+			${'goto'.$i.'_name'} = $row['zone_name'];
 			${'level_goto'.$i} = $row['zone_level'];
+		}
 	}
 }
 $template->assign_vars(array(
@@ -209,9 +206,9 @@ else
 	$template->assign_var('HAS_GOTO_4', true);
 }
 
-if ( $return_name == '' )
+if ( $gotoreturn_name == '' )
 {
-	$return_name = $lang['Adr_zone_destination_none'];
+	$gotoreturn_name = $lang['Adr_zone_destination_none'];
 	$template->assign_var('HAS_GOTO_RETURN', false);
 }
 else
@@ -328,19 +325,19 @@ $template->assign_vars(array(
 //
 if ( !empty($_POST['goto2']) && !$in_battle )
 {
-	zone_goto($goto2_name, $cost_goto2);
+	zone_goto($goto2_id, $cost_goto2);
 }
 else if ( !empty($_POST['goto3']) && !$in_battle )
 {
-	zone_goto($goto3_name, $cost_goto3);
+	zone_goto($goto3_id, $cost_goto3);
 }
-else if ( !empty($_POST['goto3']) && !$in_battle )
+else if ( !empty($_POST['goto4']) && !$in_battle )
 {
-	zone_goto($goto3_name, $cost_goto3);
+	zone_goto($goto4_id, $cost_goto4);
 }
 else if ( !empty($_POST['return']) && !$in_battle )
 {
-	zone_goto($return_name, $cost_return);
+	zone_goto($gotoreturn_id, $cost_return);
 }
 //
 // END of Zones Navigation
@@ -822,7 +819,7 @@ $template->assign_vars(array(
 	'ZONE_COST3' => $cost_goto3,
 	'ZONE_GOTO4' => $goto4_name,
 	'ZONE_COST4' => $cost_goto4,
-	'ZONE_RETURN' => $return_name,
+	'ZONE_RETURN' => $gotoreturn_name,
 	'ZONE_COST_RETURN' => $cost_return,
 	'USERS_CONNECTED_LIST' => $users_connected_list,
 	'SHOPS_IMG' => $shops,

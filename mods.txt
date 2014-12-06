@@ -428,6 +428,7 @@ Addons :
  - Addon Fix Bare Attacks (fix $dice's rand() ...) - Informpro
  - Addon Fix element colors - Informpro
  - Addon anti SQL Injection for mods - Informpro
+ - Hack adr_battle.php heavy refactor - Informpro
 
 # ADR : Advanced Spells 0.4.5 - AnimeMaster
 Permet aux joueurs d'apprendre des sorts en montant de niveau.
@@ -593,6 +594,7 @@ Donne aux villes des interfaces interactives et ajoute des images aux différent
 
 # ADR (ST) : Zone 1.0 - one_piece
 Ajoute un système très complet de zones à ADR.
+ - Addon use zone IDs instead of zone names - Informpro
 
 # Rabbitoshi 3.1.3 - one_piece
 Ajoute un système d'animalerie complet, intégré à ADR.

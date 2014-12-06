@@ -96,25 +96,25 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 	$destination2_list = '<select name="zone_goto2">';
 	$destination2_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_destination'] . '</option>';
 	for ( $i = 0 ; $i < count($zonelist) ; $i ++)
-	  	$destination2_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+	  	$destination2_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
 	$destination2_list .= '</select>';
 
 	$destination3_list = '<select name="zone_goto3">';
 	$destination3_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_destination'] . '</option>';
 	for ( $i = 0 ; $i < count($zonelist) ; $i ++)
-	  	$destination3_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+	  	$destination3_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
 	$destination3_list .= '</select>';
 
 	$destination4_list = '<select name="zone_goto4">';
 	$destination4_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_destination'] . '</option>';
 	for ( $i = 0 ; $i < count($zonelist) ; $i ++)
-	  	$destination4_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+	  	$destination4_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
 	$destination4_list .= '</select>';
 
 	$return_list = '<select name="zone_return">';
 	$return_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_destination'] . '</option>';
 	for ( $i = 0 ; $i < count($zonelist) ; $i ++)
-	  	$return_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+	  	$return_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
 	$return_list .= '</select>';
 
 	//elements list
@@ -321,7 +321,7 @@ else if ( $mode != "" )
 			$zone_id = ( !empty($HTTP_POST_VARS['id']) ) ? intval($HTTP_POST_VARS['id']) : intval($HTTP_GET_VARS['id']);
 
 			if ( $zone_id == '1' )
-				adr_previous( Adr_zone_default_undeletable , admin_adr_zones , '' );
+				adr_previous( 'Adr_zone_default_undeletable' , 'admin_adr_zones' , '' );
 
 			$sql = "DELETE FROM " . ADR_ZONES_TABLE . "
 				WHERE zone_id = '$zone_id' ";
@@ -329,7 +329,16 @@ else if ( $mode != "" )
 			if( !$result )
 				message_die(GENERAL_ERROR, "Couldn't delete zones", "", __LINE__, __FILE__, $sql);
 
-			adr_previous( Adr_zone_successful_deleted , admin_adr_zones , '' );
+			// V: also delete "goto"s
+			$goto_fields = array('goto1_id', 'goto2_id', 'goto3_id', 'goto4_id', 'return_id');
+			foreach ($goto_fields as $goto_field)
+			{
+				$sql = "UPDATE " . ADR_ZONES_TABLE . "
+					SET $goto_field = 0 WHERE $goto_field = $zone_id;
+				";
+			}
+
+			adr_previous( 'Adr_zone_successful_deleted' , 'admin_adr_zones' , '' );
 			break;
 
 		case 'edit':
@@ -345,25 +354,28 @@ else if ( $mode != "" )
 				message_die(GENERAL_ERROR, 'Could not obtain zones information', "", __LINE__, __FILE__, $sql);
 
 			$zones = $db->sql_fetchrow($result);
+			if( !$result )
+				message_die(GENERAL_ERROR, 'Could not find specificed zone information', "", __LINE__, __FILE__, $sql);
 
-			$s_hidden_fields = '<input type="hidden" name="mode" value="save" /><input type="hidden" name="zone_id" value="' . $zones['zone_id'] . '" />';
+
+			$s_hidden_fields = '<input type="hidden" name="mode" value="save" /><input type="hidden" name="zone_id" value="' . $zone_id . '" />';
 
 			//
 			//BEGIN lists
 			//
 
 			// $existing_destination1 = $zones['goto1_name'];
-			$existing_destination2 = $zones['goto2_name'];
-			$existing_destination3 = $zones['goto3_name'];
-			$existing_destination4 = $zones['goto4_name'];
-			$existing_return = $zones['return_name'];
+			$existing_destination2 = $zones['goto2_id'];
+			$existing_destination3 = $zones['goto3_id'];
+			$existing_destination4 = $zones['goto4_id'];
+			$existing_return = $zones['return_id'];
 			$existing_element = $zones['zone_element'];
 			$existing_item = $zones['zone_item'];
 			(  $existing_item == '0' ) ? $existing_item_name = $lang['Adr_zone_acp_item_nothing'] : $existing_item_name = $existing_item;
-			(  $existing_destination2 == '' ) ? $existing_destination2_name = $lang['Adr_zone_acp_choose_nothing'] : $existing_destination2_name = $existing_destination2;
-			(  $existing_destination3 == '' ) ? $existing_destination3_name = $lang['Adr_zone_acp_choose_nothing'] : $existing_destination3_name = $existing_destination3;
-			(  $existing_destination4 == '' ) ? $existing_destination4_name = $lang['Adr_zone_acp_choose_nothing'] : $existing_destination4_name = $existing_destination4;
-			(  $existing_return == '' ) ? $existing_return_name = $lang['Adr_zone_acp_choose_nothing'] : $existing_return_name = $existing_return;
+			(  $existing_destination2 == '' ) ? $existing_destination2_id = 0 : $existing_destination2_id = $existing_destination2;
+			(  $existing_destination3 == '' ) ? $existing_destination3_id = 0 : $existing_destination3_id = $existing_destination3;
+			(  $existing_destination4 == '' ) ? $existing_destination4_id = 0 : $existing_destination4_id = $existing_destination4;
+			(  $existing_return == '' ) ? $existing_return_id = 0 : $existing_return_id = $existing_return;
 
 			//destinations lists
 			$sql = "SELECT * FROM " . ADR_ZONES_TABLE ."
@@ -375,52 +387,52 @@ else if ( $mode != "" )
 			$zonelist = $db->sql_fetchrowset($result);
 
 /*			$destination1_list = '<select name="zone_goto1">';
-			$destination1_list .= '<option value = "' . $existing_destination1 . '" >' . $existing_destination1 . '</option>';
+			$destination1_list .= '';
 			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
 			{
-				if ($zonelist[$i]['zone_name'] == $existing_destination1 || $zonelist[$i]['zone_name'] == $zones['zone_name'])
+				if ($zonelist[$i]['zone_id'] == $existing_destination1 || $zonelist[$i]['zone_id'] == $zone_id)
 					continue;
-			  	$destination1_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+			  	$destination1_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
 			}
 			$destination1_list .= '</select>';
 */
 			$destination2_list = '<select name="zone_goto2">';
-			$destination2_list .= '<option value = "' . $existing_destination2 . '" >' . $existing_destination2_name . '</option><option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
+			$destination2_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
 			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
 			{
-				if ($zonelist[$i]['zone_name'] == $existing_destination2 || $zonelist[$i]['zone_name'] == $zones['zone_name'])
+				if ($zonelist[$i]['zone_id'] == $zone_id)
 					continue;
-			  	$destination2_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+			  	$destination2_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" ' . ($zonelist[$i]['zone_id'] == $existing_destination2 ? ' selected="selected"' : '') . '>' . $zonelist[$i]['zone_name'] . '</option>';
 			}
 			$destination2_list .= '</select>';
 
 			$destination3_list = '<select name="zone_goto3">';
-			$destination3_list .= '<option value = "' . $existing_destination3 . '" >' . $existing_destination3_name . '</option><option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
+			$destination3_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
 			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
 			{
-				if ($zonelist[$i]['zone_name'] == $existing_destination3 || $zonelist[$i]['zone_name'] == $zones['zone_name'])
+				if ($zonelist[$i]['zone_id'] == $zone_id)
 					continue;
-			  	$destination3_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+			  	$destination3_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" ' . ($zonelist[$i]['zone_id'] == $existing_destination3 ? ' selected="selected"' : '') . '>' . $zonelist[$i]['zone_name'] . '</option>';
 			}
 			$destination3_list .= '</select>';
 
 			$destination4_list = '<select name="zone_goto4">';
-			$destination4_list .= '<option value = "' . $existing_destination4 . '" >' . $existing_destination4_name . '</option><option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
+			$destination4_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
 			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
 			{
-				if ($zonelist[$i]['zone_name'] == $existing_destination4 || $zonelist[$i]['zone_name'] == $zones['zone_name'])
+				if ($zonelist[$i]['zone_id'] == $zone_id)
 					continue;
-			  	$destination4_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+			  	$destination4_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" ' . ($zonelist[$i]['zone_id'] == $existing_destination4 ? ' selected="selected"' : '') . '>' . $zonelist[$i]['zone_name'] . '</option>';
 			}
 			$destination4_list .= '</select>';
 
 			$return_list = '<select name="zone_return">';
-			$return_list .= '<option value = "' . $existing_return . '" >' . $existing_return_name . '</option><option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
+			$return_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
 			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
 			{
-				if ($zonelist[$i]['zone_name'] == $existing_return_name || $zonelist[$i]['zone_name'] == $zones['zone_name'])
+				if ($zonelist[$i]['zon_eid'] == $zone_id)
 					continue;
-			  	$return_list .= '<option value = "' . $zonelist[$i]['zone_name'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
+			  	$return_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" ' . ($zonelist[$i]['zone_id'] == $existing_return_name ? ' selected="selected"' : '') . '>' . $zonelist[$i]['zone_name'] . '</option>';
 			}
 			$return_list .= '</select>';
 
@@ -739,10 +751,10 @@ else if ( $mode != "" )
 				cost_goto3 = '$cost3',
 				cost_goto4 = '$cost4',
 				cost_return = '$costreturn',
-				goto2_name = '" . str_replace("\'", "''", $goto2) . "',
-				goto3_name = '" . str_replace("\'", "''", $goto3) . "',
-				goto4_name = '" . str_replace("\'", "''", $goto4) . "',
-				return_name = '" . str_replace("\'", "''", $return) . "',
+				goto2_id = '" . intval($goto2) . "',
+				goto3_id = '" . intval($goto3) . "',
+				goto4_id = '" . intval($goto4) . "',
+				return_id = '" . intval($return) . "',
 				zone_shops = '$shops',
 				zone_forge = '$forge',
 				zone_mine = '$mine',
@@ -898,17 +910,37 @@ else
 	for($i = 0; $i < count($zones); $i++)
 	{
 		//Prevent blank value in the list
-		$zone2_value = $zones[$i]['goto2_name'];
-		$zone3_value = $zones[$i]['goto3_name'];
-		$zone4_value = $zones[$i]['goto4_name'];
-		$zonereturn_value = $zones[$i]['return_name'];
+		$zone2_id = $zones[$i]['goto2_id'];
+		$zone3_id = $zones[$i]['goto3_id'];
+		$zone4_id = $zones[$i]['goto4_id'];
+		$zonereturn_id = $zones[$i]['return_id'];
 		$required_item = $zones[$i]['zone_item'];
 
+		if( $required_item == '0' ) $required_item = 'X';
+
+		// V: fetch zone names here
+		$sql = "SELECT zone_id, zone_name
+			FROM " . ADR_ZONES_TABLE . "
+			WHERE " . $db->sql_in_set('zone_id', array($zone2_id, $zone3_id, $zone4_id, $zonereturn_id));
+		if (!$result = $db->sql_query($sql))
+			message_die(GENERAL_ERROR, 'Unable to query neighborhood zones');
+		// don't forget to reset those...
+		$zone2_value = $zone3_value = $zone4_value = $zonegoto_value = '';
+		while ($row = $db->sql_fetchrow($result))
+		{
+			foreach (array(2, 3, 4, 'return') as $zone_i)
+			{
+				if ($row['zone_id'] == ${'zone'.$zone_i.'_id'})
+				{
+					${'zone'.$zone_i.'_value'} = $row['zone_name'];
+				}
+			}
+		}
+		$db->sql_freeresult($result);
 		if( $zone2_value == '' ) $zone2_value = 'X';
 		if( $zone3_value == '' ) $zone3_value = 'X';
 		if( $zone4_value == '' ) $zone4_value = 'X';
 		if( $zonereturn_value == '' ) $zonereturn_value = 'X';
-		if( $required_item == '0' ) $required_item = 'X';
 
 		$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
 		$template->assign_block_vars("zones", array(
