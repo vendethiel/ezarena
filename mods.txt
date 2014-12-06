@@ -429,6 +429,9 @@ Addons :
  - Addon Fix element colors - Informpro
  - Addon anti SQL Injection for mods - Informpro
 
+# ADR : Advanced Spells 0.4.5 - AnimeMaster
+Permet aux joueurs d'apprendre des sorts en montant de niveau.
+
 # ADR : Advanced Loot System 1.0.3 - Himmelweiss
 Ajoute un système super-complet de butin pour les monstres, avec des catégories de butin, chance de drop, combien d'items il est possible de drop, etc ... à découvrir en jeu et dans l'admin !
 
