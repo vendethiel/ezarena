@@ -900,7 +900,7 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_time_start', '
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_character_age', '16');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_skill_sp_enable', '0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_character_sp_enable', '0');
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_thief_enable', '1');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_thief_enable', '0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_thief_points', '5');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_warehouse_duration', '1');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('Adr_shop_duration', '1');

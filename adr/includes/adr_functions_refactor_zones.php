@@ -6,6 +6,7 @@
 
 function zone_get($zone_id)
 {
+	global $db;
 	static $zone_cache;
 	if (isset($zone_cache[$zone_id]))
 	{

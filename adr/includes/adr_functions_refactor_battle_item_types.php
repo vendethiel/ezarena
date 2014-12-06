@@ -598,15 +598,17 @@ function adr_pet_attack()
 		if ($pet_dice == '20') //define critical hit
 		{
 			$pet_damage = (($rabbit_user['creature_power'] * $rabbit_user['creature_level']) + (rand(2, 5) * 4));
-			$poison     = rand(0, 5);
+			$poison     = rand(0, 5); // V: poison hurts more if you crit??
 			$battle_message .= sprintf($lang['Adr_battle_pet_success_critical'], intval($pet_damage)) . '<br />';
-			$battle_message .= sprintf($lang['Adr_battle_pet_poison'], intval($poison)) . '<br />';
 		} //$pet_dice == '20'
 		else
 		{
 			$pet_damage = (($rabbit_user['creature_power'] * $rabbit_user['creature_level']) + rand(0, 3));
 			$poison     = rand(0, 3);
 			$battle_message .= sprintf($lang['Adr_battle_pet_success'], intval($pet_damage)) . '<br />';
+		}
+		if ($poison)
+		{
 			$battle_message .= sprintf($lang['Adr_battle_pet_poison'], intval($poison)) . '<br />';
 		}
 	} //$rabbit_user['creature_statut'] == '3'
