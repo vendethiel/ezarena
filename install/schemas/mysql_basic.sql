@@ -923,10 +923,6 @@ UPDATE phpbb_adr_stores SET store_sales_status = 0;
 # ADR 0.4.2
 UPDATE phpbb_adr_general SET `config_value` = '0' WHERE `config_name` = 'Adr_disable_rpg';
 
-INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_cache_interval', 15);
-INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_cache_last_updated', 0);
-UPDATE phpbb_config SET `config_value` = '0-0-0-0-0-0-0-0-0' WHERE `config_name` = 'Adr_use_cache_system';
-
 UPDATE phpbb_adr_battle_list SET battle_text = '' WHERE battle_result != 0;
 UPDATE phpbb_adr_battle_pvp SET battle_text = '' WHERE battle_result != 3;
 
