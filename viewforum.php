@@ -408,31 +408,31 @@ $db->sql_freeresult($result);
 //
 // forum enter limit by emrag
 //
-		if (!($userdata['user_level'] == ADMIN OR $userdata['user_level'] == MOD))
+if (!($userdata['user_level'] == ADMIN OR $userdata['user_level'] == MOD))
+{
+	$sql = "SELECT f.forum_id, f.forum_enter_limit, u.user_posts
+		FROM " . FORUMS_TABLE . " f, " . USERS_TABLE . " u
+		WHERE user_id = " . $userdata['user_id'];
+
+	if( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, 'Could not query information', '', __LINE__, __FILE__, $sql);
+	}
+
+	while ($row = $db->sql_fetchrow($result))
+	{
+		$forum_id_limit = $row['forum_id'];
+		$forum_enter_limit = $row['forum_enter_limit'];
+		$user_posts_limit = $row['user_posts'];
+
+		$error_limit = sprintf($lang['Forum_enter_limit_error'], $forum_enter_limit);
+
+		if ($forum_id == $forum_id_limit AND $user_posts_limit < $forum_enter_limit)
 		{
-		$sql = "SELECT f.forum_id, f.forum_enter_limit, u.user_posts
-			FROM " . FORUMS_TABLE . " f, " . USERS_TABLE . " u
-			WHERE user_id = " . $userdata['user_id'];
-
-		if( !($result = $db->sql_query($sql)) )
-		{
-			message_die(GENERAL_ERROR, 'Could not query information', '', __LINE__, __FILE__, $sql);
+			message_die(GENERAL_ERROR, $error_limit);
 		}
-
-			while ($row = $db->sql_fetchrow($result))
-			{
-			$forum_id_limit = $row['forum_id'];
-			$forum_enter_limit = $row['forum_enter_limit'];
-			$user_posts_limit = $row['user_posts'];
-
-			$error_limit = sprintf($lang['Forum_enter_limit_error'], $forum_enter_limit);
-
-				if ($forum_id == $forum_id_limit AND $user_posts_limit < $forum_enter_limit)
-				{
-					message_die(GENERAL_ERROR, $error_limit);
-				}
-			}
-		}
+	}
+}
 //
 // forum enter limit by emrag
 //

@@ -2194,10 +2194,13 @@ function password_check ($mode, $id, $password, $redirect)
 	switch($mode)
 	{
 		case 'topic':
+			exit('Topic password disabled');
+		/*
 			$sql = "SELECT topic_password AS password FROM " . TOPICS_TABLE . " WHERE topic_id = $id";
 			$passdata = ( isset($HTTP_COOKIE_VARS[$cookie_name . '_tpass']) ) ? unserialize(stripslashes($HTTP_COOKIE_VARS[$cookie_name . '_tpass'])) : '';
 			$savename = $cookie_name . '_tpass';
 			break;
+		*/
 		case 'forum':
 			$sql = "SELECT forum_password AS password FROM " . FORUMS_TABLE . " WHERE forum_id = $id";
 			$passdata = ( isset($HTTP_COOKIE_VARS[$cookie_name . '_fpass']) ) ? unserialize(stripslashes($HTTP_COOKIE_VARS[$cookie_name . '_fpass'])) : '';
@@ -2216,7 +2219,7 @@ function password_check ($mode, $id, $password, $redirect)
 	$row = $db->sql_fetchrow($result);
 	if( $password != $row['password'] )
 	{
-		$message = ( $mode == 'topic' ) ? $lang['Incorrect_topic_password'] : $lang['Incorrect_forum_password'];
+		$message = $lang['Incorrect_'.$mode.'_password'];
 		message_die(GENERAL_MESSAGE, $message);
 	}
 
@@ -2237,7 +2240,7 @@ function password_box ($mode, $s_form_action)
 	global $db, $template, $theme, $board_config, $lang, $phpEx, $phpbb_root_path, $gen_simple_header;
 	global $userdata;
 
-	$l_enter_password = ( $mode == 'topic' ) ? $lang['Enter_topic_password'] : $lang['Enter_forum_password'];
+	$l_enter_password = $lang['Enter_'.$mode.'_password'];
 
 	$page_title = $l_enter_password;
 	include($phpbb_root_path . 'includes/page_header.'.$phpEx);

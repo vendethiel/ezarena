@@ -461,25 +461,14 @@ if( !$is_auth['auth_mod'] && $userdata['user_level'] != ADMIN )
 	}
 	else if( $HTTP_POST_VARS['pass_login'] )
 	{
-		if( $post_info['topic_password'] != '' )
-		{
-			password_check('topic', $topic_id, $HTTP_POST_VARS['password'], $redirect);
-		}
-		else if( $post_info['forum_password'] != '' )
+
+		if( $post_info['forum_password'] != '' )
 		{
 			password_check('forum', $forum_id, $HTTP_POST_VARS['password'], $redirect);
 		}
 	}
 
-	if( $post_info['topic_password'] != '' && $mode != 'newtopic' )
-	{
-		$passdata = ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_tpass']) ) ? unserialize(stripslashes($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_tpass'])) : '';
-		if( $passdata[$topic_id] != md5($post_info['topic_password']) )
-		{
-			password_box('topic', $redirect);
-		}
-	}
-	else if( $post_info['forum_password'] != '' )
+	if( $post_info['forum_password'] != '' )
 	{
 		$passdata = ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_fpass']) ) ? unserialize(stripslashes($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_fpass'])) : '';
 		if( $passdata[$forum_id] != md5($post_info['forum_password']) )
