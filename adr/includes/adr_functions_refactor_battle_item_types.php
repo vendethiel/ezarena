@@ -774,7 +774,7 @@ function adr_attack_bare()
 {
 	global $monster, $bat, $adr_user, $opponent_element, $item, $db, $lang, $user_id, $power, $crit_result;
 	global $challenger, $battle_message, $user_action, $monster_action, $attack_img, $attackwith_overlay;
-	global $damage;
+	global $damage, $dice;
 
 	$monster_def_dice = rand(1, 20);
 	$monster_modifier = rand(1, 10); // this is temp. until proper monster characteristics are added to ADR
@@ -811,8 +811,8 @@ function adr_attack_weap()
 {
 	global $monster, $bat, $adr_user, $opponent_element, $item, $db, $lang, $user_id, $power, $crit_result;
 	global $challenger, $battle_message, $user_action, $monster_action, $attack_img, $attackwith_overlay;
-	global $damage;
-	
+	global $damage, $dice;
+
 	// weaprof
 	$attbonus = adr_weapon_skill_check($user_id);
 	if ((($diff === TRUE) && ($dice != '1')) || ($dice >= $threat_range))
