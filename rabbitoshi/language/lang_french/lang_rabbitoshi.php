@@ -553,9 +553,9 @@ $lang['Rabbitoshi_update_error']='Une erreur s\'est produite lors de la mise à j
 /***************************************************************************
  *   ADR Battle Language Keys
  ***************************************************************************/
-
 $lang['Adr_Rabbitoshi_invoc_succes']='Vous avez appelé votre créature pour qu\'elle vous aide au combat.';
 $lang['Rabbitoshi_battle_pet_title']='Votre créature est sur le champ de bataille';
+$lang['Rabbitoshi_battle_pet_title_dead']='Votre créature est morte';
 $lang['Rabbitoshi_battle_pet_health']='Vie';
 $lang['Rabbitoshi_battle_pet_mp']='Mana';
 $lang['Rabbitoshi_battle_pet_attack']='Attaques';

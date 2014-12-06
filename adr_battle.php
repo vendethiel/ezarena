@@ -442,6 +442,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		// Let's sort out the weapon animations...
 		// Make table for start battle sequence...
 		// 0 = Standing image , 1 = Attack image
+		$damage = 0;
 		$user_action        = 1;
 		$monster_action     = 1;
 		$attack_img         = $item['item_name'];

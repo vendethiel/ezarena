@@ -21,6 +21,8 @@ define('BATTLE_TURN_MONSTER', 2);
 // Select if the user has a battle in progress or no
 function adr_get_battle($user_id)
 {
+	global $db;
+
 	$sql = " SELECT *
 	FROM  " . ADR_BATTLE_LIST_TABLE . " 
 		WHERE battle_challenger_id = " . intval($user_id) . "
