@@ -514,8 +514,9 @@ Addons :
 Ajoute Aube/Jour/Crépuscule/Nuit au RPG.
 Basé sur le mod de ShadowTek.
 
-# ADR : Party 1.1 - Spikez
+# ADR : Party 2.0 - Informpro - Based on Clans 1.1 by Spikez
 Ajoute un système de groupe au RPG, avec des bonus configurables.
+Ré-écriture du mod de Spikez.
 
 # ADR : Pet auto-summon 1.0 - Informpro
 Invoque automatiquement votre familier pour le combat.

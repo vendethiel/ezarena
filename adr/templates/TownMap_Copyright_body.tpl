@@ -60,6 +60,11 @@
 	<tr>
 		<td class="row2"><span class="gen"><a href="http://www.nightcrawlers.be">ADR Recipebook written by: Himmelweiss</a></span></td>
 	</tr>
+	  <tr>
+		<td class="row2" align="center"><span class="gensmall">
+			Clans MOD Advanced made by <a href="http://www.nuladion.com" target="_blank">Nuladion</a>
+		</span></td>
+	  </tr>
 </table>
 <br clear="all" />
 

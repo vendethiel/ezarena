@@ -1854,6 +1854,10 @@ $lang['ADR_ITEM_LOOTTABLES_EXPLAIN'] = 'Choisissez à quelles tables de butin cet
 $lang['ADR_SPELL_LIST'] = 'Cliquez sur l\'image pour accéder à la liste des sorts que vous connaissez';
 $lang['npc_cant_give_quest_u_dont_have'] = 'Vous n\'avez pas cette quête !';
 $lang['Adr_battle_pet_was_dead'] = 'Votre familier est mort et n\'a donc pas gagné d\'expérience';
+$lang['Adr_party_not_invited'] = 'Vous n\'avez pas été invité à rejoindre ce groupe';
+$lang['Adr_party_no_such_char'] = 'Ce personnage n\'existe pas';
+$lang['Adr_party_already_invited'] = 'Ce personnage a déjà été invité';
+$lang['Adr_party_already_member'] = 'Ce personnage est déjà dans le groupe';
 //'Welcome to the Alchemy Lab. Here you can combine some items to get another powerfull item. Warning ! The order of the items you put into the cauldron is important! You have to search and find good combinations.';
 // clan mod to party mod
 $lang['Adr_Must_be_in_clan_to_party'] = 'Vous devez faire parti d\'un clan pour rejoindre un groupe !';

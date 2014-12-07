@@ -66,8 +66,7 @@ adr_enable_check();
 adr_ban_check($user_id);
 adr_character_created_check($user_id);
 
-$zone_user = adr_get_user_infos($user_id);
-$actual_zone = $zone_user['character_area'];
+$actual_zone = $adr_user['character_area'];
 
 $info = zone_get($actual_zone);
 $access = $info['zone_clans'];
@@ -89,13 +88,12 @@ if((!isset($_GET['action'])) || ($_GET['action'] == "list")) {
 		$template->assign_block_vars('no_userclans', array(
 			'L_NONE' => $lang['clans_none']
 		));
-		$template->assign_block_vars('');
 	}
 
 	while ( $row = $db->sql_fetchrow($result) ) 
 	{ 
 		// Get leader name!
-		$LRow = adr_get_user($row['user']);
+		$LRow = adr_get_user_infos($row['user']);
   		$leader = '<a href="'.$phpbb_root_path.'adr_character.php?" . POST_USERS_URL ."='.$row['leader'].'" target="_blank">'.$Lrow['character_name'].'</a>';
 		
 		// Get member names!
@@ -817,7 +815,6 @@ if(($_GET['action'] ==  "shoutbox") OR ($shoutbox)) {
 
 // Create a new clan!!
 if($_GET['action'] ==  "create") {
-
 	// Check if user is a member of an other clan, or on a clan's Approve List!
 	$sql = "SELECT name FROM ". ADR_CLANS_TABLE ."
 			WHERE leader = '".$user_id."' OR members LIKE '%ß".$user_id."Þ%' OR approvelist LIKE '%ß".$user_id."Þ%' ";
@@ -1884,28 +1881,6 @@ if($_GET['action'] ==  "clp") {
 }
 
 $page_title = $lang['clans_modtitle'].' :: '.$this_title;
-
-// 
-// Add infobar with mod and copyright info!
-// 
-/********************************
-  *
-  * Please respect the amount of time the
-  * mod author put into developing this mod 
-  * and sharing it for FREE, and leave this 
-  * little message in place! 
-  * 
-  * ~Thanks :)
-  *
-  **********************************/
-$template->assign_block_vars('infobar', array(
-	'TEXT' => '
-		  <tr>
-			<td class="row2" align="center"><span class="gensmall">
-				Clans MOD Advanced made by <a href="http://www.nuladion.com" target="_blank">Nuladion</a>
-			</span></td>
-		  </tr>
-'));
 
 //
 // Start output of page

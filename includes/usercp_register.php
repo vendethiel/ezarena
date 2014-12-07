@@ -485,11 +485,13 @@ if ( isset($HTTP_POST_VARS['submit']) )
 {
 	include($phpbb_root_path . 'includes/usercp_avatar.'.$phpEx);
 	// session id check
+	/* V: guests don't have SIDs
 	if ($sid == '' || $sid != $userdata['session_id'])
 	{
 		$error = true;
 		$error_msg .= ( ( isset($error_msg) ) ? '<br />' : '' ) . $lang['Session_invalid'];
-	}	
+	}
+	*/
 
 	$passwd_sql = '';
 	if ( $mode == 'editprofile' )
