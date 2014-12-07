@@ -492,7 +492,9 @@ function zone_npc_actions()
 
 function zone_npc_item_quest_check($npc_row)
 {
-	global $user_id, $npc_id, $db, $lang, $phpEx;
+	global $user_id, $db, $lang, $phpEx;
+
+	$npc_id = $npc_row['npc_id'];
 
 	//[QUEST] Check if the NPC needs an item(s)
 	if ( $npc_row['npc_item'] != "0" || $npc_row['npc_item'] != "" || $npc_row['npc_quest_clue'] )
@@ -569,12 +571,13 @@ function zone_npc_item_quest_check($npc_row)
 		}
 	}
 
-	if ( ($npc_row['npc_item'] != "0" && $npc_row['npc_item'] != "") OR ($npc_row['npc_kill_monster'] != "0" && $npc_row['npc_kill_monster'] != "" && $npc_row['npc_kill_monster_amount'] != "0"))
+	if ( ($npc_row['npc_item'] != "0" && $npc_row['npc_item'] != "")
+		|| ($npc_row['npc_kill_monster'] != "0" && $npc_row['npc_kill_monster'] != "" && $npc_row['npc_kill_monster_amount'] != "0"))
 	{
 		// Check if the character already has the Quest !
 		$sql = " SELECT * FROM  " . ADR_QUEST_LOG_TABLE . "
 	   		WHERE (quest_item_need = '".$npc_row['npc_item']."'
-			OR quest_kill_monster = '".$npc_row['npc_kill_monster']."')
+				OR quest_kill_monster = '".$npc_row['npc_kill_monster']."')
 			AND user_id = '$user_id'
 			AND npc_id = '$npc_id'
 	   		";

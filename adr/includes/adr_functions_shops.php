@@ -157,7 +157,10 @@ function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, 
 {
 	global $db;
 
-	$item_id = intval($item_id);
+	if ($search_col == 'item_id')
+	{
+		$item_id = intval($item_id);
+	}
 	$new_item_id = intval($new_item_id);
 	$user_id = intval($user_id);
     $shop_owner_id = intval($shop_owner_id);
@@ -174,7 +177,10 @@ function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, 
 	if(!$result){
 		message_die(GENERAL_ERROR, 'Could not obtain shops items information', "", __LINE__, __FILE__, $sql);}
 	$item_data = $db->sql_fetchrow($result);
-
+	if (!$item_data)
+	{
+		message_die(GENERAL_ERROR, 'could not find item with ' . $search_col . '=' . $item_id);
+	}
 	$item_type_use = $item_data['item_type_use'];
 	$item_name = addslashes($item_data['item_name']);
 	$item_desc = addslashes($item_data['item_desc']);
@@ -249,6 +255,25 @@ function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, 
 	return $item_data;
 }
 
+function adr_make_new_item_id($user_id)
+{
+	global $db;
+
+
+	// Make the new id for the item
+	$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
+		WHERE item_owner_id = $user_id
+		ORDER BY item_id 
+		DESC LIMIT 1";
+	$result = $db->sql_query($sql);
+	if( !$result )
+	{
+		message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+	}
+	$data = $db->sql_fetchrow($result);
+	return $data['item_id'] + 1;
+}
+
 function adr_buy_item($user_id , $item_id , $shop_owner_id , $shop_id , $direct , $nav )
 {
 	global $db , $lang , $board_config , $phpEx , $userdata, $adr_general, $adr_user;
@@ -299,18 +324,7 @@ function adr_buy_item($user_id , $item_id , $shop_owner_id , $shop_id , $direct 
 	// Substract the points
 	adr_substract_points( $user_id , $sum , $direct , $nav );
 
-	// Make the new id for the item
-	$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
-		WHERE item_owner_id = $user_id
-		ORDER BY item_id 
-		DESC LIMIT 1";
-	$result = $db->sql_query($sql);
-	if( !$result )
-	{
-		message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
-	}
-	$data = $db->sql_fetchrow($result);
-	$new_item_id = $data['item_id'] + 1 ;
+	$new_item_id = adr_make_new_item_id($user_id);
 
 	// If the shop isn't the forums one , transfer , else duplicate 
 	if ( $shop_owner_id != 1 )
