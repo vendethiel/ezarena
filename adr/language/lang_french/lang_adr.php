@@ -1852,6 +1852,7 @@ $lang['ADR_CAULDRON_EXPLAIN'] = 'Bienvenue au Chaudron Magique.<br/>Ici, vous po
 $lang['ADR_RECIPES_LIST'] = 'Cliquez sur l\'image pour pour voir les recettes que vous connaissez';
 $lang['ADR_ITEM_LOOTTABLES_EXPLAIN'] = 'Choisissez à quelles tables de butin cet objet appartient';
 $lang['ADR_SPELL_LIST'] = 'Cliquez sur l\'image pour accéder à la liste des sorts que vous connaissez';
+$lang['npc_cant_give_quest_u_dont_have'] = 'Vous n\'avez pas cette quête !';
 //'Welcome to the Alchemy Lab. Here you can combine some items to get another powerfull item. Warning ! The order of the items you put into the cauldron is important! You have to search and find good combinations.';
 // clan mod to party mod
 $lang['Adr_Must_be_in_clan_to_party'] = 'Vous devez faire parti d\'un clan pour rejoindre un groupe !';

@@ -268,8 +268,7 @@ function zone_npc_actions()
 		$npc_id = intval($_POST['npc_id']);
 		$item_id_array = explode( ',' , $_POST['item_id']);
 		$sql = "SELECT * FROM  " . ADR_NPC_TABLE . "
-				WHERE npc_id = '$npc_id'
-					AND npc_enable = 1 " ;
+				WHERE npc_id = '$npc_id'" ;
 		if ( !($result = $db->sql_query($sql)) )
 	        message_die(GENERAL_ERROR, 'Could not query npc information', '', __LINE__, __FILE__, $sql);
 
@@ -278,6 +277,25 @@ function zone_npc_actions()
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
 		if ( !($npc_give_row['npc_enable']) )
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+
+	    // V: let's add some security to this bullshit.
+	    $sql = "SELECT * FROM " . ADR_QUEST_LOG_TABLE . "
+					   		WHERE user_id = '$user_id'
+							AND npc_id = '$npc_id'
+							";
+		if (!($result = $db->sql_query($sql)))
+		{
+			message_die(GENERAL_ERROR, 'Could not query quest log information', __LINE__, __FILE__, $sql);
+		}
+		$quest = $db->sql_fetchrow($result);
+
+		if (!$quest)
+		{
+			$message = "<img src=\"adr/images/zones/npc/" . $npc_give_row['npc_img'] . "\"><br /><br /><b>" . $lang['npc_cant_give_quest_u_dont_have'] . "</b><br /><br />" . $lang['Adr_zone_event_return'];
+			$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
+			message_die(GENERAL_ERROR, $message , $adr_zone_npc_title , '' );
+			break;
+		}
 
 		$npc_zone_array = explode( ',' , $npc_give_row['npc_zone'] );
 		$npc_race_array = explode( ',' , $npc_give_row['npc_race'] );
@@ -346,7 +364,6 @@ function zone_npc_actions()
 			if ( !$npc_give_row['npc_quest_clue'] )
 				adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
 		}
-		//----
 
 		if ( adr_item_quest_check($npc_give_row['npc_id'], $adr_user['character_npc_check'], $npc_give_row['npc_times'] ) )
 		{
@@ -361,7 +378,6 @@ function zone_npc_actions()
 					if( !($aresult = $db->sql_query($delsql)) )
 						message_die(GENERAL_ERROR, "Couldn't update inventory info", "", __LINE__, __FILE__, $asql);
 
-					############ QUESTBOOK MOD v1.0.2 - START ############
 					$sql5 = "SELECT * FROM " . ADR_QUEST_LOG_TABLE . "
 						WHERE quest_item_need like '".$npc_item_array[$i].","."%' 
 						OR quest_item_need like '".$npc_item_array[$i]."'
@@ -394,9 +410,7 @@ function zone_npc_actions()
 						if( !($bresult = $db->sql_query($delsql2)) )
 							message_die(GENERAL_ERROR, "Couldn't update questlog info", "", __LINE__, __FILE__, $delsql2);
 					}
-					############ QUESTBOOK MOD v1.0.2 - END ############
 				}
-				############ QUESTBOOK MOD v1.0.2 - START ############
 				if ($npc_give_row['npc_kill_monster'] != '0' && $npc_give_row['npc_kill_monster'] != "" && ($npc_give_row['quest_kill_monster_current_amount'] == $npc_give_row['npc_kill_monster_amount']))
 				{
 					//Copy Quest to the History
@@ -417,10 +431,8 @@ function zone_npc_actions()
 					if( !($dresult = $db->sql_query($delsql3)) )
 						message_die(GENERAL_ERROR, "Couldn't update questlog info", "", __LINE__, __FILE__, $delsql3);
 				}
-				############ QUESTBOOK MOD v1.0.2 - END ############
 			}
 			else
-			############ QUESTBOOK MOD v1.0.2 - START ############
 			{
 				adr_substract_points( $user_id , $npc_give_row['npc_quest_clue_price'] , adr_zones , '' );
 				//Delete the Quest of the log
@@ -431,7 +443,6 @@ function zone_npc_actions()
 				if( !($bresult = $db->sql_query($delsql2)) )
 					message_die(GENERAL_ERROR, "Couldn't update questlog info", "", __LINE__, __FILE__, $delsql2);
 			}
-			############ QUESTBOOK MOD v1.0.2 - END ############
 
 			//give points prize
 			adr_add_points( $user_id , $npc_give_row['npc_points'] );
