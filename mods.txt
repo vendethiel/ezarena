@@ -603,9 +603,12 @@ Parfaitement intégré à ADR.
 Addons :
  - Addon Fix adr_battle not changing turn when rabbit's playing - Informpro
  - Addon adr_battle display enhancement - Informpro
+ - Addon pet don't gain exp when they're dead - Informpro
+ - Addon pet resurrected are healthy - Informpro
+ - Fix for vanishing Pets - Informpro
 
-# Rabbitoshi : Fix for vanishing Pets
-Empêche les familiers de disparaître lors du refus de resurrection. Vous devrez le ressuciter pour l'abandonner ou le vendre.
+# Rabbitoshi : EXP only for alive pets - Informpro
+Ne donne pas d'expérience si un familier meurt au combat
 
 # Rabbitoshi : Level Up Penalty 0.2.0 - egdcltd
 L'expérience nécessaire pour monter de niveau augmente avec le niveau (comme sur le RPG).

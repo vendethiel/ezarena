@@ -778,13 +778,15 @@ function adr_attack_bare()
 	global $challenger, $battle_message, $user_action, $monster_action, $attack_img, $attackwith_overlay;
 	global $damage, $dice;
 
-	$monster_def_dice = rand(1, 20);
+
+	$monster_def_dice = rand(1, 10);
 	$monster_modifier = rand(1, 10); // this is temp. until proper monster characteristics are added to ADR
 								     // V: temporary modified to 10 -- see below
 	$bare_dice = rand(1, 20);
     // Grab modifers
     $bare_power = adr_modifier_calc($challenger['character_might']);
 
+	// weaprof (yes, even for bare hand)
 	$attbonus = adr_weapon_skill_check($user_id);
 	if ((($bare_dice + $bare_power > $monster_def_dice + $monster_modifier) && ($bare_dice != '1')) || ($bare_dice == '20'))
 	{

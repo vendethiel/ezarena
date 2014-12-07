@@ -69,19 +69,14 @@ adr_character_created_check($user_id);
 $zone_user = adr_get_user_infos($user_id);
 $actual_zone = $zone_user['character_area'];
 
-$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
-       WHERE zone_id = $actual_zone ";
-if( !($result = $db->sql_query($sql)) )
-        message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
-
-$info = $db->sql_fetchrow($result);
+$info = zone_get($actual_zone);
 $access = $info['zone_clans'];
 
 if ( $access == '0' )
 	adr_previous( Adr_zone_building_noaccess , adr_zones , '' );
 
 // Clan list
-if((!isset($_GET['action'])) OR ($_GET['action'] == "list")) {
+if((!isset($_GET['action'])) || ($_GET['action'] == "list")) {
 	$this_title = $lang['clans_title_clanslist'];
 
 	// Get clans user belongs to!
@@ -100,17 +95,9 @@ if((!isset($_GET['action'])) OR ($_GET['action'] == "list")) {
 	while ( $row = $db->sql_fetchrow($result) ) 
 	{ 
 		// Get leader name!
-		$Lsql = "SELECT character_name FROM ". ADR_CHARACTERS_TABLE ."
-			WHERE character_id = '".$row['leader']."'";
-		if(!($Lresult = $db->sql_query($Lsql)))
-		{
-  			message_die(GENERAL_ERROR, 'Error retrieving data', '', __LINE__, __FILE__, $Lsql);
-		}
-		while($Lrow = $db->sql_fetchrow($Lresult))
-		{
-  			$leader = '<a href="'.$phpbb_root_path.'adr_character.php?" . POST_USERS_URL ."='.$row['leader'].'" target="_blank">'.$Lrow['character_name'].'</a>';
-		}
-
+		$LRow = adr_get_user($row['user']);
+  		$leader = '<a href="'.$phpbb_root_path.'adr_character.php?" . POST_USERS_URL ."='.$row['leader'].'" target="_blank">'.$Lrow['character_name'].'</a>';
+		
 		// Get member names!
 		$members = '';
 		if($row['members'] == '') {

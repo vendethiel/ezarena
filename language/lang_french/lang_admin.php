@@ -1080,7 +1080,7 @@ $lang['Overall_Permissions'] = 'Permissions interactives';
 // ADR stuff
 $lang['Rabbitoshi_Pets_Management']='Gestions créatures'; 
 $lang['Rabbitoshi_Shop']='Animalerie'; 
-$lang['Rabbitoshi_settings']='Configurations générales'; 
+$lang['Rabbitoshi_settings']='Configuration'; 
 $lang['Rabbitoshi_owners']='Propriétaires'; 
 
 $lang['User_adr_ban']='Ban RPG ADR ?'; 

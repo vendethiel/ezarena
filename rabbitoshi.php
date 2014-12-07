@@ -1094,6 +1094,7 @@ else
 							    creature_mp = $mp,
 							    creature_attack = $attack,
 							    creature_magicattack = $magicattack,
+							    creature_statut = 0,
 							    owner_last_visit = ".time()."
 							WHERE owner_id = ".$user_id;
 						if ( !($result = $db->sql_query($sql, BEGIN_TRANSACTION)) ) {
@@ -1240,26 +1241,7 @@ else
 
 		$statut_health = '';
 		$statut_level = $rabbit_user['creature_statut'];
-		if ( $statut_level == '0' )
-		{
-			$statut_health = $lang['Rabbitoshi_creature_statut_0'];
-		}
-		if ( $statut_level == '1' )
-		{
-			$statut_health = $lang['Rabbitoshi_creature_statut_1'];
-		}
-		if ( $statut_level == '2' )
-		{
-			$statut_health = $lang['Rabbitoshi_creature_statut_2'];
-		}
-		if ( $statut_level == '3' )
-		{
-			$statut_health = $lang['Rabbitoshi_creature_statut_3'];
-		}
-		if ( $statut_level == '4' )
-		{
-			$statut_health = $lang['Rabbitoshi_creature_statut_4'];
-		}
+		$statut_health = $lang['Rabbitoshi_creature_statut_'.$statut_level];
 
 		$ability = '';
 		$ability_level = $rabbit_user['creature_ability'];

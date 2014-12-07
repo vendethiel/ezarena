@@ -101,9 +101,9 @@ function adr_set_turn($user_id, $turn)
 	$db->sql_freeresult($result);
 }
 
-function adr_items_clear_stolen($user_id)
+function adr_items_clear_stolen()
 {
-	global $db;
+	global $db, $user_id;
 
 	// Delete stolen items from users inventory
 	$sql = " DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
@@ -114,9 +114,9 @@ function adr_items_clear_stolen($user_id)
 	$db->sql_freeresult($result);
 }
 
-function adr_items_clear_broken($user_id)
+function adr_items_clear_broken()
 {
-	global $db;
+	global $db, $user_id;
 
 	// Delete broken items from users inventory
 	$sql = " DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
@@ -322,7 +322,7 @@ function rabbit_pet_regen()
 
 function rabbit_reset_pet()
 {
-	global $rabbit_user, $db;
+	global $rabbit_user, $db, $user_id;
 
 	if ($rabbit_user['creature_invoc'] != '1')
 	{

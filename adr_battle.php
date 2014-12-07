@@ -445,10 +445,11 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		$damage = 0;
 		$user_action        = 1;
 		$monster_action     = 1;
-		$attack_img         = $item['item_name'];
+		$attack_img         = isset($item) ? $item['item_name'] : '';
 		$attackwith_overlay = ((file_exists("adr/images/battle/spells/" . $attack_img . ".gif"))) ? '<img src="adr/images/battle/spells/' . $attack_img . '.gif" width="256" height="96" border="0">' : '';
 
 		list($crit_result, $power) = adr_battle_make_crit_roll($bat['battle_challenger_att'], $challenger['character_level'], $bat['battle_opponent_def'], $item['item_type_use'], $power, $quality, 20);
+
 
 		if ($item['item_name'] == '')
 		{
@@ -467,22 +468,18 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		} //($item['item_duration'] < '2') && ($item['item_name'] != '')
 
 		// Update the database
-		// V: check if there are damage (i.e. unless we fail)
-		if ($damage)
+		$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
+			SET battle_opponent_hp = battle_opponent_hp - " . intval($damage) . ",
+				battle_turn = 2 , 
+				battle_round = (battle_round + 1),
+				battle_challenger_dmg = $damage
+			WHERE battle_challenger_id = $user_id
+			AND battle_result = 0
+			AND battle_type = 1 ";
+		if (!($result = $db->sql_query($sql)))
 		{
-			$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
-				SET battle_opponent_hp = battle_opponent_hp - $damage ,
-					battle_turn = 2 , 
-					battle_round = (battle_round + 1),
-					battle_challenger_dmg = $damage
-				WHERE battle_challenger_id = $user_id
-				AND battle_result = 0
-				AND battle_type = 1 ";
-			if (!($result = $db->sql_query($sql)))
-			{
-				message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
-			} //!($result = $db->sql_query($sql))
-		}
+			message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+		} //!($result = $db->sql_query($sql))
 	} // end of attack
 	else if ($defend && $bat['battle_turn'] == BATTLE_TURN_PLAYER)
 	{
@@ -1141,48 +1138,12 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 				message_die(GENERAL_ERROR, 'Could not update stolen item status', '', __LINE__, __FILE__, $sql);
 			} //!($result = $db->sql_query($sql))
 			
-			// Delete broken items from users inventory
-			$sql = " DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
-			WHERE item_duration < 1 
-			AND item_owner_id = $user_id ";
-			if (!($result = $db->sql_query($sql)))
-			{
-				message_die(GENERAL_ERROR, 'Could not delete broken items', '', __LINE__, __FILE__, $sql);
-			} //!($result = $db->sql_query($sql))
-			// Pet part
-			if ($rabbit_user['creature_invoc'] == '1')
-			{
-				// Set default pet health statut
-				if ($rabbit_user['creature_statut'] == '4')
-				{
-					$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . "
-					SET creature_statut = '0'
-					WHERE owner_id = $user_id ";
-					if (!$result = $db->sql_query($sql))
-					{
-						message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
-					} //!$result = $db->sql_query($sql)
-				} //$rabbit_user['creature_statut'] == '4'
-				$pet_xp       = rand($rabbit_general['experience_min'], $rabbit_general['experience_max']);
-				$pet_xp_lvl   = $pet_xp;
-				$pet_xp_limit = ($rabbit_user['creature_experience_level_limit'] - ($rabbit_user['creature_experience_level'] + $pet_xp_lvl));
-				
-				if ($pet_xp_limit < 0)
-				{
-					$pet_xp_lvl = ($rabbit_user['creature_experience_level_limit'] - $rabbit_user['creature_experience_level']);
-				} //$pet_xp_limit < 0
-			} //$rabbit_user['creature_invoc'] == '1'
+			adr_items_clear_broken();
 			$message = sprintf($lang['Adr_battle_won'], $bat['battle_challenger_dmg'], $exp, $bat['battle_opponent_sp'], $reward, get_reward_name(), $challenger['character_hp'], $challenger['character_mp']);
 			
 			///Call Loot System/// 
 			$message .= drop_loot($loot_id, $challenger['character_id'], $dropped_loot_list);
-			///Call Loot System///
-			if ($rabbit_user['creature_invoc'] == '1')
-			{
-				$message .= '<br />' . sprintf($lang['Adr_battle_pet_win'], $pet_xp);
-			} //$rabbit_user['creature_invoc'] == '1'
 			
-			########## QUESTBOOK MOD v1.0.2 - START
 			// Check if the character killed a monster that he needed for a killing quest !
 			$sql    = " SELECT * FROM " . ADR_QUEST_LOG_TABLE . "
 	   		WHERE quest_kill_monster = '" . $monster['monster_name'] . "'
@@ -1210,26 +1171,44 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 				} //$i = 0; $i < count($quest_log = $db->sql_fetchrow($result)); $i++
 			} //$quest_log = $db->sql_fetchrow($result)
 			######### QUESTBOOK MOD v1.0.2 - END
-			
+
+			if ($rabbit_user['creature_invoc'] == '1')
+			{
+				rabbit_reset_pet();
+				// V: dead pets don't gain exp
+				if ($rabbit_user['creature_health'] > 1)
+				{
+					$pet_xp       = rand($rabbit_general['experience_min'], $rabbit_general['experience_max']);
+					$pet_xp_lvl   = $pet_xp;
+					$pet_xp_limit = ($rabbit_user['creature_experience_level_limit'] - ($rabbit_user['creature_experience_level'] + $pet_xp_lvl));
+					
+					if ($pet_xp_limit < 0)
+					{
+						$pet_xp_lvl = ($rabbit_user['creature_experience_level_limit'] - $rabbit_user['creature_experience_level']);
+					} //$pet_xp_limit < 0
+					$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . " SET
+		         		creature_experience = creature_experience + '$pet_xp', 
+		         		creature_experience_level = creature_experience_level + '$pet_xp_lvl' 
+		  			WHERE owner_id = $user_id ";
+					if (!$result = $db->sql_query($sql))
+					{
+						message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
+					} //!$result = $db->sql_query($sql)
+					$message .= '<br />' . sprintf($lang['Adr_battle_pet_win'], $pet_xp);
+				}
+				else
+				{
+					$message .= '<br />' . $lang['Adr_battle_pet_was_dead'];
+				}
+			} //$rabbit_user['creature_invoc'] == '1'
+
 			if ($stolen['item_name'] != '')
 			{
 				$message .= '<br />' . sprintf($lang['Adr_battle_stolen_items'], $monster['monster_name']);
 			} //$stolen['item_name'] != ''
 			$message .= '<br /><br />' . sprintf($lang['Adr_battle_return'], "<a href=\"" . 'adr_battle.' . $phpEx . "\">", "</a>");
 			$message .= '<br /><br />' . sprintf($lang['Adr_character_return'], "<a href=\"" . 'adr_character.' . $phpEx . "\">", "</a>");
-			if ($rabbit_user['creature_invoc'] == '1')
-			{
-				// Set invoc default stats 
-				$sql = "UPDATE " . RABBITOSHI_USERS_TABLE . " 
-	     	Set creature_invoc = '0' , 
-	         		creature_experience = creature_experience + '$pet_xp', 
-	         		creature_experience_level = creature_experience_level + '$pet_xp_lvl' 
-	  		WHERE owner_id = $user_id ";
-				if (!$result = $db->sql_query($sql))
-				{
-					message_die(GENERAL_ERROR, 'Could not update pet info', '', __LINE__, __FILE__, $sql);
-				} //!$result = $db->sql_query($sql)
-			} //$rabbit_user['creature_invoc'] == '1'
+			
 			message_die(GENERAL_MESSAGE, $message);
 		} // end if one of opponent is dead
 		
