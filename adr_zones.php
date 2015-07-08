@@ -76,6 +76,9 @@ adr_ban_check($user_id);
 adr_character_created_check($user_id);
 $adr_user = adr_get_user_infos($user_id);
 
+// don't let people tell you what to do!
+$template->assign_var('OUT_OF_ZONES', false);
+
 // Get Zone infos
 $area_id = $adr_user['character_area'];
 $zone = zone_get($area_id);
@@ -151,10 +154,17 @@ $sql = "SELECT zone_id, zone_name, zone_level FROM " . ADR_ZONES_TABLE . "
 	WHERE " . $db->sql_in_set('zone_id', array($gotoreturn_id, $goto2_id, $goto3_id, $goto4_id));
 if (!$result = $db->sql_query($sql))
 	message_die(GENERAL_ERROR, 'Unable to query neighborhood zones');
-$level_goto1 = $level_goto2 = $level_goto3 = $level_goto4 = $level_return = 0;
+
+// first off, zero-init everything
+foreach (array(1, 2, 3, 4, 'return') as $i)
+{
+	${'goto'.$i.'_name'} = "";
+	${'level_goto'.$i} = 0;
+}
+
 while ($row = $db->sql_fetchrow($result))
 {
-	foreach (array(2, 3, 4, 'return') as $i)
+	foreach (array(1, 2, 3, 4, 'return') as $i)
 	{
 		if ($row['zone_id'] == ${'goto'.$i.'_id'})
 		{
@@ -168,7 +178,7 @@ $template->assign_vars(array(
 	'ZONE_LEVEL2' => $level_goto2,
 	'ZONE_LEVEL3' => $level_goto3,
 	'ZONE_LEVEL4' => $level_goto4,
-	'ZONE_LEVEL_RETURN' => $level_return,
+	'ZONE_LEVEL_RETURN' => $level_gotoreturn,
 	'CHARACTER_LEVEL' => $adr_user['character_level'],
 
 	'L_REQ_LEVEL' => $lang['Adr_Npc_acp_npc_character_level'],

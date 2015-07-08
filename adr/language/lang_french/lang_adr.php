@@ -1866,3 +1866,6 @@ $lang['Adr_clan_cant_leave_party'] = 'Vous ne pouvez pas quitter votre clan tant
 
 //character_armour_sets
 $lang['Adr_set_img_explain'] = 'Image de la panoplie d\'objets';
+
+$lang['Adr_zone_maps_adr_world_map_title'] = 'Carte du monde';
+$lang['Adr_zone_maps_map'] = 'Carte de %s';

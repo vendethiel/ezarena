@@ -48,6 +48,10 @@ $shoutbox = false;
 // Start MOD Code
 //
 
+// V: fix a few warnings
+if (empty($_GET['action']))
+	$_GET['action'] = null;
+
 $user_id = $userdata['user_id']; // Get users' id
 $points_name = get_reward_name(); // Get points name
 $adr_user = adr_get_user_infos($user_id); //Grab character details
@@ -69,10 +73,11 @@ adr_character_created_check($user_id);
 $actual_zone = $adr_user['character_area'];
 
 $info = zone_get($actual_zone);
-$access = $info['zone_clans'];
+//V: let's say you always have access to the clans page, wherever you are
+//$access = $info['zone_clans'];
 
-if ( $access == '0' )
-	adr_previous( Adr_zone_building_noaccess , adr_zones , '' );
+//if ( $access == '0' )
+//	adr_previous( Adr_zone_building_noaccess , adr_zones , '' );
 
 // Clan list
 if((!isset($_GET['action'])) || ($_GET['action'] == "list")) {
@@ -90,11 +95,11 @@ if((!isset($_GET['action'])) || ($_GET['action'] == "list")) {
 		));
 	}
 
-	while ( $row = $db->sql_fetchrow($result) ) 
+	if ( $row = $db->sql_fetchrow($result) ) 
 	{ 
 		// Get leader name!
-		$LRow = adr_get_user_infos($row['user']);
-  		$leader = '<a href="'.$phpbb_root_path.'adr_character.php?" . POST_USERS_URL ."='.$row['leader'].'" target="_blank">'.$Lrow['character_name'].'</a>';
+		$Lrow = adr_get_user_infos($row['leader']);
+  		$leader = '<a href="'.$phpbb_root_path.'adr_character.php?' . POST_USERS_URL .'='.$row['leader'].'" target="_blank">'.$Lrow['character_name'].'</a>';
 		
 		// Get member names!
 		$members = '';

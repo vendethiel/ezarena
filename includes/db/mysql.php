@@ -31,7 +31,6 @@ class sql_db
 	public $db_connect_id;
 	public $num_queries = 0;
 	public $queries;
-	protected $query_result;
 	protected $row = array();
 	protected $rowset = array();
 	protected $caching = false;
@@ -49,7 +48,6 @@ class sql_db
 		$this->password = $sqlpassword;
 		$this->server = $sqlserver;
 		$this->dbname = $database;
-		$this->query_result = null;
 	}
 
 	/**
@@ -108,7 +106,7 @@ class sql_db
 		//
 		// Remove any pre-existing queries
 		//
-		unset($this->query_result);
+		$this->query_result = null;
 		// Check cache
 		$this->caching = false;
 		$this->cache = array();
@@ -170,8 +168,8 @@ class sql_db
 
 		if( $this->query_result )
 		{
-			unset($this->row[$this->query_result]);
-			unset($this->rowset[$this->query_result]);
+			$this->row[(int) $this->query_result] = null;
+			$this->rowset[(int) $this->query_result] = null;
 
 			if( $transaction == END_TRANSACTION && $this->in_transaction )
 			{
@@ -292,8 +290,8 @@ class sql_db
 
 		if( $query_id )
 		{
-			unset($this->rowset[$query_id]);
-			unset($this->row[$query_id]);
+			$this->rowset[(int) $query_id] = null;
+			$this->row[(int) $query_id] = null;
 
 			$result = array();
 			while($rowset = mysql_fetch_array($query_id, MYSQL_ASSOC))
@@ -400,8 +398,8 @@ class sql_db
 
 		if ( $query_id )
 		{
-			unset($this->row[$query_id]);
-			unset($this->rowset[$query_id]);
+			$this->row[(int) $query_id] = null;
+			$this->rowset[(int) $query_id] = null;
 
 			@mysql_free_result($query_id);
 

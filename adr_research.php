@@ -73,7 +73,7 @@ $info = $db->sql_fetchrow($result);
 $access = $info['zone_research'];
 
 if ( $access == '0' )
-	adr_previous( Adr_zone_building_noaccess , adr_zones , '' );
+	adr_previous( 'Adr_zone_building_noaccess' , 'adr_zones' , '' );
 
 // Get Zone infos
 $area_id = $adr_user['character_area'];
@@ -95,7 +95,7 @@ if ( $mode != "" )
 		case 'library_action' :
 
 			//Cost for using library
-			adr_substract_points($user_id, 100,'', adr_research);
+			adr_substract_points($user_id, 100,'', 'adr_research');
 
 			//Research success calculation
 			$rand = rand(1,20);
@@ -103,10 +103,11 @@ if ( $mode != "" )
 			//Critical failure
 			if($rand == '1')
 			{
-				$book_false = '1';
+				$book_false = true;
 			}
 			else
 			{
+				$book_false = false;
 				$research = ($rand + adr_modifier_calc($adr_user['character_intelligence']));
 
 				if($research >= '150') $book_difficulty = '7';
@@ -194,7 +195,7 @@ if ( $mode != "" )
 
 			if ( !$library )
 			{
-				adr_previous ( Adr_library_failure , adr_research , '' );
+				adr_previous ( 'Adr_library_failure' , 'adr_research' , '' );
 			}
 			else
 			{

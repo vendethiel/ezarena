@@ -52,6 +52,8 @@ if ( !$userdata['session_logged_in'] )
 }
 adr_template_file('adr_maps_body.tpl');
 $page_title = $lang['Adr_zone_maps_adr_world_map_title'];
+$adr_general = adr_get_general_config();
+
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx); 
 $zone_id = $board_config['Adr_zone_worldmap_zone'];
@@ -83,8 +85,6 @@ $zcellsvn = $zrow['zonemap_cellheightnumber'];
 
 $buildingarray = explode('~',$uhrow['zonemap_buildings']);
 $buildingamount = count ($buildingarray);
-
-$browcount = count ($brow);
 
 // some pixies fly by and get our buildings organized
 $ia = 0;
@@ -163,18 +163,17 @@ $showmap .= '
 // Define map name
 if ( $board_config['Adr_zone_townmap_name'] == '' )
 {
-	$map_name = $board_config['sitename'] . ' ' . $lang['Adr_zone_maps_map'];
+	$map_name = sprintf($lang['Adr_zone_maps_map'], $board_config['sitename']);
 }
 else
 {
-	$map_name = $board_config['Adr_zone_townmap_name'] . ' ' . $lang['Adr_zone_maps_map'];
+	$map_name = sprintf($lang['Adr_zone_maps_map'], $board_config['Adr_zone_townmap_name']);
 }
 
 	$template->assign_vars(array(
 		'STATINFO' => "$showmap",
 		'STATTABLETITLE' => $map_name,
 		'ZONES_LINK' => $lang['Adr_zone_header_return'],
-		'CITY' => $city
 		)
 	);
 $template->pparse('body');

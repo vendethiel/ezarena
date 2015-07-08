@@ -59,9 +59,9 @@ $adr_general = adr_get_general_config();
 // Get userdata
 $user_id = $userdata['user_id'];
 
-if( isset($HTTP_POST_VARS['view_recipes_skill']) || isset($HTTP_GET_VARS['view_recipes_skill']) )
+if( isset($_POST['view_recipes_skill']) || isset($_GET['view_recipes_skill']) )
 {
-	$view_recipes_skill = ( isset($HTTP_POST_VARS['view_recipes_skill']) ) ? $HTTP_POST_VARS['view_recipes_skill'] : $HTTP_GET_VARS['view_recipes_skill'];
+	$view_recipes_skill = ( isset($_POST['view_recipes_skill']) ) ? $_POST['view_recipes_skill'] : $_GET['view_recipes_skill'];
 	$view_recipes_skill = htmlspecialchars($view_recipes_skill);	
 }
 else
@@ -76,7 +76,7 @@ if ( $view_recipes_skill != "" )
 		case 'brewing' :
 				$template->assign_block_vars('view_recipes',array());
 
-				$existing_recipe = ( isset($HTTP_POST_VARS['known_recipes']) ) ? trim($HTTP_POST_VARS['known_recipes']) : trim($HTTP_GET_VARS['known_recipes']);
+				$existing_recipe = ( isset($_POST['known_recipes']) ) ? trim($_POST['known_recipes']) : trim($_GET['known_recipes']);
 
 				$sql = "SELECT * FROM " . ADR_RECIPEBOOK_TABLE . "
 					WHERE recipe_owner_id = $user_id
@@ -216,7 +216,7 @@ if ( $view_recipes_skill != "" )
 		case 'blacksmithing' :
 				$template->assign_block_vars('view_recipes',array());
 
-				$existing_recipe = ( isset($HTTP_POST_VARS['known_recipes']) ) ? trim($HTTP_POST_VARS['known_recipes']) : trim($HTTP_GET_VARS['known_recipes']);
+				$existing_recipe = ( isset($_POST['known_recipes']) ) ? trim($_POST['known_recipes']) : trim($_GET['known_recipes']);
 
 				$sql = "SELECT * FROM " . ADR_RECIPEBOOK_TABLE . "
 					WHERE recipe_owner_id = $user_id
@@ -356,7 +356,7 @@ if ( $view_recipes_skill != "" )
 		case 'cooking' :
 				$template->assign_block_vars('view_recipes',array());
 
-				$existing_recipe = ( isset($HTTP_POST_VARS['known_recipes']) ) ? trim($HTTP_POST_VARS['known_recipes']) : trim($HTTP_GET_VARS['known_recipes']);
+				$existing_recipe = ( isset($_REQUEST['known_recipes']) ) ? trim($_REQUEST['known_recipes']) : '';
 
 				$sql = "SELECT * FROM " . ADR_RECIPEBOOK_TABLE . "
 					WHERE recipe_owner_id = $user_id
@@ -367,6 +367,9 @@ if ( $view_recipes_skill != "" )
 				if( !$result )
 			        message_die(GENERAL_ERROR, 'Could not obtain owners recipes information', "", __LINE__, __FILE__, $sql);
 				$recipes = $db->sql_fetchrowset($result);
+				$recipe_list = '';
+				$known_recipes = '';
+
 				if (count($recipes) > 0)
 				{
 					for ($i = 0; $i < count($recipes);$i++)

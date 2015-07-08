@@ -131,8 +131,8 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 									'META' => '<meta http-equiv="refresh" content="3;url=' . append_sid($redirect) . '">')
 								);
 
-								$message = $lang['Olympus_login_logged_in'] . '<br /><br />' . sprintf($lang['Olympus_login_click_return'], '<a href="' . append_sid($redirect) . '">', '</a>');
 							}
+							$message = $lang['Olympus_login_logged_in'] . '<br /><br />' . sprintf($lang['Olympus_login_click_return'], '<a href="' . append_sid($redirect) . '">', '</a>');
 
 							
 							// Output 'You have sucessfully been logged in' message.

@@ -46,6 +46,9 @@ if ( !$userdata['session_logged_in'] )
     header('Location: ' . append_sid("login.$phpEx?redirect=$redirect", true));
 }
 
+// V: basic checks
+$adr_general = adr_get_general_config();
+
 // Includes the tpl and the header
 include_once($phpbb_root_path . 'includes/page_header.'.$phpEx);
 include_once($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
@@ -57,8 +60,6 @@ $user_id = $userdata['user_id'];
 $points = $userdata['user_points'];
 $char = adr_get_user_infos($user_id);
 
-// V: basic checks
-$adr_general = adr_get_general_config();
 adr_enable_check();
 adr_ban_check($user_id);
 adr_character_created_check($user_id);

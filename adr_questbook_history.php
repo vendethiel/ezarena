@@ -72,68 +72,64 @@ $sql = " SELECT * FROM " . ADR_QUEST_LOG_HISTORY_TABLE . "
 if( !($result = $db->sql_query($sql)) )
 	message_die(GENERAL_ERROR, 'Could not obtain required quest information', "", __LINE__, __FILE__, $sql);
 	
-if ( $quest_log = $db->sql_fetchrow($result) )
+while ( $quest_log = $db->sql_fetchrow($result) )
 {
-	do
+	$quest_status = "";
+	//Get all the information about the NPC
+	$sql2 = " SELECT * FROM  " . ADR_NPC_TABLE . "
+    	WHERE npc_id = '".$quest_log['npc_id']."' 
+		";
+	if( !($result2 = $db->sql_query($sql2)) )
+		message_die(GENERAL_ERROR, 'No items found', "", __LINE__, __FILE__, $sql2);
+	if ($npc_info = $db->sql_fetchrow($result2))
 	{
-		//Get all the information about the NPC
-		$sql2 = " SELECT * FROM  " . ADR_NPC_TABLE . "
-	    	WHERE npc_id = '".$quest_log['npc_id']."' 
-			";
-		if( !($result2 = $db->sql_query($sql2)) )
-			message_die(GENERAL_ERROR, 'No items found', "", __LINE__, __FILE__, $sql2);
-		if ($npc_info = $db->sql_fetchrow($result2))
+		if ($quest_log['quest_killed_monster'] != "" && $quest_log['quest_killed_monster'] != '0')
 		{
-			if ($quest_log['quest_killed_monster'] != "" && $quest_log['quest_killed_monster'] != '0')
-			{
-				$quest_status .= sprintf($lang['Adr_questbook_quest_typ_killed'], $quest_log['quest_killed_monsters_amount'], $quest_log['quest_killed_monster']);
-			}
-			if ($quest_log['quest_item_gave'] != "" && $quest_log['quest_item_gave'] != '0')
-			{
-				$npc_item_need_array = explode( ',' , $quest_log['quest_item_gave'] );	
-				for ( $i = 0 ; $i < count( $npc_item_need_array ) ; $i++ )
-				{
-					$sql4 = "SELECT * FROM " . ADR_QUEST_LOG_HISTORY_TABLE . "
-					WHERE quest_item_gave like '".$npc_item_need_array[$i].","."%' 
-					OR quest_item_gave like '".$npc_item_need_array[$i]."'
-					OR quest_item_gave like '".$npc_item_need_array[$i].","."'
-					OR quest_item_gave like '%".",".$npc_item_need_array[$i].","."%'
-					OR quest_item_gave like '%".",".$npc_item_need_array[$i]."'
-					AND user_id = '$user_id'
-					";
-					$result4 = $db->sql_query($sql4);
-					if ( $got_item_log = $db->sql_fetchrow($result4) )
-						$quest_status .= sprintf($lang['Adr_questbook_quest_typ_item_gave'], adr_get_lang($npc_item_need_array[$i]));
-				}
-			}
-			
-			$template->assign_block_vars('quest', array(
-				
-				"QUEST_KILLED_MONSTER" => $quest_log['quest_killed_monster'],
-				"QUEST_KILLED_MONSTERS_AMOUNT" => $quest_log['quest_killed_monsters_amount'],
-				"QUEST_ITEM_GAVE" => $quest_log['quest_item_gave'],
-				
-				"QUEST_STATUS" => $quest_status,
-				
-				"NPC_ZONE" => $npc_info['npc_zone'],
-				"NPC_NAME" => $npc_info['npc_name']."<br>",
-				"NPC_IMG" => $npc_info['npc_img'],
-				"NPC_ENABLE" => $npc_info['npc_enable'],
-				"NPC_PRICE" => $npc_info['npc_price'],
-				"NPC_MESSAGE" => $npc_info['npc_message'],
-				"NPC_ITEM" => $npc_info['npc_item'],
-				"NPC_MESSAGE2" => $npc_info['npc_message2'],
-				"NPC_POINTS" => $npc_info['npc_points'],
-				"NPC_EXP" => $npc_info['npc_exp'],
-				"NPC_SP" => $npc_info['npc_sp'],
-				"NPC_ITEM2" => $npc_info['npc_item2'],
-				"NPC_TIMES" => $npc_info['npc_times'],
-
-			));
+			$quest_status .= sprintf($lang['Adr_questbook_quest_typ_killed'], $quest_log['quest_killed_monsters_amount'], $quest_log['quest_killed_monster']);
 		}
-		$quest_status = "";
+		if ($quest_log['quest_item_gave'] != "" && $quest_log['quest_item_gave'] != '0')
+		{
+			$npc_item_need_array = explode( ',' , $quest_log['quest_item_gave'] );	
+			for ( $i = 0 ; $i < count( $npc_item_need_array ) ; $i++ )
+			{
+				$sql4 = "SELECT * FROM " . ADR_QUEST_LOG_HISTORY_TABLE . "
+				WHERE quest_item_gave like '".$npc_item_need_array[$i].","."%' 
+				OR quest_item_gave like '".$npc_item_need_array[$i]."'
+				OR quest_item_gave like '".$npc_item_need_array[$i].","."'
+				OR quest_item_gave like '%".",".$npc_item_need_array[$i].","."%'
+				OR quest_item_gave like '%".",".$npc_item_need_array[$i]."'
+				AND user_id = '$user_id'
+				";
+				$result4 = $db->sql_query($sql4);
+				if ( $got_item_log = $db->sql_fetchrow($result4) )
+					$quest_status .= sprintf($lang['Adr_questbook_quest_typ_item_gave'], adr_get_lang($npc_item_need_array[$i]));
+			}
+		}
+		
+		$template->assign_block_vars('quest', array(
+			
+			"QUEST_KILLED_MONSTER" => $quest_log['quest_killed_monster'],
+			"QUEST_KILLED_MONSTERS_AMOUNT" => $quest_log['quest_killed_monsters_amount'],
+			"QUEST_ITEM_GAVE" => $quest_log['quest_item_gave'],
+			
+			"QUEST_STATUS" => $quest_status,
+			
+			"NPC_ZONE" => $npc_info['npc_zone'],
+			"NPC_NAME" => $npc_info['npc_name']."<br>",
+			"NPC_IMG" => $npc_info['npc_img'],
+			"NPC_ENABLE" => $npc_info['npc_enable'],
+			"NPC_PRICE" => $npc_info['npc_price'],
+			"NPC_MESSAGE" => $npc_info['npc_message'],
+			"NPC_ITEM" => $npc_info['npc_item'],
+			"NPC_MESSAGE2" => $npc_info['npc_message2'],
+			"NPC_POINTS" => $npc_info['npc_points'],
+			"NPC_EXP" => $npc_info['npc_exp'],
+			"NPC_SP" => $npc_info['npc_sp'],
+			"NPC_ITEM2" => $npc_info['npc_item2'],
+			"NPC_TIMES" => $npc_info['npc_times'],
+
+		));
 	}
-	while ( $quest_log = $db->sql_fetchrow($result) );
 }
 
 $template->assign_vars(array(

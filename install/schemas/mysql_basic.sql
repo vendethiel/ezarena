@@ -84,10 +84,9 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('bbc_time_regen', '
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('bbc_style_path', 'default');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('users_qp_settings', '1-0-1-1-1-1');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('anons_qp_settings', '1-0-1-1-1-1');
-INSERT INTO `phpbb_config` ( `config_name` , `config_value` ) 
-VALUES ( 'LoAl_Intervalle_logos', '120' );
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('LoAl_Intervalle_logos', '120');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('max_url_length', '60');
-INSERT INTO phpbb_config VALUES ('admin_login', '1');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('admin_login', '1');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('bluecard_limit', '3');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('bluecard_limit_2', '1');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('max_user_bancard', '10');
@@ -685,6 +684,7 @@ INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_karma_min
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_karma_trading_bonus', 0);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_karma_shop_owner_bonus', 0);
 INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_karma_give_bonus', 0);
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('last_character_replen', 0);
 
 # Jobs
 INSERT INTO phpbb_adr_jobs (job_id, job_name, job_desc, job_class_id, job_race_id, job_alignment_id, job_level, job_auth_level, job_img, job_salary, job_exp, job_item_reward_id, job_slots_available, job_slots_max, job_duration, job_sp_reward, job_payment_intervals) VALUES (1, 'Town Cryer', 'Notify the town of latest events', 0, 0, 0, 1, 0, 'town_cryer.gif', 500, 300, 717, 3, 5, 7, 75, 1);
