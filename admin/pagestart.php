@@ -48,7 +48,7 @@ else if ($userdata['user_level'] != ADMIN)
 }
 
 
-if ($HTTP_GET_VARS['sid'] != $userdata['session_id'])
+if (isset($_GET['sid']) && $HTTP_GET_VARS['sid'] != $userdata['session_id'])
 {
 	redirect("index.$phpEx?sid=" . $userdata['session_id']);
 }

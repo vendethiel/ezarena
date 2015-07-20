@@ -626,7 +626,7 @@ else
         'SELECT_CAT' => $select_category,
      	'L_SELECT_CAT' => $lang['Adr_items_select'],
 		'PAGINATION' => $pagination,
-		'PAGE_NUMBER' => sprintf($lang['Page_of'], ( floor( $start / $board_config['topics_per_page'] ) + 1 ), ceil( $total_items / $board_config['topics_per_page'] )),
+		'PAGE_NUMBER' => sprintf($lang['Page_of'], ( floor( $start / $board_config['topics_per_page'] ) + 1 ), max(1, ceil( $total_items / $board_config['topics_per_page'] ))),
 		'L_GOTO_PAGE' => $lang['Goto_page'],
 		"L_GIVE" => $lang['Adr_items_give'],
 		"L_SELL" => $lang['Adr_items_sell'],

@@ -68,12 +68,6 @@ if( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'left' )
 
 	unset($setmodules);
 
-	include('./page_header_admin.'.$phpEx);
-
-	$template->set_filenames(array(
-		"body" => "admin/index_navigate.tpl")
-	);
-
 	$mode = request_var('mode', '');
 	$mode_cookie = $board_config['cookie_name'] . '_acp_mode';
 	if ($mode != 'rpg' && $mode != 'forum')
@@ -81,6 +75,12 @@ if( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'left' )
 		$mode = isset($_COOKIE[$mode_cookie]) ? $_COOKIE[$mode_cookie] : 'forum';
 	}
 	setcookie($mode_cookie, $mode, time() + 31536000, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+
+	include('./page_header_admin.'.$phpEx);
+
+	$template->set_filenames(array(
+		"body" => "admin/index_navigate.tpl")
+	);
 
 	$template->assign_vars(array(
 		"U_FORUM_INDEX" => append_sid("../index.$phpEx"),

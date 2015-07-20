@@ -27,7 +27,7 @@ define('IN_ADR_CHARACTER', 1);
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);
-	$module['ADR-Recipes']['Brewing Recipes'] = $filename;
+	$module['ADR-Recipes']['Adr_Brewing_Recipes'] = $filename;
 
 	return;
 }
@@ -1665,7 +1665,7 @@ else
 		'S_RECIPES_MODE_SELECT' => $select_sort_mode,
 		'S_RECIPES_ORDER_SELECT' => $select_sort_order,
 		'RECIPES_PAGINATION' => $pagination,
-		'RECIPES_PAGE_NUMBER' => sprintf($lang['Page_of'], ( floor( $start / $board_config['topics_per_page'] ) + 1 ), ceil( $total_recipes / $board_config['topics_per_page'] )), 
+		'RECIPES_PAGE_NUMBER' => sprintf($lang['Page_of'], ( floor( $start / $board_config['topics_per_page'] ) + 1 ), max(1, ceil( $total_recipes / $board_config['topics_per_page'] )) ),
 		"S_RECIPES_ACTION" => append_sid("admin_adr_brewing_recipes.$phpEx?mode2=$mode2&amp;order=$sort_order"),
 		"S_HIDDEN_FIELDS" => $s_hidden_fields, 
 	));

@@ -74,3 +74,5 @@ $lang['Spell Mod'] = 'Sorts';
 $lang['Manage Zone Maps'] = 'Cartes de zone';
 $lang['Loottable_Categories'] = 'Tables de butin';
 $lang['Library'] = 'Bibliothèque';
+$lang['Adr_Crafting_Recipes'] = 'Recettes de craft';
+$lang['Adr_Brewing_Recipes'] = 'Recettes de brassage';

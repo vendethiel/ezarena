@@ -1866,7 +1866,7 @@ function read_cookies($userdata)
 		if ( $userdata['session_logged_in'] && $board_config['keep_unreads_db'] )
 		{
 			$temp = explode('//', $userdata['user_unread_topics']);
-			if ($temp[1])
+			if (!empty($temp[1]))
 			{
 				$board_config['tracking_time'] = $temp[1];
 				$w_forums = ($temp[2] ? explode(';', $temp[2]) : array());
@@ -1890,7 +1890,8 @@ function read_cookies($userdata)
 		else //not logged in or not database: cookie. If you delete this block then guests have no unread functionality
   		{
 			//the tracking floor (min time value) allows to reduce the size of the time data, so the size of the cookie is smaller
-			$tracking_floor = intval($HTTP_COOKIE_VARS[$base_name . '_uf']);
+      $val = isset($_COOKIE[$base_name . '_uf']) ? $_COOKIE[$base_name . '_uf'] : 0;
+			$tracking_floor = intval($val);
 			$board_config['tracking_unreads'] = isset($HTTP_COOKIE_VARS[$base_name . '_u']) ? unserialize($HTTP_COOKIE_VARS[$base_name . '_u']) : array();
 			@reset( $board_config['tracking_unreads'] );
 			while ( list($id, $time) = @each($board_config['tracking_unreads']) )

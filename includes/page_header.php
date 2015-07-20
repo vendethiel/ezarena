@@ -317,7 +317,7 @@ if (empty($page_title)) {
 
 // www.phpBB-SEO.com SEO TOOLKIT BEGIN - META
 $seo_meta = "";
-if (is_object($phpbb_seo) ) {
+if (isset($phpbb_seo) ) {
 	// phpBB SEO - META
 	$seo_meta = $phpbb_seo->build_meta($page_title);
 }

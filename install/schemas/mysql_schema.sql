@@ -2146,7 +2146,7 @@ ALTER TABLE `phpbb_adr_battle_monsters` DROP `monster_area_name`;
 ALTER TABLE `phpbb_adr_zones` ADD `zone_monsters_list` TEXT NOT NULL;
 
 CREATE TABLE `phpbb_adr_character_quest_log` (
-  'quest_log_id' mediumint(8) PRIMARY KEY auto_increment,
+  `quest_log_id` mediumint(8) PRIMARY KEY auto_increment,
   `user_id` INT( 8 ) NOT NULL,
   `quest_kill_monster` VARCHAR( 255 ) NULL,
   `quest_kill_monster_amount` INT( 8 ) DEFAULT '0' NOT NULL,
