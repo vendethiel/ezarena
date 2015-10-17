@@ -569,6 +569,8 @@ Permet de créer des panoplies d'armures à équiper.
 
 # ADR (ST) : Cauldron 2.0.0 - one_piece
 Ajoute un système de chaudron pour faire des recettes.
+Addons :
+ - Addon Use IDs for items - Informpro
 
 # ADR (ST) : Donation Mod - Seteo-Bloke
 Ajoute un système de Temple et de Lac auxquels vous pouvez faire des offrandes.

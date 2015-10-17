@@ -21,6 +21,16 @@
  *
  ***************************************************************************/
 
+
+// V: a simple HTML "getter"... for lack of a better word
+function html_selected($yes)
+{
+	if ($yes)
+		return ' selected="selected" ';
+	else
+		return '';
+}
+
 /**
  * V: function to avoid re-defining constants over and over again
  *  (mainly for ADR)

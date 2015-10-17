@@ -88,33 +88,33 @@ $second_item 	= intval($HTTP_POST_VARS['item2']);
 $third_item 	= intval($HTTP_POST_VARS['item3']);
 
 // Show item1 list
-	$q = "SELECT * 
-		  FROM " . ADR_SHOPS_ITEMS_TABLE . "
-		  WHERE item_owner_id = '". $user_id ."'";
-	if (!$r = $db->sql_query($q))
-		message_die(GENERAL_ERROR, 'Could not obtain inventory information', "", __LINE__, __FILE__, $q);
+$q = "SELECT * 
+	  FROM " . ADR_SHOPS_ITEMS_TABLE . "
+	  WHERE item_owner_id = '". $user_id ."'";
+if (!$r = $db->sql_query($q))
+	message_die(GENERAL_ERROR, 'Could not obtain inventory information', "", __LINE__, __FILE__, $q);
 
-	$item_data = $db->sql_fetchrowset($r);
+$item_data = $db->sql_fetchrowset($r);
 
-	$item1_list 	= '<select name="item1">';
-	$item1_list 	.= '<option selected value="" class="post">'. $lang['Adr_item_choose_item'] .'</option>';
-	for ($i = 0; $i < count($item_data); $i++)
-		$item1_list .= '<option value = "'. $item_data[$i]['item_id'] .'" class="post">' . $item_data[$i]['item_name'] . '&nbsp;('. $item_data[$i]['item_id'] . ')</option>';
-	$item1_list 	.= '</select>';
+$item1_list 	= '<select name="item1">';
+$item1_list 	.= '<option selected value="" class="post">'. $lang['Adr_item_choose_item'] .'</option>';
+for ($i = 0; $i < count($item_data); $i++)
+	$item1_list .= '<option value = "'. $item_data[$i]['item_id'] .'" class="post">' . $item_data[$i]['item_name'] . '&nbsp;('. $item_data[$i]['item_id'] . ')</option>';
+$item1_list 	.= '</select>';
 
 // Show item2 list
-	$item2_list 	= '<select name="item2">';
-	$item2_list 	.= '<option selected value="" class="post">'. $lang['Adr_item_choose_item'] .'</option>';
-	for ($i = 0; $i < count($item_data); $i++)
-		$item2_list .= '<option value = "'. $item_data[$i]['item_id'] .'" class="post">' . $item_data[$i]['item_name'] . '&nbsp;('. $item_data[$i]['item_id'] . ')</option>';
-	$item2_list 	.= '</select>';
+$item2_list 	= '<select name="item2">';
+$item2_list 	.= '<option selected value="" class="post">'. $lang['Adr_item_choose_item'] .'</option>';
+for ($i = 0; $i < count($item_data); $i++)
+	$item2_list .= '<option value = "'. $item_data[$i]['item_id'] .'" class="post">' . $item_data[$i]['item_name'] . '&nbsp;('. $item_data[$i]['item_id'] . ')</option>';
+$item2_list 	.= '</select>';
 
 // Show item3 list
-	$item3_list 	= '<select name="item3">';
-	$item3_list 	.= '<option selected value="" class="post">'. $lang['Adr_item_choose_item'] .'</option>';
-	for ($i = 0; $i < count($item_data); $i++)
-		$item3_list .= '<option value = "'. $item_data[$i]['item_id'] .'" class="post">' . $item_data[$i]['item_name'] . '&nbsp;('. $item_data[$i]['item_id'] . ')</option>';
-	$item3_list 	.= '</select>';
+$item3_list 	= '<select name="item3">';
+$item3_list 	.= '<option selected value="" class="post">'. $lang['Adr_item_choose_item'] .'</option>';
+for ($i = 0; $i < count($item_data); $i++)
+	$item3_list .= '<option value = "'. $item_data[$i]['item_id'] .'" class="post">' . $item_data[$i]['item_name'] . '&nbsp;('. $item_data[$i]['item_id'] . ')</option>';
+$item3_list 	.= '</select>';
 
 //	
 //END Item Choice List
@@ -147,6 +147,16 @@ if ( $mode != "" )
 				message_die(GENERAL_ERROR, $message , Message , '' );
 			}
 
+			// V:
+			// Okay. Take a deep breath.
+			// I have no idea who coded this. But it's terrible code.
+			// How the fuck did that ever work. I have no idea.
+			// I'll fix it up a bit... But goddamn, that's bad code
+			//
+			// The lines below (search name of the items etc)
+			// should probably use the adr functions to give/remove items
+			// but i don't know them enough, i'm afraid :/
+
 			//Verify if user have enough item if he use same items
 			if ( $second_item == $first_item && $third_item == $second_item )
 			{
@@ -168,68 +178,27 @@ if ( $mode != "" )
 					$message = '' . $lang['Adr_item_quantity_failed'] . '<br \><br \>' . $lang['Adr_zone_return_cauldron'] . '<br \><br \>';
 					message_die(GENERAL_ERROR, $message , Message , '' );
 			}
-			
-			//Search the name of each item
-			$sql = "SELECT * 
-				FROM " . ADR_SHOPS_ITEMS_TABLE . "
-				WHERE item_owner_id = '$user_id'
-				AND item_id = '$first_item'";
-			$result = $db->sql_query($sql);
-			if (!$result)
-				message_die(GENERAL_ERROR, 'Could not obtain inventory information', "", __LINE__, __FILE__, $sql);
-			$itma = $db->sql_fetchrow($result);
-			$first_name = $itma['item_name'];
-
-			$sql2 = "SELECT * 
-				FROM " . ADR_SHOPS_ITEMS_TABLE . " 
-				WHERE item_owner_id = '$user_id'
-				AND item_id = '$second_item'";
-			$result2 = $db->sql_query($sql2);
-			if (!$result2)
-				message_die(GENERAL_ERROR, 'Could not obtain inventory information', "", __LINE__, __FILE__, $sql2);
-			$itmb = $db->sql_fetchrow($result2);			
-			$second_name = $itmb['item_name'];
-
-			$sql3 = "SELECT * 
-				FROM " . ADR_SHOPS_ITEMS_TABLE . " 
-				WHERE item_id = '$third_item'
-				AND item_owner_id = '$user_id'";
-			$result3 = $db->sql_query($sql3);
-			if (!$result)
-				message_die(GENERAL_ERROR, 'Could not obtain inventory information', "", __LINE__, __FILE__, $sql3);
-			$itmc = $db->sql_fetchrow($result3);			
-			$third_name = $itmc['item_name'];
 
 			//Update user inventory
+			// V: just use a fucking WHERE IN()
 			$asql = "DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
 					WHERE item_owner_id = '$user_id'
-					AND item_id = '$first_item'";
+					AND item_id IN($first_item, $second_item, $third_item)";
 			if( !($aresult = $db->sql_query($asql)) )
 				message_die(GENERAL_ERROR, "Couldn't update inventory info", "", __LINE__, __FILE__, $asql);
 
-			$bsql = "DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
-					WHERE item_owner_id = '$user_id'
-					AND item_id = '$second_item'";
-			if( !($bresult = $db->sql_query($bsql)) )
-				message_die(GENERAL_ERROR, "Couldn't update inventory info", "", __LINE__, __FILE__, $bsql);
-
-			$csql = "DELETE FROM " . ADR_SHOPS_ITEMS_TABLE . "
-					WHERE item_owner_id = '$user_id'
-					AND item_id = '$third_item'";
-			if( !($cresult = $db->sql_query($csql)) )
-				message_die(GENERAL_ERROR, "Couldn't update inventory info", "", __LINE__, __FILE__, $csql);
-
 			//Verify if the combination match to a pack
+			// V: use fucking IDs
 			$sql = "SELECT * 
 				FROM " . ADR_CAULDRON_TABLE . "
-				WHERE item1_name = '$first_name'
-				AND item2_name = '$second_name'
-				AND item3_name = '$third_name'";
+				WHERE item1_id = '$first_item'
+				AND item2_id = '$second_item'
+				AND item3_id = '$third_item'";
 			$result = $db->sql_query($sql);
 			if( !$result )
 				message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
 			$pack_exist = $db->sql_fetchrow($result);
-			$pack_verify = $pack_exist['itemwin_name'];	
+			$pack_verify = $pack_exist['itemwin_id'];	
 
 			if ( !$pack_exist ) 
 			{	
@@ -254,7 +223,7 @@ if ( $mode != "" )
 				$sql = "SELECT * 
 					FROM " . ADR_SHOPS_ITEMS_TABLE . "
 					WHERE item_owner_id = '1'
-					AND item_name = '$pack_verify'";
+					AND item_id = '$pack_verify'";
 				$result = $db->sql_query($sql);
 				if( !$result )
 					message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);

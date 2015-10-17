@@ -1313,10 +1313,10 @@ CREATE TABLE phpbb_adr_beggar_tracker (
 
 CREATE TABLE phpbb_adr_cauldron_pack (
   pack_id int(8) NOT NULL auto_increment,
-  item1_name varchar(255) NOT NULL default '',
-  item2_name varchar(255) NOT NULL default '',
-  item3_name varchar(255) NOT NULL default '',
-  itemwin_name varchar(255) NOT NULL default '',
+  item1_id varchar(255) NOT NULL default '',
+  item2_id varchar(255) NOT NULL default '',
+  item3_id varchar(255) NOT NULL default '',
+  itemwin_id varchar(255) NOT NULL default '',
   PRIMARY KEY  (pack_id)
 ) ;
 
