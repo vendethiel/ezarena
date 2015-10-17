@@ -162,49 +162,45 @@ function zone_npc_actions()
 		$npc_quest = array();
 		$no_talk_message = array();
 		$npc_quest_hide_array = array();
-		$x = 0;
 
+		// you can't click a disabled npc
 		if ( !($npc_row['npc_enable']) )
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+		// you can't click a npc in another area
 		if ( !in_array( $area_id , $npc_zone_array ) && $npc_zone_array[0] != '0' )
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
 		if ( !in_array( $adr_user['character_race'] , $npc_race_array ) && $npc_race_array[0] != '0' && !$npc_row['npc_view'] )
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
 		else if ( !in_array( $adr_user['character_race'] , $npc_race_array ) && $npc_race_array[0] != '0' && $npc_row['npc_view'] )
 		{
-		    $no_talk_message[$x] = $lang['Adr_Npc_race_no_talk_message'];
-		    $x++;
+		    $no_talk_message[] = $lang['Adr_Npc_race_no_talk_message'];
 		}
 
 		if ( !in_array( $adr_user['character_class'] , $npc_class_array ) && $npc_class_array[0] != '0' && !$npc_row['npc_view'] )
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
 		else if ( !in_array( $adr_user['character_class'] , $npc_class_array ) && $npc_class_array[0] != '0' && $npc_row['npc_view'] )
 		{
-		    $no_talk_message[$x] = $lang['Adr_Npc_class_no_talk_message'];
-		    $x++;
+		    $no_talk_message[] = $lang['Adr_Npc_class_no_talk_message'];
 		}
 
 		if ( !in_array( $adr_user['character_alignment'] , $npc_alignment_array ) && $npc_alignment_array[0] != '0' && !$npc_row['npc_view'] )
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
 		else if ( !in_array( $adr_user['character_alignment'] , $npc_alignment_array ) && $npc_alignment_array[0] != '0' && $npc_row['npc_view'] )
 		{
-		    $no_talk_message[$x] = $lang['Adr_Npc_alignment_no_talk_message'];
-		    $x++;
+		    $no_talk_message[] = $lang['Adr_Npc_alignment_no_talk_message'];
 		}
 
 		if ( !in_array( $adr_user['character_element'] , $npc_element_array ) && $npc_element_array[0] != '0' && !$npc_row['npc_view'] )
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
 		else if( !in_array( $adr_user['character_element'] , $npc_element_array ) && $npc_element_array[0] != '0' && $npc_row['npc_view'] )
 		{
-		    $no_talk_message[$x] = $lang['Adr_Npc_element_no_talk_message'];
-		    $x++;
+		    $no_talk_message[] = $lang['Adr_Npc_element_no_talk_message'];
 		}
 		if ( !in_array( $adr_user['character_level'] , $npc_character_level_array ) && $npc_character_level_array[0] != '0' && !$npc_row['npc_view'] )
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
 		else if ( !in_array( $adr_user['character_level'] , $npc_character_level_array ) && $npc_character_level_array[0] != '0' && $npc_row['npc_view'] )
 		{
-		    $no_talk_message[$x] = $lang['Adr_Npc_character_level_no_talk_message'];
-		    $x++;
+		    $no_talk_message[] = $lang['Adr_Npc_character_level_no_talk_message'];
 		}
 
 		for ( $y = 0 ; $y < count( $user_npc_visit_array ) ; $y++ )
@@ -214,8 +210,7 @@ function zone_npc_actions()
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
 		else if ( !in_array( '1' , $npc_visit ) && $npc_visit_array[0] != '0' && $npc_row['npc_view'] )
 		{
-		    $no_talk_message[$x] = $lang['Adr_Npc_character_visit_no_talk_message'];
-		    $x++;
+		    $no_talk_message[] = $lang['Adr_Npc_character_visit_no_talk_message'];
 		}
 		
 		for ( $y = 0 ; $y < count( $user_npc_quest_array ) ; $y++ )

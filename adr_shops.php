@@ -102,6 +102,23 @@ $item_sql = adr_make_restrict_sql($adr_user);
 // V: this was missing... but it is important...
 $show_only_mine = !empty($_GET['show_only_mine']);
 
+if ( isset($HTTP_POST_VARS['mode']) && !empty($HTTP_POST_VARS['mode']) )
+{
+	$mode = htmlspecialchars($HTTP_POST_VARS['mode']); 
+}
+else if ( isset($HTTP_GET_VARS['mode']) )
+{
+	$mode = htmlspecialchars($HTTP_GET_VARS['mode']); 
+}
+else
+{
+	$mode = "view_store_list";
+}
+
+if (!$shop_id && !$shop_owner_id && in_array($mode, array('buy', 'buy_admin', 'steal')))
+{ // V: TODO few others use "store_id" check there as well?
+	adr_previous ( Adr_store_closed_msg , 'adr_shops' , '' );
+}
 if ( !$shop_id )
 {
 	$sql = "SELECT * FROM " . ADR_SHOPS_TABLE . "
@@ -115,19 +132,6 @@ if ( !$shop_id )
 	$shop_id = intval($row['shop_id']);
 }
 
-
-if ( isset($HTTP_POST_VARS['mode']) && !empty($HTTP_POST_VARS['mode']) )
-{
-	$mode = htmlspecialchars($HTTP_POST_VARS['mode']); 
-}
-else if ( isset($HTTP_GET_VARS['mode']) )
-{
-	$mode = htmlspecialchars($HTTP_GET_VARS['mode']); 
-}
-else
-{
-	$mode = "view_store_list";
-}
 
 if ( $mode != "" )
 {
@@ -193,8 +197,10 @@ if ( $mode != "" )
 			}
 
 			// Remove quota
-			if(($buying_checks == TRUE) && ($adr_general['Adr_character_limit_enable'] == '1')){
-				adr_trading_limit($user_id);}
+			if($buying_checks && $adr_general['Adr_character_limit_enable'] == '1')
+			{
+				adr_trading_limit($user_id);
+			}
 
 			if($shop_owner_id > '1'){
 				// Update user store transaction log
@@ -355,8 +361,9 @@ if ( $mode != "" )
 
 			$to_user_id = ( !empty($HTTP_POST_VARS['give_to']) ) ? $HTTP_POST_VARS['give_to'] : $HTTP_GET_VARS['give_to'];
 
+			// V: changed this to require item_owner_id == $user_id (instead of 1, wtf?)
 			$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . " 
-				WHERE item_owner_id = 1
+				WHERE item_owner_id = $user_id
 				AND item_in_shop = 0
 				AND item_duration > 0 
 				AND item_auth = 1 ";
@@ -907,18 +914,17 @@ if ( $mode != "" )
 				$row = false;
 			}
 
+			if ( !$row['store_status'] )
+			{
+				adr_previous ( Adr_store_closed_msg , 'adr_shops' , '' );
+			}
+
 			$store_name = adr_get_lang($row['store_name']);
 			$store_desc = adr_get_lang($row['store_desc']);
 			$shop_owner_id = $row['store_owner_id'];
 
 			( $shop_owner_id == '1' ) ? $zone_restriction = 'AND ( i.item_zone = 0 || i.item_zone = '.$actual_zone.' )' : $zone_restriction = '';
 			( $shop_owner_id == '1' ) ? $zone_restriction_1 = 'AND ( item_zone = 0 || item_zone = '.$actual_zone.' )' : $zone_restriction_1 = '';
-
-
-			if ( !$row['store_status'] )
-			{
-				adr_previous ( Adr_store_closed_msg , 'adr_shops' , '' );
-			}
 
 			if ( isset($HTTP_GET_VARS['mode2']) || isset($HTTP_POST_VARS['mode2']) )
 			{
@@ -1536,6 +1542,18 @@ if ( $mode != "" )
 			}
 			$shop = $db->sql_fetchrow($result);
 
+			// V: properly check zone
+			$zones = explode(',', $shop['store_zone']);
+			if (!in_array($actual_zone, $zones) && $zones[0] != 0) {
+				$shop = false;
+			}
+
+			if ( !$shop['store_status'] )
+			{
+				adr_previous ( Adr_store_closed_msg , 'adr_shops' , '' );
+			}
+
+
 			// All item info
 			$sql = "SELECT i.* , q.item_quality_lang , t.item_type_lang , e.element_img FROM " . ADR_SHOPS_ITEMS_TABLE . " i
 				LEFT JOIN " . ADR_SHOPS_ITEMS_QUALITY_TABLE . " q ON ( i.item_quality = q.item_quality_id )
@@ -1648,7 +1666,6 @@ if ( $mode != "" )
 				message_die(GENERAL_ERROR, 'Could not obtain shops information', "", __LINE__, __FILE__, $sql); 
 			}
 			$row = $db->sql_fetchrow($result);
-			var_dump($row);
 
 			// V: properly check zone
 			$zones = explode(',', $row['store_zone']);
@@ -2284,6 +2301,7 @@ $template->assign_vars(array(
 	'L_UNCHECK_ALL' => $lang['Adr_uncheck_all'],
 	'L_FORUM_SHOPS' => $lang['Adr_forum_shops_go'],
 	'L_LIST_SHOPS'  => $lang['Adr_users_shops_list'],
+	'L_SHOPS'  		=> $lang['Adr_users_shops'],
 	'L_SEARCH_ITEM' => $lang['Adr_items_search'],
 	'L_CREATE_SHOP' => $lang['Adr_users_shops_create'],
 	'L_MANAGE_SHOP' => $lang['Adr_users_shops_manage'],
@@ -2305,6 +2323,7 @@ $template->assign_vars(array(
 	'U_FORUM_SHOPS' => append_sid("adr_shops.$phpEx?mode=see_shop&amp;shop_id=1"),
 	'U_CREATE_SHOP' => append_sid("adr_shops.$phpEx?mode=create_shop"),
 	'U_MANAGE_SHOP' => append_sid("adr_shops.$phpEx?mode=see_shop&amp;shop_owner_id=".$user_id),
+	'U_SHOPS' 		 => append_sid("adr_shops.$phpEx"),
 	'U_LIST_SHOPS'  => append_sid("adr_shops.$phpEx?mode=shop_list"),
 	'U_SEARCH_ITEM' => append_sid("adr_shops.$phpEx?mode=search_item"),
 	'U_SHOP_EDIT'  => append_sid("adr_shops.$phpEx?mode=shop_edit"),

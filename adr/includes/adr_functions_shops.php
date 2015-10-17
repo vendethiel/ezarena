@@ -429,8 +429,8 @@ function adr_give_item($user_id , $to_user_id , $item_id )
 	// Make the new id for the item
 	$sql = "SELECT item_id, item_name FROM " . ADR_SHOPS_ITEMS_TABLE ."
 		WHERE item_owner_id = $to_user_id
-		ORDER BY item_id 
-		DESC LIMIT 1";
+		ORDER BY item_id DESC
+		LIMIT 1";
 	$result = $db->sql_query($sql);
 	if( !$result )
 	{

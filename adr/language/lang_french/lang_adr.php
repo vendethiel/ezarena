@@ -417,6 +417,7 @@ if ( defined ( 'IN_ADR_SHOPS' ))
    $lang['Adr_items_action']='Action';
    $lang['Adr_forum_shops_go']='Magasin général';
    $lang['Adr_users_shops_list']='Marché noir';
+   $lang['Adr_users_shops']='Magasins';
    $lang['Adr_items_search']='Rechercher un objet';
    $lang['Adr_users_shops_create']='Créer un magasin';
    $lang['Adr_users_shops_create_success']='Votre magasin a été créé avec succès';

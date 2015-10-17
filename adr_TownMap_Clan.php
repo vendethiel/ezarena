@@ -117,7 +117,7 @@ else
 	      'L_COPYRIGHT' => $lang['Adr_copyright'],
 	      'U_COPYRIGHT' => append_sid("adr_copyright.$phpEx"),
 		'U_TOWNBOUTONRETOUR' => append_sid("adr_zones.$phpEx"),
-		'U_TOWNMAP_CLAN' => append_sid("adr_TownMap_Clan.$phpEx"),
+		'U_TOWNMAP_CLAN' => append_sid("adr_clans.$phpEx"), //V: shouldn't be needed...
 		// 'U_CLAN' => append_sid("adr_clans.$phpEx"),
 		'U_CLAN' => append_sid("adr_clans.$phpEx"),
 		'U_FAQ' => append_sid("adr_character_faq.$phpEx"),
