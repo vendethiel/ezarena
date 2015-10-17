@@ -84,7 +84,7 @@ init_userprefs($userdata);
 $pm_allow_threshold = isset($board_config['pm_allow_threshold']) ? $board_config['pm_allow_threshold'] : 15;
 if ( !$userdata['session_logged_in'] || ($userdata['user_posts'] < $pm_allow_threshold) && $userdata['user_level'] != ADMIN )
 {
-	message_die(GENERAL_MESSAGE, 'Not_Authorised');
+		redirect(append_sid("login.$phpEx?redirect=privmsg.$phpEx", true));
 }
 //-- fin mod : pm threshold ------------------------------------------------------------------------
 
