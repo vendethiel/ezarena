@@ -430,7 +430,7 @@ else if ( $mode != "" )
 			$return_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
 			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
 			{
-				if ($zonelist[$i]['zon_eid'] == $zone_id)
+				if ($zonelist[$i]['zone_id'] == $zone_id)
 					continue;
 			  	$return_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" ' . ($zonelist[$i]['zone_id'] == $existing_return_name ? ' selected="selected"' : '') . '>' . $zonelist[$i]['zone_name'] . '</option>';
 			}
