@@ -94,6 +94,7 @@ Ce mod ajoute un puissant cache SQL au forum et un "temps de génération" + com
 Ajoute un bloc sur chaque page, qui permet à chaque utilisateur (Membre ou invité), de changer le thème du forum. (Normalement, un utilisateur doit être enregistré pour changer le thème). 
 Addons :
  - Addon remove current style from list - Informpro
+ - Addon when no other style is available - Informpro
 
 # ColorText 2.2.5 - crewstyle
 Ce MOD donne la possibilité aux membres de choisir une couleur par défaut pour leur posts. 

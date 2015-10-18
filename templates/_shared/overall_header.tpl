@@ -54,7 +54,7 @@ function Teleport_Popup(mypage,myname,w,h,scroll)
 </script>
 <script language="javascript" src="templates/_shared/bbc_box/fade.js" type="text/javascript"></script>
 <script language="Javascript" type="text/javascript">
-//V
+//V: meh. it's just a little fun thing to toggle divs...
 function createReducerFor(elId) {
 	var el = gEBI(elId);
 	if (!el) {
