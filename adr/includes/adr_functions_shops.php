@@ -830,18 +830,18 @@ function adr_sell_item($item_id , $user_id)
 
 	if ( $adr_general['Adr_character_limit_enable'] != 0 && $trading_limit['character_trading_limit'] < 1 )
 	{
-		adr_previous( Adr_trading_limit , adr_shops , '' );
+		adr_previous('Adr_trading_limit', 'adr_shops', '' );
 	}
 	else
 	{
-		adr_trading_limit( $user_id );
+		adr_trading_limit($user_id);
 	}
 
 	// Get the item real price
 	$temp_price = adr_get_item_real_price($item_id , $user_id);
 
 	// Apply the trading skill modification
-	$price = adr_use_skill_trading($user_id , $temp_price , sell);
+	$price = adr_use_skill_trading($user_id , $temp_price , 'sell');
 
 	// Delete the item
 	$sql = "DELETE FROM " . ADR_SHOPS_ITEMS_TABLE ."
@@ -850,7 +850,7 @@ function adr_sell_item($item_id , $user_id)
 	$result = $db->sql_query($sql);
 	if( !$result )
 	{
-		adr_previous( Adr_shop_items_failure_deleted , adr_character_inventory , '');
+		adr_previous( 'Adr_shop_items_failure_deleted' , 'adr_character_inventory' , '');
 	}
 
 	// Give points to the seller - has to be done at the end to prevent treacherous users !

@@ -215,7 +215,7 @@ function adr_get_lang($key)
 
 	$lang_key = isset($lang[$key]) ? $lang[$key] : stripslashes(trim($key));
 
-	return $lang_key ;
+	return $lang_key;
 }
 
 function adr_template_file($file, $as = 'body')

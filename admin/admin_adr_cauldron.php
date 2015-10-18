@@ -308,13 +308,13 @@ else
 	{
 		$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
 
-		// V: annoyingly enough, we need to call adr_get_item() (I added it) here.. :(
+		// V: annoyingly enough, we need to call adr_get_item/adr_get_lang (I added it) here.. :(
 		$template->assign_block_vars("cauldron", array(
 			"ROW_CLASS" => $row_class,
-			"ITEM_CREATED" => adr_get_item($cauldron_pack[$i]['itemwin_id'])['item_name'],
-			"ITEM_COMBINE1" => adr_get_item($cauldron_pack[$i]['item1_id'])['item_name'],
-			"ITEM_COMBINE2" => adr_get_item($cauldron_pack[$i]['item2_id'])['item_name'],
-			"ITEM_COMBINE3" => adr_get_item($cauldron_pack[$i]['item3_id'])['item_name'],
+			"ITEM_CREATED" => adr_get_lang(adr_get_item($cauldron_pack[$i]['itemwin_id'])['item_name']),
+			"ITEM_COMBINE1" => adr_get_lang(adr_get_item($cauldron_pack[$i]['item1_id'])['item_name']),
+			"ITEM_COMBINE2" => adr_get_lang(adr_get_item($cauldron_pack[$i]['item2_id'])['item_name']),
+			"ITEM_COMBINE3" => adr_get_lang(adr_get_item($cauldron_pack[$i]['item3_id'])['item_name']),
 			"U_CAULDRON_EDIT" => append_sid("admin_adr_cauldron.$phpEx?mode=edit&amp;id=" . $cauldron_pack[$i]['pack_id']), 
 			"U_CAULDRON_DELETE" => append_sid("admin_adr_cauldron.$phpEx?mode=delete&amp;id=" . $cauldron_pack[$i]['pack_id']))
 		);
@@ -337,6 +337,4 @@ else
 
 	$template->pparse("body");
 }
-	include_once('./page_footer_admin.'.$phpEx);
-
-?>
+include_once('./page_footer_admin.'.$phpEx);
