@@ -100,6 +100,10 @@ else
 }
 
 
+if ( isset($_POST['InfoMine']) )
+{
+	adr_previous('Adr_TownMap_Mine_Infos', 'adr_TownMap_mine', '');
+}
 
 if ( $mode != "" )
 {
@@ -182,22 +186,11 @@ if ( $mode != "" )
 			break;
 	}
 }
-
 else
 {
 	$template->assign_block_vars('main',array());
 }
 
-// Fix the values
-
-$InfoMine = $HTTP_POST_VARS['InfoMine'];
-
-if ( $InfoMine )
-{
-	adr_previous( Adr_TownMap_Mine_Infos , adr_TownMap_mine , '' );
-}
-
-else
 
 $template->assign_vars(array(
 	'SAISON' => $saison,

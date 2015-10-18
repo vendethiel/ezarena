@@ -87,10 +87,9 @@ if ( $adr_general['Adr_character_limit_enable'] != 0 && $limit_update['character
 	adr_previous ( Adr_skill_limit , adr_character , '' );
 }
 
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_REQUEST['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
-	$mode = htmlspecialchars($mode);	
+	$mode = $_REQUEST['mode'];
 }
 else
 {
@@ -103,9 +102,7 @@ if ( $mode != "" )
 {
 	switch($mode)
 	{
-
 		case 'recharge' :
-
 			$template->assign_block_vars('recharge',array());
 			$sql = " SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
 				WHERE item_owner_id = $user_id

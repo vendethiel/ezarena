@@ -390,7 +390,6 @@ if ( !($result = $db->sql_query($sql, false, 'posts_')) )
 {
    message_die(GENERAL_ERROR, 'Could not obtain topic information', '', __LINE__, __FILE__, $sql);
 }
-$cached1 = $db->cached;
 $topic_rowset = array();
 $total_announcements = 0;
 $total_global_announcements = 0;
@@ -495,7 +494,6 @@ if ( !($result = $db->sql_query($sql, false, 'posts_')) )
 {
    message_die(GENERAL_ERROR, 'Could not obtain topic information', '', __LINE__, __FILE__, $sql);
 }
-$cached2 = $db->cached;
 $total_topics = 0;
 while( $row = $db->sql_fetchrow($result) )
 {
@@ -505,32 +503,30 @@ while( $row = $db->sql_fetchrow($result) )
 
 $db->sql_freeresult($result);
 
-if($cached1 || $cached2)
+// V: this specific part is used to update the topic_views column, even though the topics are in cache
+$update_list = array();
+for($i=0; $i<count($topic_rowset); $i++)
 {
-	$update_list = array();
+	$update_list[] = $topic_rowset[$i]['topic_id'];
+}
+if(count($update_list))
+{
+	$sql = "SELECT topic_id, topic_views FROM " . TOPICS_TABLE . " WHERE topic_id IN (" . implode(', ', $update_list) . ")";
+	$list = array();
+	$result = $db->sql_query($sql, false, 'posts_');
+	while( $row = $db->sql_fetchrow($result) )
+	{
+		$list[$row['topic_id']] = $row['topic_views'];
+	}
+	$db->sql_freeresult($result);
 	for($i=0; $i<count($topic_rowset); $i++)
 	{
-		$update_list[] = $topic_rowset[$i]['topic_id'];
-	}
-	if(count($update_list))
-	{
-		$sql = "SELECT topic_id, topic_views FROM " . TOPICS_TABLE . " WHERE topic_id IN (" . implode(', ', $update_list) . ")";
-		$list = array();
-		$result = $db->sql_query($sql, false, 'posts_');
-		while( $row = $db->sql_fetchrow($result) )
+		if(isset($list[$topic_rowset[$i]['topic_id']]))
 		{
-			$list[$row['topic_id']] = $row['topic_views'];
+			$topic_rowset[$i]['topic_views'] = $list[$topic_rowset[$i]['topic_id']];
 		}
-		$db->sql_freeresult($result);
-		for($i=0; $i<count($topic_rowset); $i++)
-		{
-			if(isset($list[$topic_rowset[$i]['topic_id']]))
-			{
-				$topic_rowset[$i]['topic_views'] = $list[$topic_rowset[$i]['topic_id']];
-			}
-		}
-		unset($list);
 	}
+	unset($list);
 }
 //
 // Total topics ...

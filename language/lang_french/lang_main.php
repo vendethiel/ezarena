@@ -1323,3 +1323,6 @@ $lang['Sub_title'] = 'Description du sujet';
 // phpBB SEO - Addon disable rewrite
 $lang['Disable_rewrite'] = 'Désactiver la réecriture d\'adresses';
 $lang['Disable_rewrite_explain'] = 'La ré-écriture d\'adresses peut être désactivée si votre serveur ne le permet pas (demande le <i>rewrite_module</i> d\'Apache)';
+
+// V: pm threshold, better error message
+$lang['Not_enough_messages_to_pm'] = 'Vous devez participer plus au forum avant de pouvoir utiliser les messages privés';

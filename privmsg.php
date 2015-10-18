@@ -82,9 +82,14 @@ init_userprefs($userdata);
 //-- mod : pm threshold ----------------------------------------------------------------------------
 //-- add
 $pm_allow_threshold = isset($board_config['pm_allow_threshold']) ? $board_config['pm_allow_threshold'] : 15;
-if ( !$userdata['session_logged_in'] || ($userdata['user_posts'] < $pm_allow_threshold) && $userdata['user_level'] != ADMIN )
+// V: uh, refactor this a big... erm...
+if ( !$userdata['session_logged_in'] )
 {
-		redirect(append_sid("login.$phpEx?redirect=privmsg.$phpEx", true));
+	redirect(append_sid("login.$phpEx?redirect=privmsg.$phpEx", true));
+}
+if ($userdata['user_posts'] < $pm_allow_threshold && $userdata['user_level'] != ADMIN)
+{
+	message_die(GENERAL_MESSAGE, 'Not_enough_messages_to_pm');
 }
 //-- fin mod : pm threshold ------------------------------------------------------------------------
 
