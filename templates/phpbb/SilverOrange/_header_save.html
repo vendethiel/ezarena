@@ -1,0 +1,65 @@
+<!--
+if you want the "original" header
+stolen from http://www.bat-site.be/ultrabilou/index.php?s=SilverOrange	
+-->
+<table cellspacing="0" cellpadding="2" border="0">
+<tbody><tr> 
+						<td align="center" valign="top" nowrap="nowrap"><span class="mainmenu"><a href="portal.php" class="mainmenu"><img src="templates/SilverOrange/images/accueil.gif" width="85" height="30" border="0" alt="Accueil"></a><a href="Accueil" class="mainmenu"><img src="templates/SilverOrange/images/icon_mini_faq.gif" width="85" height="30" border="0" alt="FAQ"></a><a href="memberlist.php" class="mainmenu"><img src="templates/SilverOrange/images/icon_mini_members.gif" width="85" height="30" border="0" alt="Membres"></a></span><span class="mainmenu"><a onclick="return searchTooltip();" href="search.php" class="mainmenu" id="searchlink"><img src="templates/SilverOrange/images/icon_mini_search.gif" width="85" height="30" border="0" alt="Recherche"> <img src="templates/SilverOrange/images/icon_mini_menu_down.gif" width="8" height="5" border="0"></a>
+						<div id="searchbox" style="display:none;z-index: 100;">
+						<form action="search.php?mode=results" method="POST">
+						<table class="forumline" cellpadding="4" cellspacing="1" border="0">
+						  <tbody><tr>
+						    <th class="thHead" height="25"><a onclick="searchTooltip(); return false;" href="#" style="float:right;color: #FFF;font-size: 9px;font-family:Verdana, sans-serif; text-decoration: none;">(X)</a>Rechercher</th>
+						  </tr>
+						  <tr>
+						    <td class="row1" align="center">
+						      <input type="text" style="width: 180px" class="post" name="search_keywords" size="30"> <input class="liteoption" type="submit" value="Recherche">
+						      <input type="hidden" name="search_terms" value="all">
+						      <input type="hidden" name="search_forum" value="-1">
+						      <input type="hidden" name="search_time" value="0">
+						      <input type="hidden" name="search_cat value=" -1"="">
+						      <input type="hidden" name="sort_by value=" 0"="">
+						      <input type="hidden" name="sort_dir value=" asc"="">
+						      <input type="hidden" name="show_results value=" posts"="">
+						      <input type="hidden" name="return_chars value=" 200"="">
+						      <input type="hidden" name="search_fields" value="all">						    </td>
+						  </tr>
+						  <tr>
+						    <td class="catBottom" align="center">
+							  <a href="search.php" class="nav">Recherche avanc�e</a>							</td>
+						  </tr>
+						</tbody></table>
+						</form>
+						</div><a href="groupcp.php" class="mainmenu"><img src="templates/SilverOrange/images/icon_mini_groups.gif" width="85" height="30" border="0" alt="Groupes"></a><a href="profile.php?mode=editprofile" class="mainmenu"><img src="templates/SilverOrange/images/icon_mini_profile.gif" width="85" height="30" border="0" alt="Profil"></a><a href="news.php" class="mainmenu"><img src="templates/SilverOrange/images/icon_home.gif" width="85" height="30" border="0" alt="News"></a> 
+												</span></td>
+					</tr>
+					<tr>
+						<td height="25" align="center" valign="top" nowrap="nowrap"><p class="mainmenu"><a href="privmsg.php?folder=inbox" class="mainmenu"><img src="templates/SilverOrange/images/icon_mini_message.gif" width="85" height="30" border="0" alt="Pas de nouveau message"></a><a href="login.php?logout=true&amp;sid=02aadb76497532175d5940b7f32f4538" class="mainmenu"><img src="templates/SilverOrange/images/icon_mini_login.gif" width="85" height="30" border="0" alt="D�connexion [ Vendethiel ]"></a><a href="arcade.php" class="mainmenu"><img src="templates/SilverOrange/images/icon_mini_arcade.gif" width="85" height="30" border="0" alt="Arcade"></a><a href="arcade_defis.php" class="mainmenu"><img src="templates/SilverOrange/images/icon_mini_defis.gif" width="85" height="30" border="0" alt="D�fis Arcade"></a><a href="salle_de_jeux.php" class="mainmenu"><img src="templates/SilverOrange/images/icon_mini_arcade2.gif" width="85" height="30" border="0" alt="Arcade2"></a><a href="blog.php" class="mainmenu"><img src="templates/SilverOrange/images/icon_mini_classement.gif" width="85" height="30" border="0" alt="Classement arcade 2"></a><a href="videos.php" class="mainmenu"><img src="templates/SilverOrange/images/videos.gif" width="85" height="30" border="0" alt="Salle Videos"></a><a href="demos.php" class="mainmenu"><img src="templates/SilverOrange/images/tv.gif" width="85" height="30" border="0" alt="Salle TV"></a></p>
+					    <p class="mainmenu">&nbsp;</p></td>
+					</tr>
+						<tr><td height="25" align="center" valign="top" nowrap="nowrap"><span class="mainmenu">&nbsp;<form action="search.php?mode=results" method="post">
+   <p width="315" align="center" style="line-height:100%; margin-top:0; margin-bottom:0;">
+<!-- ------------MENU 1------------- --> 
+<select name="listepages1" size="1" onchange="chgpage1(this.form)"> 
+<option style=" background-color: #F8FBE8" selected="">STYLES</option>
+<option style=" background-color: #FDFFEE" value="changestyle.php?s=Acid">Acid</option>
+<option style=" background-color: #FDFFEE" value="changestyle.php?s=Appalachia">Appalachia</option>
+<option style=" background-color: #FDFFEE" value="changestyle.php?s=pussycatblue">Pussycatblue</option>
+<option style=" background-color: #FDFFEE" value="changestyle.php?s=subSilver">SubSilver</option>
+<option style=" background-color: #FDFFEE" value="changestyle.php?s=subWinnie">subWinnie</option>
+<option style=" background-color: #FDFFEE" value="changestyle.php?s=WorkStation_fusion">WorkStation_fusion</option>
+                </select> 
+<script language="javascript"> 
+<!-- 
+function chgpage1(formulaire) 
+{ 
+if (formulaire.listepages1.selectedIndex != 0) 
+{ 
+location.href = formulaire.listepages1.options[formulaire.listepages1.selectedIndex].value; 
+} 
+} 
+//--> 
+</script>
+<!-- ------------FIN MENU 1------------- -->
+			</p></form><br>
+				</span></td></tr></tbody></table>

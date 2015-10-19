@@ -4,7 +4,7 @@
 <!-- INCLUDE includes/stylesheets -->
 </HEAD>
 <body bgcolor="{T_BODY_BGCOLOR}" text="{T_BODY_TEXT}" link="{T_BODY_LINK}" vlink="{T_BODY_VLINK}"> 
-<table width="100%" height="100%" cellpadding="0" cellspacing="1" border="0" class="forumline">
+<table width="100%" height="100%" cellpadding="0" cellspacing="1" border="0" class="forumline chatbox">
 <!-- BEGIN shoutrow -->
 <tr>
 	<td class="{shoutrow.ROW_CLASS}" width="100%" higth="100%">
