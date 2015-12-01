@@ -3,6 +3,7 @@ EzArena (Ullti modifiée)
 Thèmes :
  - acid
  - aqua
+ - appalachia
  - chronicles
  - dark ages
  - elektro
@@ -10,8 +11,10 @@ Thèmes :
  - jedi knights 2
  - macintosh
  - maxiblue
+ - silverOrange
  - subSilver
  - subLinux
+ - subWinnie
  - workStation[Fusion]
  - xboxXtreme
 
