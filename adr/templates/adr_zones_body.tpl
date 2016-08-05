@@ -188,7 +188,7 @@
 <!-- BEGIN switch_Adr_zone_townmap_disable -->
 <table width="100%" align="center" border="1">
 	<tr>
-		<th align="center" colspan="6">Bâtiments</th>
+		<th align="center" colspan="6">Aide Bâtiments</th>
 	</tr>
 	<tr>
 		<td align="center" class="row2" width="20%" valign="top"><span class="gen">
