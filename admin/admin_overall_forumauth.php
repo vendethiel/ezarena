@@ -172,7 +172,7 @@ if( $total_categories = $db->sql_numrows($q_categories) )
 		));
 		for($j = 0; $j < $total_forums; $j++)
 		{
-			if ($forum_rows[$j]['cat_id'] != $cat_d)
+			if ($forum_rows[$j]['cat_id'] != $cat_id)
 			{
 				continue;
 			}
