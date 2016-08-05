@@ -106,8 +106,8 @@
   </table>
   <!-- END no_userclans -->
 <br />
-  <table width="99%" cellpadding="4" cellspacing="1" border="0" align="center" class="forumline"> 
 <!-- BEGIN infobar -->
+  <table width="99%" cellpadding="4" cellspacing="1" border="0" align="center" class="forumline"> 
 	{infobar.TEXT}
-<!-- END infobar -->
   </table>
+<!-- END infobar -->
