@@ -130,8 +130,7 @@ $extra_buildings = array(
 	'tailor',
 );
 foreach ($extra_buildings as $k) {
-	$template->assign_var('ZONE_'.strtoupper($k), $building_enabled = $zone['zone_'.$k]);
- $building_enabled = $zone['zone_'.$k];
+	$building_enabled = $zone['zone_'.$k];
 	$template->assign_var('ZONE_'.strtoupper($k), $building_enabled);
 	if ($building_enabled) {
 		$has_actions = true;
