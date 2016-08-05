@@ -131,7 +131,7 @@ Empêche les modérateurs d'éfiter ou supprimer les post des administrateurs.
 Ce MOD place une icone sur chaque forum permettant de l'éditer depuis l'index. 
 Addons :
  - Addon pour Subforums+ - Informpro
- - Addon Check permissions before allow forum editing - Informpro
+ - Addon Check permissions before allowing forum editing - Informpro
 
 # Extended Private Message Notification 1.2.0 - ycl6
 Ajoute l'auteur et le contenu du message privé dans l'e-mail de notification.
@@ -228,7 +228,7 @@ Ce mod réécrit les URLs des forums phpBB en injectant le titre des catégories
 Addons :
  - Addon Zero Duplicate (version avancée) 0.2.2 - dcz
   Redirige en utilisant des redirections HTTP 301 pratiquement tous les duplicates possibles de phpBB. 
- - Addon FIX bug get_vars not erased between rewrites - Informpro
+ - Addon FIX bug get_vars not reset between rewrites - Informpro
  - Addon Disable Rewriting - Informpro
 
 # MultiVote_Mod 1.4.2 - vilaras
