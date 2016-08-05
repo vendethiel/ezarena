@@ -123,7 +123,7 @@ $extra_buildings = array(
 	'fish',
 	'herbal',
 	'hunting',
-	'jobs',
+	//'jobs',// oops, shouldn't be here
 	'lake',
 	'lumberjack',
 	'research',
@@ -131,6 +131,8 @@ $extra_buildings = array(
 );
 foreach ($extra_buildings as $k) {
 	$template->assign_var('ZONE_'.strtoupper($k), $building_enabled = $zone['zone_'.$k]);
+ $building_enabled = $zone['zone_'.$k];
+	$template->assign_var('ZONE_'.strtoupper($k), $building_enabled);
 	if ($building_enabled) {
 		$has_actions = true;
 	}
