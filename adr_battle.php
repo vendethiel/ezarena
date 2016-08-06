@@ -1617,6 +1617,11 @@ $template->assign_vars(array(
 	'S_CHATBOX' => append_sid("adr_battle_chatbox.$phpEx?battle_id=" . $bat['battle_id'])
 ));
 
+// V: include header only if the battle hasn't started yet
+if (!$battle_started)
+{
+  include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
+}
 
 $template->pparse('body');
 
