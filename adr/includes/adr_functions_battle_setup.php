@@ -147,13 +147,11 @@ function adr_battle_equip_screen($user_id)
 		'L_SELECT_GREAVE' => $lang['Adr_battle_select_greave'],
 		'L_SELECT_BOOT' => $lang['Adr_battle_select_boot'],
 	));
-
-return;
 }
 
 function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves, $amulet, $ring, $greave, $boot)
 {
-	global $db, $lang, $adr_general, $template, $board_config, $phpEx;
+	global $phpbb_root_path, $db, $lang, $adr_general, $template, $board_config, $phpEx;
 
 	$user_id = intval($user_id);
 	$armor = intval($armor);
