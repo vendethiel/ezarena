@@ -46,6 +46,11 @@ if ( !$board_config['rabbitoshi_enable']) {
 	rabbitoshi_previous( Rabbitoshi_disable , index , '' );
 }
 
+// V: should this check for ADR Jailtime?
+
+// V: moved this here, as it's needed...
+$rabbit_general = rabbitoshi_get_general();
+
 // Actions
 $yourpet_name = isset($_POST['yourpet_name']) ? $_POST['yourpet_name'] : null;
 $purchacing_pet = isset($_POST['purchacing_pet']) ? $_POST['purchacing_pet'] : null;
@@ -1015,7 +1020,6 @@ else
 	}
 
 	$rabbit_user = rabbitoshi_get_user_stats($view_userdata['user_id']);
-	$rabbit_general = rabbitoshi_get_general();
 
 	if ( $searchid == $user_id ) 
 	{
