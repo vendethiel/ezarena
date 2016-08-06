@@ -166,6 +166,8 @@ function adr_hp_check()
 	return $hp_check;
 }
 
+define('ADR_ERROR_ON_EMPTY', true);
+define('ADR_ARRAY_ON_EMPTY', false);
 function adr_get_spell($spell_id, $error_on_empty)
 {
 	global $db, $user_id;

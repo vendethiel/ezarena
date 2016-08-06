@@ -334,8 +334,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 
 		if ( $item_spell2 )
 		{
-			// "true" for error-on-empty
-			$item = adr_get_spell($item_spell2, true);
+			$item = adr_get_spell($item_spell2, ADR_ERROR_ON_EMPTY);
 
 			if ($item['spell_items_req'] !='' && $item['spell_items_req'] !='0')
 			{
