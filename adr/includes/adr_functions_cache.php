@@ -776,6 +776,7 @@ function adr_get_monster_infos($monster_id)
 	// All the following code has been made by Ptirhiik
 	@include($phpbb_root_path . './adr/cache/cache_monsters.' . $phpEx);
 
+
 	if(!(empty($adr_monsters))){
 		$cached_adr_monsters = $adr_monsters[$monster_id];
 	}

@@ -528,8 +528,8 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 	$challenger = adr_get_user_infos($user_id);
 	
 	##=== START: additional status checks on user ===##
-	if (($bat['battle_turn'] == BATTLE_TURN_PLAYER)
-		&& ($petstuff || $attack || $item_spell || $item_potion || $defend || $flee || $equip || $item_spell2))
+  if (($bat['battle_turn'] == BATTLE_TURN_PLAYER)
+    && ($petstuff || $attack || $item_spell || $item_potion || $defend || $flee || $equip || $item_spell2))
 	{
 		$hp_regen = adr_hp_regen_check($user_id, $bat['battle_challenger_hp']);
 		$challenger['character_hp'] += $hp_regen;
