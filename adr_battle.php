@@ -94,24 +94,26 @@ if (!$result = $db->sql_query($sql, false, 'rabbitoshi_config'))
 	message_die(GENERAL_MESSAGE, $lang['Rabbitoshi_owner_pet_lack']);
 } //!$result = $db->sql_query($sql, false, 'rabbitoshi_config')
 $rabbit_general = rabbitoshi_get_general();
-$equip             = isset($HTTP_POST_VARS['equip']);
-$attack            = isset($HTTP_POST_VARS['attack']);
-$spell             = isset($HTTP_POST_VARS['spell']);
-$spell2            = isset($HTTP_POST_VARS['spell2']);
-$potion            = isset($HTTP_POST_VARS['potion']);
-$defend            = isset($HTTP_POST_VARS['defend']);
-$flee              = isset($HTTP_POST_VARS['flee']);
-$scan              = isset($HTTP_POST_VARS['scan']);
-$invoc             = isset($HTTP_POST_VARS['invoc']);
-$pet_attack        = isset($HTTP_POST_VARS['pet_attack']);
-$pet_magicattack   = isset($HTTP_POST_VARS['pet_magicattack']);
-$pet_specialattack = isset($HTTP_POST_VARS['pet_specialattack']);
+
+$equip             = isset($_POST['equip']);
+$attack            = isset($_POST['attack']);
+$spell             = isset($_POST['spell']);
+$spell2            = isset($_POST['spell2']);
+$potion            = isset($_POST['potion']);
+$defend            = isset($_POST['defend']);
+$flee              = isset($_POST['flee']);
+$scan              = isset($_POST['scan']);
+$invoc             = isset($_POST['invoc']);
+$pet_attack        = isset($_POST['pet_attack']);
+$pet_magicattack   = isset($_POST['pet_magicattack']);
+$pet_specialattack = isset($_POST['pet_specialattack']);
 // V: doing that because :-°
 $petstuff          = $invoc || $pet_attack || $pet_magicattack || $pet_specialattack;
 
 $bat = adr_get_battle($user_id);
+$battle_started = !empty($bat['battle_id']);
 
-if (!(is_numeric($bat['battle_id'])) && !$equip)
+if (!$battle_started && !$equip)
 {
 	// Moved the equip screen infos into adr_funtions_battle_setup.php
 	include_once($phpbb_root_path . '/adr/includes/adr_functions_battle_setup.' . $phpEx);
