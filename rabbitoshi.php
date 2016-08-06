@@ -323,10 +323,10 @@ else
 		$given_food = 0;
 
 		if ( $food_needed < 1 ) {
-			rabbitoshi_previous( Rabbitoshi_food_no_need , rabbitoshi , '' );
+			rabbitoshi_previous( 'Rabbitoshi_food_no_need' , 'rabbitoshi' , '' );
 		}
-		else if ( $food[0]['item_amount'] < 1 ) {
-			rabbitoshi_previous( Rabbitoshi_lack_food , rabbitoshi , '' );
+		else if ( !$food || $food[0]['item_amount'] < 1 ) {
+			rabbitoshi_previous( 'Rabbitoshi_lack_food' , 'rabbitoshi' , '' );
 		}
 		if ( !$rabbit_user['owner_feed_full'])
 		{
