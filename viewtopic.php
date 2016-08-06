@@ -401,10 +401,12 @@ else
 	}
 	else
 	{
-		$can_watch_topic = 0;
+    //V: wtf why is that here? this is broken by design
+		//$can_watch_topic = 0;
 		$is_watching_topic = 0;
 	}
 }
+
 //-- mod : addon hide for bbcbxr -----------------------------------------------
 //-- add
 $valid = $is_auth['auth_mod'];
@@ -759,15 +761,10 @@ $phpbb_seo->seo_meta['keywords'] = $phpbb_seo->make_keywords("$m_kewrd " . $phpb
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 //-- mod : toolbar -------------------------------------------------------------
 //-- add
-if ( $can_watch_topic ) {
-	$uw_parm = $is_watching_topic ? 'unwatch' : 'watch';
-	$tlbr_more = array(
-		'watch' => array('link_pgm' => 'viewtopic', 'link_parms' => array(POST_TOPIC_URL => intval($topic_id), $uw_parm => 'topic', 'start' => intval($start)), 'txt' => $is_watching_topic ? 'Stop_watching_topic' : 'Start_watching_topic', 'img' => $is_watching_topic ? 'tlbr_un_watch' : 'tlbr_watch'),
-	);
-}
-else {
-	$tlbr_more = array();
-}
+$uw_parm = $is_watching_topic ? 'unwatch' : 'watch';
+$tlbr_more = array(
+  'watch' => array('link_pgm' => 'viewtopic', 'link_parms' => array(POST_TOPIC_URL => intval($topic_id), $uw_parm => 'topic', 'start' => intval($start)), 'txt' => $is_watching_topic ? 'Stop_watching_topic' : 'Start_watching_topic', 'img' => $is_watching_topic ? 'tlbr_un_watch' : 'tlbr_watch'),
+);
 build_toolbar('viewtopic', $l_privmsgs_text, $s_privmsg_new, $forum_id, $tlbr_more);
 //-- fin mod : toolbar ---------------------------------------------------------
 //-- mod : quick post es -------------------------------------------------------
