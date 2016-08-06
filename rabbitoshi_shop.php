@@ -263,16 +263,15 @@ $template->assign_vars(array(
 	'L_ACTION' 		=> $lang['Rabbitoshi_shop_action'],
 	'L_BUY'		        => $lang['Rabbitoshi_shop_buy'],
 	'L_SELL'		=> $lang['Rabbitoshi_shop_sell'],
-	'L_TRANSLATOR'          => $lang['Rabbitoshi_translation'],
+	//'L_TRANSLATOR'          => $lang['Rabbitoshi_translation'],
 	'L_PET_GENERAL_MESSAGE' => $lang['Rabbitoshi_general_message'],
 	'L_PET_MESSAGE'         => $lang['Rabbitoshi_message'],
-	'PET_GENERAL_MESSAGE'   => $thought,
-	'PET_MESSAGE'           => $message,
+	//'PET_GENERAL_MESSAGE'   => $thought,
+	//'PET_MESSAGE'           => $message,
 	'POINTS'                => $userdata['user_points'],
 	'NUMBER_ITEMS'          => $number_items ,
 	'S_PET_ACTION'          => append_sid("rabbitoshi_shop.$phpEx"),
 	'S_PET_RETURN'          => append_sid("rabbitoshi.$phpEx"),
-	'S_HIDDEN_FIELDS'	=> $s_hidden_fields,
 ));
 
 $template->pparse('body');

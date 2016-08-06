@@ -209,12 +209,16 @@
 		</td>
 	</tr>
 	<!-- BEGIN pet_no_hotel -->
+  <!-- IF PET_GENERAL_MESSAGE != "" -->
 	<tr>
 		<td class="row1" align="center" colspan="2"><span class="gen"><b>{L_PET_GENERAL_MESSAGE}</b></span><br /><span class="gensmall">{PET_GENERAL_MESSAGE}<br /><br /></span></td>
 	</tr>
+  <!-- ENDIF -->
+  <!-- IF PET_MESSAGE != "" -->
 	<tr>
 		<td class="row1" align="center" colspan="2"><span class="gen"><b>{L_PET_MESSAGE}</b></span><br /><span class="gensmall">{PET_MESSAGE}<br /></span></td>
 	</tr>
+  <!-- ENDIF -->
 	<!-- END pet_no_hotel -->
 	<tr>
 		<td class="row1" align="center">

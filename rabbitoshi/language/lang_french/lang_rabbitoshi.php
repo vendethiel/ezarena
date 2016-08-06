@@ -561,7 +561,7 @@ $lang['Rabbitoshi_battle_pet_mp']='Mana';
 $lang['Rabbitoshi_battle_pet_attack']='Attaques';
 $lang['Rabbitoshi_battle_pet_magicattack']='Magie';
 $lang['Rabbitoshi_battle_pet_action_attack']='Attaquer';
-$lang['Rabbitoshi_battle_pet_action_magicattack']='Lancer une attaque magique';
+$lang['Rabbitoshi_battle_pet_action_magicattack']='Attaque magique';
 $lang['Rabbitoshi_battle_pet_action_invoc']='Appeler ';
 
 // Battle Text
