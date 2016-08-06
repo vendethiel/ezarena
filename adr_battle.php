@@ -75,6 +75,7 @@ adr_template_file('adr_battle_body.tpl');
 include($phpbb_root_path . 'includes/page_header.' . $phpEx);
 
 // Select pet infos
+include($phpbb_root_path . 'rabbitoshi/includes/functions_rabbitoshi.' . $phpEx);
 $pet_invoc = '1';
 $sql       = "SELECT * FROM  " . RABBITOSHI_USERS_TABLE . " 
 WHERE owner_id = $user_id ";
@@ -92,11 +93,7 @@ if (!$result = $db->sql_query($sql, false, 'rabbitoshi_config'))
 {
 	message_die(GENERAL_MESSAGE, $lang['Rabbitoshi_owner_pet_lack']);
 } //!$result = $db->sql_query($sql, false, 'rabbitoshi_config')
-while ($row = $db->sql_fetchrow($result))
-{
-	$rabbit_general[$row['config_name']] = $row['config_value'];
-} //$row = $db->sql_fetchrow($result)
-
+$rabbit_general = rabbitoshi_get_general();
 $equip             = isset($HTTP_POST_VARS['equip']);
 $attack            = isset($HTTP_POST_VARS['attack']);
 $spell             = isset($HTTP_POST_VARS['spell']);
