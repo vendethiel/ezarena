@@ -51,7 +51,7 @@ if (!$only_body)
 }
 adr_template_file('adr_battle_community_body.tpl', 'battle_community');
 
-$mode = ($_POST['mode']) ? $_POST['mode'] : $_POST['mode'];
+$mode = isset($_POST['mode']) ? $_POST['mode'] : '';
 
 //
 // Get online users [START].

@@ -51,10 +51,10 @@ $gen_simple_header = TRUE;
 //include_once($phpbb_root_path .'includes/page_header.'. $phpEx);
 adr_template_file('adr_global_chat_body.tpl');
 
-	$mode = ($_POST['mode']) ? $_POST['mode'] : $_POST['mode'];
+$mode = isset($_POST['mode']) ? $_POST['mode'] : '';
 
 	if(!$mode)
-		$mode = ($_GET['mode']) ? $_GET['mode'] : $_GET['mode'];
+		$mode = isset($_GET['mode']) ? $_GET['mode'] : '';
 
 	$todays_chat_info 	= GC_GetTodaysChat();
 	$todays_chat 		= $todays_chat_info['chat_text'];
@@ -262,15 +262,15 @@ adr_template_file('adr_global_chat_body.tpl');
 	$todays_chat = stripslashes($todays_chat);
 
 	$chat_session	= $todays_chat;
-	$error_messages = ($_POST['err']) ? $_POST['err'] : $_POST['err'];
+	$error_messages = isset($_POST['err']) ? $_POST['err'] : '';
 	if (!$error_messages)
-		$error_messages = ($_GET['err']) ? $_GET['err'] : $_GET['err'];
+		$error_messages = isset($_GET['err']) ? $_GET['err'] : '';
 		
 	$error_messages = (!$error_messages) ? '' : $error_[$error_messages];
 
 	$template->assign_block_vars('chat_body', array(
 		'FORM'		=> append_sid("adr_global_chat.$phpEx"),
-		'TOP_L'		=> sprintf($lang['Adr_shoutbox_archive'], date('Y-m-d')),
+		//'TOP_L'		=> sprintf($lang['Adr_shoutbox_archive'], date('Y-m-d')),
 		'TOP_M'		=> ' : ',
 		'TOP_R'		=> '<a href="'. append_sid('adr_global_chat.'. $phpEx .'?mode=archives') .'">Archives</a>',
 		'MSG'		=> $lang['Adr_shoutbox_enter'],

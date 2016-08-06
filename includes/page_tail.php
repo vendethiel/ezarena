@@ -60,7 +60,7 @@ $template->assign_vars(array(
 	'PAGE_GENERATION' => sprintf($lang['debug_generation'], $page_gen_time),
 	'MYSQL_QUERIES' => sprintf($lang['sql_queries'], $db->num_queries),
 	'PREMOD' => sprintf($lang['Premod'], $board_config['ezarena_version']) . '</strong>',
-	'STYLE_C' => $lang['style_copyright'],
+	'STYLE_C' => isset($lang['style_copyright']) ? $lang['style_copyright'] : '',
 	'TRANSLATION_INFO' => (isset($lang['TRANSLATION_INFO'])) ? $lang['TRANSLATION_INFO'] :
 	((isset($lang['TRANSLATION'])) ? $lang['TRANSLATION'] : ''),
 ));
