@@ -313,6 +313,10 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 			//adr_use_item($item_spell , $user_id);
 			adr_substract_mp($mp_usage);
 		} // end if item_spell
+    else
+    { // V: this is totes supposed to error out
+      adr_previous('Adr_battle_no_spell', 'adr_battle', '');
+    }
 		
 		if ($item['item_type_use'] == 11)
 		{
@@ -348,6 +352,10 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 			adr_use_item($item_spell2 , $user_id);
 			adr_substract_mp($mp_usage);
 		}
+    else
+    {
+      adr_previous ( 'Adr_battle_no_spell_learned' , 'adr_battle' , '' );
+    }
 
 		if ( $item['item_type_use'] == 107 )
 		{ // magic attack
@@ -382,6 +390,10 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 			
 			adr_use_item($item_potion, $user_id);
 		} // end if item_potion
+    else
+    {
+      adr_previous('Adr_battle_no_potion', 'adr_battle', '');
+    }
 		
 		if ($item['item_type_use'] == 15)
 		{
