@@ -414,3 +414,5 @@ else if($char['character_invites'] != '')
 ?>
 </td></tr>
 </table>
+<?php
+include($phpbb_root_path . 'includes/page_tail.'.$phpEx);
