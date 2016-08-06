@@ -270,16 +270,18 @@ function rabbitoshi_get_pet_value()
 	$items = $db->sql_fetchrowset($result);
 	// V: use an $item_ids array instead of N+1 queries...
 	$item_ids = array();
+  $item_prices = array();
 	foreach ($items as $row)
 	{
 		$item_ids[] = $row['item_id'];
+    $item_prices[$row['item_id']] = $row['item_prize'];
 	}
 	$db->sql_freeresult($result);
 
 	$value = 0;
 	if ($item_ids)
 	{
-		$sql = "SELECT item_amount
+		$sql = "SELECT item_amount, item_id
 			FROM " . RABBITOSHI_SHOP_USERS_TABLE . "
 			WHERE user_id = $user_id
 			AND item_id IN (" . implode(', ', $item_ids) . ")";
@@ -290,9 +292,8 @@ function rabbitoshi_get_pet_value()
 
 		while ($item = $db->sql_fetchrow($result))
 		{
-			$item_data = $db->sql_fetchrow($uresult);
-			$price = (( $item_data['item_amount'] ) * ( $items[$i]['item_prize'] ));
-			$itemsum = $itemsum + $price ;
+			$price = $item['item_amount'] * $item_prices[$item['item_id']];
+			$itemsum += $price ;
 		}
 		$db->sql_freeresult($result);
 		$value = floor ( $value + ( $value * $bonus ) + $itemsum );
