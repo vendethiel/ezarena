@@ -666,7 +666,7 @@ function adr_pet_magic()
 	}
 
 	$pet_poison = '0';
-	$price_mp   = (rand($rabbit_general['mp_min'], $rabbit_general['mp_max']) * $rabbit_user['creature_level']);
+	$price_mp   = (rand($rabbit_general['mp_min'], $rabbit_general['mp_max']) * $rabbit_user['creature_level']) || 1; // V: at least 1...
 	rabbit_check_mp($price_mp);
 	$pet_dice = rand(0, 20);	
 
