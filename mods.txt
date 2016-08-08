@@ -601,6 +601,7 @@ Donne aux villes des interfaces interactives et ajoute des images aux différent
 
 # ADR (ST) : Zone 1.0 - one_piece
 Ajoute un système très complet de zones à ADR.
+Addons :
  - Addon use zone IDs instead of zone names - Informpro
 
 # Rabbitoshi 3.1.3 - one_piece
@@ -610,7 +611,6 @@ Parfaitement intégré à ADR.
 Addons :
  - Addon Fix adr_battle not changing turn when rabbit's playing - Informpro
  - Addon adr_battle display enhancement - Informpro
- - Addon pet don't gain exp when they're dead - Informpro
  - Addon pet resurrected are healthy - Informpro
  - Fix for vanishing Pets - Informpro
 
