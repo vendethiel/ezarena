@@ -1186,7 +1186,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 			{
 				rabbit_reset_pet();
 				// V: dead pets don't gain exp
-				if ($rabbit_user['creature_health'] > 1)
+				if ($rabbit_user['creature_health'] > 0)
 				{
 					$pet_xp       = rand($rabbit_general['experience_min'], $rabbit_general['experience_max']);
 					$pet_xp_lvl   = $pet_xp;
@@ -1452,15 +1452,18 @@ if ($ability_level == '4')
 } //$ability_level == '4'
 $magicattack = $rabbit_user['creature_magicattack'];
 
-$invoc_table    = $pet_table = '';
+$invoc_table    = $pet_table = $pet_img = '';
 $show_pet_table = $rabbit_user['creature_invoc'];
 if ($show_pet_table == '1')
 {
+  // V: let's extract this to hide the last panel if no attacks are available
+  $pet_can_attack = $rabbit_user['creature_attack'] || $magicattack || $ability;
+
 	$pet_health_text = $rabbit_user['creature_health'] > 0 ? $lang['Rabbitoshi_battle_pet_health'] . ' : ' . $rabbit_user['creature_health'] . '/' . $rabbit_user['creature_health_max'] : 'Morte';
 	$pet_table       = '
 <table align="center" border="0" cellpadding="3" cellspacing="1" class="forumline" width="100%">
 <tr>
-	<th colspan="4">' . $lang['Rabbitoshi_battle_pet_title' . ($rabbit_user['creature_health'] > 0 ? '' : '_dead')] . '</th>
+	<th colspan="' . ($pet_can_attack ? 4 : 3) . '">' . $lang['Rabbitoshi_battle_pet_title' . ($rabbit_user['creature_health'] > 0 ? '' : '_dead')] . '</th>
 </tr>
 <tr align="center">
 	<td class="row1" width="25%"><span class="gen">' . $rabbit_user['owner_creature_name'] . '</span><br /><img src="rabbitoshi/images/pets/' . $rabbit_user['creature_avatar'] . '"></td>
@@ -1475,10 +1478,11 @@ if ($show_pet_table == '1')
     	'  . $lang['Rabbitoshi_battle_pet_magicattack'] . ' : ' . $rabbit_user['creature_magicattack'] . '/' . $rabbit_user['creature_magicattack_max'] . '<br />
     	<img src="rabbitoshi/images/stats/bar_left4.gif" width="6" height="13" /><img src="rabbitoshi/images/stats/bar_fil4.gif" width="' . $creature_magicattack_width . '" height="13" /><img src="rabbitoshi/images/stats/bar_right4.gif" width="6" height="13" /><br /></span>' . '
     </td>
+' . ($pet_can_attack ? '
 	<td class="row1" width="25%">
 		' . ($rabbit_user['creature_health'] > 0 && $rabbit_user['creature_attack'] ? '<input type="submit" style="width: 135" value="' . $lang['Rabbitoshi_battle_pet_action_attack'] . '" onClick="return checksubmit(this)" name="pet_attack" class="mainoption" /><br /><br />' : '') . '
 		' . ($rabbit_user['creature_health'] > 0 && $magicattack ? '<input type="submit" style="width: 135" value="' . $lang['Rabbitoshi_battle_pet_action_magicattack'] . '" onClick="return checksubmit(this)" name="pet_magicattack" class="mainoption" /><br /><br />' : '') . '
-		' . ($rabbit_user['creature_health'] > 0 && $ability ? '<input type="submit" style="width: 135" value="' . $ability . '" onClick="return checksubmit(this)" name="pet_specialattack" class="mainoption" />' : '') . '</td>
+		' . ($rabbit_user['creature_health'] > 0 && $ability ? '<input type="submit" style="width: 135" value="' . $ability . '" onClick="return checksubmit(this)" name="pet_specialattack" class="mainoption" />' : '') . '</td>' : '') . '
 </tr>
 </table>';
 } //$show_pet_table == '1'

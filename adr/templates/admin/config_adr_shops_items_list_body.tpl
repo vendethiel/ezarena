@@ -52,6 +52,7 @@
 	</tr>
 	<tr>
 		<td class="{items.ROW_CLASS}" align="left" width="20%" valign="top" colspan="2"><span class="gensmall">
+    <!-- IF items.HAS_RESTRICTIONS -->
 			 <!-- BEGIN align_restrict -->
 			{items.align_restrict.ALIGN_LIST}.<br />
 			 <!-- END align_restrict -->
@@ -64,6 +65,9 @@
 			 <!-- BEGIN race_restrict -->
 			{items.race_restrict.RACE_LIST}.<br />
 			 <!-- END race_restrict -->
+    <!-- ELSE -->
+      {L_ADR_NO_RESTRICTIONS}
+    <!-- ENDIF -->
 		</span></td>
 	</tr>
 	<!-- END items -->

@@ -27,7 +27,7 @@ define('IN_ADR_CHARACTER', 1);
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);
-	$module['ADR-Recipes']['Adr_Crafting_Recipes'] = $filename;
+	$module['Adr_Items']['Adr_Crafting_Recipes'] = $filename;
 
 	return;
 }

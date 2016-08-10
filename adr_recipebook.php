@@ -40,6 +40,7 @@ init_userprefs($userdata);
 //
 
 include($phpbb_root_path . 'adr/includes/adr_global.'.$phpEx);
+include($phpbb_root_path . 'adr/includes/adr_functions_refactor_recipebook.'.$phpEx);
 
 // Sorry , only logged users ...
 if ( !$userdata['session_logged_in'] )
@@ -52,6 +53,8 @@ if ( !$userdata['session_logged_in'] )
 // Includes the tpl and the header
 adr_template_file('adr_recipebook_body.tpl');
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
+
+// V: TODO bancheck?
 
 // Get the general config
 $adr_general = adr_get_general_config();
@@ -66,449 +69,84 @@ if( isset($_POST['view_recipes_skill']) || isset($_GET['view_recipes_skill']) )
 }
 else
 {
-	$view_recipes_skill = "";
+	$view_recipes_skill = "brewing";
 }
 
-if ( $view_recipes_skill != "" )
+function recipebook_display($skill)
 {
-	switch($view_recipes_skill)
-	{
-		case 'brewing' :
-				$template->assign_block_vars('view_recipes',array());
-
-				$existing_recipe = ( isset($_POST['known_recipes']) ) ? trim($_POST['known_recipes']) : trim($_GET['known_recipes']);
-
-				$sql = "SELECT * FROM " . ADR_RECIPEBOOK_TABLE . "
-					WHERE recipe_owner_id = $user_id
-					AND recipe_skill_id = 7
-					ORDER BY recipe_level
-					";
-				$result = $db->sql_query($sql);
-				if( !$result )
-			        message_die(GENERAL_ERROR, 'Could not obtain owners recipes information', "", __LINE__, __FILE__, $sql);
-				$recipes = $db->sql_fetchrowset($result);
-				if (count($recipes) > 0)
-				{
-					for ($i = 0; $i < count($recipes);$i++)
-						$owner_recipes .= ( $owner_recipes == '' ) ? $recipes[$i]['recipe_original_id'] : ':'.$recipes[$i]['recipe_original_id'];
-					
-					$original_recipes = explode(':',$owner_recipes);
-					
-					$recipe_list .= '<select name="known_recipes" size="4" style="width:320px;overflow:hidden;background-color:#e7d3c1;" ONCHANGE="document.list_recipes.submit()">';
-					for ($a = 0; $a < count($original_recipes); $a++)
-					{
-						$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-							WHERE item_owner_id = 1
-							AND item_id = ".$original_recipes[$a]." 
-							ORDER BY item_power, item_name
-							";
-						$result = $db->sql_query($sql);
-						if( !$result )
-					        message_die(GENERAL_ERROR, 'Could not obtain original recipe information', "", __LINE__, __FILE__, $sql);
-						$original_recipe = $db->sql_fetchrow($result);
-						
-						if ($original_recipes[$a] == $existing_recipe)
-							$selected_recipe = 'selected';
-						$recipe_list .= '<option value = "'.$original_recipes[$a].'" '.$selected_recipe.'>Level: '.$original_recipe['item_power'].' - '.$original_recipe['item_name'].'</option>';
-						$selected_recipe = '';
-					}
-					$recipe_list .= '</select>';
-					
-					if ($existing_recipe != 0 && $existing_recipe != '')
-					{
-						//get recipe info
-						$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-							WHERE item_owner_id = 1
-							AND item_id = ".$existing_recipe;
-						$result = $db->sql_query($sql);
-						if( !$result )
-					        message_die(GENERAL_ERROR, 'Could not obtain original recipe information', "", __LINE__, __FILE__, $sql);
-						$recipe_data = $db->sql_fetchrow($result);
-						
-						//get the potion info
-						$sql_p = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-							WHERE item_owner_id = 1
-							AND item_id = ".$recipe_data['item_recipe_linked_item'];
-						$result_p = $db->sql_query($sql_p);
-						if( !$result_p )
-					        message_die(GENERAL_ERROR, 'Could not obtain original recipe information', "", __LINE__, __FILE__, $sql_p);
-						$result_data = $db->sql_fetchrow($result_p);
-	
-						//generate effects list of the potion/recipe
-						$effects_list = array();
-						$effects_list = explode(':',$recipe_data['item_effect']);
-						$effects_print_list = '';
-						$stats = array('','HP','MP','AC','STR','DEX','CON','INT','WIS','CHA','MA','MD','EXP','GOLD','SP','BATTLES_REM','SKILLUSE_REM','TRADINGSKILL_REM','THEFTSKILL_REM','LEVEL');
-						for ($i = 0; $i < count($effects_list);$i++)
-						{
-							if(array_search($effects_list[$i],$stats)) {
-								$effects_print_list .= $effects_list[$i].": ".$effects_list[$i+1];
-								if($effects_list[$i+3]==0)
-									$effects_print_list .= '';
-								else
-									$effects_print_list .= ' (Target Monster)';
-								if($effects_list[$i+5]==0)
-									$effects_print_list .= ' (TEMP Effect)';
-								else
-									$effects_print_list .= ' (PERM Effect)';
-								$effects_print_list .= '<br />';
-							}
-						}
-	
-						//generate items required print_list
-						$items_req = array();
-						$items_req = explode(':',$recipe_data['item_brewing_items_req']);
-						$items_req_print = '<table border="0" width="100%" cellspacing="0" cellpadding="0">';
-						for ($i = 0; $i < count($items_req); $i++)
-						{
-							$switch = ( !($i % 2) ) ? $get_info=1 : $get_info=0;
-							if ($get_info == 1) {
-								$sql_info = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-									where item_id = ".$items_req[$i];
-								$result_info = $db->sql_query($sql_info);
-								if( !$result_info )
-								{
-									message_die(GENERAL_ERROR, 'Could not obtain items information', "", __LINE__, __FILE__, $sql_info);
-								}
-								$item_info = $db->sql_fetchrow($result_info);
-								$items_req_print .= '<tr><td style="font-family:\'serif\'">'.$item_info['item_name'].'</td><td><img src="adr/images/items/'.$item_info['item_icon'].'"></td>';
-							}
-							else {
-								$items_req_print .= '<td>(x'.$items_req[$i].')</td></tr>';
-							}
-						}
-						$items_req_print .= '</table>';
-
-						$template->assign_block_vars('view_recipes.recipe', array(
-							"RECIPE_IMG" => $recipe_data['item_icon'],
-							"RECIPE_NAME" => $recipe_data['item_name'],
-							"RECIPE_LEVEL" => $recipe_data['item_power'],
-							"RECIPE_DESC" => $recipe_data['item_desc'],
-							"RECIPE_PRICE" => $recipe_data['item_price'],
-							"RECIPE_WEIGHT" => $recipe_data['item_weight'],
-							"RECIPE_EFFECT" => $effects_print_list,
-							"RECIPE_ITEMS_REQ" => $items_req_print,
-							"L_RECIPE_ITEMS_REQ" => $lang['Adr_recipes_items_req'],
-							"RESULT_NAME" => $result_data['item_name'],
-							"RESULT_IMG" => $result_data['item_icon'],
-							"RESULT_LEVEL" => $result_data['item_power'],
-							"RESULT_DESC" => $result_data['item_desc'],
-							"RESULT_EFFECTS" => $effects_print_list,
-							"RESULT_PRICE" => $result_data['item_price'],
-							"RESULT_WEIGHT" => $result_data['item_weight'],
-							"RESULT_DURATION" => $result_data['item_duration'],
-							"RESULT_DURATION_MAX" => $result_data['item_duration_max'],
-						));
-					}
-				}
-				
-				
-				$template->assign_vars(array(
-					'RECIPE_LIST'=> $recipe_list,
-					'RECIPEBOOK_SKILL_LINKS' => '<br /><img src="adr/images/misc/brewing_button2.gif" onclick="location=\'adr_recipebook.'.$phpEx.'?view_recipes_skill=brewing\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/blacksmithing_button.gif" onclick="location=\'adr_recipebook.'.$phpEx.'?view_recipes_skill=blacksmithing\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/cooking_button.gif" onclick="location=\'adr_recipebook.'.$phpEx.'?view_recipes_skill=cooking\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/empty_button.gif"  onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/empty_button.gif" onMouseOver="this.style.cursor=\'pointer\';">',
-					'S_RECIPEBOOK_ACTION'=> append_sid("adr_recipebook.$phpEx?view_recipes_skill=brewing&amp;known_recipes=$known_recipes"),
-					'L_RECIPE_STATS' => $lang['recipe_stats'],
-					'L_PRODUCT_EFFECTS' => $lang['potion_effects'],
-					'L_PRODUCT_STATS' => $lang['potion_stats'],
-				));
-			break;
-
-		case 'blacksmithing' :
-				$template->assign_block_vars('view_recipes',array());
-
-				$existing_recipe = ( isset($_POST['known_recipes']) ) ? trim($_POST['known_recipes']) : trim($_GET['known_recipes']);
-
-				$sql = "SELECT * FROM " . ADR_RECIPEBOOK_TABLE . "
-					WHERE recipe_owner_id = $user_id
-					AND recipe_skill_id = 13
-					ORDER BY recipe_level
-					";
-				$result = $db->sql_query($sql);
-				if( !$result )
-			        message_die(GENERAL_ERROR, 'Could not obtain owners recipes information', "", __LINE__, __FILE__, $sql);
-				$recipes = $db->sql_fetchrowset($result);
-				if (count($recipes) > 0)
-				{
-					for ($i = 0; $i < count($recipes);$i++)
-						$owner_recipes .= ( $owner_recipes == '' ) ? $recipes[$i]['recipe_original_id'] : ':'.$recipes[$i]['recipe_original_id'];
-					
-					$original_recipes = explode(':',$owner_recipes);
-					
-					$recipe_list .= '<select name="known_recipes" size="4" style="width:320px;overflow:hidden;background-color:#e7d3c1;" ONCHANGE="document.list_recipes.submit()">';
-					for ($a = 0; $a < count($original_recipes); $a++)
-					{
-						$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-							WHERE item_owner_id = 1
-							AND item_id = ".$original_recipes[$a]." 
-							ORDER BY item_power, item_name
-							";
-						$result = $db->sql_query($sql);
-						if( !$result )
-					        message_die(GENERAL_ERROR, 'Could not obtain original recipe information', "", __LINE__, __FILE__, $sql);
-						$original_recipe = $db->sql_fetchrow($result);
-						
-						if ($original_recipes[$a] == $existing_recipe)
-							$selected_recipe = 'selected';
-						$recipe_list .= '<option value = "'.$original_recipes[$a].'" '.$selected_recipe.'>Level: '.$original_recipe['item_power'].' - '.$original_recipe['item_name'].'</option>';
-						$selected_recipe = '';
-					}
-					$recipe_list .= '</select>';
-					
-					if ($existing_recipe != 0 && $existing_recipe != '')
-					{
-						//get recipe info
-						$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-							WHERE item_owner_id = 1
-							AND item_id = ".$existing_recipe;
-						$result = $db->sql_query($sql);
-						if( !$result )
-					        message_die(GENERAL_ERROR, 'Could not obtain original recipe information', "", __LINE__, __FILE__, $sql);
-						$recipe_data = $db->sql_fetchrow($result);
-						
-						//get the food info
-						$sql_p = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-							WHERE item_owner_id = 1
-							AND item_id = ".$recipe_data['item_recipe_linked_item'];
-						$result_p = $db->sql_query($sql_p);
-						if( !$result_p )
-					        message_die(GENERAL_ERROR, 'Could not obtain original recipe information', "", __LINE__, __FILE__, $sql_p);
-						$result_data = $db->sql_fetchrow($result_p);
-	
-						//generate effects list of the food/recipe
-						$effects_list = array();
-						$effects_list = explode(':',$recipe_data['item_effect']);
-						$effects_print_list = '';
-						$stats = array('','HP','MP','AC','STR','DEX','CON','INT','WIS','CHA','MA','MD','EXP','GOLD','SP','BATTLES_REM','SKILLUSE_REM','TRADINGSKILL_REM','THEFTSKILL_REM','LEVEL');
-						for ($i = 0; $i < count($effects_list);$i++)
-						{
-							if(array_search($effects_list[$i],$stats)) {
-								$effects_print_list .= $effects_list[$i].": ".$effects_list[$i+1];
-								if($effects_list[$i+3]==0)
-									$effects_print_list .= '';
-								else
-									$effects_print_list .= ' (Target Monster)';
-								if($effects_list[$i+5]==0)
-									$effects_print_list .= ' (TEMP Effect)';
-								else
-									$effects_print_list .= ' (PERM Effect)';
-								$effects_print_list .= '<br />';
-							}
-						}
-	
-						//generate items required print_list
-						$items_req = array();
-						$items_req = explode(':',$recipe_data['item_brewing_items_req']);
-						$items_req_print = '<table border="0" width="100%" cellspacing="0" cellpadding="0">';
-						for ($i = 0; $i < count($items_req); $i++)
-						{
-							$switch = ( !($i % 2) ) ? $get_info=1 : $get_info=0;
-							if ($get_info == 1) {
-								$sql_info = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-									where item_id = ".$items_req[$i];
-								$result_info = $db->sql_query($sql_info);
-								if( !$result_info )
-								{
-									message_die(GENERAL_ERROR, 'Could not obtain items information', "", __LINE__, __FILE__, $sql_info);
-								}
-								$item_info = $db->sql_fetchrow($result_info);
-								$items_req_print .= '<tr><td style="font-family:\'serif\'">'.$item_info['item_name'].'</td><td><img src="adr/images/items/'.$item_info['item_icon'].'"></td>';
-							}
-							else {
-								$items_req_print .= '<td>(x'.$items_req[$i].')</td></tr>';
-							}
-						}
-						$items_req_print .= '</table>';
-
-						$template->assign_block_vars('view_recipes.recipe', array(
-							"RECIPE_IMG" => $recipe_data['item_icon'],
-							"RECIPE_NAME" => $recipe_data['item_name'],
-							"RECIPE_LEVEL" => $recipe_data['item_power'],
-							"RECIPE_DESC" => $recipe_data['item_desc'],
-							"RECIPE_PRICE" => $recipe_data['item_price'],
-							"RECIPE_WEIGHT" => $recipe_data['item_weight'],
-							"RECIPE_EFFECT" => $effects_print_list,
-							"RECIPE_ITEMS_REQ" => $items_req_print,
-							"L_RECIPE_ITEMS_REQ" => $lang['Adr_recipes_items_req'],
-							"RESULT_NAME" => $result_data['item_name'],
-							"RESULT_IMG" => $result_data['item_icon'],
-							"RESULT_LEVEL" => $result_data['item_power'],
-							"RESULT_DESC" => $result_data['item_desc'],
-							"RESULT_EFFECTS" => $effects_print_list,
-							"RESULT_PRICE" => $result_data['item_price'],
-							"RESULT_WEIGHT" => $result_data['item_weight'],
-							"RESULT_DURATION" => $result_data['item_duration'],
-							"RESULT_DURATION_MAX" => $result_data['item_duration_max'],
-						));
-					}
-				}
-				
-				
-				$template->assign_vars(array(
-					'RECIPE_LIST'=> $recipe_list,
-					'RECIPEBOOK_SKILL_LINKS' => '<br /><img src="adr/images/misc/brewing_button.gif" onclick="location=\'adr_recipebook.'.$phpEx.'?view_recipes_skill=brewing\'" onclick="location=\'adr_recipebook.'.$phpEx.'?view_recipes_skill=blacksmithing\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/blacksmithing_button2.gif" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/cooking_button.gif" onclick="location=\'adr_recipebook.'.$phpEx.'?view_recipes_skill=cooking\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/empty_button.gif"  onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/empty_button.gif" onMouseOver="this.style.cursor=\'pointer\';">',
-					'S_RECIPEBOOK_ACTION'=> append_sid("adr_recipebook.$phpEx?view_recipes_skill=blacksmithing&amp;known_recipes=$known_recipes"),
-					'L_RECIPE_STATS' => $lang['pattern_stats'],
-					'L_PRODUCT_EFFECTS' => $lang['product_effects'],
-					'L_PRODUCT_STATS' => $lang['product_stats'],
-				));
-			break;
-
-		case 'cooking' :
-				$template->assign_block_vars('view_recipes',array());
-
-				$existing_recipe = ( isset($_REQUEST['known_recipes']) ) ? trim($_REQUEST['known_recipes']) : '';
-
-				$sql = "SELECT * FROM " . ADR_RECIPEBOOK_TABLE . "
-					WHERE recipe_owner_id = $user_id
-					AND recipe_skill_id = 12
-					ORDER BY recipe_level
-					";
-				$result = $db->sql_query($sql);
-				if( !$result )
-			        message_die(GENERAL_ERROR, 'Could not obtain owners recipes information', "", __LINE__, __FILE__, $sql);
-				$recipes = $db->sql_fetchrowset($result);
-				$recipe_list = '';
-				$known_recipes = '';
-
-				if (count($recipes) > 0)
-				{
-					for ($i = 0; $i < count($recipes);$i++)
-						$owner_recipes .= ( $owner_recipes == '' ) ? $recipes[$i]['recipe_original_id'] : ':'.$recipes[$i]['recipe_original_id'];
-					
-					$original_recipes = explode(':',$owner_recipes);
-					
-					$recipe_list .= '<select name="known_recipes" size="4" style="width:320px;overflow:hidden;background-color:#e7d3c1;" ONCHANGE="document.list_recipes.submit()">';
-					for ($a = 0; $a < count($original_recipes); $a++)
-					{
-						$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-							WHERE item_owner_id = 1
-							AND item_id = ".$original_recipes[$a]." 
-							ORDER BY item_power, item_name
-							";
-						$result = $db->sql_query($sql);
-						if( !$result )
-					        message_die(GENERAL_ERROR, 'Could not obtain original recipe information', "", __LINE__, __FILE__, $sql);
-						$original_recipe = $db->sql_fetchrow($result);
-						
-						if ($original_recipes[$a] == $existing_recipe)
-							$selected_recipe = 'selected';
-						$recipe_list .= '<option value = "'.$original_recipes[$a].'" '.$selected_recipe.'>Level: '.$original_recipe['item_power'].' - '.$original_recipe['item_name'].'</option>';
-						$selected_recipe = '';
-					}
-					$recipe_list .= '</select>';
-					
-					if ($existing_recipe != 0 && $existing_recipe != '')
-					{
-						//get recipe info
-						$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-							WHERE item_owner_id = 1
-							AND item_id = ".$existing_recipe;
-						$result = $db->sql_query($sql);
-						if( !$result )
-					        message_die(GENERAL_ERROR, 'Could not obtain original recipe information', "", __LINE__, __FILE__, $sql);
-						$recipe_data = $db->sql_fetchrow($result);
-						
-						//get the food info
-						$sql_p = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-							WHERE item_owner_id = 1
-							AND item_id = ".$recipe_data['item_recipe_linked_item'];
-						$result_p = $db->sql_query($sql_p);
-						if( !$result_p )
-					        message_die(GENERAL_ERROR, 'Could not obtain original recipe information', "", __LINE__, __FILE__, $sql_p);
-						$result_data = $db->sql_fetchrow($result_p);
-	
-						//generate effects list of the food/recipe
-						$effects_list = array();
-						$effects_list = explode(':',$recipe_data['item_effect']);
-						$effects_print_list = '';
-						$stats = array('','HP','MP','AC','STR','DEX','CON','INT','WIS','CHA','MA','MD','EXP','GOLD','SP','BATTLES_REM','SKILLUSE_REM','TRADINGSKILL_REM','THEFTSKILL_REM','LEVEL');
-						for ($i = 0; $i < count($effects_list);$i++)
-						{
-							if(array_search($effects_list[$i],$stats)) {
-								$effects_print_list .= $effects_list[$i].": ".$effects_list[$i+1];
-								if($effects_list[$i+3]==0)
-									$effects_print_list .= '';
-								else
-									$effects_print_list .= ' (Target Monster)';
-								if($effects_list[$i+5]==0)
-									$effects_print_list .= ' (TEMP Effect)';
-								else
-									$effects_print_list .= ' (PERM Effect)';
-								$effects_print_list .= '<br />';
-							}
-						}
-	
-						//generate items required print_list
-						$items_req = array();
-						$items_req = explode(':',$recipe_data['item_brewing_items_req']);
-						$items_req_print = '<table border="0" width="100%" cellspacing="0" cellpadding="0">';
-						for ($i = 0; $i < count($items_req); $i++)
-						{
-							$switch = ( !($i % 2) ) ? $get_info=1 : $get_info=0;
-							if ($get_info == 1) {
-								$sql_info = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-									where item_id = ".$items_req[$i];
-								$result_info = $db->sql_query($sql_info);
-								if( !$result_info )
-								{
-									message_die(GENERAL_ERROR, 'Could not obtain items information', "", __LINE__, __FILE__, $sql_info);
-								}
-								$item_info = $db->sql_fetchrow($result_info);
-								$items_req_print .= '<tr><td style="font-family:\'serif\'">'.$item_info['item_name'].'</td><td><img src="adr/images/items/'.$item_info['item_icon'].'"></td>';
-							}
-							else {
-								$items_req_print .= '<td>(x'.$items_req[$i].')</td></tr>';
-							}
-						}
-						$items_req_print .= '</table>';
-
-						$template->assign_block_vars('view_recipes.recipe', array(
-							"RECIPE_IMG" => $recipe_data['item_icon'],
-							"RECIPE_NAME" => $recipe_data['item_name'],
-							"RECIPE_LEVEL" => $recipe_data['item_power'],
-							"RECIPE_DESC" => $recipe_data['item_desc'],
-							"RECIPE_PRICE" => $recipe_data['item_price'],
-							"RECIPE_WEIGHT" => $recipe_data['item_weight'],
-							"RECIPE_EFFECT" => $effects_print_list,
-							"RECIPE_ITEMS_REQ" => $items_req_print,
-							"L_RECIPE_ITEMS_REQ" => $lang['Adr_recipes_items_req'],
-							"RESULT_NAME" => $result_data['item_name'],
-							"RESULT_IMG" => $result_data['item_icon'],
-							"RESULT_LEVEL" => $result_data['item_power'],
-							"RESULT_DESC" => $result_data['item_desc'],
-							"RESULT_EFFECTS" => $effects_print_list,
-							"RESULT_PRICE" => $result_data['item_price'],
-							"RESULT_WEIGHT" => $result_data['item_weight'],
-							"RESULT_DURATION" => $result_data['item_duration'],
-							"RESULT_DURATION_MAX" => $result_data['item_duration_max'],
-						));
-					}
-				}
-				
-				
-				$template->assign_vars(array(
-					'RECIPE_LIST'=> $recipe_list,
-					'RECIPEBOOK_SKILL_LINKS' => '<br /><img src="adr/images/misc/brewing_button.gif" onclick="location=\'adr_recipebook.'.$phpEx.'?view_recipes_skill=brewing\'" onclick="location=\'adr_recipebook.'.$phpEx.'?view_recipes_skill=blacksmithing\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/blacksmithing_button.gif" onclick="location=\'adr_recipebook.'.$phpEx.'?view_recipes_skill=blacksmithing\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/cooking_button2.gif" onclick="location=\'adr_recipebook.'.$phpEx.'?view_recipes_skill=cooking\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/empty_button.gif"  onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/empty_button.gif" onMouseOver="this.style.cursor=\'pointer\';">',
-					'S_RECIPEBOOK_ACTION'=> append_sid("adr_recipebook.$phpEx?view_recipes_skill=cooking&amp;known_recipes=$known_recipes"),
-					'L_RECIPE_STATS' => $lang['recipe_stats'],
-					'L_PRODUCT_EFFECTS' => $lang['food_effects'],
-					'L_PRODUCT_STATS' => $lang['food_stats'],
-				));
-			break;
-	}
 }
-else
+
+$craft_categories = array(ADR_SKILL_BREWING, ADR_SKILL_BLACKSMITHING, ADR_SKILL_COOKING);
+foreach ($craft_categories as $category)
 {
-	$template->assign_block_vars('main',array());
+  $skill_name = adr_recipebook_skill_name($category);
+  if ($view_recipes_skill == $skill_name)
+  {
+    $template->assign_block_vars('view_recipes',array());
 
-	$template->assign_vars(array(
-		'RECIPEBOOK_SKILL_LINKS' => '<br /><img src="adr/images/misc/brewing_button.gif" onclick="location=\'adr_recipebook.'.$phpEx.'?view_recipes_skill=brewing\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/blacksmithing_button.gif" onclick="location=\'adr_recipebook.'.$phpEx.'?view_recipes_skill=blacksmithing\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/cooking_button.gif" onclick="location=\'adr_recipebook.'.$phpEx.'?view_recipes_skill=cooking\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/empty_button.gif" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/empty_button.gif" onMouseOver="this.style.cursor=\'pointer\';">',
-		'S_RECIPEBOOK_ACTION'=> append_sid("adr_recipebook.$phpEx"),
-	));
+    $show_recipe = ( isset($_POST['show_recipe']) ) ? intval($_POST['show_recipe']) : intval($_GET['show_recipe']);
+
+    $recipes = adr_recipebook_fetch($category);
+    $recipe_list = adr_recipebook_build_list($recipes, $show_recipe);
+    if (count($recipes) > 0 && $show_recipe)
+    {
+      $recipe = adr_recipebook_get($show_recipe);
+      $recipe_data = adr_get_item($recipe['recipe_original_id']);
+      $result_data = adr_get_item($recipe['recipe_linked_item']);
+
+      $effects_print_list = adr_recipebook_print_effects($recipe_data['item_effect']);
+      $reqitems_print_list = adr_recipebook_print_reqitems($recipe_data['item_brewing_items_req']);
+
+      //generate items required print_list
+
+      $template->assign_block_vars('view_recipes.recipe', array(
+        "RECIPE_IMG" => $recipe_data['item_icon'],
+        "RECIPE_NAME" => $recipe_data['item_name'],
+        "RECIPE_LEVEL" => $recipe_data['item_power'],
+        "RECIPE_DESC" => $recipe_data['item_desc'],
+        "RECIPE_PRICE" => $recipe_data['item_price'],
+        "RECIPE_WEIGHT" => $recipe_data['item_weight'],
+        "RECIPE_EFFECT" => $effects_print_list,
+        "RECIPE_ITEMS_REQ" => $reqitems_print_list,
+        "L_RECIPE_ITEMS_REQ" => $lang['Adr_recipes_items_req'],
+        "RESULT_NAME" => $result_data['item_name'],
+        "RESULT_IMG" => $result_data['item_icon'],
+        "RESULT_LEVEL" => $result_data['item_power'],
+        "RESULT_DESC" => $result_data['item_desc'],
+        "RESULT_EFFECTS" => $effects_print_list,
+        "RESULT_PRICE" => $result_data['item_price'],
+        "RESULT_WEIGHT" => $result_data['item_weight'],
+        "RESULT_DURATION" => $result_data['item_duration'],
+        "RESULT_DURATION_MAX" => $result_data['item_duration_max'],
+      ));
+    }
+
+    $template->assign_vars(array(
+      'RECIPE_LIST'=> $recipe_list,
+      'S_RECIPEBOOK_ACTION'=> append_sid("adr_recipebook.$phpEx?view_recipes_skill=$skill_name"),
+      'L_RECIPE_STATS' => $lang['recipe_stats'],
+      'L_PRODUCT_EFFECTS' => $lang['potion_effects'],
+      'L_PRODUCT_STATS' => $lang['potion_stats'],
+    ));
+    break;
+  }
 }
+
+$recipebook_skill_links = '';
+$i = 0;
+foreach ($craft_categories as $craft_category)
+{
+  $category = adr_recipebook_skill_name($craft_category);
+  $current = $view_recipes_skill == $category;
+  $name = adr_get_lang('Adr_' . $category);
+  $recipebook_skill_links .= '<td align="center" class="row' . (1 + $i++ % 2) . '"><br /><a href="adr_recipebook.'.$phpEx.'?view_recipes_skill='.$category . '"><span class="gen">' . ($current ? "<b>$name</b>" : $name) . '</span></a><br /><br /></td>';
+}
+$recipebook_skill_links .= '';
+$template->assign_vars(array(
+  'RECIPEBOOK_SKILL_LINKS' => $recipebook_skill_links,
+  'RECIPEBOOK_SKILL_COUNT' => count($craft_categories),
+));
 
 include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
 $template->pparse('body');
 include($phpbb_root_path . 'includes/page_tail.'.$phpEx);
-
-?>

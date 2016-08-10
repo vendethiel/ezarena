@@ -1241,7 +1241,7 @@ if ( $mode != "" )
 			$points_check_sql = ($show_only_mine == '1') ? ' AND item_price <= '.$points : '';
 			$item_sql = ($show_only_mine == '1') ? $item_sql : '';
 			##=== END: show all items or just those available to user?
-			$cat_sql = ( $cat ) ? 'AND item_type_use = '.intva($cat) : '';
+			$cat_sql = ( $cat ) ? 'AND item_type_use = '.intval($cat) : '';
 			$sql = "SELECT count(*) AS total FROM " . ADR_SHOPS_ITEMS_TABLE . " 
 				WHERE item_store_id = $shop_id 
 				AND item_owner_id = 1 

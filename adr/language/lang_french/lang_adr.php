@@ -1843,8 +1843,20 @@ $lang['Adr_inventory_items_shop_fail_selled']='Vous ne pouvez pas ajouter cet ob
 $lang['Adr_items_sellable']='Objet vendable :';
 $lang['Adr_items_sellable_yes']='Oui';
 $lang['Adr_items_sellable_no']='Non';
+//'Welcome to the Alchemy Lab. Here you can combine some items to get another powerfull item. Warning ! The order of the items you put into the cauldron is important! You have to search and find good combinations.';
+// clan mod to party mod
+$lang['Adr_Must_be_in_clan_to_party'] = 'Vous devez faire parti d\'un clan pour rejoindre un groupe !';
+$lang['Adr_party_invite_only_clan'] = 'Vous ne pouvez inviter dans votre groupe que des gens du même clan que vous';
+$lang['Adr_clan_cant_leave_party'] = 'Vous ne pouvez pas quitter votre clan tant que vous êtes dans un groupe';
+
+//character_armour_sets
+$lang['Adr_set_img_explain'] = 'Image de la panoplie d\'objets';
+
+$lang['Adr_zone_maps_adr_world_map_title'] = 'Carte du monde';
+$lang['Adr_zone_maps_map'] = 'Carte de %s';
 
 // that's how ezArena does it ...
+// HERE STARTS THE EzArena-SPECIFIC CODE
 $lang['BUILDING_UNAV'] = 'Bâtiment indisponible';
 $lang['ADR_DUEL_LIST'] = 'Cliquez sur l\'image pour accéder à vos duels';
 $lang['NO_ZONE_AVAILABLE'] = 'Il n\'existe pas de zone, ou aucune pour votre niveau. Veuillez contacter l\'administrateur du forum';
@@ -1859,14 +1871,5 @@ $lang['Adr_party_not_invited'] = 'Vous n\'avez pas été invité à rejoindre ce gro
 $lang['Adr_party_no_such_char'] = 'Ce personnage n\'existe pas';
 $lang['Adr_party_already_invited'] = 'Ce personnage a déjà été invité';
 $lang['Adr_party_already_member'] = 'Ce personnage est déjà dans le groupe';
-//'Welcome to the Alchemy Lab. Here you can combine some items to get another powerfull item. Warning ! The order of the items you put into the cauldron is important! You have to search and find good combinations.';
-// clan mod to party mod
-$lang['Adr_Must_be_in_clan_to_party'] = 'Vous devez faire parti d\'un clan pour rejoindre un groupe !';
-$lang['Adr_party_invite_only_clan'] = 'Vous ne pouvez inviter dans votre groupe que des gens du même clan que vous';
-$lang['Adr_clan_cant_leave_party'] = 'Vous ne pouvez pas quitter votre clan tant que vous êtes dans un groupe';
-
-//character_armour_sets
-$lang['Adr_set_img_explain'] = 'Image de la panoplie d\'objets';
-
-$lang['Adr_zone_maps_adr_world_map_title'] = 'Carte du monde';
-$lang['Adr_zone_maps_map'] = 'Carte de %s';
+$lang['ADR_NO_RESTRICTIONS'] = '(Pas de restrictions)';
+$lang['ADR_RECIPEBOOK'] = 'Livre de recettes';

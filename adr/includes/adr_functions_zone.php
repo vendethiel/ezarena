@@ -12,7 +12,7 @@ function adr_item_quest_check($npc_id, $npc_check, $times)
 
 	for ( $i=0 ; $i<count($npc_check_list) ; $i++ )
 	{
-	    $npc_check_list[$i] = explode(":", $npc_check_list[$i]);
+    $npc_check_list[$i] = explode(":", $npc_check_list[$i]);
 		if ( $npc_check_list[$i][0] == $npc_id )
 			if ( $npc_check_list[$i][1] >= $times )
 			    return 0;
@@ -284,16 +284,16 @@ function adr_npc_visit_update( $npc_id, $adr_user )
 	if ( $adr_user['character_npc_visited'] == '' )
 	{
 	    $adr_user['character_npc_visited'] = $npc_id;
-		$npc_update = true;
+      $npc_update = true;
 	}
 	else
 	{
 		$character_npc_visited_array = explode( ',' , $adr_user['character_npc_visited'] );
 		if ( !in_array( $npc_id , $character_npc_visited_array ) )
 		{
-	        $adr_user['character_npc_visited'] = $adr_user['character_npc_visited'] . ',' . $npc_id;
-	        $npc_update = true;
-	    }
+      $adr_user['character_npc_visited'] = $adr_user['character_npc_visited'] . ',' . $npc_id;
+      $npc_update = true;
+    }
 	}
 
 	if ( $npc_update )

@@ -31,7 +31,8 @@ function adr_update_all_cache_infos()
 	adr_update_element_infos();
 	adr_update_item_quality();
 	adr_update_item_type();
-	adr_update_posters_infos();
+  //V: fuck off.
+  //adr_update_posters_infos();
 	adr_update_race_infos();
 	adr_update_skills();
 	adr_update_monster_infos();
@@ -42,6 +43,7 @@ function adr_update_all_cache_infos()
 		adr_previous(Adr_character_general_update_error, admin_adr_general, '');
 }
 
+/** V: This fucks off.
 function adr_get_poster_infos($poster_id)
 {
 	global $db, $lang, $phpEx, $phpbb_root_path, $board_config, $table_prefix;
@@ -52,7 +54,7 @@ function adr_get_poster_infos($poster_id)
 	$poster_id = intval($poster_id);
 
 	// All the following code has been made by Ptirhiik
-	@include( $phpbb_root_path . './adr/cache/cache_posters.' . $phpEx );
+	//@include( $phpbb_root_path . './adr/cache/cache_posters.' . $phpEx );
 
 	if ( !(empty($adr_posters)) )
 	{
@@ -98,7 +100,7 @@ function adr_update_posters_infos()
 	$x = 1;
 	while ( $row = $db->sql_fetchrow($result) )
 	{
-		$id = $x;
+    $id = V doesn't know.;
 		$cells = array();
 		@reset($row);
 		while ( list($key, $value) = @each($row) )
@@ -119,7 +121,7 @@ function adr_update_posters_infos()
 	}
 	$db->clear_cache('adr_chars');
 	$template->assign_var_from_handle('cache', 'cache');
-	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?>";
+	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?" . ">";
 
 	$fname = $phpbb_root_path . './adr/cache/cache_posters'.'.' . $phpEx;
 	@chmod($fname, 0666);
@@ -127,6 +129,7 @@ function adr_update_posters_infos()
 	@fwrite($handle, $res);
 	@fclose($handle);
 }
+ */
 
 function adr_get_skill_data($target_skill)
 {
@@ -191,7 +194,6 @@ function adr_update_skills()
 	$x = 1;
 	while ( $row = $db->sql_fetchrow($result) )
 	{
-		// $id = $x;
 		// V: let's use skill ID instead of incremental id
 		$id = $row['skill_id'];
 		$cells = array();
@@ -215,7 +217,7 @@ function adr_update_skills()
 
 	$db->sql_freeresult($result);
 	$template->assign_var_from_handle('cache', 'cache');
-	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?>";
+	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?" . ">";
 
 	$fname = $phpbb_root_path . './adr/cache/cache_skills'.'.' . $phpEx;
 	@chmod($fname, 0666);
@@ -257,10 +259,10 @@ function adr_get_item_quality($item, $type)
 		case 'list':
 
 			$quality = '<select name="item_quality">';
-			for ($l = 1 ; $l < count($items_quality) ; $l++ )
+      foreach ($items_quality as $item_quality)
 			{
-				$selected = ( $items_quality[$l]['item_quality_id'] == $item ) ? 'selected="selected"' : '';
-				$quality .= '<option value = "'.$items_quality[$l]['item_quality_id'].'" '.$selected.'>' . $lang[$items_quality[$l]['item_quality_lang']] . '</option>';
+				$selected = ( $item_quality['item_quality_id'] == $item ) ? 'selected="selected"' : '';
+				$quality .= '<option value = "'.$item_quality['item_quality_id'].'" '.$selected.'>' . $lang[$item_quality['item_quality_lang']] . '</option>';
 			}
 			$quality .= '</select>';
 			return $quality;
@@ -270,9 +272,9 @@ function adr_get_item_quality($item, $type)
 		case 'search':
 
 			$quality = '<select name="item_quality">';
-			for ($l = 0 ; $l < count($items_quality) ; $l++ )
+      foreach ($items_quality as $item_quality)
 			{
-				$quality .= '<option value = "'.$items_quality[$l]['item_quality_id'].'" >' . $lang[$items_quality[$l]['item_quality_lang']] . '</option>';
+				$quality .= '<option value = "'.$item_quality['item_quality_id'].'" >' . $lang[$item_quality['item_quality_lang']] . '</option>';
 			}
 			$quality .= '</select>';
 			return $quality;
@@ -309,10 +311,7 @@ function adr_update_item_quality()
 		'cache' => 'adr/cache/cache_tpls/cache_item_quality_def.tpls')
 	);
 
-// V: why commented out??
-//	$sql = "SELECT * FROM  " . ADR_SHOPS_ITEMS_QUALITY_TABLE;
-	$sql = "SELECT * FROM ".$table_prefix . 'adr_shops_items_quality
-		ORDER BY item_quality_id';
+	$sql = "SELECT * FROM  " . ADR_SHOPS_ITEMS_QUALITY_TABLE;
 	if (!$result = $db->sql_query($sql))
 	{
 		message_die(GENERAL_ERROR, 'Unable to query item quality infos (updating cache)', '', __LINE__, __FILE__, $sql);
@@ -321,7 +320,8 @@ function adr_update_item_quality()
 	$x = 0;
 	while ( $row = $db->sql_fetchrow($result) )
 	{
-		$id = $x;
+    // V: fixed.
+		$id = $row['item_quality_id'];
 		$cells = array();
 		@reset($row);
 		while ( list($key, $value) = @each($row) )
@@ -342,7 +342,7 @@ function adr_update_item_quality()
 	}
 
 	$template->assign_var_from_handle('cache', 'cache');
-	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?>";
+	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?" . ">";
 
 	$fname = $phpbb_root_path . './adr/cache/cache_item_quality'.'.' . $phpEx;
 	@chmod($fname, 0666);
@@ -386,39 +386,33 @@ function adr_get_item_type($type, $mode)
 		case 'list':
 
 			$item_type = '<select name="item_type_use">';
-			for ($l = 1 ; $l < count($items_type) ; $l++ )
+      foreach ($items_type as $type)
 			{
-				$selected = ( $items_type[$l]['item_type_id'] == $type ) ? 'selected="selected"' : '';
-				$item_type .= '<option value = "'.$items_type[$l]['item_type_id'].'" '.$selected.'>' . adr_get_lang($items_type[$l]['item_type_lang']) . '</option>';
+				$selected = ( $type['item_type_id'] == $type ) ? 'selected="selected"' : '';
+				$item_type .= '<option value = "'.$type['item_type_id'].'" '.$selected.'>' . adr_get_lang($type['item_type_lang']) . '</option>';
 			}
 			$item_type .= '</select>';
 			return $item_type;
-			break;
 
 		case 'search':
 
 			$item_type = '<select name="item_type_use">';
-			for ($l = 0 ; $l < count($items_type) ; $l++ )
+      foreach ($items_type as $item_type)
 			{
-				$item_type .= '<option value = "'.$items_type[$l]['item_type_id'].'" >' . adr_get_lang($items_type[$l]['item_type_lang']) . '</option>';
-
+				$item_type .= '<option value = "'.$item_type['item_type_id'].'" >' . adr_get_lang($item_type['item_type_lang']) . '</option>';
 			}
 			$item_type .= '</select>';
 			return $item_type;
-			break;
 
 		case 'simple':
 
 			$item_type = adr_get_lang($items_type[$type]['item_type_lang']);
 			return $item_type;
-			break;
 
 		case 'price':
 
 			$item_type = $items_type[$type]['item_type_base_price'];
 			return $item_type;
-
-			break;
 	}
 }
 
@@ -434,37 +428,33 @@ function adr_update_item_type()
 		'cache' => 'adr/cache/cache_tpls/cache_item_type_def.tpls')
 	);
 
-//	$sql = "SELECT * FROM  " . ADR_SHOPS_ITEMS_TYPE_TABLE;
-	$sql = "SELECT * FROM ".$table_prefix . 'adr_shops_items_type
+	$sql = "SELECT * FROM  " . ADR_SHOPS_ITEMS_TYPE_TABLE . '
 		ORDER BY item_type_category, item_type_order';
 	if(!$result = $db->sql_query($sql)){
 		message_die(GENERAL_ERROR, 'Unable to query item type infos (updating cache)', '', __LINE__, __FILE__, $sql);}
 
-	$x = 0;
 	while($row = $db->sql_fetchrow($result))
 	{
-		$id = $x;
+    // V: fixed. I'd like to punch whoever wrote $id = $x in the first place...
+		$id = $row['item_type_id'];
 		$cells = array();
-		@reset($row);
-		while(list($key, $value) = @each($row))
+    foreach ($row as $key => $value)
 		{
-			$nkey = intval($key);
-			if($key != "$nkey"){
+			if(!is_integer($key)){
 				$cells[] = sprintf( "'%s' => '%s'", str_replace("'", "\'", $key), str_replace("'", "\'", $value));
 			}
 		}
 		$s_cells = empty($cells) ? '' : implode(', ', $cells);
 
 		$template->assign_block_vars('cache_row', array(
-			'ID'		=> sprintf("'%s'", str_replace("'", "\'", $id)),
+			'ID'		=> sprintf("'%s'", $id),
 			'CELLS'		=> $s_cells,
 			)
 		);
-		$x = ($x + 1);
 	}
 
 	$template->assign_var_from_handle('cache', 'cache');
-	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?>";
+	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?" . ">";
 
 	$fname = $phpbb_root_path . './adr/cache/cache_item_type'.'.' . $phpEx;
 	@chmod($fname, 0666);
@@ -519,7 +509,8 @@ function adr_update_element_infos()
 	$x = 1;
 	while($row = $db->sql_fetchrow($result))
 	{
-		$id = $x;
+    // V: fixed. I'd like to punch whoever wrote $id = $x in the first place...
+		$id = $row['element_id'];
 		$cells = array();
 		@reset($row);
 		while(list($key, $value) = @each($row)){
@@ -538,7 +529,7 @@ function adr_update_element_infos()
 	}
 
 	$template->assign_var_from_handle('cache', 'cache');
-	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?>";
+	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?" . ">";
 
 	$fname = $phpbb_root_path . './adr/cache/cache_elements'.'.' . $phpEx;
 	@chmod($fname, 0666);
@@ -592,7 +583,8 @@ function adr_update_alignment_infos()
 	$x = 1;
 	while($row = $db->sql_fetchrow($result))
 	{
-		$id = $x;
+    // V: fixed. I'd like to punch whoever wrote $id = $x in the first place...
+		$id = $row['alignment_id'];
 		$cells = array();
 		@reset($row);
 		while(list($key, $value) = @each($row)){
@@ -611,7 +603,7 @@ function adr_update_alignment_infos()
 	}
 
 	$template->assign_var_from_handle('cache', 'cache');
-	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?>";
+	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?" . ">";
 
 	$fname = $phpbb_root_path . './adr/cache/cache_alignments'.'.' . $phpEx;
 	@chmod($fname, 0666);
@@ -665,7 +657,8 @@ function adr_update_class_infos()
 	$x = 1;
 	while($row = $db->sql_fetchrow($result))
 	{
-		$id = $x;
+    // V: fixed
+		$id = $row['class_id'];
 		$cells = array();
 		@reset($row);
 		while(list($key, $value) = @each($row)){
@@ -684,7 +677,7 @@ function adr_update_class_infos()
 	}
 
 	$template->assign_var_from_handle('cache', 'cache');
-	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?>";
+	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?" . ">";
 
 	$fname = $phpbb_root_path . './adr/cache/cache_classes'.'.' . $phpEx;
 	@chmod($fname, 0666);
@@ -738,7 +731,7 @@ function adr_update_race_infos()
 	$x = 1;
 	while($row = $db->sql_fetchrow($result))
 	{
-		$id = $x;
+		$id = $row['race_id'];
 		$cells = array();
 		@reset($row);
 		while(list($key, $value) = @each($row)){
@@ -757,7 +750,7 @@ function adr_update_race_infos()
 	}
 
 	$template->assign_var_from_handle('cache', 'cache');
-	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?>";
+	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?" . ">";
 
 	$fname = $phpbb_root_path . './adr/cache/cache_races'.'.' . $phpEx;
 	@chmod($fname, 0666);
@@ -831,7 +824,7 @@ function adr_update_monster_infos()
 	}
 
 	$template->assign_var_from_handle('cache', 'cache');
-	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?>";
+	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?" . ">";
 
 	$fname = $phpbb_root_path . './adr/cache/cache_monsters'.'.' . $phpEx;
 	@chmod($fname, 0666);
@@ -894,7 +887,7 @@ function adr_update_general_config()
 	}
 
 	$template->assign_var_from_handle('cache', 'cache');
-	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?>";
+	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?" . ">";
 
 	$fname = $phpbb_root_path . './adr/cache/cache_config'.'.' . $phpEx;
 	@chmod($fname, 0666);

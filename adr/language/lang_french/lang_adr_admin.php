@@ -956,3 +956,9 @@ $lang['Adr_Time_4']='Nuit';
 $lang['Adr_monsters_time_title'] = 'Période de la journée';
 
 $lang['Adr_monster_time_choose']='Apparaît à l\'heure :';
+
+$lang['Adr_battle_monsters_modifier_type']='Formule de calcul de modificateur &agrave; utiliser';
+$lang['Adr_battle_monsters_modifier_type_explain']='L\'ancien type est utilis&eacute; dans toutes les versions d\'ADR avant la 0.3.4.<br />Cette nouvelle formule vient de Xanathis sur le forum de support d\'ADR.<br />Dans les formules qui suivent, "modificateur_config" correspond au modificateur renseign&eacute; dans la configuration ADR.<br />Ancienne formule : <pre style="display: inline">modificateur_final = (modificateur_config / 100) * (niveau_joueur - niveau_monstre)</pre><br />Nouvelle formule : <pre style="display: inline">modificateur_final = ((modificateur_config - 100) / 100) * (niveau_joueur - niveau_monstre) + 1</pre>';
+$lang['Adr_battle_monsters_modifier_type_1']='Ancienne formule';
+$lang['Adr_battle_monsters_modifier_type_2']='Nouvelle formule';
+

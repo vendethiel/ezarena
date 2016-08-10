@@ -451,6 +451,9 @@ Permet aux joueurs d'apprendre des sorts en montant de niveau. Les sorts peuvent
 Addons :
  - Addon Spells in PvP - Informpro
 
+# ADR : Cache doesn't use PK to index - Informpro
+Dans l'ADR de base, le cache indexe par le n' du row, pas par son ID.
+
 # ADR : Advanced Zone Restrictions - Informpro
 Etend les restrictions de zones aux pages suivantes (configurable depuis l'ACP) :
  - beggar
@@ -610,9 +613,11 @@ Parfaitement intégré à ADR.
 (mis à jour depuis la version 2.0 de la prémode ADR)
 Addons :
  - Addon Fix adr_battle not changing turn when rabbit's playing - Informpro
- - Addon adr_battle display enhancement - Informpro
  - Addon pet resurrected are healthy - Informpro
  - Fix for vanishing Pets - Informpro
+
+# Rabbitoshi : adr_battle display enhancement 0.2 - Informpro
+Affiche la table du familier plus clairement
 
 # Rabbitoshi : EXP only for alive pets - Informpro
 Ne donne pas d'expérience si un familier meurt au combat

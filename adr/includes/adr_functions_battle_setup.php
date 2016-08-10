@@ -429,19 +429,19 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 
 	// If the user is higher level than the monster , update the monster stats
 	if($monster_level < $level){
-		if($adr_general['battle_calc_type']){
+		if($adr_general['battle_calc_type'])
 			// Xanathis's alternative battle modifier calculation for monster battles
-			$modifier = (($adr_general['battle_monster_stats_modifier'] -100) /100) *($level - $monster_level) +1;}
+			$modifier = (($adr_general['battle_monster_stats_modifier'] - 100) / 100) * ($level - $monster_level) +1;
 		else{
 			$modifier = ($adr_general['battle_monster_stats_modifier'] /100) *($level - $monster_level);}
 
-		$monster_base_hp = ceil($monster_base_hp *$modifier);
-		$monster_base_att = ceil($monster_base_att *$modifier);
-		$monster_base_def = ceil($monster_base_def *$modifier);
-		$monster_base_mp = ceil($monster_base_mp *$modifier);
-		$monster_base_ma = ceil($monster_base_ma *$modifier);
-		$monster_base_md = ceil($monster_base_md *$modifier);
-		$monster_base_sp = ceil($monster_base_sp *$modifier);
+		$monster_base_hp = ceil($monster_base_hp * $modifier);
+		$monster_base_att = ceil($monster_base_att * $modifier);
+		$monster_base_def = ceil($monster_base_def * $modifier);
+		$monster_base_mp = ceil($monster_base_mp * $modifier);
+		$monster_base_ma = ceil($monster_base_ma * $modifier);
+		$monster_base_md = ceil($monster_base_md * $modifier);
+		$monster_base_sp = ceil($monster_base_sp * $modifier);
 	}
 
 	##=== START array for equipment id's ##

@@ -25,23 +25,30 @@ if ( !defined('IN_PHPBB') )
 }
 
 // V: added this adr_get_item fn
-//    has no caching :[
+// EDIT: added caching.
 function adr_get_item($item_id)
 {
 	global $db;
+  static $cache = array();
 	if (!$item_id)
 		return null; // avoid bad SQL queries
+
+  if (isset($cache[$item_id]))
+    return $cache[$item_id];
 
 	// Grab item details
 	$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
 		WHERE item_owner_id = 1
-		AND item_id = $item_id ";
+		AND item_id = ". intval($item_id);
 	$result = $db->sql_query($sql);
 	if( !$result )
 	{
 		message_die(GENERAL_ERROR, 'Could not obtain shops items information', "", __LINE__, __FILE__, $sql);
 	}
-	return $db->sql_fetchrow($result);
+	$item = $db->sql_fetchrow($result);
+  $db->sql_freeresult($result);
+  $cache[$item_id] = $item;
+  return $item;
 }
 
 function adr_delete_character($user_id)

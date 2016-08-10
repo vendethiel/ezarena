@@ -119,7 +119,7 @@ function zone_events($zone)
 // Zone - NPCs
 function zone_npc_actions()
 {
-	global $db, $userdata, $area_id, $user_id, $lang, $adr_user, $user_npc_visit_array, $user_npc_quest_array;
+	global $board_config, $db, $userdata, $area_id, $user_id, $lang, $adr_user, $user_npc_visit_array, $user_npc_quest_array;
 
 	if ( isset($_GET['npc']) || isset($_POST['npc']) )
 		$npc_action = ( isset($_POST['npc']) ) ? intval($_POST['npc']) : intval($_GET['npc']);
@@ -128,17 +128,10 @@ function zone_npc_actions()
 
 	if( isset($npc_action) )
 	{
-		// Deny access if user is imprisioned
-		if($userdata['user_cell_time']){
-			adr_previous('Adr_zone_no_thief_npc', 'adr_cell', '');
-		}
-
 		if ( isset($_GET['npc_id']) || isset($_POST['npc_id']) )
 		{
 			$npc_id = ( isset($_POST['npc_id']) ) ? intval($_POST['npc_id']) : intval($_GET['npc_id']);
 		}
-	    $adr_user = adr_npc_visit_update( $npc_id, $adr_user );
-
 		$sql = "SELECT * FROM  " . ADR_NPC_TABLE . "
 				WHERE npc_id = '$npc_id'
 					AND npc_enable = '1'";
@@ -148,6 +141,8 @@ function zone_npc_actions()
 		//prevent user exploit
 		if ( !($npc_row = $db->sql_fetchrow($result)))
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+
+    $adr_user = adr_npc_visit_update( $npc_id, $adr_user );
 
 		$npc_zone_array = explode( ',' , $npc_row['npc_zone'] );
 		$npc_race_array = explode( ',' , $npc_row['npc_race'] );
@@ -273,25 +268,6 @@ function zone_npc_actions()
 		if ( !($npc_give_row['npc_enable']) )
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
 
-	    // V: let's add some security to this bullshit.
-	    $sql = "SELECT * FROM " . ADR_QUEST_LOG_TABLE . "
-					   		WHERE user_id = '$user_id'
-							AND npc_id = '$npc_id'
-							";
-		if (!($result = $db->sql_query($sql)))
-		{
-			message_die(GENERAL_ERROR, 'Could not query quest log information', __LINE__, __FILE__, $sql);
-		}
-		$quest = $db->sql_fetchrow($result);
-
-		if (!$quest)
-		{
-			$message = "<img src=\"adr/images/zones/npc/" . $npc_give_row['npc_img'] . "\"><br /><br /><b>" . $lang['npc_cant_give_quest_u_dont_have'] . "</b><br /><br />" . $lang['Adr_zone_event_return'];
-			$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
-			message_die(GENERAL_ERROR, $message , $adr_zone_npc_title , '' );
-			break;
-		}
-
 		$npc_zone_array = explode( ',' , $npc_give_row['npc_zone'] );
 		$npc_race_array = explode( ',' , $npc_give_row['npc_race'] );
 		$npc_class_array = explode( ',' , $npc_give_row['npc_class'] );
@@ -353,11 +329,6 @@ function zone_npc_actions()
 				if ( count($item_npc) == 0 && ($npc_give_row['npc_kill_monster'] == "" or $npc_give_row['npc_kill_monster'] == '0'))
 			        adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_1']);
 			}
-		}
-		else
-		{
-			if ( !$npc_give_row['npc_quest_clue'] )
-				adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
 		}
 
 		if ( adr_item_quest_check($npc_give_row['npc_id'], $adr_user['character_npc_check'], $npc_give_row['npc_times'] ) )
@@ -429,7 +400,7 @@ function zone_npc_actions()
 			}
 			else
 			{
-				adr_substract_points( $user_id , $npc_give_row['npc_quest_clue_price'] , adr_zones , '' );
+				adr_substract_points( $user_id , $npc_give_row['npc_quest_clue_price'] , 'adr_zones' , '' );
 				//Delete the Quest of the log
 				$delsql2 = " DELETE FROM  " . ADR_QUEST_LOG_TABLE . "
 			   		WHERE user_id = '$user_id'
@@ -482,14 +453,14 @@ function zone_npc_actions()
 			$item_prize_lang = ( count( $npc_item2_array ) == 0 || $npc_give_row['npc_item2'] == "" ) ? "" : $prize_message;
 
 			$message = "<img src=\"adr/images/zones/npc/" . $npc_give_row['npc_img'] . "\"><br /><br /><b>" . $npc_give_row['npc_name'] . ":</b> <i>\"" . $npc_give_row['npc_message2'] . "\"</i><br /><br />".$item_prize_lang."".$points_prize_lang."".$exp_prize_lang."".$sp_prize_lang."<br />" . $lang['Adr_zone_event_return'];
-			$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
+			$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_give_row['npc_name'] );
 			message_die(GENERAL_ERROR, $message , $adr_zone_npc_title , '' );
 			break;
 		}
 		else
 		{
 			$message = "<img src=\"adr/images/zones/npc/" . $npc_give_row['npc_img'] . "\"><br /><br /><b>" . $npc_give_row['npc_name'] . ":</b> <i>\"" . $npc_give_row['npc_message2'] . "\"</i><br /><br />" . $lang['Adr_zone_event_return'];
-			$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
+			$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_give_row['npc_name'] );
 			message_die(GENERAL_ERROR, $message , $adr_zone_npc_title , '' );
 			break;
 		}
@@ -498,7 +469,7 @@ function zone_npc_actions()
 
 function zone_npc_item_quest_check($npc_row)
 {
-	global $user_id, $db, $lang, $phpEx;
+	global $user_id, $db, $lang, $phpEx, $board_config;
 
 	$npc_id = $npc_row['npc_id'];
 
