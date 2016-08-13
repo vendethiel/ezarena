@@ -106,19 +106,3 @@
 </table>
 <!-- END recipe -->
 </form>	
-
-
-
-<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
-	<tr>
-		<td align="center"><span class="gen"><a href="http://games.directorygold.com">Blacksmithing MOD written by: egdcltd</a></span></td>
-	</tr>
-	<tr>
-		<td align="center"><span class="gen">Based On</span></td>
-	</tr>
-	<tr>
-		<td align="center"><span class="gen"><a href="http://www.nightcrawlers.be">Brewing MOD written by: Himmelweiss</a></span></td>
-	</tr>
-</table>
-
-<br clear="all" />

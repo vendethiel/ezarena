@@ -774,6 +774,7 @@ if ( defined ('IN_ADR_BATTLE'))
    $lang['Adr_battle_spell_def_dura']='Le sort de %s, %s, a échoué et n\'est plus utilisable !';
    $lang['Adr_battle_potion_hp_success']='%s utilise un(e) %s et récupère %s HP!';
    $lang['Adr_battle_potion_hp_success_none']='%s essaye d\'utiliser un(e) %s mais a déjà son maximum d\'HP!';
+   $lang['Adr_battle_potion_hp_dura']='%s utilise %s et regagne %s.<br />%1$s jette %s.';
    $lang['Adr_battle_potion_hp_dura_none']='%s jette %s.';
    $lang['Adr_battle_potion_mp_success']='%s utilise un(e) %s et récupère %s MP!';
    $lang['Adr_battle_potion_mp_success_none']='%s essaye d\'utiliser un(e) %s mais a déjà son maximum d\'MP!';
@@ -1648,7 +1649,7 @@ if ( defined ('IN_ADR_COOKING'))
    $lang['Adr_skill_limit']='Vous ne pouvez plus cuisiner aujourd\'hui';
    $lang['cooking_no_tool']='Pas d\'outil';
    $lang['cooking_create']='Préparer ce plat';
-   $lang['cooking_select_tool']='Choisissez un plat';
+   $lang['cooking_select_tool']='Choisissez un outil';
    $lang['recipe_info']='Recipe Info';
    $lang['recipe_items_needed']='Items needed for this recipe';
    $lang['cooking_missing_item']='Vous n\'avez pas les ingrédients nécessaires pour préparer cette recette !';
@@ -1873,3 +1874,7 @@ $lang['Adr_party_already_invited'] = 'Ce personnage a déjà été invité';
 $lang['Adr_party_already_member'] = 'Ce personnage est déjà dans le groupe';
 $lang['ADR_NO_RESTRICTIONS'] = '(Pas de restrictions)';
 $lang['ADR_RECIPEBOOK'] = 'Livre de recettes';
+$lang['ADR_ZONE_BACKGROUND'] = 'Image de fond des combats';
+$lang['ADR_ZONE_BACKGROUND_EXPLAIN'] = 'Cette image sera affich&eacute;e dans le fond de chaque combat s\'effectuant dans la zone.<br />Elle doit &ecirc;tre dans le dossier <i>adr/images/battle/backgrounds/</i><br />Laissez vide pour une image par d&eacute;faut.';
+$lang['ADR_ENABLE_BUILDING'] = 'Cochez la case pour que %s soit disponible dans cette zone';
+$lang['ADR_POTION_NO_EFFECT'] = '%s utilise %s ... Mais rien ne se passe.';

@@ -413,7 +413,6 @@ if ( $mode != "" )
 							message_die(CRITICAL_ERROR, 'Error updating ADR Classes!');
 						}
 
-						adr_update_posters_infos();
 						adr_previous ( Adr_town_training_grounds_select_upgrade_done  , adr_character , '' );
 
 						break;
@@ -511,7 +510,6 @@ if ( $mode != "" )
 							message_die(CRITICAL_ERROR, 'Error updating ADR Classes!');
 						}
 
-						adr_update_posters_infos();
 						adr_previous ( Adr_town_training_grounds_change_class_done  , adr_character , '' );
 
 						break;

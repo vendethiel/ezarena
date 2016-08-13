@@ -168,7 +168,7 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 	{
 		$template->assign_block_vars('extra_building', array(
 			'LANG' => $lang_key,
-			'LANG_EXPLAIN' => 'Cochez la case pour que ' . $lang_key . ' soit disponible dans cette zone ?',
+			'LANG_EXPLAIN' => sprintf($lang['ADR_ENABLE_BUILDING'], $lang_key),
 			'KEY' => $k,
 			'ENABLED' => '',
 			'ROW_CLASS' => $row_class == 2 ? $row_class = 1 : $row_class = 2,
@@ -347,14 +347,8 @@ else if ( $mode != "" )
 
 			adr_template_file('admin/config_adr_zones_edit_body.tpl');
 
-			$sql = "SELECT * FROM " . ADR_ZONES_TABLE ."
-				WHERE zone_id = '$zone_id' ";
-			$result = $db->sql_query($sql);
-			if( !$result )
-				message_die(GENERAL_ERROR, 'Could not obtain zones information', "", __LINE__, __FILE__, $sql);
-
-			$zones = $db->sql_fetchrow($result);
-			if( !$result )
+      $zones = zone_get($zone_id);
+			if( !$zones )
 				message_die(GENERAL_ERROR, 'Could not find specificed zone information', "", __LINE__, __FILE__, $sql);
 
 
@@ -422,7 +416,7 @@ else if ( $mode != "" )
 			{
 				if ($zonelist[$i]['zone_id'] == $zone_id)
 					continue;
-			  	$destination4_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" ' . ($zonelist[$i]['zone_id'] == $existing_destination4 ? ' selected="selected"' : '') . '>' . $zonelist[$i]['zone_name'] . '</option>';
+        $destination4_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" ' . ($zonelist[$i]['zone_id'] == $existing_destination4 ? ' selected="selected"' : '') . '>' . $zonelist[$i]['zone_name'] . '</option>';
 			}
 			$destination4_list .= '</select>';
 
@@ -432,7 +426,7 @@ else if ( $mode != "" )
 			{
 				if ($zonelist[$i]['zone_id'] == $zone_id)
 					continue;
-			  	$return_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" ' . ($zonelist[$i]['zone_id'] == $existing_return_name ? ' selected="selected"' : '') . '>' . $zonelist[$i]['zone_name'] . '</option>';
+        $return_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" ' . ($zonelist[$i]['zone_id'] == $existing_return_name ? ' selected="selected"' : '') . '>' . $zonelist[$i]['zone_name'] . '</option>';
 			}
 			$return_list .= '</select>';
 
@@ -474,7 +468,7 @@ else if ( $mode != "" )
 
 			$monsterlist = $db->sql_fetchrowset($result);
 
-            $existing_monsters = explode(", ",$zones['zone_monsters_list']);
+      $existing_monsters = explode(", ",$zones['zone_monsters_list']);
 
 			$monsters_list = '<select name="monsters[]" size="8" multiple>';
 			if( in_array('0',$existing_monsters) )
@@ -495,7 +489,7 @@ else if ( $mode != "" )
 			{
 				$template->assign_block_vars('extra_building', array(
 					'LANG' => $lang_key,
-					'LANG_EXPLAIN' => 'Cochez la case pour que ' . $lang_key . ' soit disponible dans cette zone ?',
+          'LANG_EXPLAIN' => sprintf($lang['ADR_ENABLE_BUILDING'], $lang_key),
 					'KEY' => $k,
 					'ENABLED' => $zones['zone_'.$k] ? ' checked' : '',
 					'ROW_CLASS' => 1 + $row_class++ % 2,
@@ -532,6 +526,7 @@ else if ( $mode != "" )
 				"L_ZONE_LOOT" => $lang['Adr_admin_loot'],		
 				"L_ZONE_MULTI" => $lang['Adr_admin_maps_zonemap_cell_ctrl'],
 				"ZONE_LEVEL" => $zones['zone_level'],
+        "ZONE_BACKGROUND" => $zones['zone_background'],
 
 				"ZONE_NAME" => $zones['zone_name'],
 				"ZONE_DESC" => $zones['zone_desc'],
@@ -694,6 +689,7 @@ else if ( $mode != "" )
 			$pointwin2 = $HTTP_POST_VARS['zone_pointwin2'];
 			$pointloss1 = $HTTP_POST_VARS['zone_pointloss1'];
 			$pointloss2 = $HTTP_POST_VARS['zone_pointloss2'];
+      $zone_background = $_POST['zone_background'];
 			$chance = (string) intval($HTTP_POST_VARS['zone_chance']);
 			$level = intval($HTTP_POST_VARS['zone_level']);
 
@@ -707,7 +703,7 @@ else if ( $mode != "" )
 				$monsters_list = '0';
 			else
 			{
-	            sort($monsters);
+        sort($monsters);
 				$monsters_list = '';
 				for ($a = 0; $a < $selected_monsters; $a++)
 					$monsters_list .= ( $monsters_list == '' ) ? $monsters[$a] : ", ".$monsters[$a];
@@ -784,7 +780,8 @@ else if ( $mode != "" )
 				zone_tailor_table = '" . $tailor_loottables_list . "',
 				zone_alchemy_table = '" . $alchemy_loottables_list . "',
 				$extra_buildings_sql
-				zone_level = '$level'
+        zone_level = '$level',
+        zone_background = '$zone_background'
 				WHERE zone_id = '$zone_id'";
 			if( !($result = $db->sql_query($sql)) )
 				message_die(GENERAL_ERROR, "Couldn't update zones info", "", __LINE__, __FILE__, $sql);
@@ -840,6 +837,7 @@ else if ( $mode != "" )
 			// V: coerce to string to allow 0
 			$chance = (string)intval($HTTP_POST_VARS['zone_chance']);
 			$level = intval($HTTP_POST_VARS['zone_level']);
+      $zone_background = $_POST['zone_background'];
 
 			$monsters = array();
 			$monsters = $HTTP_POST_VARS['monsters'];
@@ -851,7 +849,7 @@ else if ( $mode != "" )
 				$monsters_list = '0';
 			else
 			{
-	            sort($monsters);
+        sort($monsters);
 				$monsters_list = '';
 				for ($a = 0; $a < $selected_monsters; $a++)
 					$monsters_list .= ( $monsters_list == '' ) ? $monsters[$a] : ", ".$monsters[$a];
@@ -873,9 +871,8 @@ else if ( $mode != "" )
 			$tailor_loottables_list = adr_save_gather_list($tailor_loottables);
 			$alchemy_loottables_list = adr_save_gather_list($alchemy_loottables);
 
-			//$goto1 == '' || $cost1 == ''
 			if ( $name == '' || $description == '' || $element == '' || $cost2 == '' || $cost3 == '' || $cost4 == '' || $costreturn == '' || $pointwin1 == '' || $pointwin2 == '' || $pointloss1 == '' || $pointloss2 == '' || $chance == '' )
-				adr_previous( Fields_empty , admin_adr_zones , '' );
+				adr_previous('Fields_empty', 'admin_adr_zones', '');
 
 			$extra_buildings_keys = $extra_buildings_values = '';
 			foreach ($zone_extra_buildings as $k => $dummy)
@@ -885,8 +882,8 @@ else if ( $mode != "" )
 			}
 
 			$sql = "INSERT INTO " . ADR_ZONES_TABLE . " 
-				( zone_id , zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto2, cost_goto3, cost_goto4, cost_return, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, zone_mine, zone_enchant, zone_monsters_list , zone_level $extra_buildings_keyszone_mining_table, zone_fishing_table, zone_hunting_table, zone_herbal_table, zone_lumberjack_table, zone_tailor_table, zone_alchemy_table )
-				VALUES ( '$zone_id' ,'" . str_replace("\'", "''", $name) . "','" . str_replace("\'", "''", $description) . "', '" . str_replace("\'", "''", $image) . "' , '" . str_replace("\'", "''", $element) . "', '" . str_replace("\'", "''", $item) . "' , '$cost2' , '$cost3' , '$cost4' , '$costreturn' , '" . str_replace("\'", "''", $goto2) . "' , '" . str_replace("\'", "''", $goto3) . "' , '" . str_replace("\'", "''", $goto4) . "' , '" . str_replace("\'", "''", $return) . "', '$shops' , '$forge' , '$prison' , '$temple' , '$bank' , '$event1' , '$event2' , '$event3' , '$event4' , '$event5' , '$event6' , '$event7' , '$event8' , '$pointwin1' , '$pointwin2' , '$pointloss1' , '$pointloss2' , '$chance' , '$mine' , '$enchant', '" . $monsters_list . "' , '$level' $extra_buildings_values, '" . $mine_loottables . "', '" . $fish_loottables . "', '" . $hunt_loottables . "', '" . $herbal_loottables . "', '" . $lumberjack_loottables . "', '$tailor_loottables', '$alchemy_loottables' )";
+				( zone_id , zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto2, cost_goto3, cost_goto4, cost_return, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, zone_mine, zone_enchant, zone_monsters_list , zone_level $extra_buildings_keyszone_mining_table, zone_fishing_table, zone_hunting_table, zone_herbal_table, zone_lumberjack_table, zone_tailor_table, zone_alchemy_table, zone_background )
+				VALUES ( '$zone_id' ,'" . str_replace("\'", "''", $name) . "','" . str_replace("\'", "''", $description) . "', '" . str_replace("\'", "''", $image) . "' , '" . str_replace("\'", "''", $element) . "', '" . str_replace("\'", "''", $item) . "' , '$cost2' , '$cost3' , '$cost4' , '$costreturn' , '" . str_replace("\'", "''", $goto2) . "' , '" . str_replace("\'", "''", $goto3) . "' , '" . str_replace("\'", "''", $goto4) . "' , '" . str_replace("\'", "''", $return) . "', '$shops' , '$forge' , '$prison' , '$temple' , '$bank' , '$event1' , '$event2' , '$event3' , '$event4' , '$event5' , '$event6' , '$event7' , '$event8' , '$pointwin1' , '$pointwin2' , '$pointloss1' , '$pointloss2' , '$chance' , '$mine' , '$enchant', '" . $monsters_list . "' , '$level' $extra_buildings_values, '" . $mine_loottables . "', '" . $fish_loottables . "', '" . $hunt_loottables . "', '" . $herbal_loottables . "', '" . $lumberjack_loottables . "', '$tailor_loottables', '$alchemy_loottables', '$zone_background' )";
 			$result = $db->sql_query($sql);
 			if( !$result )
 				message_die(GENERAL_ERROR, "Couldn't insert new zones", "", __LINE__, __FILE__, $sql);

@@ -791,6 +791,9 @@ else if ( ( $delete && $mark_list ) || $delete_all )
 				OR ( privmsgs_to_userid = " . $userdata['user_id'] . " 
 					AND privmsgs_type = " . PRIVMSGS_SAVED_IN_MAIL . " ) )";
 				break;
+
+      default:
+        message_die(GENERAL_ERROR, "No such folder type", '', __LINE__, __FILE__);
 		}
 
 		$sql = "SELECT privmsgs_id

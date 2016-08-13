@@ -206,13 +206,11 @@ $hp_regen = 0;
 $mp_regen = 0;
 $battle_message = '';
 
-$user_action        = null;
-$monster_action     = null;
 $attack_img         = null;
 $attackwith_overlay = null;
 
 if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
-	&& ($petstuff || $attack || $spell || $potion || $defend || $flee || $equip || $spell2))
+	&& ($petstuff || $attack || $spell || $potion || $defend || $flee || $equip || $spell2 || $scan))
 {
 	// Prefix challenger battle message
 	$battle_message .= '<span style="color: blue">[' . $lang['Adr_battle_msg_check'] . htmlspecialchars($challenger['character_name']) . ']: </span>';
@@ -220,7 +218,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 	{ // V: this is the early beginning.
 		$battle_message .= $monster['monster_name'] . ' ' . $lang['Adr_battle_msg_monster_start'] . '<br>';
 	} //($bat['battle_round'] == '0') && ($bat['battle_turn'] == '2')
-	else if ($scan && $bat['battle_turn'] == 1)
+	else if ($scan && $bat['battle_turn'] == BATTLE_TURN_PLAYER)
 	{
 		rabbit_pet_regen();
 		adr_use_hp_amulet();
@@ -1528,16 +1526,11 @@ if (!$result = $db->sql_query($sql))
 $monster_details = $db->sql_fetchrow($result);
 
 // Grab background details
-if (empty($bck_grnd_name))
-{
-	$bck_grnd_name = $bat['battle_bkg'];
-} //empty($bck_grnd_name)
-
-// Required to prevent battles with no background image
-if (!$bck_grnd_name && !$bat['battle_bkg'])
-{
-	$bck_grnd_name = "battle_bgnd_1.gif";
-} //!$bck_grnd_name && !$bat['battle_bkg']
+$zone = zone_get($challenger['character_area']);
+if (!empty($zone['zone_background']))
+  $bck_grnd_name = $zone['zone_background'];
+else
+  $bck_grnd_name = "battle_bgnd_1.gif";
 
 $template->assign_vars(array(
 	'ATTACK' => $weapon_list,

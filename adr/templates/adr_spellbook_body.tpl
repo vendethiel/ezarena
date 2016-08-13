@@ -153,10 +153,3 @@
 </table>
 </form>
 <!-- END view_spells -->
-
-<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
-	<tr>
-		<td align="center"><span class="gen"><a href="http://www.nightcrawlers.be">ADR Spellbook written by: Himmelweiss</a></span></td>
-	</tr>
-</table>
-<br clear="all" />

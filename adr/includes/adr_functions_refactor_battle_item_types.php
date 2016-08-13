@@ -263,22 +263,22 @@ function adr_potion_hp()
 	if ($item['item_duration'] < 2 && $power > 0 && $hp_check['character_hp'] < $hp_check['character_hp_max'])
 	{
 		$power = ($power > ($hp_check['character_hp_max'] - $hp_check['character_hp'])) ? ($hp_check['character_hp_max'] - $hp_check['character_hp']) : $power;
-		$battle_message .= sprintf($lang['Adr_battle_potion_hp_dura'], adr_get_lang($item['item_name']), $power, adr_get_lang($item['item_name'])) . '<br />';
+		$battle_message .= sprintf($lang['Adr_battle_potion_hp_dura'], $challenger['character_name'], adr_get_lang($item['item_name']), $power, adr_get_lang($item['item_name'])) . '<br />';
 	} //$item['item_duration'] < 2 && $power > 0 && $hp_check['character_hp'] < $hp_check['character_hp_max']
 	elseif ($item['item_duration'] < 2 && $power < 1 && $hp_check['character_hp'] < $hp_check['character_hp_max'])
 	{
 		$power = 0;
-		$battle_message .= sprintf($lang['Adr_battle_potion_hp_dura_none'], adr_get_lang($item['item_name']), adr_get_lang($item['item_name'])) . '<br />';
+		$battle_message .= sprintf($lang['Adr_battle_potion_hp_dura_none'], $challenger['character_name'], adr_get_lang($item['item_name']), adr_get_lang($item['item_name'])) . '<br />';
 	} //$item['item_duration'] < 2 && $power < 1 && $hp_check['character_hp'] < $hp_check['character_hp_max']
 	elseif ($item['item_duration'] > 1 && $power > 0 && $hp_check['character_hp'] < $hp_check['character_hp_max'])
 	{
 		$power = ($power > ($hp_check['character_hp_max'] - $hp_check['character_hp'])) ? ($hp_check['character_hp_max'] - $hp_check['character_hp']) : $power;
-		$battle_message .= sprintf($lang['Adr_battle_potion_hp_success'], adr_get_lang($item['item_name']), $power) . '<br />';
+		$battle_message .= sprintf($lang['Adr_battle_potion_hp_success'], $challenger['character_name'], adr_get_lang($item['item_name']), $power) . '<br />';
 	} //$item['item_duration'] > 1 && $power > 0 && $hp_check['character_hp'] < $hp_check['character_hp_max']
 	elseif ($item['item_duration'] > 1 && $power < 1 && $hp_check['character_hp'] < $hp_check['character_hp_max'])
 	{
 		$power = 0;
-		$battle_message .= sprintf($lang['Adr_battle_potion_hp_success_none'], adr_get_lang($item['item_name'])) . '<br />';
+    $battle_message .= sprintf($lang['Adr_battle_potion_hp_success_none'], $challenger['character_name'], adr_get_lang($item['item_name'])) . '<br />';
 	} //$item['item_duration'] > 1 && $power < 1 && $hp_check['character_hp'] < $hp_check['character_hp_max']
 	else
 	{
@@ -286,15 +286,15 @@ function adr_potion_hp()
 		
 		if ($item['item_duration'] < 2)
 		{
-			$battle_message .= sprintf($lang['Adr_battle_potion_hp_dura_none'], adr_get_lang($item['item_name']), adr_get_lang($item['item_name'])) . '<br />';
+			$battle_message .= sprintf($lang['Adr_battle_potion_hp_dura_none'], $challenger['character_name'], adr_get_lang($item['item_name']), adr_get_lang($item['item_name'])) . '<br />';
 		} //$item['item_duration'] < 2
 		else
 		{
-			$battle_message .= sprintf($lang['Adr_battle_potion_hp_success_none'], adr_get_lang($item['item_name'])) . '<br />';
+			$battle_message .= sprintf($lang['Adr_battle_potion_hp_success_none'], $challenger['character_name'], adr_get_lang($item['item_name'])) . '<br />';
 		}
 	}
 	
-	adr_next_round(BATTLE_TURN_MONSTER); // note: was *NOT* increasing round...
+	adr_next_round(BATTLE_TURN_MONSTER); // V: note: was *NOT* increasing round...
 	adr_increase_hp($power);
 	// Let's sort out the potion (hp) animations...
 	// Make table for start battle sequence...
@@ -318,16 +318,10 @@ function adr_potion_mp()
 		$power = (($power + $challenger['character_mp']) > $challenger['character_mp_max']) ? ($challenger['character_mp_max'] - $challenger['character_mp']) : $power;
 		$battle_message .= sprintf($lang['Adr_battle_potion_mp_success'], $challenger['character_name'], adr_get_lang($item['item_name']), $power) . '<br>';
 		
-		$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
-			SET character_mp = (character_mp + $power)
-			WHERE character_id = '$user_id'";
-		if (!($result = $db->sql_query($sql)))
-		{
-			message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
-		} //!($result = $db->sql_query($sql))
+    adr_increase_mp($power);
 		
-		// Use item
-		adr_use_item($item_potion, $user_id);
+    // V: do NOT use item. see the comment in adr_potion_generic
+		//adr_use_item($item_potion, $user_id);
 	} //($item['item_duration'] > '0') && ($challenger['character_mp'] < $challenger['character_mp_max'])
 	elseif (($item['item_duration'] > '0') && ($challenger['character_mp'] >= $challenger['character_mp_max']))
 	{
@@ -355,25 +349,27 @@ function adr_potion_mp()
 
 function adr_potion_generic()
 {
-	global $monster, $bat, $adr_user, $opponent_element, $item, $db, $lang, $user_id, $power;
-	global $challenger, $battle_message, $user_action, $monster_action, $attack_img, $attackwith_overlay;
+	global $monster, $bat, $adr_user, $opponent_element, $item, $db, $lang, $user_id, $power, $phpbb_root_path, $phpEx;
+	global $challenger, $battle_message, $user_action, $monster_action, $attack_img, $attackwith_overlay, $item_potion;
 
 	rabbit_pet_regen();
 	
 	include_once($phpbb_root_path . '/adr/includes/adr_functions_battle_setup.' . $phpEx);
 	$e_message = adr_battle_effects_initialise($user_id, $item_potion, $monster['monster_name'], 0);
 	
-	// Use item
-	adr_use_item($item_potion, $user_id);
+	// V: NO [OLD: Use item]
+  // adr_battle already calls use_item (in its if ($potion ...)). Do NOT call it again here.
+	//adr_use_item($item_potion, $user_id);
 	
 	$battle_message .= $e_message;
 	
 	// low dura message
 	if (($item['item_duration'] < '2') && ($power > '0'))
 	{
-		$battle_message .= '</span><span class="gensmall">'; // set new span class
-		$battle_message .= '&nbsp;&nbsp;>&nbsp;' . sprintf($lang['Adr_battle_potion_mp_dura_none'], $challenger['character_name'], adr_get_lang($item['item_name']), adr_get_lang($item['item_name'])) . '<br>';
-		$battle_message .= '</span><span class="genmed">'; // reset span class to default
+		//$battle_message .= '</span><span>'; // set new span class
+    // V: use _hp text here, instead of _mp
+		$battle_message .= '&nbsp;&nbsp;&nbsp;' . sprintf($lang['Adr_battle_potion_hp_dura_none'], $challenger['character_name'], adr_get_lang($item['item_name']), adr_get_lang($item['item_name'])) . '<br>';
+		$battle_message .= '</span><span>'; // reset span class to default
 	} //($item['item_duration'] < '2') && ($power > '0')
 	
 	// Update the database

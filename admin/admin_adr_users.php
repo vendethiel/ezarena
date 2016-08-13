@@ -57,7 +57,6 @@ if ( $mode != '' )
 				message_die(CRITICAL_ERROR, 'Error deleting character !');
 			}
 
-			adr_update_posters_infos();
 			adr_previous ( Adr_admin_character_deleted , admin_adr_users , '' );
 
 			break;
@@ -82,7 +81,6 @@ if ( $mode != '' )
 				}
 			}
 
-			adr_update_posters_infos();
 			adr_previous ( Adr_admin_item_deleted , admin_adr_users , '' );
 
 			break;
@@ -96,7 +94,6 @@ if ( $mode != '' )
 			if (!$db->sql_query($sql)){
 				message_die(CRITICAL_ERROR, 'Error deleting entire inventory !');}
 
-			adr_update_posters_infos();
 			adr_previous(Adr_admin_delete_entire_inventory, admin_adr_users, '');
 
 			break;
@@ -285,7 +282,6 @@ if ( $mode != '' )
 				message_die(CRITICAL_ERROR, 'Error updating character !');
 			}
 
-			adr_update_posters_infos();
 			adr_previous ( Adr_admin_character_edited, admin_adr_users, "mode=edit&amp;".POST_USERS_URL."=".$searchid);
 
 			break;

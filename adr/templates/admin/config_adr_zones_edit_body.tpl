@@ -94,6 +94,10 @@
 		<td class="row1" width="60%" ><b>{L_ZONE_MONSTER_LIST} :</b><br />{L_ZONE_MONSTER_LIST_EXPLAIN}</td>
 		<td class="row1" align="center" ><span class="gen">{ZONE_MONSTER_LIST}</span></td>
 	</tr>
+  <tr>
+		<td class="row1" width="60%" ><b>{L_ADR_ZONE_BACKGROUND} :</b><br />{L_ADR_ZONE_BACKGROUND_EXPLAIN}</td>
+		<td class="row1" align="center" ><span class="gen"><input name="zone_background" value="{ZONE_BACKGROUND}" /></span></td>
+  </tr>
 </table>
 
 <br clear="all" />

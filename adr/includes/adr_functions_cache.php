@@ -386,11 +386,18 @@ function adr_get_item_type($type, $mode)
 		case 'list':
 
 			$item_type = '<select name="item_type_use">';
-      foreach ($items_type as $type)
+      // V: store indexed by name
+      $item_types = array();
+      // V: change the variable name, so that $selected works. -_-
+      foreach ($items_type as $t)
 			{
-				$selected = ( $type['item_type_id'] == $type ) ? 'selected="selected"' : '';
-				$item_type .= '<option value = "'.$type['item_type_id'].'" '.$selected.'>' . adr_get_lang($type['item_type_lang']) . '</option>';
+				$selected = ( $t['item_type_id'] == $type ) ? 'selected="selected"' : '';
+        $name = adr_get_lang($t['item_type_lang']);
+        $item_types[$name] = '<option value = "'.$t['item_type_id'].'" '.$selected.'>' . $name . '</option>';
 			}
+      // V: sort by name
+      ksort($item_types);
+      $item_type .= implode('', $item_types);
 			$item_type .= '</select>';
 			return $item_type;
 

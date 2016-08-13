@@ -60,12 +60,3 @@
 <div align="center">
 	{L_RECIPES_ATTENTION}
 </div>
-
-<br clear="all" />
-
-<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
-	<tr>
-		<td align="center"><span class="gen"><a href="http://www.nightcrawlers.be">ADR Brewing written by: Himmelweiss</a></span></td>
-	</tr>
-</table>
-<br clear="all" />

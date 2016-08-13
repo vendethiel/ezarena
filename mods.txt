@@ -482,6 +482,8 @@ Transforme le Mod Brewing en système de crafting avancé, permet de créer des 
 
 # ADR : (Brewing+Crafting) Cooking 0.3.5 - Himmelweiss
 Ajoute un système de cuisine au mod Crafting.
+Addons :
+ - Bug fixes all over the place (using potions, effects, etc) - Informpro
 
 # ADR : Clans Mod
 Ajoute un système de clans avancé.
@@ -584,6 +586,8 @@ Ajoute un système de Temple et de Lac auxquels vous pouvez faire des offrandes.
 
 # ADR (ST) : Graphical Battles 0.1.5 - Seteo-Bloke
 Permet d'ajouter des meilleurs graphismes aux combats.
+Addons :
+ - Addon Background by Zone - Informpro
 
 # ADR (ST) : Jobs 0.2.0 - Seteo-Bloke
 Ajoute un système complet de métiers à ADR.

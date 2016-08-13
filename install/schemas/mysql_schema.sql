@@ -1924,6 +1924,8 @@ CREATE TABLE phpbb_adr_zones (
   `zone_lumberjack_table` TEXT NOT NULL,
   `zone_tailor_table` TEXT NOT NULL,
   `zone_alchemy_table` TEXT NOT NULL,
+
+  `zone_background` varchar(255) default '',
   PRIMARY KEY  (zone_id)
 ) ;
 

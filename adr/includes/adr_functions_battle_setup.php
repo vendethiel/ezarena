@@ -499,7 +499,7 @@ function adr_battle_equip_initialise($user_id, $armor, $buckler, $helm, $gloves,
 
 function adr_battle_effects_initialise($user_id,$potion_id,$monster_name,$pvp)
 {
-	global $db;
+	global $db, $battle_message, $lang;
 	$user_id = intval($user_id);
 	$potion_id = intval($potion_id);
 	$pvp = intval($pvp);
@@ -543,7 +543,7 @@ function adr_battle_effects_initialise($user_id,$potion_id,$monster_name,$pvp)
 	}
 		
 	//check if user used a potion with temp effects before entering a battle
-	if ((substr_count($potion['item_effect'], 'HP') || substr_count($potion['item_effect'], 'MP')) || ($user['character_pre_effects'] != '' && $user['character_pre_effects'] != NULL) || ($battle_stats['battle_effects'] == '' && $battle_stats['battle_effects'] == NULL))
+	if ((substr_count($potion['item_effect'], 'HP') || substr_count($potion['item_effect'], 'MP')) || ($user['character_pre_effects'] != '') || ($battle_stats['battle_effects'] == ''))
 	{
 		if ($potion_id != 0)
 			$update_battle_effects = $potion['item_effect'];
@@ -583,6 +583,15 @@ function adr_battle_effects_initialise($user_id,$potion_id,$monster_name,$pvp)
 			message_die(GENERAL_ERROR, 'Couldn\'t update characters pre effects for battle', '', __LINE__, __FILE__, $sql);
 
 		$effects = explode(':',$update_battle_effects);
+    // V: yeah, some potions are just.. useless
+    if ($update_battle_effects == '')
+    {
+      if ($potion_id)
+      {
+        $battle_message .= sprintf($lang['ADR_POTION_NO_EFFECT'], $user['character_name'], adr_get_lang($potion['item_name'])) . '<br />';
+      }
+      return;
+    }
 		for ($i = 0; $i < count($effects);$i++)
 		{
 			switch(TRUE)

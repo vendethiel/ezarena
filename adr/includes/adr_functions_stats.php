@@ -196,8 +196,6 @@ function adr_level_up($user_id , $from )
 		$new_spell = sprintf($lang['Adr_spell_learned'], $item_name);
 	}
 
-	adr_update_posters_infos();
-
 	$message = sprintf($lang['Adr_level_up_congrats'] , $new_level, $new_spell);
 	$message .= '<br /><br />'.sprintf($lang['Adr_return'],"<a href=\"" . $direction . "\">", "</a>") ;
 

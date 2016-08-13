@@ -270,10 +270,30 @@ function adr_increase_hp($hp_usage)
 		return;
 	}
 
-	// Substract the magic points
+	// Add HP
 	$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
 		SET character_hp = character_hp + " . intval($hp_usage) . "
 		WHERE character_id = $user_id ";
+	if (!($result = $db->sql_query($sql)))
+	{
+		message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+	} //!($result = $db->sql_query($sql))
+	$db->sql_freeresult($result);
+}
+
+function adr_increase_mp($mp_usage)
+{
+	global $db, $user_id;
+
+	if ($mp_usage < 1)
+	{
+		return;
+	}
+
+	// Add MP
+	$sql = "UPDATE " . ADR_CHARACTERS_TABLE . "
+		SET character_mp = character_mp + " . intval($mp_usage) . "
+		WHERE character_id = $user_id";
 	if (!($result = $db->sql_query($sql)))
 	{
 		message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
