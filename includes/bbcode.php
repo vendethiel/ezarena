@@ -146,12 +146,12 @@ function prepare_bbcode_template($bbcode_tpl)
 	$bbcode_tpl['GVideo'] = str_replace('{GVIDEOID}', '\\1', $bbcode_tpl['GVideo']);
 	$bbcode_tpl['GVideo'] = str_replace('{GVIDEOLINK}', $lang['GVideo_link'], $bbcode_tpl['GVideo']);
 	
-	// Les différentes façon d'écrire le lien du site.. 
+	// Les diffÃ©rentes faÃ§on d'Ã©crire le lien du site.. 
    	$bbcode_tpl['website1'] = str_replace('{URL}', '\\1\\2', $bbcode_tpl['website']); 
     
    	$bbcode_tpl['website2'] = str_replace('{URL}', 'http://\\1', $bbcode_tpl['website']);	
 	
-	$bbcode_tpl['youtube'] = str_replace('{YOUTUBEID}', '\\1', $bbcode_tpl['youtube']);
+	$bbcode_tpl['youtube'] = str_replace('{YOUTUBEID}', '\\3', $bbcode_tpl['youtube']);
 	$bbcode_tpl['youtube'] = str_replace('{YOUTUBELINK}', $lang['youtube_link'], $bbcode_tpl['youtube']);
 	
 //-- mod : addon hide for bbcbxr -----------------------------------------------
@@ -401,7 +401,7 @@ function bbencode_second_pass($text, $uid)
     $patterns[] = "#\[GVideo\]http://video.google.com/videoplay\?docid=([0-9A-Za-z-_]*)[^[]*\[/GVideo\]#is";
     $replacements[] = $bbcode_tpl['GVideo'];
 	
-	// Les différentes façon d'écrire le lien du site.. 
+	// Les diffÃ©rentes faÃ§on d'Ã©crire le lien du site.. 
 	// [website]xxxx://www.phpbb.com[/website] code.. 
    	$patterns[] = "#\[website\]([a-z]+?://){1}([a-z0-9\-\.,\?!%\*_\#:;~\\&$@\/=\+\(\)]+)\[/website\]#si"; 
    	$replacements[] = $bbcode_tpl['website1']; 
@@ -411,7 +411,7 @@ function bbencode_second_pass($text, $uid)
    	$replacements[] = $bbcode_tpl['website2']; 	
 	
 	// [youtube]YouTube URL[/youtube] code..
-	$patterns[] = "#\[youtube\]http://(?:www\.)?youtube.com/watch\?v=([0-9A-Za-z-_]{11})[^[]*\[/youtube\]#is";
+	$patterns[] = "#\[youtube\](?:http|https)?://(?:www\.)?(youtube.com|youtu.be|gaming.youtube.com|m.youtube.com)/(watch\?v=|v/|)([0-9A-Za-z-_]{11})[^[]*\[/youtube\]#is";
 	$replacements[] = $bbcode_tpl['youtube'];
 	
 //-- mod : bbcode box reloaded -------------------------------------------------
