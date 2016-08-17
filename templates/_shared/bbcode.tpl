@@ -91,10 +91,7 @@
 <!-- END GVideo -->
 
 <!-- BEGIN youtube -->
-<object width="425" height="350">
-	<param name="movie" value="http://www.youtube.com/v/{YOUTUBEID}"></param>
-	<embed src="http://www.youtube.com/v/{YOUTUBEID}" type="application/x-shockwave-flash" width="425" height="350"></embed>
-</object><br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/{YOUTUBEID}" frameborder="0" allowfullscreen></iframe> 
 <!-- END youtube -->
 
 <!-- BEGIN titre1_open -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="titre1">&nbsp;<!-- END titre1_open -->
