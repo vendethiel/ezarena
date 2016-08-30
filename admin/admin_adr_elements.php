@@ -96,6 +96,8 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 		"LEVEL_LIST" => $level_list,
 		"L_ELEMENTS_TITLE" => $lang['Adr_elements_add_edit'],
 		"L_ELEMENTS_EXPLAIN" => $lang['Adr_elements_add_edit_explain'],
+				"L_ELEMENT_COLOUR" => $lang['Adr_elements_colour'],
+				"L_ELEMENT_COLOUR_EX" => $lang['Adr_elements_colour_ex'],		
 		"L_NAME" => $lang['Adr_races_name'],
 		"L_NAME_EXPLAIN" => $lang['Adr_races_name_explain'],
 		"L_DESC" => $lang['Adr_races_desc'],
