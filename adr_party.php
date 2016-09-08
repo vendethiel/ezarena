@@ -155,8 +155,8 @@ if($action == 'create')
 		$sql = 'UPDATE '.ADR_CHARACTERS_TABLE.'
 			SET character_party = '.$party_id.', character_leader = 2 WHERE character_id = '.$user_id;
 		$re = $db->sql_query($sql) or die('SQL Error on line '.__LINE__);
+    $char['character_party'] = $party_id;
 		$message = 'Votre groupe a été créé avec succès.';
-		header('Location: adr_party.'.$phpEx);
 	}
 }
 
