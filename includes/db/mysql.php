@@ -411,7 +411,7 @@ class sql_db
 		}
 	}
 
-	// V: **PAN**
+	// V: **SHOOT**
 	function sql_quote($value)
 	{
 		return mysql_real_escape_string($value);

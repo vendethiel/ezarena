@@ -75,7 +75,6 @@ $actual_zone = $adr_user['character_area'];
 $info = zone_get($actual_zone);
 //V: let's say you always have access to the clans page, wherever you are
 //$access = $info['zone_clans'];
-
 //if ( $access == '0' )
 //	adr_previous( Adr_zone_building_noaccess , adr_zones , '' );
 
@@ -887,14 +886,14 @@ if($_GET['action'] ==  "docreate") {
 	if(
 		($name == "") OR 
 		($desc == "") OR 
-		($leader == "") OR 
-		($founder == "") OR 
-		($logo == "") OR 
-		($logo == "http://") OR 
-		($posts == "") OR 
-		($level == "") OR 
-		($points == "") OR 
-		($fee == "")
+		($leader == "")
+		//($founder == "") OR 
+		//($logo == "") OR 
+		//($logo == "http://") OR 
+		//($posts == "") OR 
+		//($level == "") OR 
+		//($points == "") OR 
+		//($fee == "")
 	) {
 		message_die(GENERAL_MESSAGE, $lang['clans_not_all_fields'].'<br /><br />'.sprintf($lang['clans_click_here'], '<a href="'.$file.'?action=create">','</a>'));
 	}
@@ -911,10 +910,15 @@ if($_GET['action'] ==  "docreate") {
 		message_die(GENERAL_MESSAGE, sprintf($lang['clans_clp_details_inv_points'],$points_name, $points, $points_name).'<br /><br />'.sprintf($lang['clans_click_here'], '<a href="'.$file.'?action=create">','</a>'));
 	}
 
+  // V: default out logo
+  if ($logo == 'http://')
+    $logo = '';
+  
 	// Check if logo is a jpg/jpeg/gif/png file. If not, output error!
-	if ( !preg_match("#^((ht|f)tp://)([^ \?&=\#\"\n\r\t<]*?(\.(jpg|jpeg|gif|png))$)#is", $logo) )
+  // V: only check logo if not empty
+	if ( !empty($logo) && !preg_match("#^((ht|f)tp://)([^ \?&=\#\"\n\r\t<]*?(\.(jpg|jpeg|gif|png))$)#is", $logo) )
 	{
-		message_die(GENERAL_MESSAGE, sprintf($lang['clans_clp_details_invalid_logo'],'<b>'.$logo.'</b>').'<br />'.$lang['clans_clp_details_invalid_logo2'].'<br /><br />'.sprintf($lang['clans_click_here'], '<a href="'.$file.'?action=create">','</a>'));
+		message_die(GENERAL_MESSAGE, sprintf($lang['clans_clp_details_invalid_logo'],'<b>'.htmlspecialchars($logo).'</b>').'<br />'.$lang['clans_clp_details_invalid_logo2'].'<br /><br />'.sprintf($lang['clans_click_here'], '<a href="'.$file.'?action=create">','</a>'));
 	}
 
 	// Check if Approving is a right value! (only 0 or 1!)
@@ -924,7 +928,7 @@ if($_GET['action'] ==  "docreate") {
 	}
 
 	// Check if there's a clan with the same name already!
-	$sql = "SELECT name FROM ". ADR_CLANS_TABLE ." WHERE name = '".$name."' ";
+	$sql = "SELECT name FROM ". ADR_CLANS_TABLE ." WHERE name = '".addslashes($name)."' ";
 	if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_ERROR, 'Error retrieving data', '', __LINE__, __FILE__, $sql); } 
 	while ( $row = $db->sql_fetchrow($result) ) 
 	{ if(!empty($row['name'])) { 
@@ -936,15 +940,11 @@ if($_GET['action'] ==  "docreate") {
 	$time = time();
 
 	// Get rid of all those nasty 's, "s and HTML codes
-		$name = stripslashes($name);
-		$name = addslashes($name);
-		$name = htmlspecialchars($name);
-		$desc = stripslashes($desc);
-		$desc = addslashes($desc);
-		$desc = htmlspecialchars($desc);
+  $name = htmlspecialchars($name);
+  $desc = htmlspecialchars($desc);
 
 	$Nsql = "INSERT INTO ". ADR_CLANS_TABLE ." (name,leader,members,logo,description,approving,approvelist,approve_fee,req_posts,req_points,req_level,join_fee,founded,founder,news_orderby,news_order,news_amount) VALUES
-		('".$name."','".$leader."','','".$logo."','".$desc."','".$set_approving."','','','".$posts."','".$points."','".$level."','".$fee."','".$time."','".$founder."','date','0','10')
+		('".addslashes($name)."','".intval($leader)."','','".addslashes($logo)."','".addslashes($desc)."','".$set_approving."','','','".$posts."','".$points."','".$level."','".$fee."','".$time."','".$founder."','date','0','10')
 	";
 	if ( !$db->sql_query($Nsql) ) { message_die(GENERAL_ERROR, 'Error retrieving data', '', __LINE__, __FILE__, $Nsql); } 	
 
