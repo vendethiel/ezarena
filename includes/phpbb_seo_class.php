@@ -127,6 +127,7 @@ class phpbb_seo {
 	* regular phpBB URL rewritting without slowing up the process.
 	*/
 	function url_rewrite($url, $non_html_amp = FALSE) {
+    // V: disabled?
 		if ($this->disabled)
 			return $url;
 
@@ -302,6 +303,10 @@ class phpbb_seo {
 	* To kill duplicates
 	*/
 	function seo_redirect($url, $header = "301 Moved Permanently", $code = 301, $replace = TRUE) {
+    // V: disabled?
+		if ($this->disabled)
+			return $url;
+
 		global $db;
 		if ( !empty($db) ) {
 			$db->sql_close();
