@@ -325,7 +325,7 @@ $template->assign_vars(array(
 	'U_TOWNMAP_COMBAT' => append_sid("adr_battle.$phpEx"),
 	'U_TOWNMAP_MINE' => append_sid("adr_TownMap_mine.$phpEx"),
 	'U_TOWNMAP_ENCHANTEMENT' => append_sid("adr_TownMap_pierrerunique.$phpEx"),
-	'U_TOWNMAP_CLAN' => append_sid("adr_clans.$phpEx"), // V: we use clans
+	'U_TOWNMAP_CLAN' => append_sid("adr_guilds.$phpEx"), // V: we use guilds (used to be clans; and before guild alliances)
 	'U_COPYRIGHT' => append_sid("TownMap_Copyright.$phpEx"),
 	'S_CHARACTER_ACTION' => append_sid("adr_TownMap.$phpEx"),
 ));

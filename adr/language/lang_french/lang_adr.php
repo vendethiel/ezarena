@@ -1856,6 +1856,14 @@ $lang['Adr_set_img_explain'] = 'Image de la panoplie d\'objets';
 $lang['Adr_zone_maps_adr_world_map_title'] = 'Carte du monde';
 $lang['Adr_zone_maps_map'] = 'Carte de %s';
 
+// Renlok's guild mod
+$lang['Adr_battle_won_guild_tax']='<p>La guilde r&eacute;p&egrave; une taxe de %s (argent) et %s (experience), ce qui revient &agrave; %s d\'exp&eacute;rience et %s d\'or.<br />Merci de supporter la guilde !</p>';
+$lang['Adr_guilds_page_name']='Guildes';
+$lang['Adr_guilds_personal_page_name']='Information sur ma guilde';
+
+
+
+
 // that's how ezArena does it ...
 // HERE STARTS THE EzArena-SPECIFIC CODE
 $lang['BUILDING_UNAV'] = 'Bâtiment indisponible';
@@ -1878,3 +1886,4 @@ $lang['ADR_ZONE_BACKGROUND'] = 'Image de fond des combats';
 $lang['ADR_ZONE_BACKGROUND_EXPLAIN'] = 'Cette image sera affich&eacute;e dans le fond de chaque combat s\'effectuant dans la zone.<br />Elle doit &ecirc;tre dans le dossier <i>adr/images/battle/backgrounds/</i><br />Laissez vide pour une image par d&eacute;faut.';
 $lang['ADR_ENABLE_BUILDING'] = 'Cochez la case pour que %s soit disponible dans cette zone';
 $lang['ADR_POTION_NO_EFFECT'] = '%s utilise %s ... Mais rien ne se passe.';
+

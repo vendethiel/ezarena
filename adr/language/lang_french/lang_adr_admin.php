@@ -257,13 +257,6 @@ if ( defined ('IN_ADR_SETTINGS'))
     $lang['Adr_display_topics_battle_stats']='Afficher les stats';
     $lang['Adr_next_level_penalty']='Pénalité à la montée de niveau';
     $lang['Adr_next_level_penalty_explain']='Pourcentage d\'expérience supplémentaire requise par niveau pour la montée de niveau ( au plus un personnage est de haut niveau , au plus il a besoin d\'expérience pour prendre un autre niveau ) ';
-    //GUILD
-    $lang['Adr_guilds_title']='Configuration des guildes';
-    $lang['Adr_guilds_overall_allow']='Activer les guildes OUI ou NON';
-    $lang['Adr_guilds_create_allow']='Activer la création des guildes OUI ou NON';
-    $lang['Adr_guilds_join_allow']='Activer l\'accès aux guildes OUI ou NON';
-    $lang['Adr_guilds_create_level']='Niveau minimum pour créer une guilde';
-    $lang['Adr_guilds_create_money']='Coût de création d\'une guilde';
     $lang['On']='Oui';
     $lang['Off']='Non';
     //GUILD end
@@ -955,6 +948,15 @@ $lang['Adr_Time_4']='Nuit';
 $lang['Adr_monsters_time_title'] = 'Période de la journée';
 
 $lang['Adr_monster_time_choose']='Apparaît à l\'heure :';
+
+//GUILD
+$lang['Adr_guilds_title']='Configuration des guildes';
+$lang['Adr_guilds_overall_allow']='Activer les guildes OUI ou NON';
+$lang['Adr_guilds_create_allow']='Activer la création des guildes OUI ou NON';
+$lang['Adr_guilds_join_allow']='Activer l\'inscription aux guildes OUI ou NON';
+$lang['Adr_guilds_create_level']='Niveau minimum pour créer une guilde';
+$lang['Adr_guilds_create_money']='Coût de création d\'une guilde';
+
 
 // EzArena
 $lang['Adr_battle_monsters_modifier_type']='Formule de calcul de modificateur &agrave; utiliser';

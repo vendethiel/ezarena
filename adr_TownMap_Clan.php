@@ -33,6 +33,8 @@ include($phpbb_root_path . 'adr/includes/adr_global.'.$phpEx);
 $loc = 'town';
 $sub_loc = 'adr_TownMap_Clan';
 
+// V: update! now using guilds. fuck clans!
+
 // V: note that this page is unused because
 // there's nothing in the FAQ about clans (which is the only reason this page
 //  with its 2 links is here)

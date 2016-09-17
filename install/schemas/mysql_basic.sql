@@ -1122,5 +1122,16 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('adr_world_map', 0)
 # Rabbitoshi - levelup penalty
 INSERT INTO `phpbb_rabbitoshi_general` VALUES ('next_level_penalty', 10);
 
+# ADR - Guild mod (Renlok)
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_overall_allow', 1);
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_create_allow', 1);
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_join_allow', 1);
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_create_min_posts', 0);
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_create_min_level', 1);
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('Adr_guild_create_min_money', 0);
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('battle_guild_exp_min', 1);
+INSERT INTO phpbb_adr_general (config_name, config_value) VALUES ('battle_guild_exp_max', 100);
+
+
 
 COMMIT;

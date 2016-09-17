@@ -32,6 +32,7 @@ if( !empty($setmodules) )
 	$module['Adr_vault']['Adr_vault_settings'] = "$filename?mode=vault";
 	$module['Adr_battle']['Adr_battle_settings'] = "$filename?mode=battle";
 	$module['Adr_settings']['Adr_display_settings'] = "$filename?mode=display";
+  $module['Adr_settings']['Adr_guilds'] = "$filename?mode=guilds";
 	return;
 }
 $phpbb_root_path = "./../";
@@ -247,9 +248,58 @@ $template->assign_vars(array(
 	'JOB_CRON_TIME' => $adr_general['job_salary_cron_time'],
 	'JOB_ENABLE' => ( $adr_general['job_salary_enable'] ? 'CHECKED' :'' ),
 	'NO_JOB_ENABLE' => ( !$adr_general['job_salary_enable'] ? 'CHECKED' :'' ),
+
+  // V: manually added guild stuff >.>
+  'GUILDS_OVERALL_ALLOW_CHECKED' => $adr_general['Adr_guild_overall_allow'] ? 'checked' : '',
+  'NO_GUILDS_OVERALL_ALLOW_CHECKED' => !$adr_general['Adr_guild_overall_allow'] ? 'checked' : '',
+  'GUILDS_CREATE_ALLOW_CHECKED' => $adr_general['Adr_guild_create_allow'] ? 'checked' : '',
+  'NO_GUILDS_CREATE_ALLOW_CHECKED' => !$adr_general['Adr_guild_create_allow'] ? 'checked' : '',
+  'GUILDS_JOIN_ALLOW_CHECKED' => $adr_general['Adr_guild_join_allow'] ? 'checked' : '',
+  'NO_GUILDS_JOIN_ALLOW_CHECKED' => !$adr_general['Adr_guild_join_allow'] ? 'checked' : '',
+  'GUILDS_CREATE_LEVEL' => $adr_general['Adr_guild_create_min_level'],
+  'GUILDS_CREATE_MONEY' => $adr_general['Adr_guild_create_min_money'],
 ));
 if ( $submit )
 {
+	if ( $mode == "guilds" )
+	{
+		$guild_overall_allow = intval($HTTP_POST_VARS['guild_overall_allow']);
+		$guild_create_allow = intval($HTTP_POST_VARS['guild_create_allow']);
+		$guild_join_allow = intval($HTTP_POST_VARS['guild_join_allow']);
+		$guild_create_level = intval($HTTP_POST_VARS['guild_create_level']);
+		$guild_create_money = intval($HTTP_POST_VARS['guild_create_money']);
+
+		$sql= "UPDATE " . ADR_GENERAL_TABLE . " SET config_value = '$guild_overall_allow' WHERE config_name = 'Adr_guild_overall_allow' ";
+		if ( !($result = $db->sql_query($sql)) ) 
+		{ 
+			adr_previous( Adr_character_general_update_error , admin_adr_general , '' );
+		} 
+
+		$sql= "UPDATE " . ADR_GENERAL_TABLE . " SET config_value = '$guild_create_allow' WHERE config_name = 'Adr_guild_create_allow' ";
+		if ( !($result = $db->sql_query($sql)) ) 
+		{ 
+			adr_previous( Adr_character_general_update_error , admin_adr_general , '' );
+		} 
+
+		$sql= "UPDATE " . ADR_GENERAL_TABLE . " SET config_value = '$guild_join_allow' WHERE config_name = 'Adr_guild_join_allow' ";
+		if ( !($result = $db->sql_query($sql)) ) 
+		{ 
+			adr_previous( Adr_character_general_update_error , admin_adr_general , '' );
+		}
+
+		$sql= "UPDATE " . ADR_GENERAL_TABLE . " SET config_value = '$guild_create_level' WHERE config_name = 'Adr_guild_create_min_level' ";
+		if ( !($result = $db->sql_query($sql)) ) 
+		{ 
+			adr_previous( Adr_character_general_update_error , admin_adr_general , '' );
+		}
+
+		$sql= "UPDATE " . ADR_GENERAL_TABLE . " SET config_value = '$guild_create_money' WHERE config_name = 'Adr_guild_create_min_money' ";
+		if ( !($result = $db->sql_query($sql)) ) 
+		{ 
+			adr_previous( Adr_character_general_update_error , admin_adr_general , '' );
+		}
+	}
+
 	if ( $mode == "display" )
 	{
 		$display_profile = intval($HTTP_POST_VARS['Adr_profile_display']);
@@ -766,8 +816,17 @@ $template->assign_vars(array(
 	'L_JOB_TITLE' 		=> $lang['Adr_admin_job_title'],
 	'L_JOB_ENABLE' 		=> $lang['Adr_admin_job_enable'],
 	'L_JOB_CRON_TIME'		=> $lang['Adr_admin_job_cron_time'],
-	'S_ADR_ACTION' => append_sid("admin_adr_general.$phpEx?mode=$mode"))
-);
+	'S_ADR_ACTION' => append_sid("admin_adr_general.$phpEx?mode=$mode"),
+
+  'L_GUILDS_TITLE' => $lang['Adr_guilds_title'],
+  'L_GUILDS_OVERALL_ALLOW' => $lang['Adr_guilds_overall_allow'],
+  'L_GUILDS_CREATE_ALLOW' => $lang['Adr_guilds_create_allow'],
+  'L_GUILDS_JOIN_ALLOW' => $lang['Adr_guilds_join_allow'],
+  'L_GUILDS_CREATE_POSTS' => $lang['Adr_guilds_create_posts'],
+  'L_GUILDS_CREATE_LEVEL' => $lang['Adr_guilds_create_level'],
+  'L_GUILDS_CREATE_MONEY' => $lang['Adr_guilds_create_money'],
+  'L_GUILDS_SETTINGS' => $lang['Adr_guilds'],
+));
 $template->pparse('body');
 include('./page_footer_admin.'.$phpEx);
 ?>

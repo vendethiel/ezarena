@@ -103,7 +103,6 @@ define('ADR_ZONE_BUILDINGS_TABLE', $table_prefix.'adr_zone_buildings');
 define('ADR_LIBRARY_TABLE', $table_prefix.'adr_library');
 define('ADR_LIBRARY_LEARN_TABLE', $table_prefix.'adr_library_learned');
 
-// Clans mod advanced
-define('ADR_CLANS_TABLE', $table_prefix.'adr_clans');
-define('ADR_CLANS_NEWS_TABLE', $table_prefix.'adr_clans_news');
-define('ADR_CLANS_SHOUTS_TABLE', $table_prefix.'adr_clans_shouts');
+// Guilds
+define('ADR_GUILDS_TABLE', $table_prefix.'adr_guilds');
+define('ADR_GUILD_MEMBER_TABLE', $table_prefix.'adr_guilds_members');

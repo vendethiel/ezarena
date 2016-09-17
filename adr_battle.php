@@ -1087,6 +1087,70 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 			{
 				$reward = floor((($monster['monster_level'] - $challenger['character_level']) * $adr_general['battle_base_reward_modifier']) / 100);
 			} //($monster['monster_level'] - $challenger['character_level']) > 1
+
+      // guild mod
+      //check if user in guild
+      $sql = "SELECT guild_member_guild_id FROM " . ADR_GUILD_MEMBER_TABLE . "
+        WHERE guild_member_user_id = $user_id";
+      if( !($result = $db->sql_query($sql)) )
+      {
+        message_die(GENERAL_ERROR, 'Could not update battle list', '', __LINE__, __FILE__, $sql);
+      }
+      $result = $db->sql_query($sql);
+      $in_guild = $db->sql_fetchrow($result);
+      if($in_guild['guild_member_guild_id'] > 0){
+        define('IN_GUILD',true);
+        //get guild info
+        // V: we already have the guild_id. use it.
+        $sql = "SELECT * FROM " . ADR_GUILDS_TABLE . " g
+          WHERE g.guild_id = " . $in_guild['guild_member_guild_id'];
+        if( !($result = $db->sql_query($sql)) )
+          message_die(GENERAL_ERROR, 'Could not query guild info', '', __LINE__, __FILE__, $sql);
+        $result = $db->sql_query($sql);
+        $guilddata = $db->sql_fetchrow($result);
+        //set defaults
+        $guildcopper = 0;
+        $guildexp = 0;
+        //sort out rewards after guild deductions
+        $guildcopper = round(($guilddata['guild_copper_pec']/100)*$reward);
+        $reward = $reward-$guildcopper;
+        $guildexp = round(($guilddata['guild_exp_pec']/100)*$exp);
+        $exp = $exp-$guildexp;
+        //check if guild gains a level
+        if(($guilddata['guild_exp']+$guildexp) >= $guilddata['guild_exp_max']){
+          $guildexp = ( ($guildexp+$guilddata['guild_exp'])-$guilddata['guild_exp_max'] );
+          $guildexpmax = round( $guilddata['guild_exp_max']*(rand(175,225)/100) );
+          //update guild and add new level data
+          $sql = "UPDATE " . ADR_GUILDS_TABLE . " 
+            SET guild_vault = (guild_vault + " . $guildcopper . "),
+            guild_exp = (" . $guildexp . "),
+            guild_level = (guild_level + 1),
+            guild_exp_max = " . $guildexpmax . "
+            WHERE guild_id = '" . $char['character_guild_id'] . "'";
+          if( !($result = $db->sql_query($sql)) )
+          {
+            message_die(GENERAL_ERROR, 'Could not update battle list', '', __LINE__, __FILE__, $sql);
+          }
+        } else {
+          //update guild
+          $sql = "UPDATE " . ADR_GUILDS_TABLE . " 
+            SET guild_vault = (guild_vault + " . $guildcopper . "),
+            guild_exp = (guild_exp + " . $guildexp . ")
+            WHERE guild_id = '" . $char['character_guild_id'] . "'";
+          if( !($result = $db->sql_query($sql)) )
+          {
+            message_die(GENERAL_ERROR, 'Could not update battle list', '', __LINE__, __FILE__, $sql);
+          }
+        }
+        $sql = "UPDATE " . ADR_GUILD_MEMBER_TABLE . " 
+          SET guild_member_exp_gained = (guild_member_exp_gained + " . $guildexp . "),
+          guild_member_copper_gained = (guild_member_copper_gained + " . $guildcopper . ")
+          WHERE guild_member_user_id = '$user_id'";
+        if( !($result = $db->sql_query($sql)) )
+        {
+          message_die(GENERAL_ERROR, 'Could not update battle list', '', __LINE__, __FILE__, $sql);
+        }
+      }
 			
 			$sql = " UPDATE  " . ADR_BATTLE_LIST_TABLE . " 
 			SET battle_result = 1 ,
@@ -1148,6 +1212,12 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 			
 			adr_items_clear_broken();
 			$message = sprintf($lang['Adr_battle_won'], $bat['battle_challenger_dmg'], $exp, $bat['battle_opponent_sp'], $reward, get_reward_name(), $challenger['character_hp'], $challenger['character_mp']);
+
+
+      // V: only show message if there's a % going to the guild.
+      if(defined('IN_GUILD') && ($guilddata['guild_copper_pec'] || $guilddata['guild_exp_pec'])){
+        $message .= sprintf($lang['Adr_battle_won_guild_tax'] , $guilddata['guild_copper_pec'].'%' , $guilddata['guild_exp_pec'].'%' , $guildexp , $guildcopper);
+      }
 			
 			///Call Loot System/// 
 			$message .= drop_loot($loot_id, $challenger['character_id'], $dropped_loot_list);

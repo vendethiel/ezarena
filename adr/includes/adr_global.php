@@ -35,6 +35,7 @@ include_once($phpbb_root_path . 'adr/includes/adr_functions_refactor_zones.'.$ph
 include_once($phpbb_root_path . 'adr/includes/adr_functions_refactor_battle.'.$phpEx);
 include_once($phpbb_root_path . 'adr/includes/adr_functions_refactor_events.'.$phpEx);
 include_once($phpbb_root_path . 'adr/includes/adr_functions_refactor_battle_item_types.'.$phpEx);
+include_once($phpbb_root_path . 'adr/includes/adr_functions_refactor_guilds.'.$phpEx);
 
 // V: we always cache.
 define('ADR_USE_CACHE', true);
@@ -71,7 +72,6 @@ if ( defined('IN_ADR_ZONES') || defined('IN_ADR_ZONES_ADMIN'))
 if ( defined('IN_ADR_BATTLE'))
 {
 	include_once($phpbb_root_path . 'adr/includes/adr_functions_communicate.'.$phpEx);
-	include_once($phpbb_root_path . 'adr/includes/adr_functions_clans.'. $phpEx);
 	include_once($phpbb_root_path . 'adr/includes/adr_functions_battle.'.$phpEx);
 }
 
@@ -81,7 +81,6 @@ if( !file_exists($phpbb_root_path . 'adr/language/lang_' . $board_config['defaul
 	$board_config['default_lang'] = 'english'; 
 } 
 include_once($phpbb_root_path . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr.' . $phpEx);
-include_once($phpbb_root_path . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr_clans.' . $phpEx);
 include_once($phpbb_root_path . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr_spells.' . $phpEx);
 if ( defined('IN_ADR_LIBRARY'))
 {
@@ -97,6 +96,7 @@ if ( defined('IN_ADR_ADMIN'))
 {
 	include_once($phpbb_root_path . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr_admin.' . $phpEx);
 }
+include_once($phpbb_root_path . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr_guilds.' . $phpEx);
 
 include_once($phpbb_root_path . 'adr/includes/adr_functions_spells.'.$phpEx);
 include_once($phpbb_root_path . 'adr/includes/adr_functions_spells_complete.'.$phpEx);

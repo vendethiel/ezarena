@@ -90,9 +90,19 @@ if ( !$adr_general['Adr_disable_rpg'] && $userdata['user_level'] != ADMIN )
 // Get the user infos
 $adr_char = adr_get_user_infos($user_id);
 
+//get guild info
+// V: why??
+$sql = "SELECT g.guild_heal_pec, g.guild_id FROM " . ADR_GUILDS_TABLE . " g
+  LEFT JOIN " . ADR_GUILD_MEMBER_TABLE . " gm ON ( g.guild_id = gm.guild_member_guild_id )
+  WHERE gm.guild_member_user_id = $user_id";
+if( !($result = $db->sql_query($sql)) )
+{
+  message_die(GENERAL_ERROR, 'Could not query guild info', '', __LINE__, __FILE__, $sql);
+}
+$guild = $db->sql_fetchrow($result);
+
+
 // Fix the values
-
-
 $InfoTemple = $HTTP_POST_VARS['InfoTemple'];
 
 if ( $InfoTemple )

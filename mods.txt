@@ -460,7 +460,7 @@ Etend les restrictions de zones aux pages suivantes (configurable depuis l'ACP) 
  - blacksmith
  - brewing
  - cauldron
- - clans
+ - used to have c_lans
  - cooking
  - fish
  - herbal
@@ -485,12 +485,6 @@ Ajoute un système de cuisine au mod Crafting.
 Addons :
  - Bug fixes all over the place (using potions, effects, etc) - Informpro
 
-# ADR : Clans Mod
-Ajoute un système de clans avancé.
-(note : sert de remplacement au mod "Guild Alliances")
-Addons :
- - Addon Clan Restriction for Party Mod - Informpro
-
 # ADR : Dynamic Town Maps for Zone 0.1.4 - Ozzie
 Permet de créer (et de modifier) dynamiquement des cartes
 Addons :
@@ -498,6 +492,11 @@ Addons :
  - Addon pour Enchant&Mine Links in header - Informpro
  - Addon Assisted Cell Selection - Informpro
  - Addon Togglable Zone Map - Informpro
+
+# ADR : Guild Mod 0.1 - Renlok
+Ajoute un systeme de guilde
+Addons :
+ - Addon Make it work - Informpro
 
 # ADR : Items no sell 0.0.2 - Makien
 Permet de rendre des objets non vendables (objets rares, par exemple).

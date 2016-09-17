@@ -4,8 +4,6 @@
 # $Id: mysql_schema.sql,v 1.35.2.12 2006/02/06 21:32:42 grahamje Exp $
 #
 
-START TRANSACTION;
-
 # --------------------------------------------------------
 #
 # Table structure for table 'phpbb_announcement_centre'
@@ -1475,6 +1473,9 @@ CREATE TABLE phpbb_adr_characters (
   character_skill_shield_level int(8) UNSIGNED NOT NULL default '1',
   character_skill_shield_uses int(8) UNSIGNED NOT NULL default '0',
 
+	# ADR - Guild mod (Renlok)
+	character_guild_hops int(5) default '0' NOT NULL,
+
   PRIMARY KEY  (character_id)
 ) ;
 
@@ -2301,47 +2302,76 @@ CREATE TABLE `phpbb_adr_library_learned` (
   INDEX  (`book_id`) 
 );
 
-# ADR - Clans Mod
-CREATE TABLE `phpbb_adr_clans` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `name` mediumtext NOT NULL,
-  `leader` mediumint(9) NOT NULL default '0',
-  `members` mediumtext NOT NULL,
-  `logo` mediumtext NOT NULL,
-  `description` mediumtext NOT NULL,
-  `approving` tinyint(1) NOT NULL default '0',
-  `approvelist` mediumtext NOT NULL,
-  `approve_fee` mediumtext NOT NULL,
-  `req_posts` mediumint(9) NOT NULL default '0',
-  `req_points` mediumint(9) NOT NULL default '0',
-  `req_level` mediumint(9) NOT NULL default '0',
-  `join_fee` mediumint(9) NOT NULL default '0',
-  `founded` int(11) NOT NULL default '0',
-  `founder` mediumint(9) NOT NULL default '0',
-  `news_orderby` mediumtext NOT NULL,
-  `news_order` tinyint(1) NOT NULL default '0',
-  `news_amount` int(5) NOT NULL default '10',
-  `stash_points` mediumint(9) NOT NULL default '0',
-  `stash_items` mediumtext NOT NULL,
-  PRIMARY KEY  (`id`)
-);
+# ADR - Guild Mod (Renlok)
 
-CREATE TABLE `phpbb_adr_clans_news` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `clan` mediumint(9) NOT NULL default '0',
-  `poster` mediumint(9) NOT NULL default '0',
-  `title` mediumtext NOT NULL,
-  `text` mediumtext NOT NULL,
-  `date` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
-);
 
-CREATE TABLE `phpbb_adr_clans_shouts` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `clan` mediumint(9) NOT NULL default '0',
-  `poster` mediumint(9) NOT NULL default '0',
-  `text` mediumtext NOT NULL,
-  PRIMARY KEY  (`id`)
-);
+CREATE TABLE `phpbb_adr_guilds` (
+  `guild_id` int(5) NOT NULL auto_increment,
+  `guild_name` varchar(32) NOT NULL default '',
+  `guild_leader` varchar(32) NOT NULL default '',
+  `guild_leader_id` int(5) NOT NULL default '0',
+  `guild_security_rating` decimal(2,2) NOT NULL default '0.00',
+  `guild_date_created` int(12) NOT NULL default '0',
+  `guild_description` varchar(100) NOT NULL default '',
+  `guild_history` mediumtext NOT NULL,
+  `guild_logo` varchar(255) NOT NULL default '',
+  `guild_level` int(5) NOT NULL default '1',
+  `guild_exp` int(10) NOT NULL default '0',
+  `guild_exp_max` int(10) NOT NULL default '1000',
+  `guild_hp` int(15) NOT NULL default '0',
+  `guild_hp_max` int(15) NOT NULL default '0',
+  `guild_vault` int(12) NOT NULL default '0',
+  `guild_accept_new` tinyint(1) NOT NULL default '0',
+  `guild_approve` tinyint(1) NOT NULL default '1',
+  `guild_join_min_level` int(5) NOT NULL default '1',
+  `guild_join_min_money` int(8) NOT NULL default '0',
+  `guild_rank_leader` varchar(25) NOT NULL default 'Guild Leader',
+  `guild_rank_1` varchar(25) NOT NULL default 'Guild Co-Leader',
+  `guild_rank_1_id` int(5) NOT NULL default '0',
+  `guild_rank_2` varchar(25) NOT NULL default 'Guild Co-Leader',
+  `guild_rank_2_id` int(5) NOT NULL default '0',
+  `guild_rank_3` varchar(25) NOT NULL default 'Guild Rank 3',
+  `guild_rank_3_id` int(5) NOT NULL default '0',
+  `guild_rank_4` varchar(25) NOT NULL default 'Guild Rank 4',
+  `guild_rank_4_id` int(5) NOT NULL default '0',
+  `guild_rank_5` varchar(25) NOT NULL default 'Guild Rank 5',
+  `guild_rank_5_id` int(5) NOT NULL default '0',
+  `guild_rank_member` varchar(25) NOT NULL default 'Guild Member',
+  `guild_account_time` int(11) NOT NULL default '0',
+  `guild_size` int(3) NOT NULL default '1',
+  `guild_copper_pec` int(3) NOT NULL default '0',
+  `guild_exp_pec` int(3) NOT NULL default '0',
+  `guild_forums` varchar(25) default NULL,
+  `guild_forum_group` int(10) NOT NULL default '0',
+  `guild_heal_pec` int(3) NOT NULL default '0',
+  `guild_ore` int(8) NOT NULL default '0',
+  `guild_gold` int(8) NOT NULL default '0',
+  `guild_land` int(8) NOT NULL default '0',
+  `guild_space` int(8) NOT NULL default '0',
+  `guild_building` int(8) NOT NULL default '0',
+  `building_delay` int(8) NOT NULL default '0',
+  `guild_activated_buildings` text NOT NULL,
+  `building_offence` int(8) NOT NULL default '0',
+  `building_defence` int(8) NOT NULL default '0',
+  `guild_attacking` int(8) NOT NULL default '0',
+  `guild_attack_delay` int(8) NOT NULL default '0',
+  PRIMARY KEY  (`guild_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
-COMMIT;
+CREATE TABLE `phpbb_adr_guilds_members` (
+  `guild_member_id` int(8) NOT NULL auto_increment,
+  `guild_member_guild_id` int(8) NOT NULL default '0',
+  `guild_member_user_id` int(8) NOT NULL default '0',
+  `guild_member_exp_gained` int(8) NOT NULL default '0',
+  `guild_member_copper_gained` int(8) NOT NULL default '0',
+  `guild_member_loan` int(8) NOT NULL default '0',
+  `guild_member_loan_paided` int(8) NOT NULL default '0',
+  `guild_member_loan_total_pay` int(8) NOT NULL default '0',
+  `guild_member_join_date` int(15) NOT NULL default '0',
+  `guild_member_auth` int(1) NOT NULL default '0',
+  `guild_member_votes` int(1) NOT NULL default '0',
+  `guild_member_prefs_notify` int(5) NOT NULL default '1',
+  PRIMARY KEY  (`guild_member_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;
+
+

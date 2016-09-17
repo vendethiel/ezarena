@@ -719,6 +719,38 @@
 </table>
 <!-- END display -->
 
+<!-- BEGIN guilds -->
+
+<table border="0" cellpadding="4" cellspacing="1" width="90%" class="forumline" align="center">
+  <tr>
+    <th align="center" colspan="2">{L_GUILDS_TITLE}</th>
+  </tr>
+  <tr>
+    <td class="row1" width="65%"><span class="gen">{L_GUILDS_OVERALL_ALLOW}</span></td>
+    <td class="row2" align="center" valign="top"><input type="radio" name="guild_overall_allow" value="1" {GUILDS_OVERALL_ALLOW_CHECKED} />{L_ON}&nbsp;<input type="radio" name="guild_overall_allow" value="0" {NO_GUILDS_OVERALL_ALLOW_CHECKED} />{L_OFF}</td>
+  </tr>
+  <tr>
+    <td class="row1" width="65%"><span class="gen">{L_GUILDS_CREATE_ALLOW}</span></td>
+    <td class="row2" align="center" valign="top"><input type="radio" name="guild_create_allow" value="1" {GUILDS_CREATE_ALLOW_CHECKED} />{L_ON}&nbsp;<input type="radio" name="guild_create_allow" value="0" {NO_GUILDS_CREATE_ALLOW_CHECKED} />{L_OFF}</td>
+  </tr>
+  <tr>
+    <td class="row1" width="65%"><span class="gen">{L_GUILDS_JOIN_ALLOW}</span></td>
+    <td class="row2" align="center" valign="top"><input type="radio" name="guild_join_allow" value="1" {GUILDS_JOIN_ALLOW_CHECKED} />{L_ON}&nbsp;<input type="radio" name="guild_join_allow" value="0" {NO_GUILDS_JOIN_ALLOW_CHECKED} />{L_OFF}</td>
+  </tr>
+
+  <tr>
+    <td class="row1" width="65%"><span class="gen">{L_GUILDS_CREATE_LEVEL}</span></td>
+    <td class="row2" align="center" ><input class="post" type="text" maxlength="8" size="8" name="guild_create_level"  value="{GUILDS_CREATE_LEVEL}" /></td>
+  </tr>
+  <tr>
+    <td class="row1" width="65%"><span class="gen">{L_GUILDS_CREATE_MONEY}</span></td>
+    <td class="row2" align="center" ><input class="post" type="text" maxlength="8" size="8" name="guild_create_money"  value="{GUILDS_CREATE_MONEY}" /></td>
+  </tr>
+</table>
+
+<!-- END guilds -->
+
+
 <br clear="all" />
 
 <table border="0" cellpadding="4" cellspacing="1" width="100%" class="forumline">
