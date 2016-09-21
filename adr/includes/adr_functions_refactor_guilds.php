@@ -53,13 +53,22 @@ function adr_guild_logo($logo)
  *
  * Pass the second parameter as 'count' to get only the count
  */
-function adr_guild_get_members($guild_id, $mode = '')
+function adr_guild_get_members($guild_id, $mode = '', $excludeLeader = false, $auth = ADR_GUILD_MEMBER_CONFIRMED)
 {
   global $db;
 
-  $sql = " SELECT guild_member_guild_id FROM " . ADR_GUILD_MEMBER_TABLE . "
+  $sql = "SELECT c.*, gm.*
+    FROM " . ADR_GUILD_MEMBER_TABLE . " gm
+    LEFT JOIN " . ADR_CHARACTERS_TABLE . " c
+      ON c.character_id = gm.guild_member_user_id
     WHERE guild_member_guild_id = " . intval($guild_id) . "
-    AND guild_member_auth = " . ADR_GUILD_MEMBER_CONFIRMED;
+    AND guild_member_auth = " . $auth;
+  if ($excludeLeader)
+  {
+    $guild = adr_guild_get($guild_id);
+    $sql .= "
+      AND gm.guild_member_user_id != " . $guild['guild_leader_id'];
+  }
   if( !($result = $db->sql_query($sql)) )
   {
     message_die(GENERAL_ERROR, 'Could not query count for info page', '', __LINE__, __FILE__, $sql);
@@ -113,7 +122,7 @@ function adr_guild_deposit($guild_id)
 function adr_guild_get($id)
 {
   global $db;
-  static $cache;
+  static $cache = array();
   if (isset($cache[$id]))
     return $cache[$id];
   $sql = " SELECT * FROM " . ADR_GUILDS_TABLE . "
@@ -180,10 +189,57 @@ function adr_guild_add_urls()
 function adr_guild_add_lang()
 {
   global $template, $lang;
+
   $template->assign_vars(array(
+    'L_APPROVE_ROW' => $lang['Adr_guilds_position'],
+    'L_APPROVE_LIST' => $lang['Adr_guilds_approve_list'],
+    'L_APPROVE_NAME' => $lang['Adr_guilds_approve_applicant'],
+    'L_APPROVE_LEVEL' => $lang['Adr_guilds_approve_level'],
+    'L_APPROVE_HP' => $lang['Adr_guilds_approve_hp'],
+    'L_APPROVE_MP' => $lang['Adr_guilds_approve_mp'],
+    'L_APPROVE_WINS' => $lang['Adr_guilds_approve_wins'],
+    'L_APPROVE_DEFEATS' => $lang['Adr_guilds_approve_defeats'],
+    'L_APPROVE_FLEES' => $lang['Adr_guilds_approve_flees'],
+    'L_APPROVE_HOPS' => $lang['Adr_guilds_approve_hops'],
+    'L_APPROVE_SELECT' => $lang['Adr_guilds_approve_select'],
+    'L_GUILDS_BACK' => $lang['Adr_guilds_back'],
+    'L_GUILDS_BIO_TITLE' => $lang['Adr_guilds_bio_title'],
+    'L_GUILD_VAULT' => $lang['Adr_guild_vault_title'],
+    'L_VAULT_TOTAL' => $lang['Adr_guild_vault_total'],
+    'L_GUILDS_BIO_TEXT' => $lang['Adr_guilds_bio_text'],
+    'L_GUILDS_DELETE_TITLE' => $lang['Adr_guilds_delete_title'],
+    'L_GUILDS_DELETE_TEXT' => $lang['Adr_guilds_delete_text'],
+    'L_GUILDS_BACK' => $lang['Adr_guilds_back_to_guild_admin'],
+    'L_RANK_SET_1' => $lang['Adr_guilds_set_rank_1'],
+    'L_RANK_1' => $lang['Adr_guilds_rank_1'],
+    'L_RANK_SET_2' => $lang['Adr_guilds_set_rank_2'],
+    'L_RANK_2' => $lang['Adr_guilds_rank_2'],
+    'L_RANK_SET_3' => $lang['Adr_guilds_set_rank_3'],
+    'L_RANK_3' => $lang['Adr_guilds_rank_3'],
+    'L_RANK_SET_4' => $lang['Adr_guilds_set_rank_4'],
+    'L_RANK_4' => $lang['Adr_guilds_rank_4'],
+    'L_RANK_SET_5' => $lang['Adr_guilds_set_rank_5'],
+    'L_RANK_5' => $lang['Adr_guilds_rank_5'],
+    'L_MEMBERS_LIST' => $lang['Adr_guilds_set_rank_list'],
+    'L_SUBMIT' => $lang['Adr_guilds_submit'],
+    'L_USERS_ROW' => $lang['Adr_guilds_position'],
+    'L_SUBMIT' => $lang['Adr_guilds_submit'],
+    'L_GUILDS_BACK' => $lang['Adr_guilds_back_to_guild_admin'],
+    'L_USERS_LIST' => $lang['Adr_guilds_users'],
+    'L_USERS_NAME' => $lang['Adr_guilds_approve_applicant'],
+    'L_USERS_LEVEL' => $lang['Adr_guilds_approve_level'],
+    'L_USERS_HP' => $lang['Adr_guilds_approve_hp'],
+    'L_USERS_MP' => $lang['Adr_guilds_approve_mp'],
+    'L_USERS_WINS' => $lang['Adr_guilds_approve_wins'],
+    'L_USERS_DEFEATS' => $lang['Adr_guilds_approve_defeats'],
+    'L_USERS_FLEES' => $lang['Adr_guilds_approve_flees'],
+    'L_USERS_HOPS' => $lang['Adr_guilds_approve_hops'],
+    'L_USERS_SELECT' => $lang['Adr_guilds_approve_select'],
+    'L_GUILDS_BACK' => $lang['Adr_guilds_back'],
     'L_GUILDS_RANKS' => $lang['Adr_guilds_ranks'],
     'L_LEAGUE_TABLE' => $lang['Adr_guilds_league_table'],
     'L_ROW' => $lang['Adr_guilds_position'],
+    'L_GUILDS_BACK' => $lang['Adr_guilds_back_to_guild_admin'],
     'L_NAME' => $lang['Adr_guilds_name2'],
     'L_LEADER' => $lang['Adr_guilds_leader'],
     'L_WINS' => $lang['Adr_guilds_wins'],
@@ -213,8 +269,10 @@ function adr_guild_add_lang()
     'L_GUILD_JOIN_LEVEL' => $lang['Adr_guilds_join_level'],
     'L_GUILD_JOIN_MONEY1' => $lang['Adr_guilds_join_money1'],
     'L_GUILD_JOIN_MONEY2' => $lang['Adr_guilds_join_money2'],
-    'L_SUBMIT' => $lang['Adr_guilds_create_submit'],
+    //'L_SUBMIT' => $lang['Adr_guilds_create_submit'],
     'L_GUILDS_BACK' => $lang['Adr_guilds_back'],
+    'L_GUILDS_CONFIRM_TITLE' => $lang['Adr_guilds_increase_title'],
+    'L_GUILDS_BACK' => $lang['Adr_guilds_back_to_guild_admin'],
     'L_GUILDS_JOIN_MONEY_TITLE' => $lang['Adr_guilds_join_money_title'],
     'L_GUILDS_ERROR_TITLE' => $lang['Adr_guilds_error_title'],
     'L_GUILDS_CREATE_TITLE' => $lang['Adr_guilds_create_title'],
@@ -247,6 +305,43 @@ function adr_guild_add_lang()
     'L_GUILDS_RETRACT_BUTTON' => $lang['Adr_guilds_retract_button'],
     'L_GUILDS_LEAVE_BUTTON' => $lang['Adr_guilds_leave_button'],
     'L_GUILDS_INFO_RANKS' => $lang['Adr_guilds_info_ranks'],
+    'L_GUILDS_INFO_MEMBERS' => $lang['Adr_guilds_info_members'],
+    'L_GUILDS_LEADER_DESC' => $lang['Adr_guilds_leader_desc'],
+    'L_GUILDS_LEADER_CP' => $lang['Adr_guilds_leader_cp'],
+    'L_GUILDS_LEADER_LOGO' => $lang['Adr_guilds_logo'],
+    'L_GUILDS_LEADER_GENERAL' => $lang['Adr_guilds_leader_general'],
+    'L_GUILDS_INFO' => $lang['Adr_guilds_info'],
+    'L_GUILDS_INFO_LEADER' => $lang['Adr_guilds_info_leader'],
+    'L_GUILDS_INFO_EXP_PEC' => $lang['Adr_guilds_exp_pec'],
+    'L_GUILDS_INFO_DATE2' => $lang['Adr_guilds_info_date2'],
+    'L_GUILDS_MANAGEMENT' => $lang['Adr_guilds_management'],
+    'L_GUILDS_LEADER_APPROVE' => $lang['Adr_guilds_leader_approve'],
+    'L_GUILDS_INFO_LEVEL' => $lang['Adr_guilds_info_level'],
+    'L_GUILDS_INFO_VAULT' => $lang['Adr_guilds_info_vault'],
+    'L_GUILDS_INFO_DATE' => $lang['Adr_guilds_info_date'],
+    'L_GUILDS_INFO_LENGTH' => $lang['Adr_guilds_info_length'],
+    'L_GUILDS_INFO_COPPER_PEC' => $lang['Adr_guilds_copper_pec'],
+    'L_GUILDS_INFO_HEAL_PEC' => $lang['Adr_guilds_heal_pec'],
+    'L_GUILDS_LEADER_DELETE' => $lang['Adr_guilds_leader_delete'],
+    'L_GUILDS_LEADER_USERS' => $lang['Adr_guilds_leader_users'],
+    'L_GUILDS_LEADER_SET_RANKS' => $lang['Adr_guilds_leader_set_ranks'],
+    'L_GUILDS_VAULT' => $lang['Adr_guilds_vault'],
+    'L_GUILDS_LEADER_NEW_LEADER' => $lang['Adr_guilds_leader_new_leader'],
+    'L_GUILDS_INFO_JOIN_REQS' => $lang['Adr_guilds_join_reqs'],
+    'L_GUILDS_INFO_JOIN_ACCEPT_NEW' => $lang['Adr_guilds_join_accept_new'],
+    'L_GUILDS_INFO_JOIN_LEVEL' => $lang['Adr_guilds_join_reqs_level'],
+    'L_GUILDS_INFO_JOIN_MONEY' => $lang['Adr_guilds_join_reqs_money'],
+    'L_GUILDS_INFO_JOIN_APPROVE_NEW' => $lang['Adr_guilds_join_approve'],
+    'L_GUILDS_INFO_RANKS' => $lang['Adr_guilds_info_ranks'],
+    'L_GUILDS_LEADER_RANK1' => $lang['Adr_guilds_leader_rank1'],
+    'L_GUILDS_LEADER_RANK2' => $lang['Adr_guilds_leader_rank2'],
+    'L_GUILDS_LEADER_RANK3' => $lang['Adr_guilds_leader_rank3'],
+    'L_GUILDS_LEADER_RANK4' => $lang['Adr_guilds_leader_rank4'],
+    'L_GUILDS_LEADER_RANK5' => $lang['Adr_guilds_leader_rank5'],
+    'L_GUILDS_LEADER_RANK_MEMBER' => $lang['Adr_guilds_leader_rank_member'],
+    'L_GUILDS_LEADER_BIO' => $lang['Adr_guilds_leader_bio'],
+    //'L_SUBMIT' => $lang['Adr_guilds_submit'],
+    'L_GUILDS_BACK' => $lang['Adr_guilds_back_to_guild'],
   ));
 }
 
@@ -518,6 +613,27 @@ if ( $character['character_guild_prefs_notify'] )
   adr_previous('Adr_guilds_join_approval', 'adr_guilds', "mode=guilds_join&amp;sub_mode=guilds_info_page&amp;guild_id=".$guild_id);
 }
 
+function adr_guild_build_member_options($members, $selected)
+{
+  $list = '';
+  foreach ($members as $member)
+  {
+    $name = adr_get_lang($member['character_name']);
+    $selected = ($selected == $member['character_id']) ? 'selected' : '';
+    $list .= '<option value="'.$member['character_id'].'" '.$selected.' >' . $name . '</option>';
+  }
+  return $list;
+}
+
+function adr_guild_build_members_select($members, $selected, $name, $key)
+{
+  $list = '<select name="' . $name . '">';
+  $list .= '<option value="0">' . $key . '</option>';
+  $list .= adr_guild_build_member_options($members, $selected);
+  $list .= '</select>';	
+  return $list;
+}
+
 function adr_guild_get_character_by_rank($rank, $guild_id)
 {
   global $db;
@@ -533,4 +649,9 @@ function adr_guild_get_character_by_rank($rank, $guild_id)
   $character = $db->sql_fetchrow($result);
   $db->sql_freeresult($result);
   return $character;
+}
+
+function adr_guild_increase_size_cost($guild)
+{
+  return round((($guild['guild_size']-1)*10000)/(($guild['guild_level']-$guild['guild_size'])/70));
 }

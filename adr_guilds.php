@@ -293,8 +293,6 @@ case 'guilds_join' : // mode
     break;
 
   case 'guilds_ranks': // guilds_join submode
-    $guild_id = intval($HTTP_GET_VARS['guild_id']);
-    $guild = adr_guild_get($guild);
     if (!$guild)
       break;
     $template->assign_block_vars('guilds_ranks' , array());
@@ -308,21 +306,21 @@ case 'guilds_join' : // mode
     // Grab general guild member details...
     $sql = "SELECT character_name
       FROM " . ADR_CHARACTERS_TABLE . " c
-      AND character_id NOT IN (
-        '" . $guild['guild_rank_1'] . "',
-        '" . $guild['guild_rank_2'] . "',
-        '" . $guild['guild_rank_3'] . "',
-        '" . $guild['guild_rank_4'] . "',
-        '" . $guild['guild_rank_5'] . "'
-      )
       INNER JOIN " . ADR_GUILD_MEMBER_TABLE . " gm
         ON gm.guild_member_user_id = c.character_id
       WHERE gm.guild_member_guild_id = $guild_id
-        AND gm.guild_member_auth = " . ADR_GUILD_MEMBER_CONFIRMED;
+        AND gm.guild_member_auth = " . ADR_GUILD_MEMBER_CONFIRMED . "
+        AND character_id NOT IN (
+          '" . $guild['guild_rank_1_id'] . "',
+          '" . $guild['guild_rank_2_id'] . "',
+          '" . $guild['guild_rank_3_id'] . "',
+          '" . $guild['guild_rank_4_id'] . "',
+          '" . $guild['guild_rank_5_id'] . "'
+        )";
     $result = $db->sql_query($sql); 
     $members = $db->sql_fetchrowset($result);
     $db->sql_freeresult($result);
-    $members_list = 
+    $members_list = '';
     $member_names = array();
     foreach ($members as $member)
       $member_names[] = $member['character_name'];

@@ -190,15 +190,15 @@ if ( defined('IN_ADR_GUILDS'))
 
    // Set ranks... 
    $lang['Adr_guilds_set_rank_1']='Promotion du Rang 1'; 
-   $lang['Adr_guilds_rank_1']='Grade courant du Membre 1:'; 
+   $lang['Adr_guilds_rank_1']='Membre rang 1 :'; 
    $lang['Adr_guilds_set_rank_2']='Promotion du Rang 2'; 
-   $lang['Adr_guilds_rank_2']='Grade courant du Membre 2:'; 
+   $lang['Adr_guilds_rank_2']='Membre rang 2 :'; 
    $lang['Adr_guilds_set_rank_3']='Promotion du Rang 3'; 
-   $lang['Adr_guilds_rank_3']='Grade courant du Membre 3:'; 
+   $lang['Adr_guilds_rank_3']='Membre rang 3 :'; 
    $lang['Adr_guilds_set_rank_4']='Promotion du Rang 4'; 
-   $lang['Adr_guilds_rank_4']='Grade courant du Membre 4:'; 
+   $lang['Adr_guilds_rank_4']='Membre rang 4 :'; 
    $lang['Adr_guilds_set_rank_5']='Promotion du Rang 5'; 
-   $lang['Adr_guilds_rank_5']='Grade courant du Membre 5:'; 
+   $lang['Adr_guilds_rank_5']='Membre rang 5 :'; 
    $lang['Adr_guilds_set_rank_list']='Choisissez le membre à Promouvoir:'; 
    $lang['Adr_guilds_set_rank']='Position Vacante'; 
    $lang['Adr_guilds_rank_none']='<i>Non selectionné</i>'; 
