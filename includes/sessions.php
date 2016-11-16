@@ -617,21 +617,13 @@ function record_guests_visit(&$userdata)
 		//$current_hour = 3600 * floor(time() / 3600); // div to get the current hour
 		// V: use last 5 minutes to remove the need for guest sessions (see mods/show_online)
 		$current_5mins = $timer_diff * floor(time() / $timer_diff);
-		$sql = 'UPDATE ' . GUESTS_VISIT_TABLE . '
-				SET guest_visit = guest_visit + 1
-				WHERE guest_time = ' . intval($current_5mins);
-		if ( !($result = $db->sql_query($sql)) || !$db->sql_affectedrows() )
-		{
-			$sql = 'INSERT INTO ' . GUESTS_VISIT_TABLE . '
-					(guest_time, guest_visit) VALUES (' . intval($current_5mins) . ', 1)';
-			if ( !($result = $db->sql_query($sql)) )
-			{
-				message_die(CRITICAL_ERROR, 'Error creating new guest visit stat', '', __LINE__, __FILE__, $sql);
-			}
-			$db->sql_freeresult($result);
-		}
-		if ($result) {
-			$db->sql_freeresult($result);
+    $sql = 'INSERT INTO ' . GUESTS_VISIT_TABLE . '
+        (guest_time, guest_visit) VALUES (' . intval($current_5mins) . ', 1)';
+    if ( !($result = $db->sql_query($sql)) )
+    {
+      message_die(CRITICAL_ERROR, 'Error creating new guest visit stat', '', __LINE__, __FILE__, $sql);
+    }
+    $db->sql_freeresult($result);
 		}
 
 		// V: if we had to update, reset it so we can update again
