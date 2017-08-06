@@ -82,7 +82,7 @@ init_userprefs($userdata);
 //-- mod : pm threshold ----------------------------------------------------------------------------
 //-- add
 $pm_allow_threshold = isset($board_config['pm_allow_threshold']) ? $board_config['pm_allow_threshold'] : 15;
-// V: uh, refactor this a big... erm...
+// V: uh, refactor this a bit... erm...
 if ( !$userdata['session_logged_in'] )
 {
 	redirect(append_sid("login.$phpEx?redirect=privmsg.$phpEx", true));

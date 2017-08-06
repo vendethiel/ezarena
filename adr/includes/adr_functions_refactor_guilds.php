@@ -79,6 +79,24 @@ function adr_guild_get_members($guild_id, $mode = '', $excludeLeader = false, $a
 }
 
 /**
+ * Returns the guild_id from someone's user_id, or NULL.
+ */
+function adr_guild_get_by_user($user_id)
+{
+  global $db;
+
+  $sql = "SELECT guild_member_guild_id
+    FROM " . ADR_GUILD_MEMBER_TABLE . "
+    WHERE guild_member_user_id = " . intval($user_id);
+  if (!($result = $db->sql_query($sql)))
+  {
+    message_die(GENERAL_ERROR, 'Could not query guild member info by user id', '', __LINE__, __FILE__, $sql);
+  }
+  $row = $db->sql_fetchrow($result);
+  return $row ? $row['guild_member_guild_id'] : NULL;
+}
+
+/**
  * Returns the total count of members, authenticated or not.
  */
 function adr_guild_count_all_members($guild_id)

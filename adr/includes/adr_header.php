@@ -41,11 +41,7 @@ $adr_user = adr_get_user_infos($userdata['user_id']);
 $area_id = $adr_user['character_area'];
 $actual_season = $board_config['adr_seasons'];
 $actual_time = $board_config['adr_time'];
-$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
-       WHERE zone_id = '$area_id' ";
-if( !($result = $db->sql_query($sql)) )
-        message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
-$zone = $db->sql_fetchrow($result);
+$zone = zone_get($area_id);
 $zone_shops = $zone['zone_shops'];
 $zone_forge = $zone['zone_forge'];
 $zone_mine = $zone['zone_mine'];

@@ -553,16 +553,7 @@ function adr_character_created_check($user_id)
 {
 	global $db , $lang , $phpEx , $phpbb_root_path , $board_config, $table_prefix ;
 
-	$user_id = intval($user_id);
-
-	// Check if user has created an ADR character or not
-	$sql = "SELECT character_id FROM  " . ADR_CHARACTERS_TABLE . "
-		WHERE character_id = $user_id ";
-	if ( !($result = $db->sql_query($sql)) ) 
-	{ 
-		message_die(CRITICAL_ERROR, 'Error checking if user has character'); 
-	}	
-	$row = $db->sql_fetchrow($result);
+  $row = adr_get_user_infos($user_id);
 
 	if ( !$row['character_id'] ) 
 	{	

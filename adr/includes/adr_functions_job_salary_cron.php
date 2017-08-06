@@ -29,14 +29,7 @@ function adr_job_salary_check( $user_id )
 
 	$user_id = intval($user_id);
 
-	$sql = "SELECT * FROM " . ADR_CHARACTERS_TABLE . "
-		 WHERE character_id = $user_id ";
-	if ( !($result = $db->sql_query($sql)) ) 
-	{ 
-		message_die(GENERAL_ERROR, 'Error showing all job list' , "", __LINE__, __FILE__, $sql); 
-	} 
-	$character = $db->sql_fetchrow($result);
-
+  $character = adr_get_user_infos($user_id);
 	if (!$character)
 	{
 		return;

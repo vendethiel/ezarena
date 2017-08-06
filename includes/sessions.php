@@ -624,7 +624,6 @@ function record_guests_visit(&$userdata)
       message_die(CRITICAL_ERROR, 'Error creating new guest visit stat', '', __LINE__, __FILE__, $sql);
     }
     $db->sql_freeresult($result);
-		}
 
 		// V: if we had to update, reset it so we can update again
 		//  (in another $timer_diff seconds)

@@ -309,7 +309,7 @@ function rabbit_check_mp($price_mp)
 {
 	global $rabbit_user;
 
-	if ($price_mp > $rabbit_user['creature_mp']) // pet has enough mp
+	if ($price_mp > $rabbit_user['creature_mp']) // pet doesn't have enough mp
 	{
 		adr_previous('Adr_battle_pet_mp_lack', 'adr_battle', '');
 	}

@@ -64,20 +64,15 @@ adr_enable_check();
 adr_ban_check($user_id);
 adr_character_created_check($user_id);
 
-// V: Clans Mod Integration
+// V: Guilds Mod Integration
 // Get clan user belongs to!
-$sql = "SELECT * FROM ". ADR_CLANS_TABLE ."
-		WHERE leader = '".$user_id."' OR members LIKE '%ß".$user_id."Þ%'";
-if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_ERROR, 'Error retrieving clan data', '', __LINE__, __FILE__, $sql); } 
-
-$clan = $db->sql_fetchrow($result);
-if (!$clan)
+$guild_id = adr_guild_get_by_user($user_id);
+if ($guild_id) $guild = adr_guild_get($guild_id);
+if (!$guild_id || empty($guild))
 {
 	message_die(GENERAL_MESSAGE, 'Adr_Must_be_in_clan_to_party');
 }
-// Clan mod END
-
-// Boxee
+// Guilds mod END
 ?>
 <table width=90% border=0 align="center" valign="center" bordercolor=black cellpadding="0" cellspacing="0">
 <tr><td class="row2" align="center" valign="center">
@@ -163,7 +158,8 @@ if($action == 'create')
 if($action == 'invite')
 {
 	$id = intval($_GET['id']);
-	if ($clan['leader'] != $id && false === strpos($clan['members'], "ß".$id."Þ"))
+  $invite_guild_id = adr_guild_get_by_user($id);
+	if ($invite_guild_id != $guild_id)
 	{
 		message_die(GENERAL_MESSAGE, 'Adr_party_invite_only_clan');
 	}
@@ -191,10 +187,6 @@ if($action == 'invite')
 if($action == 'join')
 {
 	$party_id = intval($_GET['party']);
-	if ($clan['leader'] != $user_id && false === strpos($clan['members'], "ß".$user_id."Þ"))
-	{
-		message_die(GENERAL_MESSAGE, 'Adr_party_invite_only_clan');
-	}
 
 	// V: first, check we were invited...
 	$invites = $char['character_invites'];
@@ -211,13 +203,6 @@ if($action == 'join')
 	WHERE character_id = '.$user_id;
 	$re = $db->sql_query($sql) or die('SQL Error on line '.__LINE__);
 	$message = 'Bienvenue dans le groupe !';
-
-	$sql = "SELECT * FROM ". ADR_CLANS_TABLE ."
-		WHERE leader = '".$user_id."' OR members LIKE '%ß".$user_id."Þ%'
-		ORDER BY name,id";
-	if ( !($result = $db->sql_query($sql)) ) {
-		message_die(GENERAL_ERROR, 'Error retrieving clan data', '', __LINE__, __FILE__, $sql); } 
-	$clan = $db->sql_fetchrow($result);
 
 	$char = adr_get_user_infos($user_id);
 }
@@ -259,12 +244,11 @@ if($action == 'promote')
 }
 if($action == 'kick')
 {
-	$id = $_GET['id'];
-	$sql = 'SELECT character_leader, character_name FROM '.ADR_CHARACTERS_TABLE.' WHERE character_id = '.$id;
+	$sql = 'SELECT character_leader, character_name FROM '.ADR_CHARACTERS_TABLE.' WHERE character_id = '.intval($_GET['id']);
 	$re = $db->sql_query($sql);
 	$row = $db->sql_fetchrow($re);
 	if($char['character_leader'] > 0
-		 && ($char['character_leader'] > $rowset[$i]['character_leader'] || $clan['leader'] == $user_id)
+		 && ($char['character_leader'] > $rowset[$i]['character_leader'] || $guild['guild_leader_id'] == $user_id)
 		 && $adr_user['character_id'] != $rowset[$i]['character_id'])
 	{
 		$sql = 'UPDATE '.ADR_CHARACTERS_TABLE.' SET character_leader = 0, character_party = 0 WHERE character_id = '.$id.' AND character_party = '.$char['character_party'];
@@ -321,7 +305,7 @@ if($char['character_party'] == 0)
 		{
 			$party_level = $party_level + $rowset[$i]['character_level'];
 			if($char['character_leader'] > 0
-			 && ($char['character_leader'] > $rowset[$i]['character_leader'] || $clan['leader'] == $user_id)
+			 && ($char['character_leader'] > $rowset[$i]['character_leader'] || $guild['guild_leader_id'] == $user_id)
 			 && $adr_user['character_id'] != $rowset[$i]['character_id'])
 			{
 				$kick = '<td class="row1"><center><span class=gen><input type=button class=liteoption value="Renvoyer" onClick="window.location.href=\'./adr_party.php?action=kick&id='.$rowset[$i]['character_id'].'#party\'"></td>';
@@ -352,19 +336,17 @@ if($char['character_party'] == 0)
 	if($char['character_leader'] > 0)
 	{
 		$sql = 'SELECT * FROM '.ADR_CHARACTERS_TABLE.'
+    INNER JOIN '.ADR_GUILD_MEMBER_TABLE.' gm
+      ON gm.guild_member_user_id = character_id
+      AND gm.guild_member_guild_id = '.$guild_id.'
 		WHERE character_party != '.$char['character_party'].'
 			ORDER BY character_name';
-		$result = $db->sql_query($sql) or die('SQL Error on Line '.__LINE__);
+		$result = $db->sql_query($sql) or message_die(GENERAL_ERROR, 'Cannot query members', '', __LINE__, __FILE__, $sql);
 		$user_list = '';
 		foreach ($db->sql_fetchrowset($result) as $invitable_char)
 		{
-			$cur_clan_member = false !== strpos($clan['members'], "ß".$invitable_char['character_id']."Þ");
-			$cur_clan_leader = $clan['leader'] == $invitable_char['character_id'];
-			$in_cur_clan = $cur_clan_leader || $cur_clan_member;
-
-			$in_cur_party = $invitable_char['character_party'] == $char['character_party'];
 			$already_invited = in_array($char['character_party'], explode('#', $invitable_char['character_invites']));
-			if ($in_cur_clan && !$in_cur_party && !$already_invited)
+			if (!$already_invited)
 			{
 				$user_list .= '<option value='.$invitable_char['character_id'].'>'.$invitable_char['character_name'].' (ID: '.$invitable_char['character_id'].')</option>';
 			}
@@ -374,7 +356,7 @@ if($char['character_party'] == 0)
 			$user_list = '<select name=members>' . $user_list . '</select>';
 			?>
 			<table width=100% border=0 bordercolor=black cellpadding="0" cellspacing="0">
-			<th colspan=3>Inviter un compagnon de votre clan.</th><th>Actions</th>
+			<th colspan=3>Inviter un compagnon de votre guilde.</th><th>Actions</th>
 			<tr><td class="row1" colspan=3><span class=gen><center><form name=form><?=$user_list?></td><td class="row1" colspan=3><input type=button class=liteoption value="Inviter !" onClick="window.location.href='./adr_party.php?action=invite&amp;id='+form.members.value+'#party'"></form></td></tr>
 			</table>
 			<?php

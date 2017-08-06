@@ -88,11 +88,6 @@ if (!$rabbit_user['owner_id'])
 {
 	$pet_invoc = '0';
 } //!$rabbit_user['owner_id']
-$sql = "SELECT * FROM  " . RABBITOSHI_GENERAL_TABLE;
-if (!$result = $db->sql_query($sql, false, 'rabbitoshi_config'))
-{
-	message_die(GENERAL_MESSAGE, $lang['Rabbitoshi_owner_pet_lack']);
-} //!$result = $db->sql_query($sql, false, 'rabbitoshi_config')
 $rabbit_general = rabbitoshi_get_general();
 
 $equip             = isset($_POST['equip']);
