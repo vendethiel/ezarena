@@ -2236,9 +2236,16 @@ CREATE TABLE phpbb_adr_shops_spells (
   # ditto 0.4.9
   `spell_alignment` varchar(255) NOT NULL DEFAULT '0',
   `spell_element_restrict` varchar(255) NOT NULL DEFAULT '0',
+
+  # Missing somehow.
+  spell_auth int(1) NOT NULL default '0',
+  spell_linked_item int(8) NOT NULL default '0',
+  spell_items_req text NOT NULL default '',
+
   KEY spell_id (spell_id),
   KEY spell_owner_id (spell_owner_id)
 ) ;
+
 # ADR - Dynamic Town Maps
 CREATE TABLE phpbb_adr_zone_buildings (
   id int(10) unsigned NOT NULL auto_increment,

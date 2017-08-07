@@ -17,8 +17,8 @@ $lang['Adr_items_type_magic_heal'] = 'Sort de soin';
 $lang['Adr_spell_not_learned'] = 'Vous n\'avez pas appris de sort';
 
 
-$lang['Adr_items_type_spell_attack'] = 'Sort : &Eacute;vocation';
-$lang['Adr_items_type_spell_defend'] = 'Sort : Abjuration';
+$lang['Adr_items_type_spell_attack'] = 'Sort d\'&eacute;vocation';
+$lang['Adr_items_type_spell_defend'] = 'Sort d\'abjuration';
 $lang['Adr_spells_already_learned'] = 'Sort déjà connu';
 $lang['Adr_spells_too_powerful'] = 'Le personnage n\'est pas assez haut niveau pour apprendre ce sort';
 $lang['Adr_spells_wrong_class'] = 'Votre classe ne vous permet pas d\'apprendre ce sort';
@@ -74,7 +74,7 @@ $lang['Adr_battle_spell_no_disease'] = '%s lance %s mais vous n\'avez pas été em
 if ( defined ('IN_ADR_ADMIN'))
 {
 	$lang['Adr_forum_shop_spells'] = 'Sorts';
-	$lang['Adr_spells_type_use_explain'] = 'Choisissez le type de sort depuis la liste déroulante.<br/><b>Assurez vous d\'utiliser un type de sort valide (par défaut : "sort offensif", "sort défensif", "sort de soin")';
+	$lang['Adr_spells_type_use_explain'] = 'Choisissez le type de sort depuis la liste déroulante.<br/><b>Assurez vous d\'utiliser un type de sort valide. Par défaut : "' . $lang['Adr_spells_skill_evocation'] . '" (attaque), "' . $lang['Adr_spells_skill_healing'] .'" (soin), et "' . $lang['Adr_spells_skill_abjuration'] . '" (defense)';
 	$lang['Adr_spells_type'] = 'Type de sort';
 	$lang['Adr_spells_title'] = 'Gestion des sorts';
 	$lang['Adr_spells_title_explain'] = 'Ici, vous pouvez gérer les sorts du RPG';
@@ -95,7 +95,7 @@ if ( defined ('IN_ADR_ADMIN'))
 	$lang['Adr_spells_items_amount_desc'] = 'Exemple : si vous avez choisis 3 objets et que vous voulez 2x le premier, 1x le second et 5x du dernière, mettez dans le champ 2:1:5. L\'ordre correspond à l\'ordre de la liste !<br /><br />Laissez blanc pour utiliser "1" comme quantité partout';
 	$lang['Adr_spells_components'] = 'Composants';
 	$lang['Adr_spells_battle'] = 'Sort lançable ...';
-	$lang['Adr_spells_battle_explain'] = 'Choisissez \'En combat\' si le sort est lançable SEULEMENT pendant un combat, \'En combat\' si le sort est seulement lançable en combat (contre des monstres et en PVP), ou \'Les deux\' si le sort est utilisable dans les deux cas.';
+	$lang['Adr_spells_battle_explain'] = 'Choisissez \'En combat\' si le sort est lançable SEULEMENT (contre des monstres et en PVP), \'Hors combat\' si le sort est seulement utilisable hors combat, ou \'Les deux\' si le sort est utilisable dans les deux cas.';
 	$lang['Adr_spells_xtreme'] = 'Code PHP au lancement du sort - Hors combat';
 	$lang['Adr_spells_xtreme_explain'] = 'Code (PHP) a exécuter au lancement du sort <i>hors combat</i>, <b>au lieu</b> d\'utiliser le code de base.<br/><b>Si vous ne savez pas à quoi cette case correspond, LAISSEZ LA BLANCHE</b>';
 	$lang['Adr_spells_xtreme_battle'] = 'Code PHP au lancement du sort - En combat';

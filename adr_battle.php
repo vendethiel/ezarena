@@ -328,23 +328,23 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		$power = 0;
 		$damage = 0;
 
-		if ( $item_spell2 )
-		{
-			$item = adr_get_spell($item_spell2, ADR_ERROR_ON_EMPTY);
+    if ( $item_spell2 )
+    {
+      $item = adr_get_spell($item_spell2, ADR_ERROR_ON_EMPTY);
 
-			if ($item['spell_items_req'] !='' && $item['spell_items_req'] !='0')
-			{
-				adr_spell_check_components($item_spell2, $user_id, 'adr_battle');
-			}
+      if ($item['spell_items_req'] !='' && $item['spell_items_req'] !='0')
+      {
+        adr_spell_check_components($item_spell2, $user_id, 'adr_battle');
+      }
 
-			adr_check_mp($challenger, $item, 'spell');
+      adr_check_mp($challenger, $item, 'spell');
 
-			$power = (($item['spell_power'] * 1.2) + $item['spell_add_power']);
-			$mp_usage = ($item['spell_mp_use'] + $item['spell_power']);
+      $power = (($item['spell_power'] * 1.2) + $item['spell_add_power']);
+      $mp_usage = ($item['spell_mp_use'] + $item['spell_power']);
 
-			adr_use_item($item_spell2 , $user_id);
-			adr_substract_mp($mp_usage);
-		}
+      adr_use_item($item_spell2 , $user_id);
+      adr_substract_mp($mp_usage);
+    }
     else
     {
       adr_previous ( 'Adr_battle_no_spell_learned' , 'adr_battle' , '' );
@@ -1448,7 +1448,7 @@ for ($s = 0; $s < count($spells); $s++)
 {
 	$spells_power = $spells[$s]['spell_power'] + $spells[$s]['spell_add_power'];
 	
-	if (($spells[$s]['item_type_use'] == 11 || $spells[$s]['item_type_use'] == 108 || $spells[$s]['item_type_use']) && ($spells[$s]['spell_mp_use'] <= $challenger['character_mp']))
+	if (($spells[$s]['item_type_use'] == ADR_SKILL_EVOCATION || $spells[$s]['item_type_use'] == ADR_SKILL_HEALING || $spells[$s]['item_type_use'] == ADR_SKILL_ADJURATION) && ($spells[$s]['spell_mp_use'] <= $challenger['character_mp']))
 	{
 		$spell2_selected = ($HTTP_POST_VARS['item_spell2'] == $spells[$s]['spell_id']) ? 'selected' : '';
 		$spell2_list .= '<option value = "' . $spells[$s]['spell_id'] . '" ' . $spell2_selected . '>' . adr_get_lang($spells[$s]['spell_name']) . ' ( ' . $lang['Adr_items_power'] . ' : ' . $spells_power . ' )' . '</option>';

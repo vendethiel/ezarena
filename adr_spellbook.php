@@ -60,6 +60,7 @@ $adr_user = adr_get_user_infos($user_id);
 
 //adr_battle_cell_check($user_id, $userdata);
 
+$spell_categories = array(ADR_SKILL_EVOCATION, ADR_SKILL_HEALING, ADR_SKILL_ADJURATION);
 if( isset($_POST['view_spells_skill']) || isset($_GET['view_spells_skill']) )
 {
 	$view_spells_skill = ( isset($_POST['view_spells_skill']) ) ? $_POST['view_spells_skill'] : $_GET['view_spells_skill'];
@@ -67,48 +68,44 @@ if( isset($_POST['view_spells_skill']) || isset($_GET['view_spells_skill']) )
 }
 else
 {
-	$view_spells_skill = "";
+	$view_spells_skill = $spell_categories[0];
 }
 
-if ( $view_spells_skill != "" )
+$spellbook_category_links = '';
+foreach ($spell_categories as $i => $category)
 {
-	switch($view_spells_skill)
-	{
-		// V: I removed the "known_spells" part of the URL. what is that even supposed to do??
-		case 'evocation' :
-			$current_skill_id = 107;
-			$recipebook_skill_links = '<br /><img src="adr/images/misc/evocation2.jpg" onclick="location=\'adr_spellbook.'.$phpEx.'?view_spells_skill=evocation\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/healing.jpg" onclick="location=\'adr_spellbook.'.$phpEx.'?view_spells_skill=healing\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/abjuration.jpg" onclick="location=\'adr_spellbook.'.$phpEx.'?view_spells_skill=abjuration\'" onMouseOver="this.style.cursor=\'pointer\';">';
-			$recipebook_action = append_sid("adr_spellbook.$phpEx?view_spells_skill=evocation");
-			$spell_skill = $lang['Adr_spells_skill_evocation'];
-		break;
-		case 'healing' :
-			$current_skill_id = 108;
-			$recipebook_skill_links = '<br /><img src="adr/images/misc/evocation.jpg" onclick="location=\'adr_spellbook.'.$phpEx.'?view_spells_skill=evocation\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/healing2.jpg" onclick="location=\'adr_spellbook.'.$phpEx.'?view_spells_skill=healing\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/abjuration.jpg" onclick="location=\'adr_spellbook.'.$phpEx.'?view_spells_skill=abjuration\'" onMouseOver="this.style.cursor=\'pointer\';">';
-			$recipebook_action = append_sid("adr_spellbook.$phpEx?view_spells_skill=healing");
-			$spell_skill = $lang['Adr_spells_skill_healing'];
-		break;
-		case 'abjuration' :
-			$current_skill_id = 109;
-			$recipebook_skill_links = '<br /><img src="adr/images/misc/evocation.jpg" onclick="location=\'adr_spellbook.'.$phpEx.'?view_spells_skill=evocation\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/healing.jpg" onclick="location=\'adr_spellbook.'.$phpEx.'?view_spells_skill=healing\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/abjuration2.jpg" onclick="location=\'adr_spellbook.'.$phpEx.'?view_spells_skill=abjuration\'" onMouseOver="this.style.cursor=\'pointer\';">';
-			$recipebook_action = append_sid("adr_spellbook.$phpEx?view_spells_skill=abjuration");
-			$spell_skill = $lang['Adr_spells_skill_abjuration'];
-		break;
-	}
+  $skill_name = adr_spellbook_category_name($category);
+  $current = $view_spells_skill == $category;
+  if ($current)
+  {
+    $spells = adr_spellbook_fetch($user_id, $category);
+    $template->assign_block_vars('view_spells', array());
+    $show_spell = isset($_POST['show_spell']) ? intval($_POST['show_spell']) : intval($_GET['show_spell']);
+		$spell_list = '<select name="known_spells" size="4" style="width:320px;overflow:hidden;background-color:#e7d3c1;" ONCHANGE="document.list_spells.submit()">';
+    foreach ($spells as $spell)
+    {
+      if ($show_spell && $spell['spell_id'] == $show_spell)
+      {
+      }
+    }
+    $template->assign_vars(array(
+      'SPELL_LIST' => adr_spellbook_build_list($spells, $show_spell),
+      'S_SPELLBOOK_ACTION' => append_sid('adr_spellbook.'.$phpEx.'?view_spells_skill='.$category),
+    ));
+  }
 
-	$template->assign_block_vars('view_spells',array());
+  $name = adr_get_lang('Adr_'.$skill_name);
+  $spellbook_category_links .= '<td align="center" class="row' . (1 + $i % 2) . '"><br /><a href="adr_spellbook.'.$phpEx.'?view_spells_skill='.$category . '"><span class="gen">' . ($current ? "<b>$name</b>" : $name) . '</span></a><br /><br /></td>';
+}
 
+$template->assign_vars(array(
+  'SPELLBOOK_SKILL_LINKS' => $spellbook_category_links,
+  'SPELLBOOK_SKILL_COUNT' => count($spell_categories),
+));
+
+/*
 	$known_spells = ( isset($_REQUEST['known_spells']) ) ? trim($_REQUEST['known_spells']) : '';
 
-	$sql = "SELECT * FROM " . ADR_SHOPS_SPELLS_TABLE . "
-		WHERE spell_owner_id = $user_id
-		AND item_type_use = '$current_skill_id'
-		ORDER BY spell_power
-		";
-	$result = $db->sql_query($sql);
-	if( !$result )
-        message_die(GENERAL_ERROR, 'Could not obtain owners spells information', "", __LINE__, __FILE__, $sql);
-	$spells = $db->sql_fetchrowset($result);
-	$db->sql_freeresult($spells);
 
 	$spell_list = '';
 	if (count($spells) > 0)
@@ -178,7 +175,7 @@ if ( $view_spells_skill != "" )
 					$effects_print_list .= '<br />';
 				}
 			}
-*/
+* /
 			//generate items required print_list
 			$items_req = explode(':',$spell_data['spell_items_req']);
 
@@ -244,7 +241,6 @@ if ( $view_spells_skill != "" )
 
 	$template->assign_vars(array(
 		'RECIPE_LIST'=> $spell_list,
-		'RECIPEBOOK_SKILL_LINKS' => $recipebook_skill_links,
 		'S_RECIPEBOOK_ACTION'=> $recipebook_action,
 		'L_SPELL_SKILL' => $spell_skill,
 		'L_RECIPE_STATS' => $lang['recipe_stats'],
@@ -253,15 +249,7 @@ if ( $view_spells_skill != "" )
 	));
 
 }
-else
-{
-	$template->assign_block_vars('main',array());
-
-	$template->assign_vars(array(
-		'RECIPEBOOK_SKILL_LINKS' => '<br /><img src="adr/images/misc/evocation.jpg" onclick="location=\'adr_spellbook.'.$phpEx.'?view_spells_skill=evocation\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/healing.jpg" onclick="location=\'adr_spellbook.'.$phpEx.'?view_spells_skill=healing\'" onMouseOver="this.style.cursor=\'pointer\';"><img src="adr/images/misc/abjuration.jpg" onclick="location=\'adr_spellbook.'.$phpEx.'?view_spells_skill=abjuration\'" onMouseOver="this.style.cursor=\'pointer\';">',
-		'S_RECIPEBOOK_ACTION'=> append_sid("adr_spellbook.$phpEx"),
-	));
-}
+ */
 
 include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
 $template->pparse('body');

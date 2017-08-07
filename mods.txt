@@ -434,8 +434,10 @@ Addons :
  - Addon anti SQL Injection for mods - Informpro
  - Hack adr_battle.php heavy refactor - Informpro
 
-# ADR : Advanced Spells 0.4.5 - AnimeMaster
-Permet aux joueurs d'apprendre des sorts en montant de niveau.
+# ADR : Advanced Spell Addon 0.4.10 - AnimeMaster, egdcltd
+Permet aux joueurs d'apprendre des sorts en montant de niveau. Les sorts peuvent être édités dans l'administration.
+Addons :
+ - Addon Spells in PvP - Informpro
 
 # ADR : Advanced Loot System 1.0.3 - Himmelweiss
 Ajoute un système super-complet de butin pour les monstres, avec des catégories de butin, chance de drop, combien d'items il est possible de drop, etc ... à découvrir en jeu et dans l'admin !
@@ -445,11 +447,6 @@ Ajoute un système de NPC (PNJ) avancé au Zone Mod, permettant de dépasser la 
 
 # ADR : Advanced NPC System Expansion 0.2.3-beta - Ozzie
 Ajoute de nombreuses fonctionnalités au mod "Advanced NPC System", comme la possibilité de reporter un tricheur (avec la possiblité pour un administrateur de mp/bannir/... le joueur), permet aux PNJs d'apparaître dans plusieurs zones, les PNJs peuvent demander plusieurs objets, et vous pouvez ajouter des restrictions de classe/race/niveau/élément/alignement/a parlé avec tel PNJ/a fini tel quête (aucune, une ou plusieurs).
-
-# ADR : Advanced Spell Addon 0.4.10 - AnimeMaster, egdcltd
-Permet aux joueurs d'apprendre des sorts en montant de niveau. Les sorts peuvent être édités dans l'administration.
-Addons :
- - Addon Spells in PvP - Informpro
 
 # ADR : Cache doesn't use PK to index - Informpro
 Dans l'ADR de base, le cache indexe par le n' du row, pas par son ID.

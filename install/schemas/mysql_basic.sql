@@ -1004,6 +1004,7 @@ INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item
 # ADR - Advanced Spells
 INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (107, 1, 'Adr_items_type_spell_attack');
 INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (108, 1, 'Adr_items_type_magic_heal');
+INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (109, 1, 'Adr_items_type_spell_defend');
 INSERT INTO phpbb_adr_shops_items_type (item_type_id, item_type_base_price, item_type_lang) VALUES (110, 50, 'Adr_items_type_spell_recipe');
 
 

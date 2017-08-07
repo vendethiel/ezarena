@@ -1,34 +1,25 @@
 
 <br clear="all" />
 
-<!-- BEGIN main -->
 <br />
-<form method="post" action="{S_RECIPEBOOK_ACTION}">
-<h1><center>Select Spells to View</center></h1>
-<table width="810" cellspacing="2" cellpadding="2" border="0" align="center">
-	<tr>
-		<td align="center">{RECIPEBOOK_SKILL_LINKS}</td>
-	</tr>
+<form method="post" name="list_spells" action="{S_SPELLBOOK_ACTION}">
+<table class="forumline" height="" cellspacing="2" cellpadding="2" border="1" align="center" width="70%">
+  <tr>
+    <th colspan="{SPELLBOOK_SKILL_COUNT}">
+      {L_ADR_SPELLBOOK}
+    </th>
+  </tr>
+  <tr>
+    {SPELLBOOK_SKILL_LINKS}
+  </tr>
+  <tr>
+    <td valign="top" width="100%" class="row1" colspan="{SPELLBOOK_SKILL_COUNT}">{SPELL_LIST}</td>
+  </tr>
 </table>
-<table width="810" height="528" background="adr/images/misc/recipebook.gif" style="background-repeat:no-repeat;" cellspacing="2" cellpadding="2" border="0" align="center">
-	<tr>
-		<td>
-		</td>
-	</tr>
-</table>
-</form>
-<!-- END main -->
 
 <!-- BEGIN view_spells -->
 <br />
-<form method="post" name="list_spells" action="{S_RECIPEBOOK_ACTION}">
-<h1><center>Select Spells to View</center></h1>
-<table width="810" cellspacing="2" cellpadding="2" border="0" align="center">
-	<tr>
-		<td align="center">{RECIPEBOOK_SKILL_LINKS}</td>
-	</tr>
-</table>
-<table width="823" height="533" background="adr/images/misc/recipebook.gif" style="background-repeat:no-repeat;" cellspacing="2" cellpadding="2" border="0" align="center">
+<table width="823" height="533" style="background-repeat:no-repeat;" cellspacing="2" cellpadding="2" border="0" align="center">
 	<tr>
 		<td valign="top">
 			<table width="823" cellspacing="2" cellpadding="2" border="0" align="center">

@@ -121,14 +121,14 @@ if ( $mode != "" )
 			$recipe_list = $db->sql_fetchrowset($result);
 
 			$spell_recipe = '<select name="spell_recipe">';
-                  	$spell_recipe .= '<option value = "0" >' . $lang['Adr_spells_recipe_none'] . '</option>';
-                  	for( $i = 0; $i < count($recipe_list); $i++ )
-                  	{
-				$recipe_list[$i]['item_name'] = adr_get_lang($recipe_list[$i]['item_name']);
-				$spell_selected = ( $items['spell_linked_item'] == $recipe_list[$i]['item_id'] ) ? 'selected' : '';
-				$spell_recipe .= '<option value = "'.$recipe_list[$i]['item_id'].'" '.$spell_selected.' >' . $recipe_list[$i]['item_name'] . '</option>';
-                	}
-                  	$spell_recipe .= '</select>';
+      $spell_recipe .= '<option value = "0" >' . $lang['Adr_spells_recipe_none'] . '</option>';
+      for( $i = 0; $i < count($recipe_list); $i++ )
+      {
+        $recipe_list[$i]['item_name'] = adr_get_lang($recipe_list[$i]['item_name']);
+        $spell_selected = ( $items['spell_linked_item'] == $recipe_list[$i]['item_id'] ) ? 'selected' : '';
+        $spell_recipe .= '<option value = "'.$recipe_list[$i]['item_id'].'" '.$spell_selected.' >' . $recipe_list[$i]['item_name'] . '</option>';
+      }
+      $spell_recipe .= '</select>';
 
 			//item list
   			$sql = "SELECT item_name, item_owner_id, item_power, item_id FROM ". ADR_SHOPS_ITEMS_TABLE ."
@@ -201,24 +201,24 @@ if ( $mode != "" )
 				"L_ITEM_MP_USE_EXPLAIN" => $lang['Adr_items_mp_use_explain'],
 				"L_ITEM_TYPE" => $lang['Adr_spells_type'],
 				"L_ITEM_TYPE_EXPLAIN" => $lang['Adr_spells_type_use_explain'],
-				"L_ITEM_AUTH" => $lang['Adr_spells_auth'],
-				"L_ITEM_AUTH_EXPLAIN" => $lang['Adr_spells_auth_explain'],
-        			"L_ITEM_BATTLE" => $lang['Adr_spells_battle'],
-        			"L_ITEM_BATTLE_EXPLAIN" => $lang['Adr_spells_battle_explain'],
-        			"L_ITEM_XTREME" => $lang['Adr_spells_xtreme'],
-        			"L_ITEM_XTREME_EXPLAIN" => $lang['Adr_spells_xtreme_explain'],
-        			"L_ITEM_XTREME_BATTLE" => $lang['Adr_spells_xtreme_battle'],
-        			"L_ITEM_XTREME_BATTLE_EXPLAIN" => $lang['Adr_spells_xtreme_battle_explain'],
-        			"L_ITEM_XTREME_PVP" => $lang['Adr_spells_xtreme_pvp'],
-        			"L_ITEM_XTREME_PVP_EXPLAIN" => $lang['Adr_spells_xtreme_pvp_explain'],
-                                "L_ALIGNMENT_LIMIT" => $lang['Adr_spells_alignment_limit'],
-                                "L_ALIGNMENT_LIMIT_EXPLAIN" => $lang['Adr_spells_alignment_limit_explain'],
-                                "L_ELEMENT_LIMIT" => $lang['Adr_spells_element_limit'],
-                                "L_ELEMENT_LIMIT_EXPLAIN" => $lang['Adr_spells_element_limit_explain'],
-				"L_NAME" => $lang['Adr_races_name'],
-				"L_DESC" => $lang['Adr_races_desc'],
-				"L_ACTION" => $lang['Action'],
-				"L_ITEMS" => $lang['Adr_shops_categories_items'],
+        "L_ITEM_AUTH" => $lang['Adr_spells_auth'],
+        "L_ITEM_AUTH_EXPLAIN" => $lang['Adr_spells_auth_explain'],
+        "L_ITEM_BATTLE" => $lang['Adr_spells_battle'],
+        "L_ITEM_BATTLE_EXPLAIN" => $lang['Adr_spells_battle_explain'],
+        "L_ITEM_XTREME" => $lang['Adr_spells_xtreme'],
+        "L_ITEM_XTREME_EXPLAIN" => $lang['Adr_spells_xtreme_explain'],
+        "L_ITEM_XTREME_BATTLE" => $lang['Adr_spells_xtreme_battle'],
+        "L_ITEM_XTREME_BATTLE_EXPLAIN" => $lang['Adr_spells_xtreme_battle_explain'],
+        "L_ITEM_XTREME_PVP" => $lang['Adr_spells_xtreme_pvp'],
+        "L_ITEM_XTREME_PVP_EXPLAIN" => $lang['Adr_spells_xtreme_pvp_explain'],
+        "L_ALIGNMENT_LIMIT" => $lang['Adr_spells_alignment_limit'],
+        "L_ALIGNMENT_LIMIT_EXPLAIN" => $lang['Adr_spells_alignment_limit_explain'],
+        "L_ELEMENT_LIMIT" => $lang['Adr_spells_element_limit'],
+        "L_ELEMENT_LIMIT_EXPLAIN" => $lang['Adr_spells_element_limit_explain'],
+        "L_NAME" => $lang['Adr_races_name'],
+        "L_DESC" => $lang['Adr_races_desc'],
+        "L_ACTION" => $lang['Action'],
+        "L_ITEMS" => $lang['Adr_shops_categories_items'],
 				"L_EDIT" => $lang['Edit'],
 				"L_DELETE" => $lang['Delete'],
 				"L_ITEM_IMG" => $lang['Adr_races_image'],
@@ -320,7 +320,7 @@ if ( $mode != "" )
 			}
 			$alignment_type .= '</select>';
 
-                        $sql = "SELECT * FROM " . ADR_ELEMENTS_TABLE ;
+      $sql = "SELECT * FROM " . ADR_ELEMENTS_TABLE ;
 			$result = $db->sql_query($sql);
 			if( !$result )
 			{
@@ -328,20 +328,20 @@ if ( $mode != "" )
 			}
 			$element_list = $db->sql_fetchrowset($result);
 
-			$element_weap_list = '<select name="element_weap_list">';
-                  	$element_weap_list .= '<option value = "0" >' . $lang['Adr_items_element_none'] . '</option>';
-                  	for( $i = 0; $i < count($element_list); $i++ )
-                  	{
-				$element_list[$i]['element_name'] = adr_get_lang($element_list[$i]['element_name']);
-				$element_selected = ( $items['spell_element'] == $element_list[$i]['element_id'] ) ? 'selected' : '';
-				$element_weap_list .= '<option value = "'.$element_list[$i]['element_id'].'" '.$element_selected.' >' . $element_list[$i]['element_name'] . '</option>';
-                  	}
-                  	$element_weap_list .= '</select>';
+      $element_weap_list = '<select name="element_weap_list">';
+      $element_weap_list .= '<option value = "0" >' . $lang['Adr_items_element_none'] . '</option>';
+      for( $i = 0; $i < count($element_list); $i++ )
+      {
+        $element_list[$i]['element_name'] = adr_get_lang($element_list[$i]['element_name']);
+        $element_selected = ( $items['spell_element'] == $element_list[$i]['element_id'] ) ? 'selected' : '';
+        $element_weap_list .= '<option value = "'.$element_list[$i]['element_id'].'" '.$element_selected.' >' . $element_list[$i]['element_name'] . '</option>';
+      }
+      $element_weap_list .= '</select>';
 
-			$element_selected_array = explode( ',' , $items['spell_element_restrict'] );
-			$element_restrict_list = '<select name="element_restrict_list[]" size="10" multiple>';
-   			$element_restrict_list .= ( $element_selected_array[0] == '0' ) ? '<option value="0" SELECTED class="post">'. $lang['Adr_elements_all'] .'</option>' : '<option value="0" class="post">'. $lang['Adr_classes_all'] .'</option>';
-			for( $i = 0; $i < count($element_list); $i++ )
+      $element_selected_array = explode( ',' , $items['spell_element_restrict'] );
+      $element_restrict_list = '<select name="element_restrict_list[]" size="10" multiple>';
+      $element_restrict_list .= ( $element_selected_array[0] == '0' ) ? '<option value="0" SELECTED class="post">'. $lang['Adr_elements_all'] .'</option>' : '<option value="0" class="post">'. $lang['Adr_classes_all'] .'</option>';
+      for( $i = 0; $i < count($element_list); $i++ )
 			{
 				if ( in_array( $element_list[$i]['element_id'] , $element_selected_array ) )
 					$element_restrict_list .= '<option value = "' . $element_list[$i]['element_id'] . '" SELECTED class="post">' . adr_get_lang($element_list[$i]['element_name']) . '</option>';
@@ -507,13 +507,13 @@ if ( $mode != "" )
 
 			$item_id = intval($_POST['item_id']);
 			$item_name = ( isset($_POST['item_name']) ) ? trim($_POST['item_name']) : trim($_GET['item_name']);
-			$item_desc = ( isset($_POST['item_desc']) ) ? trim($_POST['item_desc']) : trim($_GET['item_desc']);
-			$item_icon = ( isset($_POST['item_img']) ) ? trim($_POST['item_img']) : trim($_GET['item_img']);
-			$item_type_use = intval($_POST['item_type_use']);
-                        $item_power = intval($_POST['item_power']);
-			$item_level = intval($_POST['item_level']);
-			$item_add_power = intval($_POST['item_add_power']);
-			$item_mp_use = intval($_POST['item_mp_use']);
+      $item_desc = ( isset($_POST['item_desc']) ) ? trim($_POST['item_desc']) : trim($_GET['item_desc']);
+      $item_icon = ( isset($_POST['item_img']) ) ? trim($_POST['item_img']) : trim($_GET['item_img']);
+      $item_type_use = intval($_POST['item_type_use']);
+      $item_power = intval($_POST['item_power']);
+      $item_level = intval($_POST['item_level']);
+      $item_add_power = intval($_POST['item_add_power']);
+      $item_mp_use = intval($_POST['item_mp_use']);
 			$item_element = intval($_POST['element_weap_list']);
 			$item_element_str = intval($_POST['item_element_str']);
 			$item_element_same = intval($_POST['item_element_same']);
@@ -529,27 +529,27 @@ if ( $mode != "" )
 			$item_xtreme_pvp = ( isset($_POST['spell_xtreme_pvp']) ) ? trim($_POST['spell_xtreme_pvp']) : trim($_GET['spell_xtreme_pvp']);
 			$item_alignment = (isset($_POST['item_alignment_limit'])) ? $_POST['item_alignment_limit'] : array();
 			$item_alignment_limit = adr_admin_make_array('1', $item_alignment);
-			$item_element_restrict = (isset($_POST['element_restrict_list'])) ? $_POST['element_restrict_list'] : array();
-			$item_element_restrict_limit = adr_admin_make_array('1', $item_element_restrict);
+      $item_element_restrict = (isset($_POST['element_restrict_list'])) ? $_POST['element_restrict_list'] : array();
+      $item_element_restrict_limit = adr_admin_make_array('1', $item_element_restrict);
 
-         		##=== START: Prevent 0% element effects
-         		if($item_element == '0'){
-         		   $item_element_str = intval(100);
-         		   $item_element_same = intval(100);
-         		   $item_element_weak = intval(100);
-         		}
-         		##=== END: Prevent 0% element effects
+      ##=== START: Prevent 0% element effects
+      if($item_element == '0'){
+        $item_element_str = intval(100);
+        $item_element_same = intval(100);
+        $item_element_weak = intval(100);
+      }
+      ##=== END: Prevent 0% element effects
 
-			//spell_items_req
-			$recipe_items_req_list = array();
-			$recipe_items_req_list = $_POST['recipe_items_req'];
-			$recipe_items_amount_list = array();
-			$recipe_items_amount_list = explode(':',$_POST['recipe_items_amount']);
-			
-			$selected_req_item = count($recipe_items_req_list);
-			if ( $selected_req_item == 0 )
-				$final_req_list = '';
-			elseif ( in_array('0',$recipe_items_req_list) )
+      //spell_items_req
+      $recipe_items_req_list = array();
+      $recipe_items_req_list = $_POST['recipe_items_req'];
+      $recipe_items_amount_list = array();
+      $recipe_items_amount_list = explode(':',$_POST['recipe_items_amount']);
+
+      $selected_req_item = count($recipe_items_req_list);
+      if ( $selected_req_item == 0 )
+        $final_req_list = '';
+      elseif ( in_array('0',$recipe_items_req_list) )
 				$final_req_list = '0';
 			else
 			{
@@ -588,8 +588,7 @@ if ( $mode != "" )
 					spell_xtreme = '$item_xtreme',
 					spell_xtreme_battle = '$item_xtreme_battle',
 					spell_xtreme_pvp = '$item_xtreme_pvp'
-				WHERE spell_id = " . $item_id . "
-				AND spell_owner_id = 1 ";
+				WHERE  ";
 			if( !($result = $db->sql_query($sql)) )
 			{
 				message_die(GENERAL_ERROR, "Couldn't update shops items", "", __LINE__, __FILE__, $sql);
@@ -619,7 +618,9 @@ if ( $mode != "" )
 					spell_xtreme = '$item_xtreme',
 					spell_xtreme_battle = '$item_xtreme_battle',
 					spell_xtreme_pvp = '$item_xtreme_pvp'
-				WHERE spell_original_id = " . $item_id ;
+        WHERE spell_original_id = " . $item_id . "
+          OR (spell_id = " . $item_id . "
+            AND spell_owner_id = 1)";
 			if( !($result = $db->sql_query($sql)) )
 			{
 				message_die(GENERAL_ERROR, "Couldn't update user spells", "", __LINE__, __FILE__, $sql);

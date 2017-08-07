@@ -72,10 +72,6 @@ else
 	$view_recipes_skill = "brewing";
 }
 
-function recipebook_display($skill)
-{
-}
-
 $craft_categories = array(ADR_SKILL_BREWING, ADR_SKILL_BLACKSMITHING, ADR_SKILL_COOKING);
 foreach ($craft_categories as $category)
 {

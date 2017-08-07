@@ -164,7 +164,7 @@ $lang['Adr_job_title']='Centre de recrutement';
 $lang['Adr_job_img']='Image:';
 $lang['Adr_job_name']='Titre:';
 $lang['Adr_job_desc']='Description:';
-$lang['Adr_job_level']='Niveau requis:';
+$lang['Adr_job_level']='Niveau requis :';
 $lang['Adr_job_salary']='Salaire quotidien:';
 $lang['Adr_job_duration']='Durée:';
 $lang['Adr_job_slots']='Disponibilitée:';
@@ -496,8 +496,8 @@ if ( defined ( 'IN_ADR_SHOPS' ))
    $lang['Adr_items_type_greave']='Jambière';
    $lang['Adr_items_type_boot']='Bottes';
    $lang['Adr_items_type_gloves']='Gants';
-   $lang['Adr_items_type_magic_attack']='Magie offensive';
-   $lang['Adr_items_type_magic_defend']='Magie defensive';
+   $lang['Adr_items_type_magic_attack']='Objet magique offensif';
+   $lang['Adr_items_type_magic_defend']='Objet magique d&eacute;fensif';
    $lang['Adr_items_type_amulet']='Amulette';
    $lang['Adr_items_type_ring']='Anneau';
    $lang['Adr_items_type_health_potion']='Potion de soins';
@@ -762,7 +762,7 @@ if ( defined ('IN_ADR_BATTLE'))
    $lang['Adr_battle_opponent_attack_failure']='%s ne parviens pas à toucher %s !';
    $lang['Adr_battle_opponent_crit']='%s subit un coup critique !';
 
-   $lang['Adr_battle_spell_success']='%s lance le sort %s (élément %s) et infligeant %s point(s) de dégats à %s!';
+   $lang['Adr_battle_spell_success']='%s lance le sort %s (élément %s) et inflige %s point(s) de dégats à %s!';
    $lang['Adr_battle_spell_success_norm']='%s lance le sort %s et inflige %s points de dommage à %s!';
    $lang['Adr_battle_spell_oppose_str_success']='%s lance le sort %s [élément plus puissant] et inflige %s point(s) de dégâts à %s !';
    $lang['Adr_battle_spell_oppose_same_success']='%s lance le sort %s [élément égal] sur %s et inflige %s  point(s) de dégâts !';
@@ -1886,4 +1886,8 @@ $lang['ADR_ZONE_BACKGROUND'] = 'Image de fond des combats';
 $lang['ADR_ZONE_BACKGROUND_EXPLAIN'] = 'Cette image sera affich&eacute;e dans le fond de chaque combat s\'effectuant dans la zone.<br />Elle doit &ecirc;tre dans le dossier <i>adr/images/battle/backgrounds/</i><br />Laissez vide pour une image par d&eacute;faut.';
 $lang['ADR_ENABLE_BUILDING'] = 'Cochez la case pour que %s soit disponible dans cette zone';
 $lang['ADR_POTION_NO_EFFECT'] = '%s utilise %s ... Mais rien ne se passe.';
-
+$lang['ADR_SPELLBOOK'] = 'Livre de sorts';
+// XXX the following spell categories should probably be in adr_lang_spells instead...
+$lang['Adr_evocation'] = '&Eacute;vocation';
+$lang['Adr_healing'] = 'Soin';
+$lang['Adr_adjuration'] = 'Adjuration';
