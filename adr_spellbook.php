@@ -86,6 +86,33 @@ foreach ($spell_categories as $i => $category)
     {
       if ($show_spell && $spell['spell_id'] == $show_spell)
       {
+        //generate items required print_list
+        $items_req = explode(':',$spell['spell_items_req']);
+
+        //Check if spell can be cast
+        if($spell['spell_battle'] == '1' || $spell['spell_battle'] == '2')
+        {
+          $cast_spell = "<a href=\"adr_spell_cast.$phpEx?spell_id=$existing_spell\">Cast Spell</a>";
+        }
+
+        if ($spell['spell_items_req'] != '0' && $spell['spell_items_req'] !='')
+        {
+          $items_req_print = adr_spellbook_print_reqitems(explode(':', $spell['spell_items_req']));
+        }
+
+        else
+        {
+          $items_req_print = 'None';
+        }
+
+        $template->assign_block_vars('view_spells.spell', array(
+          "RECIPE_IMG" => $spell['spell_icon'],
+          "RECIPE_NAME" => $spell['spell_name'],
+          "RECIPE_LEVEL" => $spell['spell_power'],
+          "RECIPE_DESC" => $spell['spell_desc'],
+          "RECIPE_ITEMS_REQ" => $items_req_print,
+          "CAST_SPELL" => $cast_spell,
+        ));
       }
     }
     $template->assign_vars(array(
@@ -102,154 +129,6 @@ $template->assign_vars(array(
   'SPELLBOOK_SKILL_LINKS' => $spellbook_category_links,
   'SPELLBOOK_SKILL_COUNT' => count($spell_categories),
 ));
-
-/*
-	$known_spells = ( isset($_REQUEST['known_spells']) ) ? trim($_REQUEST['known_spells']) : '';
-
-
-	$spell_list = '';
-	if (count($spells) > 0)
-	{
-		for ($i = 0; $i < count($spells);$i++)
-			$owner_spells .= ( $owner_spells == '' ) ? $spells[$i]['spell_original_id'] : ':'.$spells[$i]['spell_original_id'];
-		
-		$original_spells = explode(':',$owner_spells);
-		
-		$spell_list .= '<select name="known_spells" size="4" style="width:320px;overflow:hidden;background-color:#e7d3c1;" ONCHANGE="document.list_spells.submit()">';
-		for ($a = 0; $a < count($original_spells); $a++)
-		{
-			$sql = "SELECT * FROM " . ADR_SHOPS_SPELLS_TABLE . "
-				WHERE spell_owner_id = 1
-				AND spell_id = ".$original_spells[$a]." 
-				ORDER BY spell_power, spell_name
-				";
-			$result = $db->sql_query($sql);
-			if( !$result )
-		        message_die(GENERAL_ERROR, 'Could not obtain original spell information', "", __LINE__, __FILE__, $sql);
-			$original_spell = $db->sql_fetchrow($result);
-			
-			if ($original_spells[$a] == $existing_spell)
-				$selected_spell = 'selected';
-			$spell_list .= '<option value = "'.$original_spells[$a].'" '.$selected_spell.'>Level: '.$original_spell['spell_power'].' - '.$original_spell['spell_name'].'</option>';
-			$selected_spell = '';
-		}
-		$spell_list .= '</select>';
-		
-		if ($existing_spell != 0 && $existing_spell != '')
-		{
-			//get spell info
-			$sql = "SELECT * FROM " . ADR_SHOPS_SPELLS_TABLE . "
-				WHERE spell_owner_id = 1
-				AND spell_id = ".$existing_spell;
-			$result = $db->sql_query($sql);
-			if( !$result )
-		        message_die(GENERAL_ERROR, 'Could not obtain original spell information', "", __LINE__, __FILE__, $sql);
-			$spell_data = $db->sql_fetchrow($result);
-/*						
-			//get the potion info
-			$sql_p = "SELECT * FROM " . ADR_SHOPS_SPELLS_TABLE . "
-				WHERE item_owner_id = 1
-				AND item_id = ".$spell_data['item_recipe_linked_item'];
-			$result_p = $db->sql_query($sql_p);
-			if( !$result_p )
-		        message_die(GENERAL_ERROR, 'Could not obtain original spell information', "", __LINE__, __FILE__, $sql_p);
-			$result_data = $db->sql_fetchrow($result_p);
-
-			//generate effects list of the spell
-			$effects_list = array();
-			$effects_list = explode(':',$spell_data['item_effect']);
-			$effects_print_list = '';
-			$stats = array('','HP','MP','AC','STR','DEX','CON','INT','WIS','CHA','MA','MD','EXP','GOLD','SP','BATTLES_REM','SKILLUSE_REM','TRADINGSKILL_REM','THEFTSKILL_REM','LEVEL');
-			for ($i = 0; $i < count($effects_list);$i++)
-			{
-				if(array_search($effects_list[$i],$stats)) {
-					$effects_print_list .= $effects_list[$i].": ".$effects_list[$i+1];
-					if($effects_list[$i+3]==0)
-						$effects_print_list .= '';
-					else
-						$effects_print_list .= ' (Target Monster)';
-					if($effects_list[$i+5]==0)
-						$effects_print_list .= ' (TEMP Effect)';
-					else
-						$effects_print_list .= ' (PERM Effect)';
-					$effects_print_list .= '<br />';
-				}
-			}
-* /
-			//generate items required print_list
-			$items_req = explode(':',$spell_data['spell_items_req']);
-
-			//Check if spell can be cast
-			if($spell_data['spell_battle'] == '1' || $spell_data['spell_battle'] == '2')
-			{
-				$cast_spell = "<a href=\"adr_spell_cast.$phpEx?spell_id=$existing_spell\">Cast Spell</a>";
-//							$cast_spell = "<br /><input type=\"submit\" name=\"cast_spell\" value=\"Cast Spell\" class=\"mainoption\" onclick=\"location=\'adr_spell_cast.'.$phpEx.'?spell_id='.$existing_spell.'\'" />";
-			}
-
-			if(($spell_data['spell_items_req'] !='0') && ($spell_data['spell_items_req'] !=''))
-			{
-				$items_req_print = '<table border="0" width="100%" cellspacing="0" cellpadding="0">';
-				for ($i = 0; $i < count($items_req); $i++)
-				{
-					$switch = ( !($i % 2) ) ? $get_info=1 : $get_info=0;
-					if ($get_info == 1) {
-						$sql_info = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-							where item_id = ".$items_req[$i];
-						$result_info = $db->sql_query($sql_info);
-						if( !$result_info )
-						{
-							message_die(GENERAL_ERROR, 'Could not obtain items information', "", __LINE__, __FILE__, $sql_info);
-						}
-						$item_info = $db->sql_fetchrow($result_info);
-						$items_req_print .= '<tr><td style="font-family:\'serif\'">'.$item_info['item_name'].'</td><td><img src="adr/images/items/'.$item_info['item_icon'].'"></td>';
-					}
-					else {
-						$items_req_print .= '<td>(x'.$items_req[$i].')</td></tr>';
-					}
-				}
-				$items_req_print .= '</table>';
-			}
-
-			else
-			{
-				$items_req_print = 'None';
-			}
-			
-			$template->assign_block_vars('view_spells.spell', array(
-				"RECIPE_IMG" => $spell_data['spell_icon'],
-				"RECIPE_NAME" => $spell_data['spell_name'],
-				"RECIPE_LEVEL" => $spell_data['spell_power'],
-				"RECIPE_DESC" => $spell_data['spell_desc'],
-//							"RECIPE_PRICE" => $spell_data['item_price'],
-//							"RECIPE_WEIGHT" => $spell_data['item_weight'],
-//							"RECIPE_EFFECT" => $effects_print_list,
-				"RECIPE_ITEMS_REQ" => $items_req_print,
-//							"L_RECIPE_ITEMS_REQ" => $lang['Adr_recipes_items_req'],
-//							"RESULT_NAME" => $result_data['item_name'],
-//							"RESULT_IMG" => $result_data['item_icon'],
-//							"RESULT_LEVEL" => $result_data['item_power'],
-//							"RESULT_DESC" => $result_data['item_desc'],
-//							"RESULT_EFFECTS" => $effects_print_list,
-//							"RESULT_PRICE" => $result_data['item_price'],
-//							"RESULT_WEIGHT" => $result_data['item_weight'],
-//							"RESULT_DURATION" => $result_data['item_duration'],
-//							"RESULT_DURATION_MAX" => $result_data['item_duration_max'],
-				"CAST_SPELL" => $cast_spell,
-			));
-		}
-	}
-
-	$template->assign_vars(array(
-		'RECIPE_LIST'=> $spell_list,
-		'S_RECIPEBOOK_ACTION'=> $recipebook_action,
-		'L_SPELL_SKILL' => $spell_skill,
-		'L_RECIPE_STATS' => $lang['recipe_stats'],
-		'L_PRODUCT_EFFECTS' => $lang['potion_effects'],
-		'L_PRODUCT_STATS' => $lang['potion_stats'],
-	));
-
-}
- */
 
 include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
 $template->pparse('body');

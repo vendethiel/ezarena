@@ -18,18 +18,16 @@
 </table>
 
 <!-- BEGIN view_spells -->
+<!-- BEGIN spell -->
 <br />
-<table width="823" height="533" style="background-repeat:no-repeat;" cellspacing="2" cellpadding="2" border="0" align="center">
+<table width="823" height="533" class="forumline" cellspacing="2" cellpadding="2" border="0" align="center">
 	<tr>
-		<td valign="top">
-			<table width="823" cellspacing="2" cellpadding="2" border="0" align="center">
+		<td valign="top" width="35%">
+			<table cellspacing="2" cellpadding="2" border="0" align="center">
 				<tr>
-					<td width="55"></td>
-					<td width="320" valign="top">{RECIPE_LIST}<br />
-						<!-- BEGIN spell -->
-						<table witdh="320" cellspacing="2" cellpadding="2" border="0">
+						<table width="100%" cellspacing="2" cellpadding="2" border="0">
 							<tr>
-								<td colspan="2" width="320">
+								<td colspan="2" width="100%">
 									<table border="0" cellspacing="0" cellpadding="0" align="center">
 										<tr>
 											<td><img src="adr/images/items/{view_spells.spell.RECIPE_IMG}"></td>
@@ -40,7 +38,7 @@
 							</tr>
 							<tr>
 								<td colspan="2" style="font-family:'serif'">
-									<strong>Spell Components Required:</strong>
+									<strong>Composants :</strong>
 									<br />
 									{view_spells.spell.RECIPE_ITEMS_REQ}
 								</td>
@@ -67,16 +65,6 @@
 											<td style="font-family:'serif'" width="180" valign="top">Cast:</td>
 											<td style="font-family:'serif'">{view_spells.spell.CAST_SPELL}</td>
 										</tr>
-<!--
-										<tr>
-											<td style="font-family:'serif'" width="180" valign="top">Price:</td>
-											<td style="font-family:'serif'">{view_spells.spell.RECIPE_PRICE}</td>
-										</tr>
-										<tr>
-											<td style="font-family:'serif'" width="180" valign="top">Weight:</td>
-											<td style="font-family:'serif'">{view_spells.spell.RECIPE_WEIGHT}</td>
-										</tr>
--->
 									</table>
 								</td>
 							</tr>
@@ -85,56 +73,6 @@
 					</td>
 					<td width="50">&nbsp;</td>
 					<td width="340" valign="top" style="font-family:'serif'">
-						<!-- BEGIN spell -->
-<!--
-						<table border="0" cellspacing="0" cellpadding="0" align="center">
-							<tr>
-								<td><img src="adr/images/items/{view_spells.spell.RESULT_IMG}"></td>
-								<td style="font-family:'serif'"><strong>{view_spells.spell.RESULT_NAME}</strong></td>
-							</tr>
-						</table>
-
-						<br />
-							<strong>Spell Effects</strong>
-						<br />
-						<table border="0" width="340" cellspacing="0" cellpadding="0">
-							<tr>
-								<td style="font-family:'serif';font-size:12px;" colspan="2">
-									{view_spells.spell.RESULT_EFFECTS}
-								</td>
-							</tr>
-						</table>
-						<br />
-							<strong>Spell Stats</strong>
-						<br />
-						<table border="0" width="340" cellspacing="0" cellpadding="0">
-							<tr>
-								<td style="font-family:'serif'" width="180">Level:</td>
-								<td style="font-family:'serif'">{view_spells.spell.RESULT_LEVEL}</td>
-							</tr>
-							<tr>
-								<td style="font-family:'serif'" width="180">Description:</td>
-								<td style="font-family:'serif'">{view_spells.spell.RESULT_DESC}</td>
-							</tr>
-							<tr>
-								<td style="font-family:'serif'" align="center" colspan="2">{view_spells.spell.CAST_SPELL}</td>
-							</tr>
-
-							<tr>
-								<td style="font-family:'serif'" width="180" valign="top">Price:</td>
-								<td style="font-family:'serif'">{view_spells.spell.RESULT_PRICE}</td>
-							</tr>
-							<tr>
-								<td style="font-family:'serif'" width="180" valign="top">Weight:</td>
-								<td style="font-family:'serif'">{view_spells.spell.RESULT_WEIGHT}</td>
-							</tr>
-							<tr>
-								<td style="font-family:'serif'" width="180" valign="top">Duration:</td>
-								<td style="font-family:'serif'">{view_spells.spell.RESULT_DURATION} / {view_spells.spell.RESULT_DURATION_MAX}</td>
-							</tr>
-						</table>
--->
-						<!-- END spell -->
 					</td>
 					<td width="60"></td>
 				</tr>
@@ -142,5 +80,6 @@
 		</td>
 	</tr>
 </table>
+<!-- END spell -->
 </form>
 <!-- END view_spells -->

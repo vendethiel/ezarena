@@ -773,7 +773,6 @@ if ( $mode != "" )
 			$sql = "SELECT * FROM " . ADR_STORES_TABLE . " 
 					WHERE store_admin = 0 
 					ORDER BY store_name ASC ";
-			//	AND (store_zone = $actual_zone  ||  store_zone = 0 )
 			$result = $db->sql_query($sql);
 			if( !$result )
 			{
