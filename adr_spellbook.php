@@ -99,11 +99,12 @@ foreach ($spell_categories as $i => $category)
         {
           $items_req_print = adr_spellbook_print_reqitems(explode(':', $spell['spell_items_req']));
         }
-
         else
         {
           $items_req_print = 'None';
         }
+
+        // TODO print required class/element/alignment
 
         $template->assign_block_vars('view_spells.spell', array(
           "RECIPE_IMG" => $spell['spell_icon'],

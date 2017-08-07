@@ -588,36 +588,6 @@ if ( $mode != "" )
 					spell_xtreme = '$item_xtreme',
 					spell_xtreme_battle = '$item_xtreme_battle',
 					spell_xtreme_pvp = '$item_xtreme_pvp'
-				WHERE  ";
-			if( !($result = $db->sql_query($sql)) )
-			{
-				message_die(GENERAL_ERROR, "Couldn't update shops items", "", __LINE__, __FILE__, $sql);
-			}
-
-			$sql = "UPDATE " . ADR_SHOPS_SPELLS_TABLE . "
-				SET 	spell_name = '" . str_replace("\'", "''", $item_name) . "', 
-					spell_desc = '" . str_replace("\'", "''", $item_desc) . "', 
-					spell_icon = '" . str_replace("\'", "''", $item_icon) . "', 
-					item_type_use = $item_type_use, 
-					spell_class = '$item_class_limit', 
-					spell_alignment = '$item_alignment_limit',
-					spell_element_restrict = '$item_element_restrict_limit',
-					spell_power = $item_power, 
-					spell_level = $item_level, 
-					spell_add_power = $item_add_power,
-					spell_mp_use = $item_mp_use,
-					spell_max_skill = $item_max_skill ,
-					spell_element = $item_element,
-					spell_element_str_dmg = $item_element_str,
-					spell_element_same_dmg = $item_element_same,
-					spell_element_weak_dmg = $item_element_weak ,
-					spell_auth = $item_auth,
-					spell_linked_item = $item_linked_item,
-					spell_items_req = '".$final_req_list."',
-					spell_battle = $item_battle,
-					spell_xtreme = '$item_xtreme',
-					spell_xtreme_battle = '$item_xtreme_battle',
-					spell_xtreme_pvp = '$item_xtreme_pvp'
         WHERE spell_original_id = " . $item_id . "
           OR (spell_id = " . $item_id . "
             AND spell_owner_id = 1)";
