@@ -1891,5 +1891,5 @@ $lang['ADR_SPELLBOOK'] = 'Livre de sorts';
 $lang['Adr_evocation'] = '&Eacute;vocation';
 $lang['Adr_healing'] = 'Soin';
 $lang['Adr_adjuration'] = 'Adjuration';
-$lang['ADR_FIGHT_OVER'] = 'Combat termin&eacute;';
+$lang['ADR_FIGHT_OVER'] = 'Combat terminé';
 $lang['ADR_NEW_TURN'] = 'Nouveau tour';

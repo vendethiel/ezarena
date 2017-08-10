@@ -166,6 +166,9 @@
 <!-- END pvp -->
 </form>
 <script language="javascript" type="text/javascript">
+document.location.href = '#';
+document.location.href = '#focusme';
+
 var currentTurn = {CURRENT_TURN};
 var needsTurn = {NEEDS_TURN};
 function checkTurn() {
@@ -178,8 +181,11 @@ function checkTurn() {
         // don't refresh page if someone is typing
         if (gEBI('custom_taunt').value)
           alert('{L_ADR_NEW_TURN}');
-        else
-          document.location.reload();
+        else {
+          // Can't use .reload() or it'll send a POST.
+          // Can't just self-assign because of the hash...
+          document.location = document.location.href.split('#')[0];
+        }
       } else
         checkTurn();
     });

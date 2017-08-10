@@ -84,7 +84,7 @@ $taunt = $HTTP_POST_VARS['taunt'];
 // Have the current battle informations
 $sql = "SELECT * FROM " . ADR_BATTLE_PVP_TABLE . "
   WHERE (battle_opponent_id = $user_id  OR battle_challenger_id = $user_id)
-    AND battle_id = '$battle_id'";
+  AND battle_id = '$battle_id'";
 if(!($result = $db->sql_query($sql)))
   message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
 $battle_pvp = $db->sql_fetchrow($result);
@@ -515,15 +515,16 @@ if( !($result = $db->sql_query($sql)) )
         $battle_message .= sprintf($lang['Adr_battle_healing_success'], $current_name, adr_get_lang($item['spell_name']), $power).'<br />';
 
         // Update the database
+        $battle_pvp['battle_turn'] = $dest;
         $sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
           SET battle_challenger_hp = battle_challenger_hp + $power , 
           battle_turn = $dest
           WHERE battle_challenger_id = $user_id
           AND battle_id = $battle_id ";
-        if( !($result = $db->sql_query($sql)) )
-        {
-          message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
-        }
+if( !($result = $db->sql_query($sql)) )
+{
+  message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
+}
       }
     }
 
@@ -1573,7 +1574,7 @@ $template->assign_vars(array(
   'L_ACTIONS' => $lang['Adr_actions_opponent'],
   'L_BATTLE_CHAT' => $lang['Adr_pvp_battle_chat'],
   'S_PVP_ACTION' => append_sid("adr_battle_pvp.$phpEx?battle_id=".$battle_id),
-  'CURRENT_TURN' => $battle_pvp['battle_turn'],
+  'CURRENT_TURN' => $battle['battle_turn'], /* note: use battle here, as it's been queried after actions were applied */
   'NEEDS_TURN' => $user_id,
   'S_CHECK_TURN' => append_sid("adr_battle_pvp.$phpEx?get_turn&battle_id=".$battle_id),
   'L_BATTLE_REFRESH' => $lang['Adr_pvp_refresh_page'],
