@@ -56,6 +56,8 @@ adr_template_file('adr_TownMap_Maison_body.tpl');
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
 
+// Get the general config
+$adr_general = adr_get_general_config();
 adr_enable_check();
 adr_ban_check($user_id);
 adr_character_created_check($user_id);
@@ -79,13 +81,6 @@ if ( is_numeric($bat['battle_id']) )
 }
 
 
-// Get the general config
-$adr_general = adr_get_general_config();
-
-if ( !$adr_general['Adr_disable_rpg'] && $userdata['user_level'] != ADMIN ) 
-{	
-	adr_previous ( Adr_disable_rpg , 'index' , '' );
-}
 // Deny access if user is imprisioned
 if($userdata['user_cell_time']){
 	adr_previous(Adr_shops_no_thief, adr_cell, '');}

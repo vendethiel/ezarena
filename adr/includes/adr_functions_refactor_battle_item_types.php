@@ -4,21 +4,10 @@
  * and are "just" code refactoring, because sometimes it makes me cry to have 5-times dups.
  */
 
-function adr_spell_offensive()
+function adr_update_element_item_name($item)
 {
-	global $monster, $power, $bat, $adr_user, $opponent_element, $item, $db, $lang, $user_id, $power, $quality;
-	global $challenger, $battle_message, $user_action, $monster_action, $attack_img, $attackwith_overlay;
-
-	// Sort out magic check & opponents saving throw
-	$dice                      = rand(1, 20);
-	$monster['monster_wisdom'] = 10 + (rand(1, $monster['monster_level']) * 2); //temp calc
-	$magic_check               = ceil($dice + $item['item_power'] + adr_modifier_calc($challenger['character_intelligence']));
-	$fort_save                 = 11 + adr_modifier_calc($monster['monster_wisdom']);
-	$diff                      = ($magic_check >= $fort_save && $dice != '1') || $dice == '20';
-	$power                     = $power + adr_modifier_calc($challenger['character_intelligence']);
-	
-	// Grab details for Elemental infos
-	$elemental    = adr_get_element_infos($opponent_element);
+  if (!$item['item_element'])
+    return;
 	$element_name = adr_get_element_infos($item['item_element']);
 	
 	// Here we apply text colour if set
@@ -28,61 +17,110 @@ function adr_spell_offensive()
 	} //$element_name['element_colour'] != ''
 	else
 	{
-		$item['item_name'] = $item['item_name'];
+		$item['item_name'] = adr_get_lang($item['item_name']);
 	}
+}
+
+function adr_calc_magic_power($item, $power, $intelligence, $wisdom)
+{
+	$dice = rand(1, 20);
+  $mod = adr_modifier_calc($intelligence);
+	$magic_check = ceil($dice + $item['item_power'] + $mod);
+	$fort_save = 11 + adr_modifier_calc($wisdom);
+	$diff = ($magic_check >= $fort_save && $dice != '1') || $dice == '20';
+  $success = ($diff && $dice != 1) || $dice == 20;
+	return array($diff, $power + $mod);
+}
+
+function adr_spell_text($item, $current_name, $opponent_name, $damage, $type)
+{
+  global $lang;
+
+  if (!empty($item['item_element']))
+  {
+    $element_name = adr_get_element_infos($item['item_element']);
+    return sprintf($lang['Adr_'.$type.'_spell_success'], $current_name, $item['item_name'], adr_get_lang($element_name['element_name']), $opponent_name, $damage).'<br />';}
+  else
+  {
+    return sprintf($lang['Adr_'.$type.'_spell_success_norm'], $current_name, $item['item_name'], $opponent_name, $damage).'<br />';
+  }
+}
+
+function adr_pvp_spell_offensive($item, $power)
+{
+  global $lang, $self_prefix, $opp_prefix, $battle_message, $battle_id;
+  global $opponent_element, $current_infos, $current_name;
+
+  // Grab details for Elemental infos
+  $elemental = adr_get_element_infos($opponent_element);
+  adr_update_element_item_name($item);
+
+  // Sort out magic check & opponents saving throw
+  list($success, $power) = adr_calc_magic_power($item, $power, $current_infos['character_intelligence'], $opponent_infos['character_wisdom']);
+  $attbonus = adr_weapon_skill_check_item($user_id, $item);
+
+  // Check for successful strike upon opponent
+  if ($success)
+  {
+    $damage = adr_calc_item_damage($item, $power, $attbonus, $opponent_element);
+    $battle_message .= adr_spell_text($item, $current_name, $opponent_name, $damage, 'pvp');
+  }
+  else{
+    $damage = 0;
+    $battle_message .= sprintf($lang['Adr_pvp_spell_failure'], $current_name, $item['item_name'], $opponent_name).'<br />';
+  }
+  adr_pvp_inflict_damage($opp_prefix, $damage, $battle_id);
+}
+
+function adr_pvp_spell_defensive($item, $power)
+{
+  global $db, $battle_message, $lang, $current_name;
+  // Create message
+  $battle_message .= sprintf($lang['Adr_pvp_spell_defensive_success'], $current_name, adr_get_lang($item['item_name']), $current_name, $power).'<br />';
+
+  $sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
+    SET battle_{$self_prefix}_att = (battle_{$self_prefix}_att + $power),
+          battle_{$self_prefix}_def = (battle_{$self_prefix}_def + $power)
+          WHERE battle_id = '$battle_id'";
+  if(!($result = $db->sql_query($sql))){
+    message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);}
+}
+
+function adr_spell_offensive($item, $power)
+{
+	global $monster, $power, $bat, $adr_user, $opponent_element, $db, $lang, $user_id, $quality;
+	global $challenger, $battle_message, $user_action, $monster_action, $attack_img, $attackwith_overlay;
+
+	// Sort out magic check & opponents saving throw
+	$wisdom = 10 + (rand(1, $monster['monster_level']) * 2); //temp calc
+  list($success, $power) = adr_calc_magic_power($item, $power, $challenger['character_intelligence'], $wisdom);
 	
-	##=== START: Critical hit code
+  adr_update_element_item_name($item);
+	
 	$threat_range = ($item['item_type_use'] == '6') ? '19' : '20'; // magic weaps get slightly better threat range
 	list($crit_result, $power) = adr_battle_make_crit_roll($bat['battle_challenger_att'], $challenger['character_level'], $bat['battle_opponent_def'], $item['item_type_use'], $power, $quality, $threat_range);
-	##=== END: Critical hit code
-	
+
 	rabbit_pet_regen();
 	
-	$attbonus = adr_weapon_skill_check($user_id);
-
-	if (($diff === TRUE && $dice != '1') || $dice == '20')
+	$attbonus = adr_weapon_skill_check_item($user_id, $item);
+  if ($success)
 	{
-		$damage = adr_calc_item_damage($item, $power, $attbonus);
+		$damage = adr_calc_item_damage($item, $power, $attbonus, $opponent_element);
 		
 		// Fix dmg value
 		$damage = ($damage > $bat['battle_opponent_hp']) ? $bat['battle_opponent_hp'] : $damage;
-		
-		// Fix attack msg type
-		if (($item['item_element'] > '0') && ($element_name['element_name'] != ''))
-		{
-			$battle_message .= sprintf($lang['Adr_battle_spell_success'], $challenger['character_name'], $item['item_name'], adr_get_lang($element_name['element_name']), $damage, $monster['monster_name']) . '<br>';
-		} //($item['item_element'] > '0') && ($element_name['element_name'] != '')
-		else
-		{
-			$battle_message .= sprintf($lang['Adr_battle_spell_success_norm'], $challenger['character_name'], $item['item_name'], $damage, $monster['monster_name']) . '<br>';
-		}
-	} //(($diff === TRUE) && ($dice != '1')) || ($dice == '20')
+    $battle_message .= adr_spell_text($item, $challenger['character_name'], $monster['monster_name'], $damage, 'battle');
+	}
 	else
 	{
 		$damage = 0;
 		$battle_message .= sprintf($lang['Adr_battle_spell_failure'], $challenger['character_name'], $item_name, $monster['monster_name']) . '<br />';
 	}
+  $battle_message .= adr_duration_text($item, $challenger['character_name']);
 	
-	if ($item['item_duration'] < 2)
-	{
-		$battle_message .= '</span><span class="gensmall">'; // set new span class
-		$battle_message .= '&nbsp;&nbsp;>&nbsp;' . sprintf($lang['Adr_battle_spell_dura'], $challenger['character_name'], $item['item_name']) . '<br>';
-		$battle_message .= '</span><span class="genmed">'; // reset span class to default
-	} //$item['item_duration'] < 2
-
-	// Update the database
-	$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
-		SET battle_opponent_hp = battle_opponent_hp - $damage ,
-			battle_challenger_dmg = $damage , 
-			battle_turn = 2 ,
-			battle_round = (battle_round + 1)
-		WHERE battle_challenger_id = $user_id
-		AND battle_result = 0
-		AND battle_type = 1 ";
-	if (!($result = $db->sql_query($sql)))
-	{
-		message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
-	} //!($result = $db->sql_query($sql))
+  adr_next_round(BATTLE_TURN_MONSTER,
+    "battle_opponent_hp = battle_opponent_hp - $damage,
+			battle_challenger_dmg = $damage,");
 	// Let's sort out the spell (attack) animations...
 	// Make table for battle sequence...
 	// 0 = Standing image , 1 = Attack image
@@ -92,9 +130,9 @@ function adr_spell_offensive()
 	$attackwith_overlay = ((file_exists("adr/images/battle/spells/" . $attack_img . ".gif"))) ? '<img src="adr/images/battle/spells/' . $attack_img . '.gif" width="256" height="96" border="0">' : '';
 }
 
-function adr_spell_defensive()
+function adr_spell_defensive($item, $power)
 {
-	global $monster, $bat, $adr_user, $opponent_element, $item, $db, $lang, $user_id, $power;
+	global $monster, $bat, $adr_user, $opponent_element, $db, $lang, $user_id;
 	global $challenger, $battle_message, $user_action, $monster_action, $attack_img, $attackwith_overlay;
 
 	$attbonus = adr_weapon_skill_check($user_id);
@@ -103,26 +141,11 @@ function adr_spell_defensive()
 
 	// Create battle message
 	$battle_message .= sprintf($lang['Adr_battle_spell_defensive_success'], $challenger['character_name'], $item['item_name'], $power) . '<br>';
-	if ($item['item_duration'] < '2')
-	{
-		$battle_message .= '</span><span class="gensmall">'; // set new span class
-		$battle_message .= '&nbsp;&nbsp;>&nbsp;' . sprintf($lang['Adr_battle_spell_def_dura'], $challenger['character_name'], $item['item_name']) . '<br>';
-		$battle_message .= '</span><span class="genmed">'; // reset span class to default
-	} //$item['item_duration'] < '2'
+  $battle_message .= adr_duration_text($item, $challenger['character_name']);
 	
-	// Update the database
-	$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
-		SET battle_challenger_att = battle_challenger_att + $power ,
-			battle_challenger_def = battle_challenger_def + $power ,
-			battle_turn = 2,
-			battle_round = (battle_round + 1) 
-		WHERE battle_challenger_id = $user_id
-		AND battle_result = 0
-		AND battle_type = 1 ";
-	if (!($result = $db->sql_query($sql)))
-	{
-		message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
-	} //!($result = $db->sql_query($sql))
+  adr_next_round(BATTLE_TURN_MONSTER, "
+		battle_challenger_att = battle_challenger_att + $power ,
+			battle_challenger_def = battle_challenger_def + $power ,");
 	// Let's sort out the spell (defence) animations...
 	// Make table for start battle sequence...
 	// 0 = Standing image , 1 = Attack image
@@ -156,7 +179,6 @@ function adr_magic_attack()
 		$item['spell_name'] = adr_get_lang($item['spell_name']);
 	}
 
-	$attbonus = 0;
 	$attbonus = adr_weapon_skill_check($user_id);
 
 	if((($diff === TRUE) && ($dice != '1')) || ($dice == '20')){
@@ -168,7 +190,7 @@ function adr_magic_attack()
 		}
 		else
 		{
-		$damage = adr_calc_item_damage($item, $power, $attbonus);
+      $damage = adr_calc_item_damage($item, $power, $attbonus);
 			$damage = ($damage > $bat['battle_opponent_hp']) ? $bat['battle_opponent_hp'] : $damage;
 
 			// Fix attack msg type
@@ -183,19 +205,8 @@ function adr_magic_attack()
 		$battle_message .= sprintf( $lang['Adr_battle_spell_failure'], $challenger['character_name'], $item['spell_name'], $monster['monster_name']).'<br />';
 	}
 
-	// Update the database
-	$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
-		SET battle_opponent_hp = battle_opponent_hp - $damage ,
-			battle_challenger_dmg = $damage , 
-			battle_turn = 2 ,
-			battle_round = (battle_round + 1)
-		WHERE battle_challenger_id = $user_id
-		AND battle_result = 0
-		AND battle_type = 1 ";
-	if( !($result = $db->sql_query($sql)) )
-	{
-		message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
-	}
+  adr_next_round(BATTLE_TURN_MONSTER,
+    "battle_opponent_hp = battle_opponent_hp - $damage");
 }
 
 function adr_magic_healing()
@@ -217,6 +228,7 @@ function adr_magic_healing()
 
 		$battle_message .= sprintf($lang['Adr_battle_healing_success'] ,$challenger['character_name'], adr_get_lang($item['spell_name']) , $power ).'<br />' ; 
 		adr_increase_hp($power);
+    adr_next_round(BATTLE_TURN_MONSTER);
 	}
 }
 
@@ -236,19 +248,10 @@ function adr_magic_defense()
 	{
 		$battle_message .= sprintf($lang['Adr_battle_spell_defensive_success'], $challenger['character_name'], $item['spell_name'], $power).'<br>';
 
-		// Update the database
-		$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
-			SET battle_challenger_att = battle_challenger_att + $power ,
-				battle_challenger_def = battle_challenger_def + $power ,
-				battle_turn = 2,
-				battle_round = (battle_round + 1)
-			WHERE battle_challenger_id = $user_id
-			AND battle_result = 0
-			AND battle_type = 1 ";
-		if( !($result = $db->sql_query($sql)) )
-		{
-			message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);
-		}
+    adr_next_round(BATTLE_TURN_MONSTER, "
+			battle_challenger_att = battle_challenger_att + $power ,
+      battle_challenger_def = battle_challenger_def + $power ,
+    ");
 	}
 }
 

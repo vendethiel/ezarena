@@ -160,8 +160,6 @@ else if (!(is_numeric($bat['battle_id'])) && $equip)
 $user_action    = 0;
 $monster_action = 0;
 
-$bat = adr_get_battle($user_id);
-
 // Get the monster infos
 $monster = adr_get_monster_infos($bat['battle_opponent_id']);
 
@@ -225,7 +223,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		if ($scan_success > 69)
 		{
 			($opponent_message_enable == '') ? $scan_message = '' . $lang['Adr_battle_scan_no_message'] . '' : $scan_message = '' . $lang['Adr_battle_scan_success'] . ' :<br />' . $opponent_message . '<br />';
-			$battle_message .= sprintf($scan_message) . '<br />';
+			$battle_message .= $scan_message . '<br />';
 		} //$scan_success > 69
 		else
 		{
@@ -292,33 +290,24 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		$power      = 0;
 		$damage     = 0;
 		
-		if ($item_spell && ($item = adr_get_item_in_battle($item_spell)))
-		{
-			adr_check_mp($challenger, $item, 'item');
-			$dice     = rand(0, 5);
-			$power    = (($item['item_power']) + $item['item_add_power'] + $dice);
-			$mp_usage = $item['item_power'] + $item['item_mp_use'];
-			if ($mp_usage == '')
-			{
-				adr_previous('Adr_battle_check', 'adr_battle', '');
-			} //$mp_usage == ''
-			
-			//adr_use_item($item_spell , $user_id);
-			adr_substract_mp($mp_usage);
-		} // end if item_spell
-    else
-    { // V: this is totes supposed to error out
+		if (!$item_spell || !($item = adr_get_item_in_battle($item_spell, $bat['battle_start'])))
       adr_previous('Adr_battle_no_spell', 'adr_battle', '');
-    }
+
+    $mp_usage = adr_check_mp($challenger, $item, 'item');
+    $dice     = rand(0, 5);
+    $power    = $item['item_power'] + $item['item_add_power'] + $dice;
+    
+    adr_use_item($item_spell , $user_id);
+    adr_substract_mp($mp_usage);
 		
 		if ($item['item_type_use'] == 11)
 		{
-			adr_spell_offensive();
+			adr_spell_offensive($item, $power);
 		} // end if item type 11
 		
 		else if ($item['item_type_use'] == 12)
 		{
-			adr_spell_defensive();
+			adr_spell_defensive($item, $power);
 		} // end if item type 12
 	} // end if spell
 	else if ( $spell2 && $bat['battle_turn'] == BATTLE_TURN_PLAYER )
@@ -527,8 +516,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		$hp_regen = adr_hp_regen_check($user_id, $bat['battle_challenger_hp']);
 		$challenger['character_hp'] += $hp_regen;
 		$mp_regen = adr_mp_regen_check($user_id, $bat['battle_challenger_mp']);
-		// V: commented out as I don't know if this is needed
-		//$challenger['character_mp'] += $mp_regen;
+		$challenger['character_mp'] += $mp_regen;
 		
 		$battle_message .= '<span class="gensmall" style="color: #FF0000">'; // prefix new span class
 		if ((($hp_regen > '0') && ($mp_regen == '0')) || (($mp_regen > '0') && ($hp_regen == '0')))
@@ -793,7 +781,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 		
 		// V: after rabbitoshi played
 		//  this fixes a dumb bug ;_;
-		if ($bat['battle_opponent_hp'] > '0') // not rabbitoshi's turn
+		if ($bat['battle_opponent_hp'] > '0')
 		{
 			$monster_name                    = adr_get_lang($monster['monster_name']);
 			$character_name                  = $challenger['character_name'];

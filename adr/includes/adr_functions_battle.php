@@ -103,7 +103,8 @@ function adr_battle_make_crit_roll($att, $level, $opp_def, $item_type_use=0, $po
 	$quality = intval($quality);
 	$threat_range = intval($threat_range);
 	$party_bonus = intval($party_bonus);
-    $item['item_crit_hit_mod'] = intval(2); //temp
+  // V: every single item has a crit mod that's *2, WAT?
+  $item['item_crit_hit_mod'] = 2; //temp
 
 	$crit_result = FALSE;
 	if($dice >= $threat_range){
@@ -252,7 +253,6 @@ function adr_mp_regen_check($user_id, $battle_challenger_mp)
 			if(!($result = $db->sql_query($sql))){
 				message_die(GENERAL_ERROR, 'Could not update battle', '', __LINE__, __FILE__, $sql);}
 
-			return $mp_regen;
 		}
 	}
 	return $mp_regen;
@@ -931,6 +931,12 @@ function drop_loot($monster_id,$user_id,$dropped_loot_list)
 function adr_weapon_skill_check($user_id)
 {
 	global $db , $lang , $adr_general , $item;
+  return adr_weapon_skill_check_item($user_id, $item);
+}
+
+function adr_weapon_skill_check_item($user_id, $item)
+{
+	global $db , $lang , $adr_general;
 	$char = adr_get_user_infos($user_id);
 	$sql = "SELECT * FROM " . ADR_CHARACTERS_TABLE . "
 	WHERE character_id = $user_id ";

@@ -618,11 +618,12 @@ $sql = " SELECT * FROM  " . ADR_CHARACTERS_TABLE . "
 if( !($result = $db->sql_query($sql)) )
         message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
-$users_connected_list = '';
+$users_connected = [];
 while( $row = $db->sql_fetchrow($result)) 
-	$users_connected_list.=' <a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $row['character_id']) . '">' . $row['character_name'] . '</a> . ';
+	$users_connected[] =' <a href="' . append_sid("adr_character.$phpEx?" . POST_USERS_URL . "=" . $row['character_id']) . '">' . $row['character_name'] . '</a>';
 
-if ( !$users_connected_list) $users_connected_list = $lang['None'];
+if ( !$users_connected) $users_connected_list = $lang['None'];
+else $users_connected_list = implode(', ', $users_connected) . '.';
 
 $users_connected_list = '<b><u>'. $lang['Adr_zone_connected']. '</u></b> : ' . $users_connected_list;
 

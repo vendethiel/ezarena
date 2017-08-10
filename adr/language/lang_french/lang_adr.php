@@ -762,14 +762,14 @@ if ( defined ('IN_ADR_BATTLE'))
    $lang['Adr_battle_opponent_attack_failure']='%s ne parviens pas à toucher %s !';
    $lang['Adr_battle_opponent_crit']='%s subit un coup critique !';
 
-   $lang['Adr_battle_spell_success']='%s lance le sort %s (élément %s) et inflige %s point(s) de dégats à %s!';
-   $lang['Adr_battle_spell_success_norm']='%s lance le sort %s et inflige %s points de dommage à %s!';
+   $lang['Adr_battle_spell_success']='%1$s lance le sort %2$s (élément %3$s) et inflige %5$s point(s) de dégats à %4$s!';
+   $lang['Adr_battle_spell_success_norm']='%1$s lance le sort %2$s et inflige %4$s points de dommage à %3s !';
    $lang['Adr_battle_spell_oppose_str_success']='%s lance le sort %s [élément plus puissant] et inflige %s point(s) de dégâts à %s !';
    $lang['Adr_battle_spell_oppose_same_success']='%s lance le sort %s [élément égal] sur %s et inflige %s  point(s) de dégâts !';
    $lang['Adr_battle_spell_oppose_weak_success']='%s lance le sort %s [élément plus faible] sur %s et inflige %s point(s) de dégâts !';
    $lang['Adr_battle_spell_failure']='%s a essayé de lancer le sort %s sur %s mais a échoué !';
    $lang['Adr_battle_spell_defensive_success']='%s lance le sort %s qui augmente sa force et défense physique de %s!';
-   $lang['Adr_battle_spell_dura']='Le sort de %s, %s, a échoué et n\'est plus utilisable !';
+   $lang['Adr_battle_spell_dura']='Le sort de %s, %s, se brise et n\'est plus utilisable !';
    $lang['Adr_battle_spell_dura_fail']='Votre sort a échoué et n\'est plus utilisable !';
    $lang['Adr_battle_spell_def_dura']='Le sort de %s, %s, a échoué et n\'est plus utilisable !';
    $lang['Adr_battle_potion_hp_success']='%s utilise un(e) %s et récupère %s HP!';
@@ -1891,3 +1891,5 @@ $lang['ADR_SPELLBOOK'] = 'Livre de sorts';
 $lang['Adr_evocation'] = '&Eacute;vocation';
 $lang['Adr_healing'] = 'Soin';
 $lang['Adr_adjuration'] = 'Adjuration';
+$lang['ADR_FIGHT_OVER'] = 'Combat termin&eacute;';
+$lang['ADR_NEW_TURN'] = 'Nouveau tour';

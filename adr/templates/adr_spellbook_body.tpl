@@ -69,12 +69,7 @@
 								</td>
 							</tr>
 						</table>
-						<!-- END spell -->
 					</td>
-					<td width="50">&nbsp;</td>
-					<td width="340" valign="top" style="font-family:'serif'">
-					</td>
-					<td width="60"></td>
 				</tr>
 			</table>
 		</td>

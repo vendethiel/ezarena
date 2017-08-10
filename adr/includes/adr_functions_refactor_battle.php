@@ -18,6 +18,19 @@ define('BATTE_PVP', 2);
 define('BATTLE_TURN_PLAYER', 1);
 define('BATTLE_TURN_MONSTER', 2);
 
+function adr_duration_text($item, $self_name)
+{
+  global $lang;
+	if ($item['item_duration'] < 2)
+	{
+		$message = '</span><span class="gensmall">'; // set new span class
+		$message .= '&nbsp;&nbsp;&nbsp;' . sprintf($lang['Adr_battle_spell_dura'], $self_name, $item['item_name']) . '<br>';
+		$message .= '</span><span class="genmed">'; // reset span class to default
+    return $message;
+	} //$item['item_duration'] < 2
+  return '';
+}
+
 // Select if the user has a battle in progress or no
 function adr_get_battle($user_id)
 {
@@ -37,13 +50,14 @@ function adr_get_battle($user_id)
 	return $bat;
 }
 
-function adr_next_round($turn)
+function adr_next_round($turn, $extra = '')
 {
 	global $db, $user_id;
 
 	// Update the database
 	$sql = "UPDATE " . ADR_BATTLE_LIST_TABLE . "
-		SET battle_round = (battle_round + 1),
+    SET $extra
+      battle_round = (battle_round + 1),
 			battle_turn = $turn
 		WHERE battle_challenger_id = $user_id
 		AND battle_result = 0
@@ -71,7 +85,7 @@ function adr_use_hp_amulet()
 
 function adr_use_mp_ring()
 {
-	global $bat, $challeneger, $hp_regen, $battle_message;
+	global $bat, $challeneger, $mp_regen, $battle_message;
 
 	// Check if user a Ring for MP regen this turn	
 	if ($bat['battle_challenger_mp'] != 0)
@@ -84,6 +98,10 @@ function adr_use_mp_ring()
 	} //$bat['battle_challenger_mp'] != 0
 }
 
+/**
+ * Sets the turn.
+ * If you want to set the round as well, use adr_next_round.
+ */
 function adr_set_turn($user_id, $turn)
 {
 	global $db;
@@ -129,17 +147,21 @@ function adr_items_clear_broken()
 }
 
 // get an item that's usable in combat
-//  = not in shop, not in warehouse, with duration
-function adr_get_item_in_battle($item_id)
+//  = not in shop, not in warehouse, with duration, not bought during battle
+function adr_get_item_in_battle($item_id, $ts = null, $pvp = false)
 {
 	global $item_sql, $user_id, $db;
 
+  $ts_sql = $ts ? " AND (item_bought_timestamp < '$ts' OR item_bought_timestamp = '0')" : "";
+  $pvp_sql = $pvp ? " AND item_monster_thief = 0" : "";
 	$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
 		WHERE item_in_shop = 0 
 		AND item_in_warehouse = 0
 		AND item_owner_id = $user_id 
 		AND item_duration > 0
 		$item_sql
+    $ts_sql
+    $pvp_sql
 		AND item_id = " . intval($item_id);
 	if (!($result = $db->sql_query($sql)))
 	{
@@ -190,8 +212,10 @@ function adr_get_spell($spell_id, $error_on_empty)
 	return $item;
 }
 
-function adr_calc_item_damage($item, $power, $attbonus)
+function adr_calc_item_damage($item, $power, $attbonus, $opponent_element)
 {
+  $elemental = adr_get_element_infos($opponent_element);
+
 	if (($item['item_element']) && ($item['item_element'] === $elemental['element_oppose_strong']) && ($item['item_duration'] > '1') && (!empty($item['item_name'])))
 	{
 		$damage = ceil(($power * ($item['item_element_weak_dmg'] / 100)) * $attbonus);
@@ -215,10 +239,17 @@ function adr_calc_item_damage($item, $power, $attbonus)
 
 function adr_check_mp($challenger, $item, $type)
 {
-	if ($challenger['character_mp'] < ($item[$type.'_mp_use'] + $item[$type.'_power']) || $challenger['character_mp'] < 0)
+  return adr_check_mp_value($challenger['character_mp'], $item, $type);
+}
+
+function adr_check_mp_value($mp, $item, $type)
+{
+  $mp_usage = $item[$type.'_mp_use'] + $item[$type.'_power'];
+	if ($mp_usage == '' || $mp < $mp_usage || $mp < 0)
 	{ // not enough mana
 		adr_previous('Adr_battle_check', 'adr_battle', '');
-	}		
+  }
+  return $mp_usage;
 }
 
 function adr_substract_mp($mp_usage)
