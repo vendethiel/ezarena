@@ -40,7 +40,7 @@ $zone_extra_buildings = array(
 	'lumberjack' => 'le Bûcheronnage',
 	'research' => 'la Recherche à la bibliothèque',
 	'tailor' => 'la Couture',
-  'alchemy' 'l\'Alchimie',
+  'alchemy' => 'l\'Alchimie',
 );
 
 if( !empty($setmodules) )
