@@ -1416,7 +1416,7 @@ if ( defined ('IN_ADR_NPC_ADMIN'))
    $lang['Adr_Npc_acp_quest_name']='Quête';
    $lang['Adr_Npc_acp_quest']='Quête Options';
    $lang['Adr_Npc_acp_item_name']='Est-ce que le PNJ a besoin d\'un objet?';
-   $lang['Adr_Npc_acp_item_name_explain']='Choisissez un/des objet(s) dans la liste. Si le personnage possède cet(s) objet(s) dans son inventaire, il peut le(s) donner au PNJ. Si vous ne voulez pas choisir d\'objet, passez à l\'étape suivante.';
+   $lang['Adr_Npc_acp_item_name_explain']='Choisissez un/des objet(s) dans la liste. Si le personnage possède cet(s) objet(s) dans son inventaire, il peut le(s) donner au PNJ. Si vous ne voulez pas choisir d\'objet, passez à l\'étape suivante.<br /><b>Note :</b> Si vous avez choisi "Demander de l\'argent", ce r&eacute;glage est ignor&eacute;.';
    $lang['Adr_Npc_acp_npc_message2']='Le message du PNJ après qu\'il ait reçu le(s) objet(s)';
    $lang['Adr_Npc_acp_npc_message2_explain']='C\'est ce que le PNJ va dire quand un personnage lui donne le(s) objets. (Champ Obligatoire si vous avez choisi un/des objet(s) ou si vous avez activé l\'option "payer pour finir la quête")';
    $lang['Adr_Npc_acp_npc_message3']='Second message du PNJ après qu\'il ait reçu le/les objet(s)';
@@ -1457,14 +1457,14 @@ if ( defined ('IN_ADR_NPC_ADMIN'))
    $lang['Adr_Npc_acp_npc_quest_explain']='PNJ(s) que le joueur doit avoir aidé (en complétant leur quête) pour voir ce PNJ (tant qu\'ils valident aussi les autres critères).';
    $lang['Adr_Npc_acp_npc_view']='Montrer ce PNJ à tout le monde :';
    $lang['Adr_Npc_acp_npc_view_explain']='Affiche le PNJ même si le personnage ne répond pas aux critères (race, classe, niveau, vites de PNJ, quêtes complétées ...).';
-   $lang['Adr_Npc_acp_npc_quest_hide']='Cacher le PNJ une fois que le joueur ?';
+   $lang['Adr_Npc_acp_npc_quest_hide']='Cacher le PNJ une fois que le joueur a fini la qu&ecirc;te ?';
    $lang['Adr_Npc_acp_npc_quest_hide_explain']='Cochez cette case cachera le PNJ une fois que le joueur aura fini la quête. Ce réglage permet, par exemple, de faire une suite de quête (en demandant au joueur de compléter la quête du PNJ précédent).';
    // $lang['Adr_Npc_acp_npc_quest_clue']='Proposer au joueur de payer pour un finir la quête ?';
    // $lang['Adr_Npc_acp_npc_quest_clue_explain']='Propose au joueur de payer pour obtenir les récompenses sans avoir d\'objet (ignore les objets nécessaires, requiert les 2 messages d\'entrés)';
-   $lang['Adr_Npc_acp_npc_quest_clue']='Permettre de payer pour finir la quête ?';
-   $lang['Adr_Npc_acp_npc_quest_clue_explain']='Au lieu de demander un objet pour finir la quête, le PNJ demandera de l\'argent';
-   $lang['Adr_Npc_acp_npc_quest_clue_price']='Prix de l\'indice';
-   $lang['Adr_Npc_acp_npc_quest_clue_price_explain']='Prix que le joueur doit payer pour voir l\'indice.';
+   $lang['Adr_Npc_acp_npc_quest_clue']='Demander de l\'argent pour finir la qu&ecirc;te plut&ocirc;t que un/des objet(s) ?';
+   $lang['Adr_Npc_acp_npc_quest_clue_explain']='Au lieu de demander un ou des objets pour finir la quête, le PNJ demandera de l\'argent. Les autres conditions seront quand m&ecirc;mes v&eacute;rifi&eacute;es.<br /><b>Note :</b> Si vous activez cette option, le joueur ne pourra compl&eacute;ter que de cette fa&ccedil;on.';
+   $lang['Adr_Npc_acp_npc_quest_clue_price']='Prix pour finir la qu&ecirc;te';
+   $lang['Adr_Npc_acp_npc_quest_clue_price_explain']='Prix que le joueur doit payer pour finir la qu&ecirc;te.';
 }
 $lang['Adr_zone_npc_talk'] = 'Parler';
 
@@ -1909,3 +1909,5 @@ $lang['Adr_fish'] = $lang['Adr_fishing'];
 $lang['Adr_tailor']=$lang['Adr_tailoring'];
 $lang['Adr_herbal']=$lang['Adr_herbalism'];
 $lang['Adr_research'] = 'Recherche';
+// used in questbook history
+$lang['Adr_questbook_quest_typ_clue'] = 'Vous avez pay&eacute; pour valider cette qu&ecirc;te';

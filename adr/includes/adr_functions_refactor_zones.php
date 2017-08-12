@@ -117,6 +117,71 @@ function zone_events($zone)
 }
 
 // Zone - NPCs
+function zone_npc_check_preconditions($npc_row)
+{
+  global $lang, $adr_user, $user_id;
+  global $user_npc_visit_array, $user_npc_quest_array;
+
+  $no_talk_message = array();
+
+  $npc_zone_array = explode( ',' , $npc_row['npc_zone'] );
+  $npc_race_array = explode( ',' , $npc_row['npc_race'] );
+  $npc_class_array = explode( ',' , $npc_row['npc_class'] );
+  $npc_alignment_array = explode( ',' , $npc_row['npc_alignment'] );
+  $npc_element_array = explode( ',' , $npc_row['npc_element'] );
+  $npc_character_level_array = explode( ',' , $npc_row['npc_character_level'] );
+  $npc_visit_array = explode( ',' , $npc_row['npc_visit_prerequisite'] );
+  $npc_quest_array = explode( ',' , $npc_row['npc_quest_prerequisite'] );
+
+  $npc_visit = array();
+  $npc_quest = array();
+  $npc_quest_hide_array = array();
+
+  // you can't click a disabled npc
+  if ( !($npc_row['npc_enable']) )
+    adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+  // you can't click a npc in another area
+  if ( !in_array( $area_id , $npc_zone_array ) && $npc_zone_array[0] != '0' )
+    adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+  if ( !in_array( $adr_user['character_race'] , $npc_race_array ) && $npc_race_array[0] != '0')
+      $no_talk_message[] = $lang['Adr_Npc_race_no_talk_message'];
+
+  if ( !in_array( $adr_user['character_class'] , $npc_class_array ) && $npc_class_array[0] != '0')
+    $no_talk_message[] = $lang['Adr_Npc_class_no_talk_message'];
+
+  if ( !in_array( $adr_user['character_alignment'] , $npc_alignment_array ) && $npc_alignment_array[0] != '0')
+    $no_talk_message[] = $lang['Adr_Npc_alignment_no_talk_message'];
+
+  if ( !in_array( $adr_user['character_element'] , $npc_element_array ) && $npc_element_array[0] != '0')
+    $no_talk_message[] = $lang['Adr_Npc_element_no_talk_message'];
+
+  if ( !in_array( $adr_user['character_level'] , $npc_character_level_array ) && $npc_character_level_array[0] != '0')
+    $no_talk_message[] = $lang['Adr_Npc_character_level_no_talk_message'];
+
+  for ($y = 0; $y < count($user_npc_visit_array); $y++)
+    $npc_visit[$y] = ( in_array( $user_npc_visit_array[$y] , $npc_visit_array ) ) ? '1' : '0';
+
+  if (!in_array('1' , $npc_visit) && $npc_visit_array[0] != '0')
+    $no_talk_message[] = $lang['Adr_Npc_character_visit_no_talk_message'];
+
+  for ($y = 0; $y < count($user_npc_quest_array); $y++)
+  {
+    $npc_quest_id = explode( ':' , $user_npc_quest_array[$y] );
+    $npc_quest[$y] = ( in_array( $npc_quest_id[0] , $npc_quest_array ) ) ? '1' : '0';
+    $npc_quest_hide_array[$y] = ( $npc_quest_id[0] == $npc_row['npc_id'] ) ? '1' : '0';
+  }
+  if ( !in_array( '1' , $npc_quest ) && $npc_quest_array[0] != '0')
+    $no_talk_message[] = $lang['Adr_Npc_character_quest_no_talk_message'];
+
+  // here, uses npc_quest_hide
+  if	( in_array( '1' , $npc_quest_hide_array ) && $npc_row['npc_quest_hide'] )
+    adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+
+  if ($no_talk_message && !$npc_row['npc_view'])
+    adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+  return $no_talk_message;
+}
+
 function zone_npc_actions()
 {
 	global $board_config, $db, $userdata, $area_id, $user_id, $lang, $adr_user, $user_npc_visit_array, $user_npc_quest_array;
@@ -143,87 +208,8 @@ function zone_npc_actions()
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
 
     $adr_user = adr_npc_visit_update( $npc_id, $adr_user );
+    $no_talk_message = zone_npc_check_preconditions($npc_row);
 
-		$npc_zone_array = explode( ',' , $npc_row['npc_zone'] );
-		$npc_race_array = explode( ',' , $npc_row['npc_race'] );
-		$npc_class_array = explode( ',' , $npc_row['npc_class'] );
-		$npc_alignment_array = explode( ',' , $npc_row['npc_alignment'] );
-		$npc_element_array = explode( ',' , $npc_row['npc_element'] );
-		$npc_character_level_array = explode( ',' , $npc_row['npc_character_level'] );
-		$npc_visit_array = explode( ',' , $npc_row['npc_visit_prerequisite'] );
-		$npc_quest_array = explode( ',' , $npc_row['npc_quest_prerequisite'] );
-
-		$npc_visit = array();
-		$npc_quest = array();
-		$no_talk_message = array();
-		$npc_quest_hide_array = array();
-
-		// you can't click a disabled npc
-		if ( !($npc_row['npc_enable']) )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		// you can't click a npc in another area
-		if ( !in_array( $area_id , $npc_zone_array ) && $npc_zone_array[0] != '0' )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		if ( !in_array( $adr_user['character_race'] , $npc_race_array ) && $npc_race_array[0] != '0' && !$npc_row['npc_view'] )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		else if ( !in_array( $adr_user['character_race'] , $npc_race_array ) && $npc_race_array[0] != '0' && $npc_row['npc_view'] )
-		{
-		    $no_talk_message[] = $lang['Adr_Npc_race_no_talk_message'];
-		}
-
-		if ( !in_array( $adr_user['character_class'] , $npc_class_array ) && $npc_class_array[0] != '0' && !$npc_row['npc_view'] )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		else if ( !in_array( $adr_user['character_class'] , $npc_class_array ) && $npc_class_array[0] != '0' && $npc_row['npc_view'] )
-		{
-		    $no_talk_message[] = $lang['Adr_Npc_class_no_talk_message'];
-		}
-
-		if ( !in_array( $adr_user['character_alignment'] , $npc_alignment_array ) && $npc_alignment_array[0] != '0' && !$npc_row['npc_view'] )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		else if ( !in_array( $adr_user['character_alignment'] , $npc_alignment_array ) && $npc_alignment_array[0] != '0' && $npc_row['npc_view'] )
-		{
-		    $no_talk_message[] = $lang['Adr_Npc_alignment_no_talk_message'];
-		}
-
-		if ( !in_array( $adr_user['character_element'] , $npc_element_array ) && $npc_element_array[0] != '0' && !$npc_row['npc_view'] )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		else if( !in_array( $adr_user['character_element'] , $npc_element_array ) && $npc_element_array[0] != '0' && $npc_row['npc_view'] )
-		{
-		    $no_talk_message[] = $lang['Adr_Npc_element_no_talk_message'];
-		}
-		if ( !in_array( $adr_user['character_level'] , $npc_character_level_array ) && $npc_character_level_array[0] != '0' && !$npc_row['npc_view'] )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		else if ( !in_array( $adr_user['character_level'] , $npc_character_level_array ) && $npc_character_level_array[0] != '0' && $npc_row['npc_view'] )
-		{
-		    $no_talk_message[] = $lang['Adr_Npc_character_level_no_talk_message'];
-		}
-
-		for ( $y = 0 ; $y < count( $user_npc_visit_array ) ; $y++ )
-			$npc_visit[$y] = ( in_array( $user_npc_visit_array[$y] , $npc_visit_array ) ) ? '1' : '0';
-		
-		if ( !in_array( '1' , $npc_visit ) && $npc_visit_array[0] != '0' && !$npc_row['npc_view'] )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		else if ( !in_array( '1' , $npc_visit ) && $npc_visit_array[0] != '0' && $npc_row['npc_view'] )
-		{
-		    $no_talk_message[] = $lang['Adr_Npc_character_visit_no_talk_message'];
-		}
-		
-		for ( $y = 0 ; $y < count( $user_npc_quest_array ) ; $y++ )
-		{
-			$npc_quest_id = explode( ':' , $user_npc_quest_array[$y] );
-			$npc_quest[$y] = ( in_array( $npc_quest_id[0] , $npc_quest_array ) ) ? '1' : '0';
-			$npc_quest_hide_array[$y] = ( $npc_quest_id[0] == $npc_row['npc_id'] ) ? '1' : '0';
-		}
-		
-		if ( !in_array( '1' , $npc_quest ) && $npc_quest_array[0] != '0' && !$npc_row['npc_view'] )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		else if ( !in_array( '1' , $npc_quest ) && $npc_quest_array[0] != '0' && $npc_row['npc_view'] )
-		{
-		    $no_talk_message[$x] = $lang['Adr_Npc_character_quest_no_talk_message'];
-		}
-		
-		if 	( in_array( '1' , $npc_quest_hide_array ) && $npc_row['npc_quest_hide'] )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
 		$adr_moderators_array = explode( ',' , $board_config['zone_adr_moderators'] );
 		if ( $npc_row['npc_user_level'] != '0' && !( ( $npc_row['npc_user_level'] == '1' && $userdata['user_level'] == ADMIN ) || ( $npc_row['npc_user_level'] == '2' && ( in_array( $user_id , $adr_moderators_array ) || $userdata['user_level'] == ADMIN ) ) ) )
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
@@ -236,7 +222,6 @@ function zone_npc_actions()
 			$message = "<img src=\"adr/images/zones/npc/" . $npc_row['npc_img'] . "\"><br /><br /><b>" . $npc_row['npc_name'] . ":</b> <i>\"" . $no_talk_message[$message_id] . "\"</i><br /><br />" . $lang['Adr_zone_event_return'];
 			$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
 			message_die(GENERAL_MESSAGE, $message , $adr_zone_npc_title , '' );
-			break;
 		}
 		else
 		{
@@ -265,47 +250,7 @@ function zone_npc_actions()
 		//prevent user exploit
 		if ( !($npc_give_row = $db->sql_fetchrow($result)))
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		if ( !($npc_give_row['npc_enable']) )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-
-		$npc_zone_array = explode( ',' , $npc_give_row['npc_zone'] );
-		$npc_race_array = explode( ',' , $npc_give_row['npc_race'] );
-		$npc_class_array = explode( ',' , $npc_give_row['npc_class'] );
-		$npc_alignment_array = explode( ',' , $npc_give_row['npc_alignment'] );
-		$npc_element_array = explode( ',' , $npc_give_row['npc_element'] );
-		$npc_character_level_array = explode( ',' , $npc_give_row['npc_character_level'] );
-		$npc_visit_array = explode( ',' , $npc_give_row['npc_visit_prerequisite'] );
-		$npc_quest_array = explode( ',' , $npc_give_row['npc_quest_prerequisite'] );
-
-		$npc_visit = array();
-		$npc_quest = array();
-		$npc_quest_hide_array = array();
-		if ( !in_array( $area_id , $npc_zone_array ) && $npc_zone_array[0] != '0' )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		if ( !in_array( $adr_user['character_race'] , $npc_race_array ) && $npc_race_array[0] != '0' )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		if ( !in_array( $adr_user['character_class'] , $npc_class_array ) && $npc_class_array[0] != '0' )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		if ( !in_array( $adr_user['character_alignment'] , $npc_alignment_array ) && $npc_alignment_array[0] != '0' )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		if ( !in_array( $adr_user['character_element'] , $npc_element_array ) && $npc_element_array[0] != '0' )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		if ( !in_array( $adr_user['character_level'] , $npc_character_level_array ) && $npc_character_level_array[0] != '0' )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		for ( $y = 0 ; $y < count( $user_npc_visit_array ) ; $y++ )
-			$npc_visit[$y] = ( in_array( $user_npc_visit_array[$y] , $npc_visit_array ) ) ? '1' : '0';
-		if ( !in_array( '1' , $npc_visit ) && $npc_visit_array[0] != '0' && !$npc_give_row['npc_view'] )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		for ( $y = 0 ; $y < count( $user_npc_quest_array ) ; $y++ )
-		{
-			$npc_quest_id = explode( ':' , $user_npc_quest_array[$y] );
-			$npc_quest[$y] = ( in_array( $npc_quest_id[0] , $npc_quest_array ) ) ? '1' : '0';
-			$npc_quest_hide_array[$y] = ( $npc_quest_id[0] == $npc_give_row['npc_id'] ) ? '1' : '0';
-		}
-		if ( !in_array( '1' , $npc_quest ) && $npc_quest_array[0] != '0' && !$npc_give_row['npc_view'] )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
-		if 	( in_array( '1' , $npc_quest_hide_array ) && $npc_give_row['npc_quest_hide'] )
-			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
+    $no_talk_message = zone_npc_check_preconditions($npc_give_row);
 		$adr_moderators_array = explode( ',' , $board_config['zone_adr_moderators'] );
 		if ( $npc_give_row['npc_user_level'] != '0' && !( ( $npc_give_row['npc_user_level'] == '1' && $userdata['user_level'] == ADMIN ) || ( $npc_give_row['npc_user_level'] == '2' && ( in_array( $user_id , $adr_moderators_array ) || $userdata['user_level'] == ADMIN ) ) ) )
 			adr_item_quest_cheat_notification($user_id, $lang['Adr_zone_npc_cheating_type_2']);
@@ -345,11 +290,11 @@ function zone_npc_actions()
 						message_die(GENERAL_ERROR, "Couldn't update inventory info", "", __LINE__, __FILE__, $asql);
 
 					$sql5 = "SELECT * FROM " . ADR_QUEST_LOG_TABLE . "
-						WHERE quest_item_need like '".$npc_item_array[$i].","."%' 
+						WHERE quest_item_need like '".$npc_item_array[$i].",%' 
 						OR quest_item_need like '".$npc_item_array[$i]."'
 						OR quest_item_need like '".$npc_item_array[$i].","."'
-						OR quest_item_need like '%".",".$npc_item_array[$i].","."%'
-						OR quest_item_need like '%".",".$npc_item_array[$i]."'
+						OR quest_item_need like '%,".$npc_item_array[$i].",%'
+						OR quest_item_need like '%,".$npc_item_array[$i]."'
 						AND user_id = '$user_id'
 						";
 					$cresult = $db->sql_query($sql5);
@@ -357,26 +302,26 @@ function zone_npc_actions()
 				   		message_die(GENERAL_ERROR, 'Could not obtain required quest information', "", __LINE__, __FILE__, $sql5);
 					if ( $got_item_log = $db->sql_fetchrow($cresult) )
 						$got_item += 1;
+        }
 					
-					if ($got_item == count( $npc_item_array ) && ($npc_give_row['npc_kill_monster'] == '0' || $npc_give_row['npc_kill_monster'] == ""))
-					{
-						//Copy Quest to the History
-						$insertsql = "INSERT INTO " . ADR_QUEST_LOG_HISTORY_TABLE . "
-							( user_id, quest_killed_monster , quest_killed_monsters_amount , npc_id, quest_item_gave)
-							VALUES ( '$user_id' , '".$npc_give_row['npc_kill_monster']."' , '".$npc_give_row['npc_monster_amount']."' , '". $npc_give_row['npc_id'] ."', '".$npc_give_row['npc_item']."' )";
-						$result = $db->sql_query($insertsql);
-						if( !$result )
-							message_die(GENERAL_ERROR, "Couldn't insert finished quest", "", __LINE__, __FILE__, $insertsql);
+        if ($got_item == count( $npc_item_array ) && ($npc_give_row['npc_kill_monster'] == '0' || $npc_give_row['npc_kill_monster'] == ""))
+        {
+          //Copy Quest to the History
+          $insertsql = "INSERT INTO " . ADR_QUEST_LOG_HISTORY_TABLE . "
+            ( user_id, quest_killed_monster , quest_killed_monsters_amount , npc_id, quest_item_gave)
+            VALUES ( '$user_id' , '".$npc_give_row['npc_kill_monster']."' , '".$npc_give_row['npc_monster_amount']."' , '". $npc_give_row['npc_id'] ."', '".$npc_give_row['npc_item']."' )";
+          $result = $db->sql_query($insertsql);
+          if( !$result )
+            message_die(GENERAL_ERROR, "Couldn't insert finished quest", "", __LINE__, __FILE__, $insertsql);
 
-						//Delete the Quest of the log
-						$delsql2 = " DELETE FROM  " . ADR_QUEST_LOG_TABLE . "
-					   		WHERE user_id = '$user_id'
-							AND npc_id = '$npc_id'
-					   		";
-						if( !($bresult = $db->sql_query($delsql2)) )
-							message_die(GENERAL_ERROR, "Couldn't update questlog info", "", __LINE__, __FILE__, $delsql2);
-					}
-				}
+          //Delete the Quest of the log
+          $delsql2 = " DELETE FROM  " . ADR_QUEST_LOG_TABLE . "
+            WHERE user_id = '$user_id'
+            AND npc_id = '$npc_id'
+";
+          if( !($bresult = $db->sql_query($delsql2)) )
+            message_die(GENERAL_ERROR, "Couldn't update questlog info", "", __LINE__, __FILE__, $delsql2);
+        }
 				if ($npc_give_row['npc_kill_monster'] != '0' && $npc_give_row['npc_kill_monster'] != "" && ($npc_give_row['quest_kill_monster_current_amount'] == $npc_give_row['npc_kill_monster_amount']))
 				{
 					//Copy Quest to the History
@@ -397,17 +342,25 @@ function zone_npc_actions()
 					if( !($dresult = $db->sql_query($delsql3)) )
 						message_die(GENERAL_ERROR, "Couldn't update questlog info", "", __LINE__, __FILE__, $delsql3);
 				}
-			}
-			else
-			{
-				adr_substract_points( $user_id , $npc_give_row['npc_quest_clue_price'] , 'adr_zones' , '' );
-				//Delete the Quest of the log
-				$delsql2 = " DELETE FROM  " . ADR_QUEST_LOG_TABLE . "
+      }
+      else
+      {
+        adr_substract_points( $user_id , $npc_give_row['npc_quest_clue_price'] , 'adr_zones' , '' );
+        //Delete the Quest of the log
+        $delsql2 = " DELETE FROM  " . ADR_QUEST_LOG_TABLE . "
 			   		WHERE user_id = '$user_id'
 					AND npc_id = '$npc_id'
 			   		";
 				if( !($bresult = $db->sql_query($delsql2)) )
 					message_die(GENERAL_ERROR, "Couldn't update questlog info", "", __LINE__, __FILE__, $delsql2);
+
+        // Insert empty values as the user paid for it all.
+        $insertsql = "INSERT INTO " . ADR_QUEST_LOG_HISTORY_TABLE . "
+        ( user_id, quest_killed_monster , quest_killed_monsters_amount , npc_id, quest_item_gave)
+        VALUES ( '$user_id' , '' , '0' , '". $npc_give_row['npc_id'] ."', '' )";
+        $result = $db->sql_query($insertsql);
+        if( !$result )
+          message_die(GENERAL_ERROR, "Couldn't insert finished quest", "", __LINE__, __FILE__, $insertsql);
 			}
 
 			//give points prize
@@ -472,6 +425,38 @@ function zone_npc_item_quest_check($npc_row)
 	global $user_id, $db, $lang, $phpEx, $board_config;
 
 	$npc_id = $npc_row['npc_id'];
+  // V: moved this part at the beginning, so that we always insert the quest first and foremost.
+  //    This fixes a "bug": say a quest requires item X, and you already have it before ever talking to the NPC - before this was moved, you'd need to talk to the NPC twice.
+  //    (first to add the quest to your questlog, then to submit)
+	if ( ($npc_row['npc_item'] != "0" && $npc_row['npc_item'] != "")
+		|| ($npc_row['npc_kill_monster'] != "0" && $npc_row['npc_kill_monster'] != "" && $npc_row['npc_kill_monster_amount'] != "0"))
+	{
+		// Check if the character already has the Quest !
+    // V: removed this part. I think we should only compare quests by npc_id,
+    //    since NPCs can only have one quest.
+    //    Completed quests have their own table anyway.
+    /*
+	   		WHERE (quest_item_need = '".$npc_row['npc_item']."'
+				OR quest_kill_monster = '".$npc_row['npc_kill_monster']."')
+     */
+		$sql = " SELECT * FROM  " . ADR_QUEST_LOG_TABLE . "
+			WHERE user_id = '$user_id'
+			AND npc_id = '$npc_id'
+	   		";
+		$result = $db->sql_query($sql);
+		if( !$result )
+	   		message_die(GENERAL_ERROR, 'Could not obtain required quest information', "", __LINE__, __FILE__, $sql);
+		if ( !($quest_log = $db->sql_fetchrow($result)) )
+		{
+			//Add the quest to the questlog
+			$sql = "INSERT INTO " . ADR_QUEST_LOG_TABLE . "
+				( user_id, quest_kill_monster , quest_kill_monster_amount , quest_kill_monster_current_amount , quest_item_have, quest_item_need, npc_id )
+				VALUES ( '$user_id' , '".$npc_row['npc_kill_monster']."' , '".$npc_row['npc_monster_amount']."' , '0' , '', '". $npc_row['npc_item'] ."' , '". $npc_row['npc_id'] ."' )";
+			$result = $db->sql_query($sql);
+			if( !$result )
+				message_die(GENERAL_ERROR, "Couldn't insert new quest", "", __LINE__, __FILE__, $sql);
+		}
+	}
 
 	//[QUEST] Check if the NPC needs an item(s)
 	if ( $npc_row['npc_item'] != "0" || $npc_row['npc_item'] != "" || $npc_row['npc_quest_clue'] )
@@ -548,30 +533,6 @@ function zone_npc_item_quest_check($npc_row)
 		}
 	}
 
-	if ( ($npc_row['npc_item'] != "0" && $npc_row['npc_item'] != "")
-		|| ($npc_row['npc_kill_monster'] != "0" && $npc_row['npc_kill_monster'] != "" && $npc_row['npc_kill_monster_amount'] != "0"))
-	{
-		// Check if the character already has the Quest !
-		$sql = " SELECT * FROM  " . ADR_QUEST_LOG_TABLE . "
-	   		WHERE (quest_item_need = '".$npc_row['npc_item']."'
-				OR quest_kill_monster = '".$npc_row['npc_kill_monster']."')
-			AND user_id = '$user_id'
-			AND npc_id = '$npc_id'
-	   		";
-		$result = $db->sql_query($sql);
-		if( !$result )
-	   		message_die(GENERAL_ERROR, 'Could not obtain required quest information', "", __LINE__, __FILE__, $sql);
-		if ( !($quest_log = $db->sql_fetchrow($result)) )
-		{
-			//Add the quest to the questlog
-			$sql = "INSERT INTO " . ADR_QUEST_LOG_TABLE . "
-				( user_id, quest_kill_monster , quest_kill_monster_amount , quest_kill_monster_current_amount , quest_item_have, quest_item_need, npc_id )
-				VALUES ( '$user_id' , '".$npc_row['npc_kill_monster']."' , '".$npc_row['npc_monster_amount']."' , '0' , '', '". $npc_row['npc_item'] ."' , '". $npc_row['npc_id'] ."' )";
-			$result = $db->sql_query($sql);
-			if( !$result )
-				message_die(GENERAL_ERROR, "Couldn't insert new quest", "", __LINE__, __FILE__, $sql);
-		}
-	}
 	// Check if user has killed enough monsters
 	$sqlm3 = " SELECT * FROM  " . ADR_QUEST_LOG_TABLE . "
    		WHERE quest_kill_monster = '".$npc_row['npc_kill_monster']."'

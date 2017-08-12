@@ -105,6 +105,11 @@ while ( $quest_log = $db->sql_fetchrow($result) )
 					$quest_status .= sprintf($lang['Adr_questbook_quest_typ_item_gave'], adr_get_lang($npc_item_need_array[$i]));
 			}
 		}
+    if ($quest_status == '')
+    {
+      // V: no items, no mob killed. User paid.
+      $quest_status .= $lang['Adr_questbook_quest_typ_clue'];
+    }
 		
 		$template->assign_block_vars('quest', array(
 			

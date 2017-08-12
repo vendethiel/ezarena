@@ -61,7 +61,6 @@ function adr_item_quest_check_insert($quest_check, $npc_id, $user_id)
 
 function adr_item_quest_cheat_notification($user_id, $cheat_type)
 {
-	echo 'DEBUG: cheat';
 	global $board_config, $userdata, $adr_general, $adr_user, $lang, $db, $phpEx, $table_prefix, $HTTP_SERVER_VARS, $HTTP_ENV_VARS;
 
 	$adr_ban_punishment = false;

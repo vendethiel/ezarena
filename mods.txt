@@ -447,6 +447,17 @@ Ajoute un système de NPC (PNJ) avancé au Zone Mod, permettant de dépasser la 
 
 # ADR : Advanced NPC System Expansion 0.2.3-beta - Ozzie
 Ajoute de nombreuses fonctionnalités au mod "Advanced NPC System", comme la possibilité de reporter un tricheur (avec la possiblité pour un administrateur de mp/bannir/... le joueur), permet aux PNJs d'apparaître dans plusieurs zones, les PNJs peuvent demander plusieurs objets, et vous pouvez ajouter des restrictions de classe/race/niveau/élément/alignement/a parlé avec tel PNJ/a fini tel quête (aucune, une ou plusieurs).
+TODO :
+ - Advanced NPC System Expansion Multiple Items
+
+# ADR : QuestBook System v1.0.2 pour Advanced NPC System - Himmelweiss
+Ajoute un système de listes de quetes.
+Addons :
+ - Questbook History v1.0.1 - Himmelweiss
+ - NPC should offer to complete quest if completable on first visit - Informpro
+ - Heavy refactoring - Informpro
+TODO :
+ - Rewrite the checks to complete a quest (items + kills)
 
 # ADR : Cache doesn't use PK to index - Informpro
 Dans l'ADR de base, le cache indexe par le n' du row, pas par son ID.
@@ -457,7 +468,6 @@ Etend les restrictions de zones aux pages suivantes (configurable depuis l'ACP) 
  - blacksmith
  - brewing
  - cauldron
- - used to have c_lans
  - cooking
  - fish
  - herbal
@@ -467,6 +477,7 @@ Etend les restrictions de zones aux pages suivantes (configurable depuis l'ACP) 
  - lumberjack
  - research
  - tailor
+ - alchemy
 
 # ADR : Blacksmithing 0.3.0 - Himmelweiss
 Ajoute un système avancé de forge au mod Crafting.
@@ -525,9 +536,6 @@ Ré-écriture du mod de Spikez.
 
 # ADR : Pet auto-summon 1.0 - Informpro
 Invoque automatiquement votre familier pour le combat.
-
-# ADR : QuestBook System v1.0.2 - Himmelweiss
-Ajoute un système pour garder la liste des quêtes en cours, incluant le nom du PNJ, sa zone, son message, quel objet il vous faut encore ou quel monstre vous devez toujours tuer.
 
 # ADR : Research 0.2.3-beta - egdcltd
 Permet aux joueurs de découvrir des informations dans des livres, le tout configurable dans l'ACP.

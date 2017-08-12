@@ -125,6 +125,14 @@ function update_npc(newimage)
 		<td class="row1" align="center" ><span class="gen">{NPC_ITEM}</span></td>
 	</tr>
 	<tr>
+		<td class="row2" width="60%" ><b>{L_NPC_QUEST_MONSTERKILL_NAME}</b><br \>{L_NPC_QUEST_MONSTERKILL_EXPLAIN}</td>
+		<td class="row2" align="center" ><span class="gen">{NPC_MONSTER}</span></td>
+	</tr>
+	<tr>
+		<td class="row1" width="60%"><b>{L_NPC_QUEST_MONSTERKILL_AMOUNT} :</b><br />{L_NPC_QUEST_MONSTERAMOUNT_EXPLAIN}</td>
+		<td class="row1" align="center" ><input type="text" name="npc_monster_amount" value="{NPC_MONSTER_AMOUNT}" size="4" maxlength="4" /></td>
+	</tr>
+	<tr>
 		<td class="row2" width="60%"><b>{L_NPC_MESSAGE2} :</b><br />{L_NPC_MESSAGE2_EXPLAIN}</td>
 		<td class="row2" align="center" ><textarea name="npc_message2" cols="50" rows="5" class="post">{NPC_MSG2}</textarea>
 	<!-- BEGIN npc_add -->
@@ -163,14 +171,6 @@ function update_npc(newimage)
 	<tr>
 		<td class="row2" width="60%"><b>{L_NPC_TIMES} :</b><br />{L_NPC_TIMES_EXPLAIN}</td>
 		<td class="row2" align="center" ><input type="text" name="npc_times" value="{NPC_TIMES}" size="4" maxlength="4" /></td>
-	</tr>
-	<tr>
-		<td class="row1" width="60%" ><b>{L_NPC_QUEST_MONSTERKILL_NAME}</b><br \>{L_NPC_QUEST_MONSTERKILL_EXPLAIN}</td>
-		<td class="row1" align="center" ><span class="gen">{NPC_MONSTER}</span></td>
-	</tr>
-	<tr>
-		<td class="row2" width="60%"><b>{L_NPC_QUEST_MONSTERKILL_AMOUNT} :</b><br />{L_NPC_QUEST_MONSTERAMOUNT_EXPLAIN}</td>
-		<td class="row2" align="center" ><input type="text" name="npc_monster_amount" value="{NPC_MONSTER_AMOUNT}" size="4" maxlength="4" /></td>
 	</tr>
 </table>
 
