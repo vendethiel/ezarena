@@ -18,7 +18,7 @@
 		<th class="thTop">{L_NPC_COST}</th>
 		<th class="thTop">{L_NPC_ZONE_NAME}</th>
 		<th class="thTop">{L_NPC_QUEST}</th>
-		<th class="thTop">{L_NPC_QUEST}</th>
+		<th class="thTop">{L_ADR_NPC_MOB_KILLS}</th>
 		<th class="thTop">{L_NPC_RANDOM}</th>
 		<th colspan="2" class="thCornerR">{L_NPC_ACTION}</th>
 	</tr>

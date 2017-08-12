@@ -1911,3 +1911,5 @@ $lang['Adr_herbal']=$lang['Adr_herbalism'];
 $lang['Adr_research'] = 'Recherche';
 // used in questbook history
 $lang['Adr_questbook_quest_typ_clue'] = 'Vous avez pay&eacute; pour valider cette qu&ecirc;te';
+// used in npc admin
+$lang['ADR_NPC_MOB_KILLS'] = 'Monstres &agrave; tuer';
