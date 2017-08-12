@@ -1,4 +1,14 @@
 <?php
+/*
+	'beggar',
+	'fish',
+	'herbal',
+	'hunting',
+	'lake',
+	'lumberjack',
+	'research',
+	'tailor',
+ */
 /***************************************************************************
 *                   		lang_adr.php [French]
 *                      		 -------------------
@@ -1893,3 +1903,9 @@ $lang['Adr_healing'] = 'Soin';
 $lang['Adr_adjuration'] = 'Adjuration';
 $lang['ADR_FIGHT_OVER'] = 'Combat terminé';
 $lang['ADR_NEW_TURN'] = 'Nouveau tour';
+// used in adr_zones actions
+$lang['Adr_beggar'] = 'Mendiant';
+$lang['Adr_fish'] = $lang['Adr_fishing'];
+$lang['Adr_tailor']=$lang['Adr_tailoring'];
+$lang['Adr_herbal']=$lang['Adr_herbalism'];
+$lang['Adr_research'] = 'Recherche';

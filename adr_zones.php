@@ -85,7 +85,7 @@ $zone = zone_get($area_id);
 
 // V: let's make sure nothing bad happened for some reason
 //  i.e. somebody deleted the zone.
-//  of course, it's still gonna fail its race's start zone got ERASED
+//  of course, it's still gonna fail if the race's start zone got ERASED
 if (!$zone)
 {
 	$sql = "SELECT race_zone_begin FROM " . ADR_RACES_TABLE . "
@@ -114,7 +114,6 @@ $zone_prison = $zone['zone_prison'];
 $zone_bank = $zone['zone_bank'];
 
 // V: let's build actions stuff
-$has_actions = false;
 $extra_buildings = array(
 	'beggar',
 	'blacksmith',
@@ -123,20 +122,51 @@ $extra_buildings = array(
 	'fish',
 	'herbal',
 	'hunting',
-	//'jobs',// oops, shouldn't be here
 	'lake',
 	'lumberjack',
 	'research',
 	'tailor',
+  'alchemy',
 );
+$enabled_buildings = array();
 foreach ($extra_buildings as $k) {
 	$building_enabled = $zone['zone_'.$k];
 	$template->assign_var('ZONE_'.strtoupper($k), $building_enabled);
 	if ($building_enabled) {
-		$has_actions = true;
+    $enabled_buildings[] = $k;
 	}
 }
-$template->assign_var('ZONE_HAS_ACTIONS', $has_actions);
+$template->assign_var('ZONE_HAS_ACTIONS', !!$enabled_buildings);
+
+// pretty rendering (instead of old ezarena td.disabled rendering)
+if ($enabled_buildings) {
+  $building_url = array('blacksmith' => 'blacksmithing');
+  function div_by($num, $div) { return !($num % $div); }
+  $num_buildings = count($enabled_buildings);
+  // ew
+  $colspan = div_by($num_buildings, 5) ? 5 : (
+    div_by($num_buildings, 4) ? 4 : (
+      div_by($num_buildings, 3) ? 3 : (
+        $num_buildings == 1 ? 1 : 2
+      )
+    )
+  );
+  $actions_html = '<tr>';
+  $row = 0;
+  foreach ($enabled_buildings as $i => $building) {
+    if ($i && !($i % $colspan)) {
+      $actions_html .= '</tr><tr>';
+    } else $row++;
+    $key = isset($building_url[$building]) ? $building_url[$building] : $building;
+    $has_colspan = $num_buildings % $colspan && $i + 1 == $num_buildings;
+    $link = '<a href="'.append_sid("adr_$key.$phpEx").'">'.$lang['Adr_'.$key].'</a>';
+    $actions_html .= "<td class=row" . (1 + ($row % 2)) . (
+      $has_colspan ? " colspan=2" : ""
+    ) . " align='center'>$link</td>";
+  }
+  $actions_html .= '</tr>';
+  $template->assign_var('ZONE_ACTIONS_HTML', $actions_html);
+}
 
 // Begin NSEW Nav
 $cost_goto1 = $zone['cost_goto1'];

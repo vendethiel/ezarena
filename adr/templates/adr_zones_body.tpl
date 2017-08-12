@@ -221,24 +221,7 @@
 	<tr>
 		<th align="center" colspan="10">Actions</td>
 	</tr>
-	<tr>
-        <td <!-- IF ! ZONE_BLACKSMITH -->class="disabled"<!-- ENDIF --> align="center" class="row1"><!-- IF ZONE_BLACKSMITH --><a href="adr_blacksmithing.php"><!-- ENDIF -->Forge<!-- IF ZONE_BLACKSMITH --></a><!-- ENDIF --></td>
-        <td <!-- IF ! ZONE_BREWING -->class="disabled"<!-- ENDIF --> align="center" class="row2"><!-- IF ZONE_BREWING --><a href="adr_brewing.php">Brassage</a><!-- ENDIF --></td>
-        <td <!-- IF ! ZONE_COOKING -->class="disabled"<!-- ENDIF --> align="center" class="row1"><!-- IF ZONE_COOKING --><a href="adr_cooking.php"><!-- ENDIF -->Cuisine<!-- IF ZONE_COOKING --></a><!-- ENDIF --></td>
-        <td <!-- IF ! ZONE_CAULDRON -->class="disabled"<!-- ENDIF --> align="center" class="row2"><!-- IF ZONE_CAULDRON --><a href="adr_cauldron.php"><!-- ENDIF -->Chaudron<!-- IF ZONE_CAULDRON --></a><!-- ENDIF --></td>
-    </tr>
-    <tr>
-	    <td <!-- IF ! ZONE_ALCHEMY -->class="disabled"<!-- ENDIF --> align="center" class="row2"><!-- IF ZONE_ALCHEMY --><a href="adr_alchemy.php"><!-- ENDIF -->Atelier d'alchimie<!-- IF ZONE_ALCHEMY --></a><!-- ENDIF --></td>
-        <td <!-- IF ! ZONE_TAILOR -->class="disabled"<!-- ENDIF --> align="center" class="row1"><!-- IF ZONE_TAILOR --><a href="adr_tailor.php"><!-- ENDIF -->Tailleur<!-- IF ZONE_TAILOR --></a><!-- ENDIF --></td>
-    	<td <!-- IF ! ZONE_BEGGAR -->class="disabled"<!-- ENDIF --> align="center" class="row2"><!-- IF ZONE_BEGGAR --><a href="adr_beggar.php"><!-- ENDIF -->Parler à la mendiante<!-- IF ZONE_BEGGAR --></a><!-- ENDIF --></td>
-    	<td <!-- IF ! ZONE_LAKE -->class="disabled"<!-- ENDIF --> align="center" class="row1"><!-- IF ZONE_LAKE --><a href="adr_lake.php"><!-- ENDIF -->Lac magique<!-- IF ZONE_LAKE --></a><!-- ENDIF --></td>
-    </td>
-	<tr>
-        <td <!-- IF ! ZONE_FISH -->class="disabled"<!-- ENDIF --> align="center" class="row1"><!-- IF ZONE_FISH --><a href="adr_fish.php"><!-- ENDIF -->Pêche<!-- IF ZONE_FISH --></a><!-- ENDIF --></td>
-        <td <!-- IF ! ZONE_HERBAL -->class="disabled"<!-- ENDIF --> align="center" class="row2"><!-- IF ZONE_HERBAL --><a href="adr_herbal.php"><!-- ENDIF -->Herboristerie<!-- IF ZONE_HERBAL --></a><!-- ENDIF --></td>
-        <td <!-- IF ! ZONE_HUNTING -->class="disabled"<!-- ENDIF --> align="center" class="row1"><!-- IF ZONE_HUNTING --><a href="adr_hunting.php"><!-- ENDIF -->Chasse<!-- IF ZONE_HUNTING --></a><!-- ENDIF --></td>
-        <td <!-- IF ! ZONE_LUMBERJACK -->class="disabled"<!-- ENDIF --> align="center" class="row2"><!-- IF ZONE_LUMBERJACK --><a href="adr_lumberjack.php"><!-- ENDIF -->Bûcheronnage<!-- IF ZONE_LUMBERJACK --></a><!-- ENDIF --></td>
-    </tr>
+{ZONE_ACTIONS_HTML}
 </table>
 <!-- ENDIF -->
 <!-- END switch_Adr_zone_townmap_disable -->

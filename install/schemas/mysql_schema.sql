@@ -1903,6 +1903,7 @@ CREATE TABLE phpbb_adr_zones (
   zone_lumberjack int(1) NOT NULL default '0',
   zone_research int(1) NOT NULL default '0',
   zone_tailor int(1) NOT NULL default '0',
+  zone_alchemy int(1) NOT NULL default '0',
 
   zone_event1 int(1) NOT NULL default '0',
   zone_event2 int(1) NOT NULL default '0',
@@ -2315,7 +2316,7 @@ CREATE TABLE `phpbb_adr_library_learned` (
 CREATE TABLE `phpbb_adr_guilds` (
   `guild_id` int(5) NOT NULL auto_increment,
   `guild_name` varchar(32) NOT NULL default '',
-  --`guild_leader` varchar(32) NOT NULL default '',
+  `guild_leader` varchar(32) NOT NULL default '',
   `guild_leader_id` int(5) NOT NULL default '0',
   `guild_security_rating` decimal(2,2) NOT NULL default '0.00',
   `guild_date_created` int(12) NOT NULL default '0',

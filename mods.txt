@@ -493,7 +493,7 @@ Addons :
 # ADR : Guild Mod 0.1 - Renlok
 Ajoute un systeme de guilde
 Addons :
- - Addon Make it work - Informpro
+ - Addon rewrite it completly so it works - Informpro
 
 # ADR : Items no sell 0.0.2 - Makien
 Permet de rendre des objets non vendables (objets rares, par exemple).
@@ -705,6 +705,7 @@ Supprime les tags HTML des titres de forums dans les meta et dans le titre de la
 
 # Subforums + 0.0.6a - Ptirhiik, asinshesq
 Addons :
+ - Addon pour fonctioner avex XS - Informpro
  - Addon pour KUF - asinshesq
  - Addon pour RCS - ABDev
  - Addon pour Last topic title on index - ABDev

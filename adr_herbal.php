@@ -71,15 +71,9 @@ $limit_update = $db->sql_fetchrow($result);
 adr_enable_check();
 adr_ban_check($user_id);
 adr_character_created_check($user_id);
+$adr_user = adr_get_user_infos($user_id); 
+$info = zone_get($adr_user['character_area']);
 
-$actual_zone = $zone_user['character_area'];
-
-$sql = " SELECT * FROM  " . ADR_ZONES_TABLE . "
-       WHERE zone_id = $actual_zone ";
-if( !($result = $db->sql_query($sql)) )
-        message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
-
-$info = $db->sql_fetchrow($result);
 $access = $info['zone_herbal'];
 
 if ( $access == '0' )
