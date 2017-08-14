@@ -565,6 +565,7 @@ function adr_battle_effects_initialise($user_id,$potion_id,$monster_name,$pvp)
 		}
 		else if ($pvp == 1)
 		{
+      // V: WTF IS THIS SHIT? This should use the battle id ASAP
 			//update battle_list with effects and clear character_pre_effects
 			$sql = "UPDATE " . ADR_BATTLE_PVP_TABLE . "
 				SET battle_effects = '".$update_battle_effects."'

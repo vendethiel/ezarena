@@ -109,7 +109,7 @@ function event_trigger_get_item($zone)
 		return;
 	}
 
-	adr_shop_insert_item($new_item['item_id'], adr_make_new_item_id($user_id), $user_id, 1);
+	adr_shop_insert_item($new_item['item_id'], adr_next_item_id($user_id), $user_id, 1);
 	$item_name = $new_item['item_name'];
 	$message = '<img src="adr/images/zones/get_item.gif"><br /><br />' . $lang['Adr_zone_event_item'] . '<br /><br /><b>' . $item_name . '</b><br /><br /><img src="adr/images/items/' . $item_icon . '"><br /><br />' . $item_desc . '<br /><br />' . $lang['Adr_zone_event_return'] . '<br /><br />';
 	message_die(GENERAL_ERROR, $message , 'Zones' , '' );

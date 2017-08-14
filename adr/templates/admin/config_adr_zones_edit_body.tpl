@@ -96,7 +96,7 @@
 	</tr>
   <tr>
 		<td class="row1" width="60%" ><b>{L_ADR_ZONE_BACKGROUND} :</b><br />{L_ADR_ZONE_BACKGROUND_EXPLAIN}</td>
-		<td class="row1" align="center" ><span class="gen"><input name="zone_background" value="{ZONE_BACKGROUND}" /></span></td>
+		<td class="row1" align="center" ><span class="gen"><select onchange="document.getElementById('background_preview').src = '{ZONE_BACKGROUND_PATH}'+this.options[selectedIndex].value;" name="zone_background">{ZONE_BACKGROUND_LIST}</select> <img id="background_preview" src="{ZONE_BACKGROUND_PATH}{ZONE_BACKGROUND}" /></span></td>
   </tr>
 </table>
 

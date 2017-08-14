@@ -128,65 +128,7 @@ function adr_job_salary_check( $user_id )
 			// Check if there is a item reward
 			if ( $item_reward != 0 )
 			{
-				// Grab item reward details
-				$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE . "
-					WHERE item_owner_id = 1
-					AND item_id = $item_reward ";
-				$result = $db->sql_query($sql);
-				if( !$result )
-				{
-					message_die(GENERAL_ERROR, 'Could not obtain shops items information', "", __LINE__, __FILE__, $sql);
-				}
-				$item_data = $db->sql_fetchrow($result);
-
-				// V: item data was deleted
-				// return here to avoid pm'ing
-				// @todo should this pm an error to admin?
-				if (!$item_data)
-				{
-					return;
-				}
-
-				// Make the new id for the item
-				$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
-					WHERE item_owner_id = $character_id
-					ORDER BY item_id 
-					DESC LIMIT 1";
-				$result = $db->sql_query($sql);
-				if( !$result )
-				{
-					message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
-				}
-				$data = $db->sql_fetchrow($result);
-				$new_item_id = $data['item_id'] + 1 ;
-
-				$item_type_use = $item_data['item_type_use'];
-				$item_name = addslashes($item_data['item_name']);
-				$item_desc = addslashes($item_data['item_desc']);
-				$item_icon = trim($item_data['item_icon']);
-				$item_price = $item_data['item_price'];
-				$item_quality = $item_data['item_quality'];
-				$item_duration = $item_data['item_duration'];
-				$item_duration_max = $item_data['item_duration_max'];
-				$item_power = $item_data['item_power'];
-				$item_add_power = $item_data['item_add_power'];
-				$item_mp_use = $item_data['item_mp_use'];
-				$item_element = $item_data['item_element'];
-				$item_element_str_dmg = $item_data['item_element_str_dmg'];
-				$item_element_same_dmg = $item_data['item_element_same_dmg'];
-				$item_element_weak_dmg = $item_data['item_element_weak_dmg'];
-				$item_weight = $item_data['item_weight'];
-				$item_max_skill = $item_data['item_max_skill'];
-				$item_sell_back_percentage = $item_data['item_sell_back_percentage'];
-
-				$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . " 
-					( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , item_duration , item_duration_max , item_power , item_add_power , item_mp_use , item_weight , item_auth , item_element , item_element_str_dmg , item_element_same_dmg , item_element_weak_dmg , item_max_skill , item_sell_back_percentage )
-					VALUES ( $new_item_id , $character_id , $item_type_use , '$item_name' , '$item_desc' , '" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max , $item_power , $item_add_power , $item_mp_use , $item_weight , 0 , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg , $item_max_skill , $item_sell_back_percentage )";
-				$result = $db->sql_query($sql);
-				if( !$result )
-				{
-					message_die(GENERAL_ERROR, "Couldn't insert reward new item", "", __LINE__, __FILE__, $sql);
-				}
+        adr_shop_insert_item($item_reward, adr_next_item_id($user_id), $user_id, 1);
 			}
 		
 			if ( $character_job_pm != 0 )

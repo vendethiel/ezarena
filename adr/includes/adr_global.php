@@ -771,7 +771,7 @@ function get_images($pfad, $sub=1, $tubes_only=0)
 	}
 
 	@closedir($dir);
-	Sort($xxx_images);
+	sort($xxx_images);
 	return $xxx_images;
 }
 

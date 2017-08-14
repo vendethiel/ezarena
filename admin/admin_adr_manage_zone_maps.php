@@ -105,7 +105,7 @@ $origtype = $HTTP_POST_VARS['origtype'];
 
 //--------------------------------Main Page START-----------------------------------------
 
-if ((empty($mode)) || ($mode == 'MAIN') || ($mode == 'Main'))
+if ((empty($mode)) || ($mode == 'MAIN') || ($mode == 'Main') || $mode == $lang['Adr_admin_maps_main'])
 {
 
 	$sql = "SELECT zone_name,zone_id from " . ADR_ZONES_TABLE . " WHERE zone_name = 'World Map'";
@@ -331,15 +331,16 @@ if ($mode == $lang['Adr_admin_maps_zone_townmap_edit'] )
 				}
 			}
 
+      $building_desc = array();
 			$sql = "select * from ".ADR_ZONE_BUILDINGS_TABLE." order by sdesc";
 			if ( !($iresult = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_4']); }
-			for ($x = 0; $x < mysql_num_rows($iresult); $x++)
-			{
-				$irow = mysql_fetch_array($iresult);
+      while ($irow = $db->sql_fetchrow($iresult))
+      {
 				$buildinglist .= $irow['sdesc'];
 				if ($irow['zone_building_type'] == 0 || $irow['zone_building_type'] == 1 || $irow['zone_building_type'] == 2)
 				{
 					$desc = isset($lang['Adr_building_'.$irow['sdesc']]) ? $lang['Adr_building_'.$irow['sdesc']] : ucfirst($irow['sdesc']);
+          $building_desc[$irow['name']] = $desc;
 					$buildingtypes .= "<option value=\"".$irow['sdesc']."\">".$desc."</option>";
 				}
 			}
@@ -354,7 +355,7 @@ if ($mode == $lang['Adr_admin_maps_zone_townmap_edit'] )
 					{
 						$sql = "select * from ".ADR_ZONE_BUILDINGS_TABLE." WHERE sdesc = '$buildingarray[$ia]'";
 						if ( !($bresult = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_4'].'test'); }
-						$brow2 = mysql_fetch_array($bresult);
+						$brow2 = $db->sql_fetchrow($bresult);
 						$buildinglist2[$iv][$ih] = $brow2['name'];
 					}
 					else
@@ -385,13 +386,14 @@ if ($mode == $lang['Adr_admin_maps_zone_townmap_edit'] )
 				$statinfo .= '<tr>';
 				for ($sh = 1; $sh <= $zcellshn; $sh++)
 				{
-					$celltitle = '';
 					if (in_array($cn, $zbuildingcells))
 					{
 						$total_valid++;
-						$celltitle = 'title="Cellule - '.$cn.'"
-						onclick="document.getElementById(\'buildingcell\').selectedIndex = ' . $total_valid . ';"';
+            $building_name = $buildinglist2[$sv][$sh] == 'empty' ? '' : ' ('.$building_desc[$buildinglist2[$sv][$sh]].')';
+						$celltitle = 'title="Cellule'.$building_name.' - '.$cn.'" onclick="document.getElementById(\'buildingcell\').selectedIndex = ' . $total_valid . ';"';
 					}
+          else
+            $celltitle = ' title="Invalide - '.$cn.'"';
 					$statinfo .= '
 		<td width="'.$zcellsh.'px" height="'.$zcellsv.'px"><img src="../adr/images/zones/townmap/buildings/'.$buildinglist2[$sv][$sh].'.gif" ' . $celltitle . ' width="'.$zcellsh.'px" height="'.$zcellsv.'px" border="0" alt="Cell - '.$cn.'"></td>';
 					$cn++;

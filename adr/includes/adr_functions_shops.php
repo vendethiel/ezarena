@@ -27,6 +27,24 @@ if (!defined('IN_ADR_BATTLE')){
 	define('IN_ADR_BATTLE', true);
 }
 
+function adr_next_item_id($user_id)
+{
+  global $db;
+  //new id for the item
+  $sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
+    WHERE item_owner_id = $user_id
+    ORDER BY item_id
+    DESC LIMIT 1";
+  $result = $db->sql_query($sql);
+  if( !$result )
+  {
+    message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
+  }
+  $item_data = $db->sql_fetchrow($result); 
+
+	return $item_data['item_id'] + 1 ; 
+}
+
 function adr_count_store_items($user_id)
 {
 	global $db;
@@ -152,6 +170,15 @@ function adr_update_store_user_trans($user_id, $shop_owner_id, $items, $sum)
 	return;
 }
 
+/*
+ * A simple function to add an item to a player.
+ * Auto-calculates the next item id, and uses the shop_owner 1 for "all items"
+ */
+function adr_add_item_to($item_id, $user_id)
+{
+  return adr_shop_insert_item($item_id, adr_next_item_id($user_id), $user_id, 1);
+}
+
 // New sql insert function introduced into v0.4.4 for ease
 function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, $type=0, $shop_id=0, $search_col = 'item_id')
 {
@@ -255,25 +282,6 @@ function adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id, 
 	return $item_data;
 }
 
-function adr_make_new_item_id($user_id)
-{
-	global $db;
-
-
-	// Make the new id for the item
-	$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
-		WHERE item_owner_id = $user_id
-		ORDER BY item_id 
-		DESC LIMIT 1";
-	$result = $db->sql_query($sql);
-	if( !$result )
-	{
-		message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
-	}
-	$data = $db->sql_fetchrow($result);
-	return $data['item_id'] + 1;
-}
-
 function adr_buy_item($user_id , $item_id , $shop_owner_id , $shop_id , $direct , $nav )
 {
 	global $db , $lang , $board_config , $phpEx , $userdata, $adr_general, $adr_user;
@@ -324,7 +332,7 @@ function adr_buy_item($user_id , $item_id , $shop_owner_id , $shop_id , $direct 
 	// Substract the points
 	adr_substract_points( $user_id , $sum , $direct , $nav );
 
-	$new_item_id = adr_make_new_item_id($user_id);
+	$new_item_id = adr_next_item_id($user_id);
 
 	// If the shop isn't the forums one , transfer , else duplicate 
 	if ( $shop_owner_id != 1 )
@@ -385,21 +393,8 @@ function adr_buy_admin_item($user_id , $item_id , $shop_owner_id , $shop_id , $d
 		adr_previous( Adr_lack_items , $direct , $nav );
 	}
 
-	// Make the new id for the item
-	$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
-		WHERE item_owner_id = $user_id
-		ORDER BY item_id 
-		DESC LIMIT 1";
-	$result = $db->sql_query($sql);
-	if( !$result )
-	{
-		message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
-	}
-	$data = $db->sql_fetchrow($result);
-	$new_item_id = $data['item_id'] + 1 ;
-
-	// Insert item details
-	adr_shop_insert_item($item_id, $new_item_id, $user_id, $shop_owner_id);
+  // Insert item details
+	adr_shop_insert_item($item_id, adr_next_item_id($user_id), $user_id, $shop_owner_id);
 
 	return $sum;
 }
@@ -426,18 +421,7 @@ function adr_give_item($user_id , $to_user_id , $item_id )
 		adr_trading_limit( $user_id );
 	}
 
-	// Make the new id for the item
-	$sql = "SELECT item_id, item_name FROM " . ADR_SHOPS_ITEMS_TABLE ."
-		WHERE item_owner_id = $to_user_id
-		ORDER BY item_id DESC
-		LIMIT 1";
-	$result = $db->sql_query($sql);
-	if( !$result )
-	{
-		adr_previous( Adr_shop_items_failure_deleted , adr_character_inventory , '');
-	}
-	$data = $db->sql_fetchrow($result);
-	$new_item_id = $data['item_id'] + 1 ;
+  $new_item_id = adr_next_item_id($to_user_id);
 
 	// Grab the items details
 	$sql = "SELECT item_id, item_name, item_stolen_id, item_stolen_by, item_stolen_timestamp, item_donated_by, item_donated_timestamp
@@ -557,16 +541,7 @@ function adr_steal_item($user_id , $item_id , $shop_owner_id , $shop_id )
 
 	if($success == TRUE)
 	{
-		// Make the new id for the item
-		$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
-			WHERE item_owner_id = '$user_id'
-			ORDER BY item_id
-			DESC LIMIT 1";
-		$result = $db->sql_query($sql);
-		if(!$result){
-			message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);}
-		$data = $db->sql_fetchrow($result);
-		$new_item_id = ($data['item_id'] + 1);
+    $new_item_id = adr_next_item_id($user_id);
 
 		if($shop_owner_id != '1'){
 			// This will never be TRUE as of v0.4.3 because there is no player store stealing allowed

@@ -573,6 +573,9 @@ else if ( $mode != "" )
    			$npc_list .= ( $npc_visit_selected_array[0] == '0' ) ? '<option value="0" SELECTED class="post">'. $lang['Adr_npc_no_npc_requirement'] .'</option>' : '<option value="0" class="post">'. $lang['Adr_npc_no_npc_requirement'] .'</option>';
 			for ($i = 0; $i < count($npclist); $i++)
 			{
+        // V: hide current NPC from prerequisites list
+        if ($npclist[$i]['npc_id'] == $npc_id)
+          continue;
 				if ( in_array( $npclist[$i]['npc_id'] , $npc_visit_selected_array ) )
 					$npc_list .= '<option value = "' . $npclist[$i]['npc_id'] . '" SELECTED class="post">' . $npclist[$i]['npc_id'] . '-' . $npclist[$i]['npc_name'] . '</option>';
 				else
@@ -584,6 +587,9 @@ else if ( $mode != "" )
    			$npc_list2 .= ( $npc_quest_selected_array[0] == '0' ) ? '<option value="0" SELECTED class="post">'. $lang['Adr_npc_no_npc_requirement'] .'</option>' : '<option value="0" class="post">'. $lang['Adr_npc_no_npc_requirement'] .'</option>';
 			for ($i = 0; $i < count($npclist); $i++)
 			{
+        // V: hide current NPC from prerequisites list
+        if ($npclist[$i]['npc_id'] == $npc_id)
+          continue;
 				if ( $npclist[$i]['npc_item'] != '0' )
 				{
 					if ( in_array( $npclist[$i]['npc_id'] , $npc_quest_selected_array ) )

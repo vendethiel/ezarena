@@ -152,6 +152,9 @@ else if (!(is_numeric($bat['battle_id'])) && $equip)
 	{
 		message_die(GENERAL_ERROR, 'Could not update battle limit', '', __LINE__, __FILE__, $sql);
 	} //!($result = $db->sql_query($sql))
+
+  // refresh battle once fight is started
+  $bat = adr_get_battle($user_id);
 } //!(is_numeric($bat['battle_id'])) && $equip
 
 // Let's sort out the start animations...
@@ -160,8 +163,9 @@ else if (!(is_numeric($bat['battle_id'])) && $equip)
 $user_action    = 0;
 $monster_action = 0;
 
-// Get the monster infos
-$monster = adr_get_monster_infos($bat['battle_opponent_id']);
+// V: $battle_started is outdated here
+if ($bat['battle_id'])
+  $monster = adr_get_monster_infos($bat['battle_opponent_id']);
 
 // Get character infos
 $challenger = adr_get_user_infos($user_id);
@@ -1400,7 +1404,21 @@ if (!($result = $db->sql_query($sql)))
 {
 	message_die(GENERAL_ERROR, 'Could not query battle list', '', __LINE__, __FILE__, $sql);
 } //!($result = $db->sql_query($sql))
-$items = $db->sql_fetchrowset($result);
+$all_items = $db->sql_fetchrowset($result);
+
+// V: only show once every item. This uses item_name as we don't keep the 'item_template_id' (maybe we should).
+$items = array();
+$quantity_for = array();
+foreach ($all_items as $item)
+{
+  $key = $item['item_name'].'|||'.$item['item_duration'];
+  if (isset($quantity_for[$key])) {
+    $quantity_for[$key]++;
+  } else {
+    $items[] = $item;
+    $quantity_for[$key] = 1;
+  }
+}
 
 // V: moved below that end-of-if
 // I don't know who's making ADR changelogs, but
@@ -1410,26 +1428,27 @@ for ($i = 0, $count_items = count($items); $i < $count_items; $i++)
 	$item_name  = adr_get_lang($items[$i]['item_name']);
 	$item_power = ($adr_general['item_power_level'] == '1') ? ($items[$i]['item_power'] + $items[$i]['item_add_power']) : $items[$i]['item_power'];
 
-	
+  $quantity_text = ($quantity_for[$key] > 1 ? " x$quantity_for[$key]" : '');
 	if ( ( $items[$i]['item_type_use'] ==  5 || $items[$i]['item_type_use'] ==  6 ||
 		// weap prof mod : 40-46
-		$items[$i]['item_type_use'] ==  40 || $items[$i]['item_type_use'] ==  41 || $items[$i]['item_type_use'] ==  42 || $items[$i]['item_type_use'] == 43
-		|| $items[$i]['item_type_use'] ==  44 || $items[$i]['item_type_use'] ==  45 || $items[$i]['item_type_use'] ==  46 )
+		($items[$i]['item_type_use'] >=  40 && $items[$i]['item_type_use'] <= 46))
 	 && ( $items[$i]['item_mp_use'] <= $challenger['character_mp'] ) )
 	{
 		$item_weapon = isset($HTTP_POST_VARS['item_weapon']) ? $HTTP_POST_VARS['item_weapon'] : null;
 		$weapon_selected = ($item_weapon == $items[$i]['item_id']) ? 'selected' : '';
-		$weapon_list .= '<option value = "' . $items[$i]['item_id'] . '" ' . $weapon_selected . '>' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )' . '</option>';
+		$weapon_list .= '<option value = "' . $items[$i]['item_id'] . '" ' . $weapon_selected . '>' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )' . $quantity_text . '</option>';
 	}
 	else if (($items[$i]['item_type_use'] == 11 || $items[$i]['item_type_use'] == 12) && (($items[$i]['item_power'] + $items[$i]['item_mp_use']) <= $challenger['character_mp']))
 	{
+    // V: I'm a pig :(.
+    $key = $item['item_name'].'|||'.$item['item_duration'];
 		$spell_selected = ($HTTP_POST_VARS['item_spell'] == $items[$i]['item_id']) ? 'selected' : '';
-		$spell_list .= '<option value = "' . $items[$i]['item_id'] . '" ' . $spell_selected . ' >' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )' . '</option>';
+		$spell_list .= '<option value = "' . $items[$i]['item_id'] . '" ' . $spell_selected . ' >' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )' . $quantity_text . '</option>';
 	}
 	else if ($items[$i]['item_type_use'] == 15 || $items[$i]['item_type_use'] == 16 || $items[$i]['item_type_use'] == 19)
 	{
 		$potion_selected = ($HTTP_POST_VARS['item_potion'] == $items[$i]['item_id']) ? 'selected' : '';
-		$potion_list .= '<option value = "' . $items[$i]['item_id'] . '" ' . $potion_selected . ' >' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )' . '</option>';
+		$potion_list .= '<option value = "' . $items[$i]['item_id'] . '" ' . $potion_selected . ' >' . $item_name . ' ( ' . $lang['Adr_items_power'] . ' : ' . $item_power . ' - ' . $lang['Adr_items_duration'] . ' : ' . $items[$i]['item_duration'] . ' )' . $quantity_text . '</option>';
 	}
 } //$i = 0, $count_items = count($items); $i < $count_items; $i++
 for ($s = 0; $s < count($spells); $s++)

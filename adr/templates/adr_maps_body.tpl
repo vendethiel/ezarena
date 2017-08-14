@@ -3,9 +3,6 @@
 	<tr>
 	  <th class="thHead" colspan="2">{STATTABLETITLE}</th>
 	</tr>
-  <tr>
-	<td align="center" valign="top" class="row1"><span class="genmed">{ZONES_LINK}</span></td>
-  </tr>
 	<tr>
 		{STATINFO}
 	</tr>

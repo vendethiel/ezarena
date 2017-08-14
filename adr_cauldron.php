@@ -207,57 +207,9 @@ if ( $mode != "" )
 			}
 			else
 			{
-				// Make the new id for the item
-				$sql = "SELECT item_id 
-					FROM " . ADR_SHOPS_ITEMS_TABLE . "
-					WHERE item_owner_id = '$user_id'
-					ORDER BY 'item_id' DESC 
-					LIMIT 1";
-				$result = $db->sql_query($sql);
-				if( !$result )
-					message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
-				$data = $db->sql_fetchrow($result);
-				$new_item_id = $data['item_id'] + 1 ;
+        $added_item = adr_add_item_to($pack_verify, $user_id);
 
-				// Make the new item
-				$sql = "SELECT * 
-					FROM " . ADR_SHOPS_ITEMS_TABLE . "
-					WHERE item_owner_id = '1'
-					AND item_id = '$pack_verify'";
-				$result = $db->sql_query($sql);
-				if( !$result )
-					message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
-				$new_item 				= $db->sql_fetchrow($result);
-
-				$item_type_use 			= $new_item['item_type_use'];
-				$item_name 				= trim(rtrim(addslashes(stripslashes($new_item['item_name']))));
-				$item_desc 				= trim(rtrim(addslashes(stripslashes($new_item['item_desc']))));
-				$item_icon 				= trim(rtrim($new_item['item_icon']));
-				$item_price				= $new_item['item_price'];
-				$item_quality 			= $new_item['item_quality'];
-				$item_duration 			= $new_item['item_duration'];
-				$item_duration_max 		= $new_item['item_duration_max'];
-				$item_power 			= $new_item['item_power'];
-				$item_add_power 			= $new_item['item_add_power'];
-				$item_mp_use 			= $new_item['item_mp_use'];
-				$item_element 			= $new_item['item_element'];
-				$item_element_str_dmg 		= $new_item['item_element_str_dmg'];
-				$item_element_same_dmg 		= $new_item['item_element_same_dmg'];
-				$item_element_weak_dmg 		= $new_item['item_element_weak_dmg'];
-				$item_weight 			= $new_item['item_weight'];
-				$item_max_skill 			= $new_item['item_max_skill'];
-				$item_sell_back_percentage 	= $new_item['item_sell_back_percentage'];
-
-				if ( $item_duration_max < $item_duration ) $item_duration_max = $item_duration;
-
-				$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . "
-					( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , item_duration , item_duration_max , item_power , item_add_power , item_mp_use , item_weight , item_auth , item_element , item_element_str_dmg , item_element_same_dmg , item_element_weak_dmg , item_max_skill , item_sell_back_percentage )
-					VALUES ( $new_item_id , $user_id , $item_type_use , '$item_name' , '$item_desc' , '" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max , $item_power , $item_add_power , $item_mp_use , $item_weight , 0 , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg , $item_max_skill , $item_sell_back_percentage )";
-				$result = $db->sql_query($sql);
-				if( !$result )
-					message_die(GENERAL_ERROR, "Couldn't insert new item", "", __LINE__, __FILE__, $sql);
-
-				$message = '' . $lang['Adr_item_combine_success'] . '<br \><br \>' . $item_name . '<br \><br \><img src="adr/images/items/' . $item_icon . '"><br \><br \>' . $item_desc . '<br \><br \>' . $lang['Adr_zone_return_cauldron'] . '<br \><br \>';
+				$message = '' . $lang['Adr_item_combine_success'] . '<br \><br \>' . $added_item['item_name'] . '<br \><br \><img src="adr/images/items/' . $added_item['item_icon'] . '"><br \><br \>' . $added_item['item_desc'] . '<br \><br \>' . $lang['Adr_zone_return_cauldron'] . '<br \><br \>';
 				message_die(GENERAL_ERROR, $message , Message , '' );
 				break;	
 			}

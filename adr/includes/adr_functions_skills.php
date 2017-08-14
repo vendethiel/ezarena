@@ -814,17 +814,7 @@ function adr_use_skill($user_id , $tool, $recipe_item_id, $skill_id, $type)
 			}
 		}
 		
-		// Make the new id for the item
-		$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
-			WHERE item_owner_id = $user_id
-			ORDER BY item_id 
-			DESC LIMIT 1";
-		$result = $db->sql_query($sql);
-		if( !$result )
-			message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
-		$data = $db->sql_fetchrow($result);
-
-		$new_item_id = $data['item_id'] + 1 ;
+		$new_item_id = adr_next_item_id($user_id);
 		$item_name = $crafted_item['item_name'];
 		$item_type = $crafted_item['item_type_use'] ; 
 		$item_desc = 'Crafted by '.$adr_user['character_name'].''; 
@@ -993,7 +983,7 @@ function drop_gather_loot($zone_id, $user_id, $type, $skill_number)
 
 		$item_id = $possible_items_db[$rnd_item]['item_id'];
 		// V: REFACTOOOR
-		$item_data = adr_shop_insert_item($item_id, adr_make_new_item_id($user_id), $user_id, 1);
+		$item_data = adr_shop_insert_item($item_id, adr_next_item_id($user_id), $user_id, 1);
 
 		$message .= "<br><br><table align=\"center\" border=\"0\" cellpadding=\"0\" class=\"gen\"><tr>";
 		$message .= "<tr><td align=\"center\"  valign=\"top\"><span class=\"gen\">Vous avez obtenu : ".adr_get_lang($item_data['item_name'])."<br><img src=\"./adr/images/items/".$item_data['item_icon']."\"</span></td></tr>";

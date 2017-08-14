@@ -55,6 +55,8 @@ require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);
 include_once($phpbb_root_path . 'adr/includes/adr_global.'.$phpEx);
 
+$background_path = 'adr/images/battle/backgrounds/';
+$background_images = get_filenames(get_images($background_path));
 
 if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
 {
@@ -218,6 +220,8 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 		'ZONE_POINTLOSS1' => 0,
 		'ZONE_POINTLOSS2' => 0,
 		// basic fields
+    "ZONE_BACKGROUND_LIST" => $background_images,
+    "ZONE_BACKGROUND_PATH" => $phpbb_root_path . $background_path,
 		"ZONE_ELEMENT" => $element_list,
 		"ZONE_ITEM" => $item_list,
 		"ZONE_MONSTER_LIST" => $monsters_list,
@@ -528,6 +532,8 @@ else if ( $mode != "" )
 				"L_ZONE_MULTI" => $lang['Adr_admin_maps_zonemap_cell_ctrl'],
 				"ZONE_LEVEL" => $zones['zone_level'],
         "ZONE_BACKGROUND" => $zones['zone_background'],
+        "ZONE_BACKGROUND_LIST" => $background_images,
+        "ZONE_BACKGROUND_PATH" => $phpbb_root_path . $background_path,
 
 				"ZONE_NAME" => $zones['zone_name'],
 				"ZONE_DESC" => $zones['zone_desc'],

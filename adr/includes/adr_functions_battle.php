@@ -281,45 +281,7 @@ function adr_temple_donation($user_id, $chance, $donated)
 		message_die(GENERAL_MESSAGE, $lang['Adr_temple_no_donation']);
 	}
 
-	$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
-		WHERE item_owner_id = '$user_id'
-		ORDER BY item_id
-		DESC LIMIT 1";
-	$result = $db->sql_query($sql);
-	if( !$result )
-	{
-		message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
-	}
-	$data = $db->sql_fetchrow($result);
-	$new_item_id = $data['item_id'] + 1;
-	$item_type = $newitem['item_type_use'];
-	$item_name = $newitem['item_name'];
-	$item_desc = $newitem['item_desc'];
-	$item_icon = $newitem['item_icon'];
-	$item_quality = $newitem['item_quality'];
-	$item_duration = $newitem['item_duration'];
-	$item_duration_max = $newitem['item_duration_max'];
-	$item_add_power = $newitem['item_add_power'];
-	$item_power = $newitem['item_power'];
-	$item_price = $newitem['item_price'];
-	$item_mp_use = $newitem['item_mp_use'];
-	$item_element = $newitem['item_element'];
-	$item_element_str_dmg = $newitem['item_element'];
-	$item_element_same_dmg = $newitem['item_element'];
-	$item_element_weak_dmg = $newitem['item_element'];
-	$item_max_skill = $newitem['item_max_skill'];
-	$item_weight = $newitem['item_weight'];
-
-	// Insert into database
-	$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . "
-		( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , item_duration ,  item_duration_max , item_power , item_add_power  , item_mp_use , item_element , item_element_str_dmg , item_element_same_dmg ,  item_element_weak_dmg , item_max_skill  , item_weight)
-		VALUES ( $new_item_id , $user_id , $item_type , '" . str_replace("\'", "''", $item_name) . "', '" . str_replace("\'", "''",  $item_desc) . "' , '" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max ,  $item_power , $item_add_power , $item_mp_use , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg ,  $item_max_skill , $item_weight)";
-	$result = $db->sql_query($sql);
-	if( !$result )
-	{
-		message_die(GENERAL_ERROR, "Couldn't insert new item", "", __LINE__, __FILE__, $sql);
-	}
-	
+  adr_shop_insert_item($newitem['item_id'], adr_next_item_id($user_id), $user_id, 1);
 	adr_temple_tracker($user_id, $item_name, $donated);
 
 	return $new_item_id;
@@ -343,46 +305,7 @@ function adr_beggar_donation($user_id, $chance, $donated)
 		message_die(GENERAL_ERROR, 'Could not query item table', '', __LINE__, __FILE__, $sql);
 	}
 	$newitem = $db->sql_fetchrow($result);
-
-	$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
-		WHERE item_owner_id = '$user_id'
-		ORDER BY item_id
-		DESC LIMIT 1";
-	$result = $db->sql_query($sql);
-	if( !$result )
-	{
-		message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
-	}
-	$data = $db->sql_fetchrow($result);
-	$new_item_id = $data['item_id'] + 1;
-	$item_type = $newitem['item_type_use'];
-	$item_name = $newitem['item_name'];
-	$item_desc = $newitem['item_desc'];
-	$item_icon = $newitem['item_icon'];
-	$item_quality = $newitem['item_quality'];
-	$item_duration = $newitem['item_duration'];
-	$item_duration_max = $newitem['item_duration_max'];
-	$item_add_power = $newitem['item_add_power'];
-	$item_power = $newitem['item_power'];
-	$item_price = $newitem['item_price'];
-	$item_mp_use = $newitem['item_mp_use'];
-	$item_element = $newitem['item_element'];
-	$item_element_str_dmg = $newitem['item_element'];
-	$item_element_same_dmg = $newitem['item_element'];
-	$item_element_weak_dmg = $newitem['item_element'];
-	$item_max_skill = $newitem['item_max_skill'];
-	$item_weight = $newitem['item_weight'];
-
-	// Insert into database
-	$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . "
-		( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , item_duration ,  item_duration_max , item_power , item_add_power  , item_mp_use , item_element , item_element_str_dmg , item_element_same_dmg ,  item_element_weak_dmg , item_max_skill  , item_weight)
-		VALUES ( $new_item_id , $user_id , $item_type , '" . str_replace("\'", "''", $item_name) . "', '" . str_replace("\'", "''",  $item_desc) . "' , '" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max ,  $item_power , $item_add_power , $item_mp_use , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg ,  $item_max_skill , $item_weight)";
-	$result = $db->sql_query($sql);
-	if( !$result )
-	{
-		message_die(GENERAL_ERROR, "Couldn't insert new item", "", __LINE__, __FILE__, $sql);
-	}
-
+  adr_shop_insert_item($newitem['item_id'], adr_next_item_id($user_id), $user_id, 1);
 	adr_beggar_tracker($user_id, $item_name, $donated);
 
 	return $new_item_id;
@@ -406,46 +329,7 @@ function adr_lake_donation($user_id, $chance, $donated)
 		message_die(GENERAL_ERROR, 'Could not query item table', '', __LINE__, __FILE__, $sql);
 	}
 	$newitem = $db->sql_fetchrow($result);
-
-	$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
-		WHERE item_owner_id = '$user_id'
-		ORDER BY item_id
-		DESC LIMIT 1";
-	$result = $db->sql_query($sql);
-	if( !$result )
-	{
-		message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
-	}
-	$data = $db->sql_fetchrow($result);
-	$new_item_id = $data['item_id'] + 1;
-	$item_type = $newitem['item_type_use'];
-	$item_name = $newitem['item_name'];
-	$item_desc = $newitem['item_desc'];
-	$item_icon = $newitem['item_icon'];
-	$item_quality = $newitem['item_quality'];
-	$item_duration = $newitem['item_duration'];
-	$item_duration_max = $newitem['item_duration_max'];
-	$item_add_power = $newitem['item_add_power'];
-	$item_power = $newitem['item_power'];
-	$item_price = $newitem['item_price'];
-	$item_mp_use = $newitem['item_mp_use'];
-	$item_element = $newitem['item_element'];
-	$item_element_str_dmg = $newitem['item_element'];
-	$item_element_same_dmg = $newitem['item_element'];
-	$item_element_weak_dmg = $newitem['item_element'];
-	$item_max_skill = $newitem['item_max_skill'];
-	$item_weight = $newitem['item_weight'];
-
-	// Insert into database
-	$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . "
-		( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , item_duration ,  item_duration_max , item_power , item_add_power  , item_mp_use , item_element , item_element_str_dmg , item_element_same_dmg ,  item_element_weak_dmg , item_max_skill  , item_weight)
-		VALUES ( $new_item_id , $user_id , $item_type , '" . str_replace("\'", "''", $item_name) . "', '" . str_replace("\'", "''",  $item_desc) . "' , '" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max ,  $item_power , $item_add_power , $item_mp_use , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg ,  $item_max_skill , $item_weight)";
-	$result = $db->sql_query($sql);
-	if( !$result )
-	{
-		message_die(GENERAL_ERROR, "Couldn't insert new item", "", __LINE__, __FILE__, $sql);
-	}
-
+  adr_shop_insert_item($newitem['item_id'], adr_next_item_id($user_id), $user_id, 1);
 	adr_lake_tracker($user_id, $item_name, $donated);
 
 	return $new_item_id;
@@ -635,50 +519,7 @@ function drop_loot($monster_id,$user_id,$dropped_loot_list)
 				}
 				$rolled_item = $db->sql_fetchrow($result);
 				
-				//new id for the item
-				$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
-				   WHERE item_owner_id = $user_id
-				   ORDER BY item_id
-				   DESC LIMIT 1";
-				$result = $db->sql_query($sql);
-				if( !$result )
-				{
-					message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
-				}
-				$item_data = $db->sql_fetchrow($result); 
-				
-				$item_id_new = $item_data['item_id'] + 1 ; 
-				$item_type = $rolled_item['item_type_use'] ; 
-				$item_picture = $rolled_item['item_icon'] ; 
-				$item_name = $rolled_item['item_name']; 
-				$item_desc = $rolled_item['item_desc']; 
-				$item_icon = $rolled_item['item_icon'] ; 
-				$item_quality = $rolled_item['item_quality']; 
-				$item_duration = $rolled_item['item_duration']; 
-				$item_duration_max = $rolled_item['item_duration_max']; 
-				$item_add_power = $rolled_item['item_add_power']; 
-				$item_power = $rolled_item['item_power']; 
-				$item_price = $rolled_item['item_price']; 
-				$item_mp_use = $rolled_item['item_mp_use']; 
-				$item_element = $rolled_item['item_element']; 
-				$item_element_str_dmg = $rolled_item['item_element_str_dmg']; 
-				$item_element_same_dmg = $rolled_item['item_element_same_dmg']; 
-				$item_element_weak_dmg = $rolled_item['item_element_weak_dmg']; 
-				$item_max_skill = $rolled_item['item_max_skill']; 
-				$item_weight = $rolled_item['item_weight']; 
-				
-				// Give item to user
-				$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . " ( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , 
-						item_duration , item_duration_max , item_power , item_add_power , item_mp_use , item_element , item_element_str_dmg , 
-						item_element_same_dmg , item_element_weak_dmg , item_max_skill  , item_weight ) 
-						VALUES ( $item_id_new , $user_id , $item_type , '" . str_replace("\'", "''", $item_name) . "', '" . str_replace("\'", "''", $item_desc) . "' , 
-						'" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max , $item_power ,  
-						$item_add_power , $item_mp_use , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg , $item_max_skill , $item_weight)"; 
-				$result = $db->sql_query($sql);
-				if( !$result )
-				{
-					message_die(GENERAL_ERROR, "Item doesn't exist !", "", __LINE__, __FILE__, $sql); 
-				}
+        adr_shop_insert_item($rolled_item['item_id'], adr_next_item_id($user_id), $user_id, 1);
 				$dropped_loot_list .= ( $dropped_loot_list == '' ) ? $rolled_item['item_id'] : ":".$rolled_item['item_id'];
 				
 				$message .= "<tr><td align=\"center\"  valign=\"top\">You found a ".adr_get_lang($rolled_item['item_name'])."<br><img src=\"./adr/images/items/".$rolled_item['item_icon']."\"</td></tr>";
@@ -741,50 +582,7 @@ function drop_loot($monster_id,$user_id,$dropped_loot_list)
 			}
 			$rolled_item = $db->sql_fetchrow($result);
 			
-			//new id for the item
-			$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
-			   WHERE item_owner_id = $user_id
-			   ORDER BY item_id
-			   DESC LIMIT 1";
-			$result = $db->sql_query($sql);
-			if( !$result )
-			{
-				message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
-			}
-			$item_data = $db->sql_fetchrow($result); 
-
-			$item_id_new = $item_data['item_id'] + 1 ; 
-			$item_type = $rolled_item['item_type_use'] ; 
-			$item_picture = $rolled_item['item_icon'] ; 
-			$item_name = $rolled_item['item_name']; 
-			$item_desc = $rolled_item['item_desc']; 
-			$item_icon = $rolled_item['item_icon'] ; 
-			$item_quality = $rolled_item['item_quality']; 
-			$item_duration = $rolled_item['item_duration']; 
-			$item_duration_max = $rolled_item['item_duration_max']; 
-			$item_add_power = $rolled_item['item_add_power']; 
-			$item_power = $rolled_item['item_power']; 
-			$item_price = $rolled_item['item_price']; 
-			$item_mp_use = $rolled_item['item_mp_use']; 
-			$item_element = $rolled_item['item_element']; 
-			$item_element_str_dmg = $rolled_item['item_element_str_dmg']; 
-			$item_element_same_dmg = $rolled_item['item_element_same_dmg']; 
-			$item_element_weak_dmg = $rolled_item['item_element_weak_dmg']; 
-			$item_max_skill = $rolled_item['item_max_skill']; 
-			$item_weight = $rolled_item['item_weight']; 
-			
-			// Give item to user
-			$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . " ( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , 
-					item_duration , item_duration_max , item_power , item_add_power , item_mp_use , item_element , item_element_str_dmg , 
-					item_element_same_dmg , item_element_weak_dmg , item_max_skill  , item_weight ) 
-					VALUES ( $item_id_new , $user_id , $item_type , '" . str_replace("\'", "''", $item_name) . "', '" . str_replace("\'", "''", $item_desc) . "' , 
-					'" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max , $item_power ,  
-					$item_add_power , $item_mp_use , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg , $item_max_skill , $item_weight)"; 
-			$result = $db->sql_query($sql);
-			if( !$result )
-			{
-				message_die(GENERAL_ERROR, "Item doesn't exist !", "", __LINE__, __FILE__, $sql); 
-			}
+      adr_shop_insert_item($rolled_item['item_id'], adr_next_item_id($user_id), $user_id, 1);
 			$dropped_loot_list .= ( $dropped_loot_list == '' ) ? $rolled_item['item_id'] : ":".$rolled_item['item_id'];
 			
 			$message .= "<tr><td align=\"center\"  valign=\"top\">You found a ".adr_get_lang($rolled_item['item_name'])."<br><img src=\"./adr/images/items/".$rolled_item['item_icon']."\"</td></tr>";
@@ -794,61 +592,8 @@ function drop_loot($monster_id,$user_id,$dropped_loot_list)
 	{
 		foreach ($specific_items as $value) 
 		{
-			$sql = "SELECT * FROM " . ADR_SHOPS_ITEMS_TABLE."
-			WHERE item_owner_id = 1
-				AND item_id = $value
-			";
-			if( !($result = $db->sql_query($sql)) ) 
-			{
-				message_die(GENERAL_ERROR, 'Could not query items list', '', __LINE__, __FILE__, $sql); 
-			}
-			$specific_items_db = $db->sql_fetchrow($result);
-			
-			//new id for the item
-			$sql = "SELECT item_id FROM " . ADR_SHOPS_ITEMS_TABLE ."
-			   WHERE item_owner_id = $user_id
-			   ORDER BY item_id
-			   DESC LIMIT 1";
-			$result = $db->sql_query($sql);
-			if( !$result )
-			{
-				message_die(GENERAL_ERROR, 'Could not obtain item information', "", __LINE__, __FILE__, $sql);
-			}
-			$item_data = $db->sql_fetchrow($result); 
-
-			$item_id_new = $item_data['item_id'] + 1 ; 
-			$item_type = $specific_items_db['item_type_use'] ; 
-			$item_picture = $specific_items_db['item_icon'] ; 
-			$item_name = $specific_items_db['item_name']; 
-			$item_desc = $specific_items_db['item_desc']; 
-			$item_icon = $specific_items_db['item_icon'] ; 
-			$item_quality = $specific_items_db['item_quality']; 
-			$item_duration = $specific_items_db['item_duration']; 
-			$item_duration_max = $specific_items_db['item_duration_max']; 
-			$item_add_power = $specific_items_db['item_add_power']; 
-			$item_power = $specific_items_db['item_power']; 
-			$item_price = $specific_items_db['item_price']; 
-			$item_mp_use = $specific_items_db['item_mp_use']; 
-			$item_element = $specific_items_db['item_element']; 
-			$item_element_str_dmg = $specific_items_db['item_element_str_dmg']; 
-			$item_element_same_dmg = $specific_items_db['item_element_same_dmg']; 
-			$item_element_weak_dmg = $specific_items_db['item_element_weak_dmg']; 
-			$item_max_skill = $specific_items_db['item_max_skill']; 
-			$item_weight = $specific_items_db['item_weight']; 
-			
-			// Give item to user
-			$sql = "INSERT INTO " . ADR_SHOPS_ITEMS_TABLE . " ( item_id , item_owner_id , item_type_use , item_name , item_desc , item_icon , item_price , item_quality , 
-					item_duration , item_duration_max , item_power , item_add_power , item_mp_use , item_element , item_element_str_dmg , 
-					item_element_same_dmg , item_element_weak_dmg , item_max_skill  , item_weight ) 
-					VALUES ( $item_id_new , $user_id , $item_type , '" . str_replace("\'", "''", $item_name) . "', '" . str_replace("\'", "''", $item_desc) . "' , 
-					'" . str_replace("\'", "''", $item_icon) . "' , $item_price , $item_quality , $item_duration , $item_duration_max , $item_power ,  
-					$item_add_power , $item_mp_use , $item_element , $item_element_str_dmg , $item_element_same_dmg , $item_element_weak_dmg , $item_max_skill , $item_weight)"; 
-			$result = $db->sql_query($sql);
-			if( !$result )
-			{
-				message_die(GENERAL_ERROR, "Item doesn't exist !", "", __LINE__, __FILE__, $sql); 
-			}
-			$dropped_loot_list .= ( $dropped_loot_list == '' ) ? $specific_items_db['item_id'] : ":".$specific_items_db['item_id'];
+      adr_shop_insert_item($value, adr_next_item_id($user_id), $user_id, 1);
+			$dropped_loot_list .= ( $dropped_loot_list == '' ) ? $value : ":".$value;
 
 			$message .= "<tr><td align=\"center\"  valign=\"top\">You found a ".adr_get_lang($specific_items_db['item_name'])."<br><img src=\"./adr/images/items/".$specific_items_db['item_icon']."\"</td></tr>";
 		}

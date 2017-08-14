@@ -380,7 +380,7 @@ function zone_npc_actions()
 				$npc_item2_array = explode( ',' , $npc_give_row['npc_item2'] );
 				for ( $i = 0 ; $i < count( $npc_item2_array ) ; $i++ )
 				{
-					adr_shop_insert_item($npc_item2_array[$i], adr_make_new_item_id($user_id), $user_id, 1, 0, 0, 'item_name');
+					adr_shop_insert_item($npc_item2_array[$i], adr_next_item_id($user_id), $user_id, 1, 0, 0, 'item_name');
 
 					if ( count( $npc_item2_array ) == 1 )
 						$prize_item .= adr_get_lang( $npc_item2_array[$i] ) ;

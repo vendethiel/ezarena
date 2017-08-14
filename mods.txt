@@ -441,6 +441,8 @@ Addons :
 
 # ADR : Advanced Loot System 1.0.3 - Himmelweiss
 Ajoute un système super-complet de butin pour les monstres, avec des catégories de butin, chance de drop, combien d'items il est possible de drop, etc ... à découvrir en jeu et dans l'admin !
+Addons :
+ - Fix for ADR 0.4.4+ - Informpro
 
 # ADR : Advanced NPC System 2.2.0-beta - Dedo
 Ajoute un système de NPC (PNJ) avancé au Zone Mod, permettant de dépasser la limite des 6 PNJs par zone, et de créer un système de quête simple où le PNJ peut demander à un joueur de lui rapporter un objet contre une expérience/des points/SP/objet
@@ -450,7 +452,7 @@ Ajoute de nombreuses fonctionnalités au mod "Advanced NPC System", comme la pos
 TODO :
  - Advanced NPC System Expansion Multiple Items
 
-# ADR : QuestBook System v1.0.2 pour Advanced NPC System - Himmelweiss
+# ADR : Advanced NPC System : QuestBook System v1.0.2 - Himmelweiss
 Ajoute un système de listes de quetes.
 Addons :
  - Questbook History v1.0.1 - Himmelweiss
@@ -458,9 +460,6 @@ Addons :
  - Heavy refactoring - Informpro
 TODO :
  - Rewrite the checks to complete a quest (items + kills)
-
-# ADR : Cache doesn't use PK to index - Informpro
-Dans l'ADR de base, le cache indexe par le n' du row, pas par son ID.
 
 # ADR : Advanced Zone Restrictions - Informpro
 Etend les restrictions de zones aux pages suivantes (configurable depuis l'ACP) :
@@ -493,6 +492,9 @@ Ajoute un système de cuisine au mod Crafting.
 Addons :
  - Bug fixes all over the place (using potions, effects, etc) - Informpro
 
+# ADR : Cache doesn't use PK to index 1.0 - Informpro
+Dans l'ADR de base, le cache indexe par le n' du row, pas par son ID.
+
 # ADR : Dynamic Town Maps for Zone 0.1.4 - Ozzie
 Permet de créer (et de modifier) dynamiquement des cartes
 Addons :
@@ -506,8 +508,11 @@ Ajoute un systeme de guilde
 Addons :
  - Addon rewrite it completly so it works - Informpro
 
+# ADR : Hide Duplicate Items 1.0 - Informpro
+Lors d'un combat, ne montre qu'une fois chaque paire objet/duree.
+
 # ADR : Items no sell 0.0.2 - Makien
-Permet de rendre des objets non vendables (objets rares, par exemple).
+Permet de rendre des objets non vendables (objets de quete, par exemple).
 
 # ADR : Level Required Zones 1.0.0 - Insydius
 Permet de limiter l'accès à une zone pour les personnes d'un certain niveau
@@ -639,6 +644,7 @@ Permet de modifier les gains à la montée de niveau par familier.
 
 ---
 
+
 # File Attachment Mod 2.4.5 - Acyd Burn
 Permet d'attacher des fichiers aux messages
 Addons :
@@ -713,7 +719,7 @@ Supprime les tags HTML des titres de forums dans les meta et dans le titre de la
 
 # Subforums + 0.0.6a - Ptirhiik, asinshesq
 Addons :
- - Addon pour fonctioner avex XS - Informpro
+ - Addon pour fonctioner avec XS - Informpro
  - Addon pour KUF - asinshesq
  - Addon pour RCS - ABDev
  - Addon pour Last topic title on index - ABDev
