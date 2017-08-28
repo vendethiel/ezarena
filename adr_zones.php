@@ -648,7 +648,7 @@ $sql = " SELECT * FROM  " . ADR_CHARACTERS_TABLE . "
 if( !($result = $db->sql_query($sql)) )
         message_die(GENERAL_ERROR, 'Could not query area list', '', __LINE__, __FILE__, $sql);
 
-$users_connected = [];
+$users_connected = array();
 while( $row = $db->sql_fetchrow($result)) 
 	$users_connected[] =' <a href="' . append_sid("adr_character.$phpEx?" . POST_USERS_URL . "=" . $row['character_id']) . '">' . $row['character_name'] . '</a>';
 
