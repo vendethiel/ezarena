@@ -1144,9 +1144,7 @@ class attach_parent
 				{
 					$error_msg .= '<br />';
 				}
-				$ini_val = ( phpversion() >= '4.0.0' ) ? 'ini_get' : 'get_cfg_var';
-		
-				$max_size = @$ini_val('upload_max_filesize');
+				$max_size = ini_get('upload_max_filesize');
 
 				if ($max_size == '')
 				{
@@ -1251,22 +1249,13 @@ class attach_parent
 				if (!(intval($attach_config['allow_ftp_upload'])))
 				{
 					// Descide the Upload method
-					$ini_val = ( phpversion() >= '4.0.0' ) ? 'ini_get' : 'get_cfg_var';
-		
-					$safe_mode = @$ini_val('safe_mode');
+					$safe_mode = ini_get('safe_mode');
 
-					if (@$ini_val('open_basedir'))
+					if (ini_get('open_basedir'))
 					{
-						if (@phpversion() < '4.0.3')
-						{
-							$upload_mode = 'copy';
-						}
-						else
-						{
-							$upload_mode = 'move';
-						}
+            $upload_mode = 'move';
 					}
-					else if (@$ini_val('safe_mode'))
+					else if (ini_get('safe_mode'))
 					{
 						$upload_mode = 'move';
 					}

@@ -106,7 +106,7 @@ if ( isset($HTTP_POST_VARS['submit']) )
 		//
 		if ( preg_match('/[c-z]:\\\.*/i', getenv('PATH')) && !$board_config['smtp_delivery'])
 		{
-			$ini_val = ( @phpversion() >= '4.0.0' ) ? 'ini_get' : 'get_cfg_var';
+			$ini_val = 'ini_get';
 
 			// We are running on windows, force delivery to use our smtp functions
 			// since php's are broken by default

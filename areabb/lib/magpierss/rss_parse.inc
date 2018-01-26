@@ -449,12 +449,7 @@ class MagpieRSS {
     *
     */
     function create_parser($source, $out_enc, $in_enc, $detect) {
-        if ( substr(phpversion(),0,1) == 5) {
-            $parser = $this->php5_create_parser($in_enc, $detect);
-        }
-        else {
-            list($parser, $source) = $this->php4_create_parser($source, $in_enc, $detect);
-        }
+        $parser = $this->php5_create_parser($in_enc, $detect);
         if ($out_enc) {
             $this->encoding = $out_enc;
             xml_parser_set_option($parser, XML_OPTION_TARGET_ENCODING, $out_enc);

@@ -117,8 +117,6 @@ function user_avatar_upload($mode, $avatar_mode, &$current_avatar, &$current_typ
 {
 	global $board_config, $db, $lang;
 
-	$ini_val = ( @phpversion() >= '4.0.0' ) ? 'ini_get' : 'get_cfg_var';
-
 	$width = $height = 0;
 	$type = '';
 
@@ -166,7 +164,7 @@ function user_avatar_upload($mode, $avatar_mode, &$current_avatar, &$current_typ
 		{
 			$avatar_data = substr($avatar_data, strlen($avatar_data) - $avatar_filesize, $avatar_filesize);
 
-			$tmp_path = ( !@$ini_val('safe_mode') ) ? '/tmp' : './' . $board_config['avatar_path'] . '/tmp';
+			$tmp_path = ( !ini_get('safe_mode') ) ? '/tmp' : './' . $board_config['avatar_path'] . '/tmp';
 			$tmp_filename = tempnam($tmp_path, uniqid(rand()) . '-');
 
 			$fptr = @fopen($tmp_filename, 'wb');
@@ -267,13 +265,8 @@ function user_avatar_upload($mode, $avatar_mode, &$current_avatar, &$current_typ
 		}
 		else
 		{
-			if ( @$ini_val('open_basedir') != '' )
+			if ( ini_get('open_basedir') != '' )
 			{
-				if ( @phpversion() < '4.0.3' )
-				{
-					message_die(GENERAL_ERROR, 'open_basedir is set and your PHP version does not allow move_uploaded_file', '', __LINE__, __FILE__);
-				}
-
 				$move_file = 'move_uploaded_file';
 			}
 			else

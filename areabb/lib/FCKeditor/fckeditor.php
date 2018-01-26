@@ -104,12 +104,7 @@ class FCKeditor
 
 	function IsCompatible()
 	{
-		global $HTTP_USER_AGENT ;
-
-		if ( isset( $HTTP_USER_AGENT ) )
-			$sAgent = $HTTP_USER_AGENT ;
-		else
-			$sAgent = $_SERVER['HTTP_USER_AGENT'] ;
+    $sAgent = $_SERVER['HTTP_USER_AGENT'] ;
 
 		if ( strpos($sAgent, 'MSIE') !== false && strpos($sAgent, 'mac') === false && strpos($sAgent, 'Opera') === false )
 		{

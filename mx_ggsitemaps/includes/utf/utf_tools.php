@@ -90,47 +90,20 @@ if (extension_loaded('mbstring')) {
 	* Notes:
 	* - offset for mb_strrpos was added in 5.2.0, we emulate if it is lower
 	*/
-	if (version_compare(phpversion(), '5.2.0', '>=')) {
-		/**
-		* UTF-8 aware alternative to strrpos
-		* @ignore
-		*/
-		function utf8_strrpos($str,	$needle, $offset = null) {
-			// Emulate behaviour of strrpos rather than raising warning
-			if (empty($str)) {
-				return false;
-			}
-			if (is_null($offset)) {
-				return mb_strrpos($str, $needle);
-			} else {
-				return mb_strrpos($str, $needle, $offset);
-			}
-		}
-	} else {
-		/**
-		* UTF-8 aware alternative to strrpos
-		* @ignore
-		*/
-		function utf8_strrpos($str,	$needle, $offset = null) {
-			// offset for mb_strrpos was added in 5.2.0
-			if (is_null($offset)) {
-				// Emulate behaviour of strrpos rather than raising warning
-				if (empty($str)) {
-					return false;
-				}
-				return mb_strrpos($str, $needle);
-			} else {
-				if (!is_int($offset)) {
-					trigger_error('utf8_strrpos expects parameter 3 to be long', E_USER_WARNING);
-					return false;
-				}
-				$str = mb_substr($str, $offset);
-				if (false !== ($pos = mb_strrpos($str, $needle))) {
-					return $pos + $offset;
-				}
-				return false;
-			}
-		}
+  /**
+  * UTF-8 aware alternative to strrpos
+  * @ignore
+  */
+  function utf8_strrpos($str,	$needle, $offset = null) {
+    // Emulate behaviour of strrpos rather than raising warning
+    if (empty($str)) {
+      return false;
+    }
+    if (is_null($offset)) {
+      return mb_strrpos($str, $needle);
+    } else {
+      return mb_strrpos($str, $needle, $offset);
+    }
 	}
 	/**
 	* UTF-8 aware alternative to strpos

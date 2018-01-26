@@ -3120,25 +3120,14 @@ switch($mode_id)
 				// Load functions
 				include($phpbb_root_path . 'includes/functions_search.'.$phpEx);
 				// Identify PHP version and time limit configuration
-				if (phpversion() >= '4.0.5' && ($board_config['dbmtnc_rebuildcfg_php3only'] == 0)) // Handle PHP beffore 4.0.5 as PHP 3 since array_search is not available
-				{
-					$php_ver = 4;
-					// try to reset time limit
-					$reset_allowed = TRUE;
-					$execution_time = $board_config['dbmtnc_rebuildcfg_timelimit'];
-					set_error_handler('catch_error');
-					set_time_limit($board_config['dbmtnc_rebuildcfg_timelimit']);
-					restore_error_handler();
-					// Try to set unlimited execution time
-					@set_time_limit(0);
-				}
-				else
-				{
-					$php_ver = 3;
-					$execution_time = get_cfg_var('max_execution_time');
-					// Try to set unlimited execution time
-					@set_time_limit(0);
-				}
+        // try to reset time limit
+        $reset_allowed = TRUE;
+        $execution_time = $board_config['dbmtnc_rebuildcfg_timelimit'];
+        set_error_handler('catch_error');
+        set_time_limit($board_config['dbmtnc_rebuildcfg_timelimit']);
+        restore_error_handler();
+        // Try to set unlimited execution time
+        @set_time_limit(0);
 				if ($execution_time === FALSE)
 				{
 					$execution_time = 30; // Asume 30 if an error occurs

@@ -46,7 +46,7 @@ session_start();
 // Thanks to Matt Kavanagh and Stefan Esser for providing feedback as well as patch files
 
 // PHP5 with register_long_arrays off?
-if (@phpversion() >= '5.0.0' && (!@ini_get('register_long_arrays') || @ini_get('register_long_arrays') == '0' || strtolower(@ini_get('register_long_arrays')) == 'off'))
+if ((!@ini_get('register_long_arrays') || @ini_get('register_long_arrays') == '0' || strtolower(@ini_get('register_long_arrays')) == 'off'))
 {
 	$HTTP_POST_VARS = $_POST;
 	$HTTP_GET_VARS = $_GET;
@@ -60,18 +60,6 @@ if (@phpversion() >= '5.0.0' && (!@ini_get('register_long_arrays') || @ini_get('
 	{
 		$HTTP_SESSION_VARS = $_SESSION;
 	}
-}
-
-// Protect against GLOBALS tricks
-if (isset($HTTP_POST_VARS['GLOBALS']) || isset($HTTP_POST_FILES['GLOBALS']) || isset($HTTP_GET_VARS['GLOBALS']) || isset($HTTP_COOKIE_VARS['GLOBALS']))
-{
-	die("Hacking attempt");
-}
-
-// Protect against HTTP_SESSION_VARS tricks
-if (isset($HTTP_SESSION_VARS) && !is_array($HTTP_SESSION_VARS))
-{
-	die("Hacking attempt");
 }
 
 //

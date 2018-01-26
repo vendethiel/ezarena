@@ -821,12 +821,10 @@ function user_notification($mode, &$post_data, &$topic_title, &$forum_id, &$topi
 				//
 				if (preg_match('/[c-z]:\\\.*/i', getenv('PATH')) && !$board_config['smtp_delivery'])
 				{
-					$ini_val = (@phpversion() >= '4.0.0') ? 'ini_get' : 'get_cfg_var';
-
 					// We are running on windows, force delivery to use our smtp functions
 					// since php's are broken by default
 					$board_config['smtp_delivery'] = 1;
-					$board_config['smtp_host'] = @$ini_val('SMTP');
+					$board_config['smtp_host'] = ini_get('SMTP');
 				}
 
 				if (sizeof($bcc_list_ary))
