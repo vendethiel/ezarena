@@ -141,7 +141,7 @@
 <br />
 <table width="100%">
 	<tr>
-		<td align="center"><span class="gen">{L_TOWNBOUTONRETOUR}<br /></a></span></td>
+		<td align="center"><span class="gen"><a href="{U_TOWNBOUTONRETOUR}">{L_TOWNBOUTONRETOUR}<br /></a></span></td>
 	</tr>
 </table>
 <br />

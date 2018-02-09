@@ -71,7 +71,6 @@ if ( !$userdata['session_logged_in'] )
 $saison = 'Carte' . $board_config['adr_seasons'];
 $musique = $musics[$board_config['adr_seasons'] - 1];
 
-include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 adr_template_file('adr_TownMap_body.tpl');
 
 // Who is looking at this page ?
@@ -103,6 +102,7 @@ if ( is_numeric($bat['battle_id']) )
 
 
 // Get the general config
+$adr_general = adr_get_general_config();
 adr_enable_check();
 adr_ban_check($user_id);
 adr_character_created_check($user_id);
@@ -116,8 +116,6 @@ $adr_char = adr_get_user_infos($user_id);
 //====================================================================
 
 // Begin Infos
-
-include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
 
 $InfoPrison = $HTTP_POST_VARS['InfoPrison'];
 
@@ -211,6 +209,9 @@ if (PAGE_DISABLED && $userdata['user_level'] != ADMIN)
 	header('location:'.append_sid("adr_zones.$phpEx"));
 	exit;
 }
+
+include($phpbb_root_path . 'includes/page_header.'.$phpEx);
+include($phpbb_root_path . 'adr/includes/adr_header.'.$phpEx);
 
 $template->assign_vars(array(
 	// V: adr_townmap is disabled, show alert message

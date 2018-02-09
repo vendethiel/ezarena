@@ -35,7 +35,7 @@ if ( $board_config['gzip_compress'] )
 {
 	$useragent = (isset($HTTP_SERVER_VARS['HTTP_USER_AGENT'])) ? $HTTP_SERVER_VARS['HTTP_USER_AGENT'] : getenv('HTTP_USER_AGENT');
 
-	if ( strstr($useragent,'compatible') || strstr($useragent,'Gecko') ) )
+	if ( strstr($useragent,'compatible') || strstr($useragent,'Gecko') )
 	{
 		if ( extension_loaded('zlib') )
 		{
