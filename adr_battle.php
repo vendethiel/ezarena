@@ -169,6 +169,7 @@ if ($battle_started)
 
 // Get character infos
 $challenger = adr_get_user_infos($user_id);
+$zone = zone_get($challenger['character_area']);
 
 $user_ma            = $bat['battle_challenger_magic_attack'];
 $user_md            = $bat['battle_challenger_magic_resistance'];
@@ -1087,6 +1088,7 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
       $in_guild = $db->sql_fetchrow($result);
       if($in_guild['guild_member_guild_id'] > 0){
         define('IN_GUILD',true);
+        // V: TODO extract this code...
         //get guild info
         // V: we already have the guild_id. use it.
         $sql = "SELECT * FROM " . ADR_GUILDS_TABLE . " g
@@ -1271,9 +1273,18 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 			{
 				$message .= '<br />' . sprintf($lang['Adr_battle_stolen_items'], $monster['monster_name']);
 			} //$stolen['item_name'] != ''
-			$message .= '<br /><br />' . sprintf($lang['Adr_battle_return'], "<a href=\"" . 'adr_battle.' . $phpEx . "\">", "</a>");
+
+      if (empty($zone['zone_teleport_win']) || !($new_zone = zone_get($zone['zone_teleport_win'])))
+      {
+        $message .= '<br /><br />' . sprintf($lang['Adr_battle_return'], "<a href=\"" . 'adr_battle.' . $phpEx . "\">", "</a>");
+      }
+      else
+      {
+        adr_teleport_character($user_id, $zone['zone_teleport_win']);
+        $message .= '<br /><br />' . sprintf($lang['ADR_BATTLE_TELEPORTED'], $new_zone['zone_name'], "<a href=\"" . 'adr_zones.' . $phpEx . "\">", "</a>");
+      }
 			$message .= '<br /><br />' . sprintf($lang['Adr_character_return'], "<a href=\"" . 'adr_character.' . $phpEx . "\">", "</a>");
-			
+
 			message_die(GENERAL_MESSAGE, $message);
 		} // end if one of opponent is dead
 		
@@ -1348,7 +1359,17 @@ if ((is_numeric($bat['battle_id']) && $bat['battle_type'] == 1)
 			{
 				$message .= '<br /><br />' . sprintf($lang['Adr_battle_stolen_items_lost'], $monster['monster_name']);
 			} //$stolen['item_name'] != ''
-			$message .= '<br /><br />' . sprintf($lang['Adr_battle_temple'], "<a href=\"" . 'adr_temple.' . $phpEx . "\">", "</a>");
+
+      if (empty($zone['zone_teleport_lose']) || !($new_zone = zone_get($zone['zone_teleport_lose'])))
+      {
+        $message .= '<br /><br />' . sprintf($lang['Adr_battle_temple'], "<a href=\"" . 'adr_temple.' . $phpEx . "\">", "</a>");
+      }
+      else
+      {
+        adr_teleport_character($user_id, $zone['zone_teleport_lose']);
+        $message .= '<br /><br />' . sprintf($lang['ADR_BATTLE_TELEPORTED'], $new_zone['zone_name'], "<a href=\"" . 'adr_zones.' . $phpEx . "\">", "</a>");
+      }
+
 			$message .= '<br /><br />' . sprintf($lang['Adr_character_return'], "<a href=\"" . 'adr_character.' . $phpEx . "\">", "</a>");
 			message_die(GENERAL_MESSAGE, $message);
 		} //$challenger_hp < 1 && $opponent_hp > 0
@@ -1490,13 +1511,7 @@ list($creature_attack_width, $creature_attack_empty) = adr_make_bars($rabbit_use
 list($creature_magicattack_width, $creature_magicattack_empty) = adr_make_bars($rabbit_user['creature_magicattack'], $rabbit_user['creature_magicattack_max'], '100');
 
 // Grab pet details again
-$sql = "SELECT * FROM  " . RABBITOSHI_USERS_TABLE . "
-		WHERE owner_id = $user_id ";
-if (!$result = $db->sql_query($sql))
-{
-	message_die(GENERAL_ERROR, 'Could not get pet info', '', __LINE__, __FILE__, $sql);
-} //!$result = $db->sql_query($sql)
-$rabbit_user = $db->sql_fetchrow($result);
+$rabbit_user = rabbitoshi_get_user_stats($user_id);
 
 $ability       = '';
 $ability_level = $rabbit_user['creature_ability'];
@@ -1598,7 +1613,6 @@ if (!$result = $db->sql_query($sql))
 $monster_details = $db->sql_fetchrow($result);
 
 // Grab background details
-$zone = zone_get($challenger['character_area']);
 if (!empty($zone['zone_background']))
   $bck_grnd_name = $zone['zone_background'];
 else

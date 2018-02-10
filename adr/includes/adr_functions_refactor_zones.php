@@ -79,13 +79,7 @@ function zone_goto($goto_id, $cost_goto)
 	if ( ( $required_item == '0' ) || ( $required_item == $item_check['item_name'] ) ) 
 	{
 		adr_substract_points( $user_id , $cost_goto , adr_zones , '' );
-
-		//Update character zone
-		$sql = " UPDATE  " . ADR_CHARACTERS_TABLE . " 
-			SET character_area = '$destination_id'
-			WHERE character_id = '$user_id' ";
-		if( !($result = $db->sql_query($sql)) )
-			message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
+    adr_teleport_character($user_id, $destination_id);
 
 		@header('Location:'.append_sid("adr_zones.$phpEx"));
 		adr_previous( Adr_zone_change_success , adr_zones , '' );
@@ -97,6 +91,18 @@ function zone_goto($goto_id, $cost_goto)
 		message_die(GENERAL_ERROR, $message , Zones , '' );
 		break;
 	}
+}
+
+function adr_teleport_character($user_id, $destination_id)
+{
+  global $db;
+
+  $sql = " UPDATE  " . ADR_CHARACTERS_TABLE . " 
+    SET character_area = '$destination_id'
+    WHERE character_id = '$user_id' ";
+  if( !($result = $db->sql_query($sql)) )
+    message_die(GENERAL_ERROR, 'Could not update character zone', '', __LINE__, __FILE__, $sql);
+  $db->sql_freeresult($result);
 }
 
 function zone_events($zone)

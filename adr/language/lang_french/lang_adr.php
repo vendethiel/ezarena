@@ -1913,3 +1913,4 @@ $lang['Adr_research'] = 'Recherche';
 $lang['Adr_questbook_quest_typ_clue'] = 'Vous avez pay&eacute; pour valider cette qu&ecirc;te';
 // used in npc admin
 $lang['ADR_NPC_MOB_KILLS'] = 'Monstres &agrave; tuer';
+$lang['ADR_BATTLE_TELEPORTED'] = 'Vous avez été téléporté vers %s.<br />Cliquez %sici%s pour revenir à la page des zones.';

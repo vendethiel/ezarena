@@ -1928,6 +1928,8 @@ CREATE TABLE phpbb_adr_zones (
   `zone_alchemy_table` TEXT NOT NULL,
 
   `zone_background` varchar(255) default '',
+  `zone_teleport_win` int(9),
+  `zone_teleport_lose` int(9),
   PRIMARY KEY  (zone_id)
 ) ;
 

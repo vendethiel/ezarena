@@ -121,6 +121,16 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 	  	$return_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
 	$return_list .= '</select>';
 
+  $zone_teleport_win_list = '<select name="zone_teleport_win">';
+  $zone_teleport_win_list .= '<option value="">' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
+  $zone_teleport_win_list .= generate_select_for($zonelist, 'zone_id', 'zone_name');
+  $zone_teleport_win_list .= '</select>';
+
+  $zone_teleport_lose_list = '<select name="zone_teleport_lose">';
+  $zone_teleport_lose_list .= '<option value="">' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
+  $zone_teleport_lose_list .= generate_select_for($zonelist, 'zone_id', 'zone_name');
+  $zone_teleport_lose_list .= '</select>';
+
 	//elements list
 	$sql = "SELECT * FROM " . ADR_ELEMENTS_TABLE ;
 	$result = $db->sql_query($sql);
@@ -231,6 +241,8 @@ if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
 		"ZONE_DESTINATION3" => $destination3_list,
 		"ZONE_DESTINATION4" => $destination4_list,
 		"ZONE_RETURN" => $return_list,
+    "ZONE_TELEPORT_WIN_LIST" => $zone_teleport_win_list,
+    "ZONE_TELEPORT_LOSE_LIST" => $zone_teleport_lose_list,
 		"L_ZONE_TITLE" => $lang['Adr_Zone_acp_title'],
 		"L_ZONE_EXPLAIN" => $lang['Adr_Zone_acp_title_explain'],
 		"L_ZONE_SETTINGS" => $lang['Adr_Zone_acp_settings_title'],
@@ -387,55 +399,35 @@ else if ( $mode != "" )
 
 			$zonelist = $db->sql_fetchrowset($result);
 
-/*			$destination1_list = '<select name="zone_goto1">';
-			$destination1_list .= '';
-			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
-			{
-				if ($zonelist[$i]['zone_id'] == $existing_destination1 || $zonelist[$i]['zone_id'] == $zone_id)
-					continue;
-			  	$destination1_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" >' . $zonelist[$i]['zone_name'] . '</option>';
-			}
-			$destination1_list .= '</select>';
-*/
 			$destination2_list = '<select name="zone_goto2">';
 			$destination2_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
-			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
-			{
-				if ($zonelist[$i]['zone_id'] == $zone_id)
-					continue;
-			  	$destination2_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" ' . ($zonelist[$i]['zone_id'] == $existing_destination2 ? ' selected="selected"' : '') . '>' . $zonelist[$i]['zone_name'] . '</option>';
-			}
+      $destination2_list .= generate_select_for($zonelist, 'zone_id', 'zone_name', $existing_destination2, $zone_id);
 			$destination2_list .= '</select>';
 
 			$destination3_list = '<select name="zone_goto3">';
 			$destination3_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
-			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
-			{
-				if ($zonelist[$i]['zone_id'] == $zone_id)
-					continue;
-			  	$destination3_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" ' . ($zonelist[$i]['zone_id'] == $existing_destination3 ? ' selected="selected"' : '') . '>' . $zonelist[$i]['zone_name'] . '</option>';
-			}
+      $destination3_list .= generate_select_for($zonelist, 'zone_id', 'zone_name', $existing_destination3, $zone_id);
 			$destination3_list .= '</select>';
 
 			$destination4_list = '<select name="zone_goto4">';
 			$destination4_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
-			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
-			{
-				if ($zonelist[$i]['zone_id'] == $zone_id)
-					continue;
-        $destination4_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" ' . ($zonelist[$i]['zone_id'] == $existing_destination4 ? ' selected="selected"' : '') . '>' . $zonelist[$i]['zone_name'] . '</option>';
-			}
+      $destination4_list .= generate_select_for($zonelist, 'zone_id', 'zone_name', $existing_destination4, $zone_id);
 			$destination4_list .= '</select>';
 
 			$return_list = '<select name="zone_return">';
 			$return_list .= '<option value = "" >' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
-			for ( $i = 0 ; $i < count($zonelist) ; $i ++)
-			{
-				if ($zonelist[$i]['zone_id'] == $zone_id)
-					continue;
-        $return_list .= '<option value = "' . $zonelist[$i]['zone_id'] . '" ' . ($zonelist[$i]['zone_id'] == $existing_return_name ? ' selected="selected"' : '') . '>' . $zonelist[$i]['zone_name'] . '</option>';
-			}
+      $return_list .= generate_select_for($zonelist, 'zone_id', 'zone_name', $existing_return, $zone_id);
 			$return_list .= '</select>';
+
+			$zone_teleport_win_list = '<select name="zone_teleport_win">';
+			$zone_teleport_win_list .= '<option value="">' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
+      $zone_teleport_win_list .= generate_select_for($zonelist, 'zone_id', 'zone_name', $zones['zone_teleport_win'], $zone_id);
+			$zone_teleport_win_list .= '</select>';
+
+			$zone_teleport_lose_list = '<select name="zone_teleport_lose">';
+			$zone_teleport_lose_list .= '<option value="">' . $lang['Adr_zone_acp_choose_nothing'] . '</option>';
+      $zone_teleport_lose_list .= generate_select_for($zonelist, 'zone_id', 'zone_name', $zones['zone_teleport_lose'], $zone_id);
+			$zone_teleport_lose_list .= '</select>';
 
 			//elements list
 			$sql = "SELECT * FROM " . ADR_ELEMENTS_TABLE ;
@@ -548,6 +540,8 @@ else if ( $mode != "" )
 				"ZONE_DESTINATION3" => $destination3_list,
 				"ZONE_DESTINATION4" => $destination4_list,
 				"ZONE_RETURN" => $return_list,
+        "ZONE_TELEPORT_WIN_LIST" => $zone_teleport_win_list,
+        "ZONE_TELEPORT_LOSE_LIST" => $zone_teleport_lose_list,
 				// "ZONE_COSTDESTINATION1" => $zones['cost_goto1'],
 				"ZONE_COSTDESTINATION2" => $zones['cost_goto2'],
 				"ZONE_COSTDESTINATION3" => $zones['cost_goto3'],
@@ -699,7 +693,9 @@ else if ( $mode != "" )
 			$pointloss1 = $HTTP_POST_VARS['zone_pointloss1'];
 			$pointloss2 = $HTTP_POST_VARS['zone_pointloss2'];
       $zone_background = $_POST['zone_background'];
-			$chance = (string) intval($HTTP_POST_VARS['zone_chance']);
+      $zone_teleport_win = intval($_POST['zone_teleport_win']);
+      $zone_teleport_lose = intval($_POST['zone_teleport_lose']);
+			$chance = intval($HTTP_POST_VARS['zone_chance']);
 			$level = intval($HTTP_POST_VARS['zone_level']);
 
 			$monsters = array();
@@ -790,7 +786,9 @@ else if ( $mode != "" )
 				zone_alchemy_table = '" . $alchemy_loottables_list . "',
 				$extra_buildings_sql
         zone_level = '$level',
-        zone_background = '$zone_background'
+        zone_background = '$zone_background',
+        zone_teleport_win = '$zone_teleport_win',
+        zone_teleport_lose = '$zone_teleport_lose'
 				WHERE zone_id = '$zone_id'";
 			if( !($result = $db->sql_query($sql)) )
 				message_die(GENERAL_ERROR, "Couldn't update zones info", "", __LINE__, __FILE__, $sql);
@@ -838,6 +836,8 @@ else if ( $mode != "" )
 			$chance = (string)intval($HTTP_POST_VARS['zone_chance']);
 			$level = intval($HTTP_POST_VARS['zone_level']);
       $zone_background = $_POST['zone_background'];
+      $zone_teleport_win = intval($_POST['zone_teleport_win']);
+      $zone_teleport_lose = intval($_POST['zone_teleport_lose']);
 
 			$monsters = array();
 			$monsters = $HTTP_POST_VARS['monsters'];
@@ -882,8 +882,8 @@ else if ( $mode != "" )
 			}
 
 			$sql = "INSERT INTO " . ADR_ZONES_TABLE . " 
-				( zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto2, cost_goto3, cost_goto4, cost_return, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, zone_mine, zone_enchant, zone_monsters_list , zone_level $extra_buildings_keyszone_mining_table, zone_fishing_table, zone_hunting_table, zone_herbal_table, zone_lumberjack_table, zone_tailor_table, zone_alchemy_table, zone_background )
-				VALUES ( '" . str_replace("\'", "''", $name) . "','" . str_replace("\'", "''", $description) . "', '" . str_replace("\'", "''", $image) . "' , '" . str_replace("\'", "''", $element) . "', '" . str_replace("\'", "''", $item) . "' , '$cost2' , '$cost3' , '$cost4' , '$costreturn' , '" . str_replace("\'", "''", $goto2) . "' , '" . str_replace("\'", "''", $goto3) . "' , '" . str_replace("\'", "''", $goto4) . "' , '" . str_replace("\'", "''", $return) . "', '$shops' , '$forge' , '$prison' , '$temple' , '$bank' , '$event1' , '$event2' , '$event3' , '$event4' , '$event5' , '$event6' , '$event7' , '$event8' , '$pointwin1' , '$pointwin2' , '$pointloss1' , '$pointloss2' , '$chance' , '$mine' , '$enchant', '" . $monsters_list . "' , '$level' $extra_buildings_values, '" . $mine_loottables . "', '" . $fish_loottables . "', '" . $hunt_loottables . "', '" . $herbal_loottables . "', '" . $lumberjack_loottables . "', '$tailor_loottables', '$alchemy_loottables', '$zone_background' )";
+				( zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto2, cost_goto3, cost_goto4, cost_return, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, zone_mine, zone_enchant, zone_monsters_list , zone_level $extra_buildings_keyszone_mining_table, zone_fishing_table, zone_hunting_table, zone_herbal_table, zone_lumberjack_table, zone_tailor_table, zone_alchemy_table, zone_background, zone_teleport_win, zone_teleport_lose )
+				VALUES ( '" . str_replace("\'", "''", $name) . "','" . str_replace("\'", "''", $description) . "', '" . str_replace("\'", "''", $image) . "' , '" . str_replace("\'", "''", $element) . "', '" . str_replace("\'", "''", $item) . "' , '$cost2' , '$cost3' , '$cost4' , '$costreturn' , '" . str_replace("\'", "''", $goto2) . "' , '" . str_replace("\'", "''", $goto3) . "' , '" . str_replace("\'", "''", $goto4) . "' , '" . str_replace("\'", "''", $return) . "', '$shops' , '$forge' , '$prison' , '$temple' , '$bank' , '$event1' , '$event2' , '$event3' , '$event4' , '$event5' , '$event6' , '$event7' , '$event8' , '$pointwin1' , '$pointwin2' , '$pointloss1' , '$pointloss2' , '$chance' , '$mine' , '$enchant', '" . $monsters_list . "' , '$level' $extra_buildings_values, '" . $mine_loottables . "', '" . $fish_loottables . "', '" . $hunt_loottables . "', '" . $herbal_loottables . "', '" . $lumberjack_loottables . "', '$tailor_loottables', '$alchemy_loottables', '$zone_background', $zone_teleport_win, $zone_teleport_lose )";
 			$result = $db->sql_query($sql);
 			if( !$result )
 				message_die(GENERAL_ERROR, "Couldn't insert new zones", "", __LINE__, __FILE__, $sql);
@@ -1024,4 +1024,18 @@ function adr_create_gather_list($zone, $type)
 	}
 	$the_loottables_list .= '</select>';
 	return $the_loottables_list;
+}
+
+function generate_select_for($arr, $key_value, $key_lang, $selected, $skip)
+{
+  $ret = '';
+  foreach ($arr as $v)
+  {
+    $value = $v[$key_value];
+    if (!empty($skip) && $value == $skip)
+      continue;
+    $selected_html = $value == $selected ? ' selected="selected"' : '';
+    $ret .= '<option value="' . $value . '"' . $selected_html . '>' . $v[$key_lang] . '</option>';
+  }
+  return $ret;
 }
