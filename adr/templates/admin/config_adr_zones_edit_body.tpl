@@ -9,6 +9,11 @@
 	<tr>
 		<th align="center" colspan="10" ><u>{L_ZONE_SETTINGS}</u></td>
 	</tr>
+	<!-- IF EDIT_ZONE_MAP_LINK -->
+	<tr>
+		<td class="catBottom" align="center" colspan="3"><a class="mainoption" href="{EDIT_ZONE_MAP_LINK}">{L_ADR_EDIT_ZONE_MAP}</a></td>
+	</tr>
+	<!-- ENDIF -->
 	<tr>
 		<td class="row1" width="60%"><b>{L_ZONE_NAME} :</b><br />{L_ZONE_NAME_EXPLAIN}</td>
 		<td class="row1" align="center" ><input type="text" name="zone_name" value="{ZONE_NAME}" size="63" maxlength="255" /></td>

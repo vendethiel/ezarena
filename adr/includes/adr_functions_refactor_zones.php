@@ -4,6 +4,21 @@
  * and are "just" code refactoring, because sometimes it makes me cry to have 5-times dups.
  */
 
+function zone_get_all()
+{
+  global $db;
+  static $zones_cache;
+  if ($zones_cache)
+    return $zones_cache;
+
+	$sql = "SELECT * FROM  " . ADR_ZONES_TABLE;
+	if( !($result = $db->sql_query($sql)) )
+	        message_die(GENERAL_ERROR, 'Could not query zone list', '', __LINE__, __FILE__, $sql);
+  $zones_cache = $data = $db->sql_fetchrowset($result);
+  $db->sql_freeresult($result);
+  return $data;
+}
+
 function zone_get($zone_id)
 {
 	global $db;

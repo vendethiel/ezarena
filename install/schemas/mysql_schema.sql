@@ -1865,7 +1865,7 @@ CREATE TABLE phpbb_adr_vault_users (
 ) ;
 
 CREATE TABLE phpbb_adr_zones (
-  zone_id int(8) NOT NULL default '0',
+  zone_id int(8) NOT NULL AUTO_INCREMENT,
   zone_name varchar(255) NOT NULL default '',
   zone_desc varchar(255) NOT NULL default '',
   zone_img varchar(255) NOT NULL default '',

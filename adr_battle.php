@@ -153,8 +153,9 @@ else if (!(is_numeric($bat['battle_id'])) && $equip)
 		message_die(GENERAL_ERROR, 'Could not update battle limit', '', __LINE__, __FILE__, $sql);
 	} //!($result = $db->sql_query($sql))
 
-  // refresh battle once fight is started
+  // refresh battle now that the fight is started
   $bat = adr_get_battle($user_id);
+  $battle_started = true;
 } //!(is_numeric($bat['battle_id'])) && $equip
 
 // Let's sort out the start animations...
@@ -163,8 +164,7 @@ else if (!(is_numeric($bat['battle_id'])) && $equip)
 $user_action    = 0;
 $monster_action = 0;
 
-// V: $battle_started is outdated here
-if ($bat['battle_id'])
+if ($battle_started)
   $monster = adr_get_monster_infos($bat['battle_opponent_id']);
 
 // Get character infos

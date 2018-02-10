@@ -22,17 +22,6 @@ define('IN_ADR_ZONES_ADMIN', 1);
 define('IN_ADR_CHARACTER', 1);
 define('IN_ADR_SHOPS', 1);
 define('IN_ADR_ZONE_MAPS', 1);
-// START global variable fix
-if(is_array($_GET))
-{
-   extract($_GET, EXTR_PREFIX_SAME, "get");
-}
-
-if(is_array($_POST))
-{
-   extract($_POST, EXTR_PREFIX_SAME, "post");
-}
-// END global variable fix
 if(	!empty($setmodules) )
 {
 	$file = basename(__FILE__);
@@ -70,7 +59,7 @@ $action = stripslashes($HTTP_POST_VARS['action']);
 $zone_name2 = $HTTP_POST_VARS['zone_name2'];
 $zone_name1 = $HTTP_POST_VARS['zone_name1'];
 $assignzone = $HTTP_POST_VARS['assignzone'];
-$id = $HTTP_POST_VARS['id'];
+$id = intval($HTTP_POST_VARS['id']);
 $zone_name = $HTTP_POST_VARS['zone_name'];
 $remove = $HTTP_POST_VARS['remove'];
 $buildingcell = $HTTP_POST_VARS['buildingcell'];
@@ -103,89 +92,41 @@ $townmapcellheightnumber = $HTTP_POST_VARS['townmapcellheightnumber'];
 $origname = $HTTP_POST_VARS['origname'];
 $origtype = $HTTP_POST_VARS['origtype'];
 
+// Support accessing from URL. This is used in adr_admin_zones, to link to here
+if (empty($mode) && isset($_GET['mode']) && isset($_GET['id']))
+{
+	$id = intval($_GET['id']);
+	$mode = $lang['Adr_admin_maps_zone_townmap_edit'];
+	$action = 'main';
+}
+
 //--------------------------------Main Page START-----------------------------------------
 
-if ((empty($mode)) || ($mode == 'MAIN') || ($mode == 'Main') || $mode == $lang['Adr_admin_maps_main'])
+if (empty($mode) || strtolower($mode) == 'main' || $mode == $lang['Adr_admin_maps_main'])
 {
-
-	$sql = "SELECT zone_name,zone_id from " . ADR_ZONES_TABLE . " WHERE zone_name = 'World Map'";
-	if ( !($result = $db->sql_query($sql)) )  {message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_2']);}
-	$data1 = $db->sql_fetchrowset($result);
-	if ( !($data1[0]['zone_name'] == 'World Map') )
-	{
-		$sql2 = "SELECT * from " . ADR_ZONES_TABLE . " ORDER by zone_id DESC";
-		if ( !($result2 = $db->sql_query($sql2)) ) {message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_2']);}
-		$data2 = $db->sql_fetchrowset($result2);
-		$bottom_zone = $data2[0]['zone_id']+1;
-		$sql3 = "INSERT INTO " . ADR_ZONES_TABLE . " (zone_id, zone_name, zone_desc, zone_img, zone_element, return_name) VALUES ($bottom_zone, 'World Map', 'Map of the World', 'World.gif', 'Earth', 'World Map')";
-		if ( !($db->sql_query($sql3)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_11']); }
-        $sql4 = "UPDATE ". CONFIG_TABLE . " SET config_value = '$bottom_zone' WHERE config_name = 'Adr_zone_worldmap_zone' ";
-		if ( !($result4 = $db->sql_query($sql4)) ) { message_die(GENERAL_ERROR, $lang['Adr_admin_maps_error_14']); }
-		$sql5 = "UPDATE ". ADR_ZONE_MAPS_TABLE . " SET zone_id = '$bottom_zone' WHERE zone_world = 1";
-		if ( !($result5 = $db->sql_query($sql5)) ) {message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_1']);}
-	}
-	else
-	{
-		$world_zone_id = $data1[0]['zone_id'];
-		if ( !( $world_zone_id == $board_config['Adr_zone_worldmap_zone'] ) && $result['zone_name'] == 'World Map' )
-		{
-        	$sql4 = "UPDATE ". CONFIG_TABLE . " SET config_value = '$world_zone_id' WHERE config_name = 'Adr_zone_worldmap_zone' ";
-			if ( !($result4 = $db->sql_query($sql4)) ) { message_die(GENERAL_ERROR, $lang['Adr_admin_maps_error_14']); }
-		}
-	}
-	$sql2 = "SELECT * from " . ADR_ZONES_TABLE . " ORDER by zone_id DESC";
-	if ( !($result2 = $db->sql_query($sql2)) ) {message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_2']);}
-	$data2 = $db->sql_fetchrowset($result2);
-	$bottom_zone = $data2[0]['zone_id']+1;
+	adr_map_get_world(); // Ensure World Map exists
 
 	$sql = "SELECT * from " . ADR_ZONE_MAPS_TABLE . " m
-			LEFT JOIN  " . ADR_ZONES_TABLE . " z ON ( m.zone_id = z.zone_id )
+			INNER JOIN  " . ADR_ZONES_TABLE . " z ON m.zone_id = z.zone_id
 			WHERE m.zone_id > 0
 			ORDER by z.zone_name ASC";
 	if ( !($iresult = $db->sql_query($sql)) ) {message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_1']);}
 	$zonemaplist = "";
-//	$irow = mysql_fetch_array($iresult);
-	for ($x = 0; $x < $bottom_zone; $x++)
+	$zone_with_maps = array();
+	while ($row = $db->sql_fetchrow($iresult))
 	{
-		$irow = mysql_fetch_array($iresult);
-		if ( !($irow['zone_id'] == '' || $irow['zone_id'] == 0 ) )
-		{
-			$jsql = "SELECT zone_name from " . ADR_ZONES_TABLE . " WHERE zone_id = $irow[zone_id]";
-			if ( !($jresult = $db->sql_query($jsql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_2']); }
-			$jrow = mysql_fetch_array($jresult);
-
-			$zonemaplist .= "<option value=\"".$jrow['zone_name']."\">Carte de ".ucfirst($jrow['zone_name'])."</option>";
-		}
+		$zone_with_maps[] = $row['zone_id'];
+		// V: TODO use zone_id
+		$zonemaplist .= "<option value=\"".$row['zone_name']."\">Carte de ".ucfirst($row['zone_name'])."</option>";
 	}
 
 	$zonemaplist2 = "";
-
-	$nsql = "select zone_name, zone_id from ".ADR_ZONES_TABLE." ORDER by zone_name ASC";
-	$nresult = $db->sql_query($nsql);
-	if ( !$nresult ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_2']); }
-	$nrow = $db->sql_fetchrowset($nresult);
-
-		$irow = mysql_fetch_array($iresult);
-			$ksql = "SELECT * from " . ADR_ZONE_MAPS_TABLE . " ORDER by zone_id ASC";
-			if ( !($kresult = $db->sql_query($ksql)) ) {message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_1']);}
-			$krow = $db->sql_fetchrowset($kresult);
-
-			for ($y = 0; $y < count($nrow); $y++)
-			{
-				$nrow[$y]['map_assigned'] = 0;
-				for ( $z = 0; $z < count($krow); $z++)
-				{
-					if ( $krow[$z]['zone_id'] == $nrow[$y]['zone_id'] )
-					{
-						$nrow[$y]['map_assigned'] = 1;
-						break;
-					}
-				}
-				if ( $nrow[$y]['map_assigned'] == 0 )
-				{
-					$zonemaplist2 .= "<option value=\"".$nrow[$y]['zone_name']."\">".ucfirst($nrow[$y]['zone_name'])."</option>";
-				}
-			}
+	foreach (zone_get_all() as $zone)
+	{
+		// V: TODO use zone_id
+		if (!in_array($zone['zone_id'], $zone_with_maps))
+			$zonemaplist2 .= "<option value=\"".$zone['zone_name']."\">".ucfirst($zone['zone_name'])."</option>";
+	}
 	$statinfo = '
 	<tr><td class="row2" colspan="2"><br></td></tr>
 	<tr><input type="hidden" value="main" name="action">
@@ -221,30 +162,55 @@ if ((empty($mode)) || ($mode == 'MAIN') || ($mode == 'Main') || $mode == $lang['
 //--------------------------------Main Page END-----------------------------------------
 //--------------------------------Edit Zone TownMap Page START-----------------------------------------
 
+if ($action == $lang['Adr_admin_maps_assign'])
+{
+	$zone = zone_get($id);
+	if (!isset($assignzone) || !$zone)
+	{
+		$message = '<br />'. $lang['Adr_admin_maps_select_zonemap'].sprintf( $lang['Adr_admin_maps_return_1'] ,"<a href=\"".append_sid("admin_adr_manage_zone_maps.".$phpEx)."\">", "</a>" );
+		$message .= sprintf( $lang['Adr_admin_maps_return_2'] ,"<a href=\"".append_sid("index.".$phpEx."?pane=right")."\">","</a> to return to Admin Index.<p>" );
+		message_die(GENERAL_MESSAGE, $message);
+	}
+	$sql = "select * from ".ADR_ZONE_TOWNMAP_TABLE." where zonemap_type=$assignzone";
+	if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_7']); }
+	$hrow = $db->sql_fetchrow($result);
+
+	$sql2 = "INSERT INTO ".ADR_ZONE_MAPS_TABLE." (zone_id, zonemap_type, zonemap_buildings) VALUES ($id, $assignzone, '$buildinglist')";
+	if ( !($db->sql_query($sql2)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_8']); }
+
+	// V: hack around the original code – instead of a shitty message, let's directly go into edit mode
+	/*
+	$message = '<br />'. $lang['Adr_admin_maps_zonemap_assigned'].sprintf( $lang['Adr_admin_maps_return_1'] ,"<a href=\"".append_sid("admin_adr_manage_zone_maps.".$phpEx)."\">", "</a>" );
+	$message .= sprintf( $lang['Adr_admin_maps_return_2'] ,"<a href=\"".append_sid("index.".$phpEx."?pane=right")."\">","</a> to return to Admin Index.<p>" );
+	message_die(GENERAL_MESSAGE, $message);
+	 */
+	$action = 'main';
+	$mode = $lang['Adr_admin_maps_zone_townmap_edit'];
+	$zone_name2 = $zone['zone_name']; // not sure that's necessary, but...
+}
+
 if ($mode == $lang['Adr_admin_maps_zone_townmap_edit'] )
 {
 	if ($action == 'main')
 	{
-		if ($zone_name == '')
+		if ($zone_name1 == '' && $zone_name2 == '')
 		{
-			if (($zone_name1 != '') && ($zone_name2 != ''))
+			if ($id && ($zone = zone_get($id)))
+			{
+				$zone_name1 = $zone_name2 = $zone['zone_name'];
+			}
+			else
 			{
 				$message = '<br />'.$lang['Adr_admin_maps_missing_town_name'].sprintf( $lang['Adr_admin_maps_return_1'] ,"<a href=\"".append_sid("admin_adr_manage_zone_maps.".$phpEx)."\">", "</a>" );
 				$message .= sprintf( $lang['Adr_admin_maps_return_2'] ,"<a href=\"".append_sid("index.".$phpEx."?pane=right")."\">","</a> to return to Admin Index.<p>" );
 				message_die(GENERAL_MESSAGE, $message);
 			}
-			if (($zone_name1 == '') && ($zone_name2 == ''))
-			{
-				$message = '<br />'.$lang['Adr_admin_maps_missing_town_name'].sprintf( $lang['Adr_admin_maps_return_1'] ,"<a href=\"".append_sid("admin_adr_manage_zone_maps.".$phpEx)."\">", "</a>" );
-				$message .= sprintf( $lang['Adr_admin_maps_return_2'] ,"<a href=\"".append_sid("index.".$phpEx."?pane=right")."\">","</a> to return to Admin Index.<p>" );
-				message_die(GENERAL_MESSAGE, $message);
-			}
-			if ($zone_name1 != '') {$zone_name = $zone_name1;}
-			if ($zone_name2 != '') {$zone_name = $zone_name2;}
 		}
+		if ($zone_name1 != '') {$zone_name = $zone_name1;}
+		if ($zone_name2 != '') {$zone_name = $zone_name2;}
 		$sql = "select zone_name, zone_id from ".ADR_ZONES_TABLE." where zone_name='$zone_name'";
 		if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_3']); }
-		$prow = mysql_fetch_array($result);
+		$prow = $db->sql_fetchrow($result);
 
 		if ($prow['zone_id'] == 0)
 		{
@@ -255,14 +221,15 @@ if ($mode == $lang['Adr_admin_maps_zone_townmap_edit'] )
 		}
 		$id = $prow['zone_id'];
 
-		$sql = "select * from ".ADR_ZONE_BUILDINGS_TABLE."";
+		$sql = "select * from ".ADR_ZONE_BUILDINGS_TABLE;
 		if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_4']); }
-		$brow = mysql_fetch_array($result);
+		$brow = $db->sql_fetchrow($result);
 
 		$sql = "select * from ".ADR_ZONE_MAPS_TABLE." where zone_id='$id'";
 		if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_5']); }
-		$uhrow = mysql_fetch_array($result);
+		$uhrow = $db->sql_fetchrow($result);
 
+		// If we don't have a zone map yet, first ask the user what kind of zone they want
 		if ($uhrow['zonemap_type'] == '')
 		{
 
@@ -271,16 +238,15 @@ if ($mode == $lang['Adr_admin_maps_zone_townmap_edit'] )
 			{		message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_6'] );	}
 
 			$zones = "<span class=\"genmed\"><select name=\"assignzone\">";
-			for ($x = 0; $x < mysql_num_rows($result); $x++)
+			while ($zoneinfo = $db->sql_fetchrow($result))
 			{
-				$zoneinfo = mysql_fetch_array($result);
 				$zones .= "<option value=\"".$zoneinfo['zonemap_type']."\">".$zoneinfo['zonemap_type']." - ".$zoneinfo['zonemap_name']."</option>";
 			}
 			$zones .= "</select>";
 
 			$statinfo = '
 			<tr>
-				<td colspan="2" align="center" class="row2"><span class="gen"><b>'.$zone_name.$lang['Adr_admin_maps_no_townmap'].'</b></span><input type="hidden" value="'.$lang['Adr_admin_maps_edit_townmap'].'" name="mode"><input type="hidden" value="'.$id.'" name="id"><input type="hidden" value="'.$zone_name.'" name="zone_name"></td>
+				<td colspan="2" align="center" class="row2"><span class="gen"><b>'.$zone_name.' - '.$lang['Adr_admin_maps_no_townmap'].'</b></span><input type="hidden" value="'.$lang['Adr_admin_maps_edit_townmap'].'" name="mode"><input type="hidden" value="'.$id.'" name="id"><input type="hidden" value="'.$zone_name.'" name="zone_name"></td>
 			</tr>
 			<tr>
 				<td class="row2"><span class="genmed"><b>'.$lang['Adr_admin_maps_townmap_type'].':</b></span></td>
@@ -368,14 +334,18 @@ if ($mode == $lang['Adr_admin_maps_zone_townmap_edit'] )
 
 // lets get some gnomes to build the map
 
+			$edit_link = append_sid($phpbb_root_path.'admin/admin_adr_zones.php?mode=edit&amp;id='.$id);
 			$statinfo = '
 <tr>
 	<td class="row1" align="center" valign="center" colspan="2"><span class="genmed"><b>'.sprintf( $lang['Adr_admin_maps_editing_townmap'], $zone_name ).'</b></span>
 </tr>
 <tr>
+	<td class="row2" align="center" valign="center" colspan="2"><a href="' . $edit_link . '">Editer la zone</a></td>
+</tr>
+<tr>
 	<td class="row1" align="center" valign="center">
 <br>
-<b>Cliquez sur une case valide pour la s�lectionner.</b>
+<b>Cliquez sur une case valide pour la sélectionner.</b>
 <table background="../adr/images/zones/townmap/'.$townmap.'" width="'.$zwidth.'px" height="'.$zheight.'px" cellpadding=0 cellspacing=0 marginwidth=0 marginheight=0 topmargin=0 leftmargin=0 border=1>';
 
 			$cn = 1;
@@ -468,35 +438,6 @@ if ($action == $lang['Adr_admin_maps_delete_townmap'])
 	}
 
 	$message = '<br />'.$lang['Adr_admin_maps_zone_townmap_deleted'].sprintf( $lang['Adr_admin_maps_return_1'] ,"<a href=\"".append_sid("admin_adr_manage_zone_maps.".$phpEx)."\">", "</a>" );
-	$message .= sprintf( $lang['Adr_admin_maps_return_2'] ,"<a href=\"".append_sid("index.".$phpEx."?pane=right")."\">","</a> to return to Admin Index.<p>" );
-	message_die(GENERAL_MESSAGE, $message);
-}
-if ($action == $lang['Adr_admin_maps_assign'])
-{
-	if (!isset($assignzone))
-	{
-		$message = '<br />'. $lang['Adr_admin_maps_select_zonemap'].sprintf( $lang['Adr_admin_maps_return_1'] ,"<a href=\"".append_sid("admin_adr_manage_zone_maps.".$phpEx)."\">", "</a>" );
-		$message .= sprintf( $lang['Adr_admin_maps_return_2'] ,"<a href=\"".append_sid("index.".$phpEx."?pane=right")."\">","</a> to return to Admin Index.<p>" );
-		message_die(GENERAL_MESSAGE, $message);
-	}
-	$sql = "select * from ".ADR_ZONE_TOWNMAP_TABLE." where zonemap_type=$assignzone";
-	if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_7']); }
-	$hrow = mysql_fetch_array($result);
-
-	$zcellshn = $hrow['zonemap_cellwidthnumber'];
-	$zcellsvn = $hrow['zonemap_cellheightnumber'];
-	$cellamount = $zcellshn * $zcellsvn;
-
-	$buildinglist = '';
-	for ($a = 1; $a <= $cellamount; $a++)
-	{
-		$buildinglist .= "~";
-	}
-
-	$sql2 = "INSERT INTO ".ADR_ZONE_MAPS_TABLE." (zone_id, zonemap_type, zonemap_buildings) VALUES ($id, $assignzone, '$buildinglist')";
-	if ( !($db->sql_query($sql2)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_8']); }
-
-	$message = '<br />'. $lang['Adr_admin_maps_zonemap_assigned'].sprintf( $lang['Adr_admin_maps_return_1'] ,"<a href=\"".append_sid("admin_adr_manage_zone_maps.".$phpEx)."\">", "</a>" );
 	$message .= sprintf( $lang['Adr_admin_maps_return_2'] ,"<a href=\"".append_sid("index.".$phpEx."?pane=right")."\">","</a> to return to Admin Index.<p>" );
 	message_die(GENERAL_MESSAGE, $message);
 }

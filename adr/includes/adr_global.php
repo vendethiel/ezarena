@@ -32,10 +32,10 @@ include_once($phpbb_root_path . 'adr/includes/adr_functions_rewards.'. $phpEx);
 include_once($phpbb_root_path . 'adr/includes/adr_functions_cache.'.$phpEx);
 // V: REFACTORINGS
 include_once($phpbb_root_path . 'adr/includes/adr_functions_refactor_zones.'.$phpEx);
+include_once($phpbb_root_path . 'adr/includes/adr_functions_refactor_zone_maps.'.$phpEx);
 include_once($phpbb_root_path . 'adr/includes/adr_functions_refactor_spellbook.'.$phpEx);
 include_once($phpbb_root_path . 'adr/includes/adr_functions_refactor_battle.'.$phpEx);
 include_once($phpbb_root_path . 'adr/includes/adr_functions_refactor_events.'.$phpEx);
-include_once($phpbb_root_path . 'adr/includes/adr_functions_refactor_battle_item_types.'.$phpEx);
 include_once($phpbb_root_path . 'adr/includes/adr_functions_refactor_guilds.'.$phpEx);
 
 // V: we always cache.

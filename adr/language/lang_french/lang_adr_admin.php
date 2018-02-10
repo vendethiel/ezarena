@@ -13,8 +13,6 @@ if ( !defined ('IN_ADR_ADMIN') )
     return;
 }
 
-$lang['ADR_THIS_IS_LOOTTABLES'] = 'Note : cette liste est la liste des <b>tables de butin</b>.<br/>Vous pouvez les modifier dans l\'onglet "Objet" puis "Tables de butin".<br/>';
-
 if ( defined ('IN_ADR_CHARACTER'))
 {
     //ZONE
@@ -964,3 +962,5 @@ $lang['Adr_battle_monsters_modifier_type_explain']='L\'ancien type est utilis&ea
 $lang['Adr_battle_monsters_modifier_type_1']='Ancienne formule';
 $lang['Adr_battle_monsters_modifier_type_2']='Nouvelle formule';
 $lang['Adr_classes_image_explain']='L\'image correspondante doit être placée dans le répertoire <i>adr/images/classes/</i><br />Note : des images sp&eacute;ciales sont utilis&eacute;es pendant les combats. Vous devez aussi cr&eacute;er deux images, <br /><i>adr/images/battle/characters/NOM_CLASSE_0.gif</i> et <i>adr/images/battle/characters/NOM_CLASSE_1.gif</i><br /> pour les images de temps mort \ d\'attaque lors d\'un combat';
+$lang['ADR_THIS_IS_LOOTTABLES'] = 'Note : cette liste est la liste des <b>tables de butin</b>.<br/>Vous pouvez les modifier dans l\'onglet "Objet" puis "Tables de butin".<br/>';
+$lang['ADR_EDIT_ZONE_MAP'] = 'Editer la carte dynamique';

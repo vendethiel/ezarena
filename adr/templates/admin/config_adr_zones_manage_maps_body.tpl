@@ -10,9 +10,4 @@
 	</tr>
   </table>
 </form>
-<table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
-  <tr> 
-	<td align="center"><span class="genmed">Dynamic TownMaps MOD written by: Ozzie</span></td>
-  </tr>
-</table>
 <br	clear="all" />

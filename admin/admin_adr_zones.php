@@ -26,6 +26,7 @@ define('IN_ADR_LOOTTABLES', 1);
 define('IN_ADR_ZONE_MAPS', 1);
 
 // V: zone extra buildings
+// TODO $lang-ize this
 $zone_extra_buildings = array(
 	'beggar' => 'le Mendiant',
 	'blacksmith' => 'le Forgeron (fabrication)',
@@ -356,6 +357,7 @@ else if ( $mode != "" )
 			if( !$zones )
 				message_die(GENERAL_ERROR, 'Could not find specificed zone information', "", __LINE__, __FILE__, $sql);
 
+      $template->assign_var('EDIT_ZONE_MAP_LINK', append_sid($phpbb_root_path.'admin/admin_adr_manage_zone_maps.php?mode=edit&id='.$zone_id));
 
 			$s_hidden_fields = '<input type="hidden" name="mode" value="save" /><input type="hidden" name="zone_id" value="' . $zone_id . '" />';
 
@@ -798,15 +800,6 @@ else if ( $mode != "" )
 
 		case "savenew":
 
-			$sql = "SELECT * FROM " . ADR_ZONES_TABLE ."
-				ORDER BY zone_id 
-				DESC LIMIT 1";
-			$result = $db->sql_query($sql);
-			if( !$result )
-				message_die(GENERAL_ERROR, 'Could not obtain zones information', "", __LINE__, __FILE__, $sql);
-
-			$fields_data = $db->sql_fetchrow($result);
-			$zone_id = $fields_data['zone_id'] +1;
 			$name = ( isset($HTTP_POST_VARS['zone_name']) ) ? trim($HTTP_POST_VARS['zone_name']) : trim($HTTP_GET_VARS['zone_name']);
 			$description = ( isset($HTTP_POST_VARS['zone_desc']) ) ? trim($HTTP_POST_VARS['zone_desc']) : trim($HTTP_GET_VARS['zone_desc']);
 			$image = ( isset($HTTP_POST_VARS['zone_img']) ) ? trim($HTTP_POST_VARS['zone_img']) : trim($HTTP_GET_VARS['zone_img']);
@@ -889,8 +882,8 @@ else if ( $mode != "" )
 			}
 
 			$sql = "INSERT INTO " . ADR_ZONES_TABLE . " 
-				( zone_id , zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto2, cost_goto3, cost_goto4, cost_return, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, zone_mine, zone_enchant, zone_monsters_list , zone_level $extra_buildings_keyszone_mining_table, zone_fishing_table, zone_hunting_table, zone_herbal_table, zone_lumberjack_table, zone_tailor_table, zone_alchemy_table, zone_background )
-				VALUES ( '$zone_id' ,'" . str_replace("\'", "''", $name) . "','" . str_replace("\'", "''", $description) . "', '" . str_replace("\'", "''", $image) . "' , '" . str_replace("\'", "''", $element) . "', '" . str_replace("\'", "''", $item) . "' , '$cost2' , '$cost3' , '$cost4' , '$costreturn' , '" . str_replace("\'", "''", $goto2) . "' , '" . str_replace("\'", "''", $goto3) . "' , '" . str_replace("\'", "''", $goto4) . "' , '" . str_replace("\'", "''", $return) . "', '$shops' , '$forge' , '$prison' , '$temple' , '$bank' , '$event1' , '$event2' , '$event3' , '$event4' , '$event5' , '$event6' , '$event7' , '$event8' , '$pointwin1' , '$pointwin2' , '$pointloss1' , '$pointloss2' , '$chance' , '$mine' , '$enchant', '" . $monsters_list . "' , '$level' $extra_buildings_values, '" . $mine_loottables . "', '" . $fish_loottables . "', '" . $hunt_loottables . "', '" . $herbal_loottables . "', '" . $lumberjack_loottables . "', '$tailor_loottables', '$alchemy_loottables', '$zone_background' )";
+				( zone_name , zone_desc, zone_img , zone_element, zone_item, cost_goto2, cost_goto3, cost_goto4, cost_return, goto2_name, goto3_name, goto4_name, return_name, zone_shops , zone_forge , zone_prison , zone_temple, zone_bank, zone_event1, zone_event2, zone_event3, zone_event4, zone_event5, zone_event6, zone_event7, zone_event8, zone_pointwin1, zone_pointwin2, zone_pointloss1, zone_pointloss2, zone_chance, zone_mine, zone_enchant, zone_monsters_list , zone_level $extra_buildings_keyszone_mining_table, zone_fishing_table, zone_hunting_table, zone_herbal_table, zone_lumberjack_table, zone_tailor_table, zone_alchemy_table, zone_background )
+				VALUES ( '" . str_replace("\'", "''", $name) . "','" . str_replace("\'", "''", $description) . "', '" . str_replace("\'", "''", $image) . "' , '" . str_replace("\'", "''", $element) . "', '" . str_replace("\'", "''", $item) . "' , '$cost2' , '$cost3' , '$cost4' , '$costreturn' , '" . str_replace("\'", "''", $goto2) . "' , '" . str_replace("\'", "''", $goto3) . "' , '" . str_replace("\'", "''", $goto4) . "' , '" . str_replace("\'", "''", $return) . "', '$shops' , '$forge' , '$prison' , '$temple' , '$bank' , '$event1' , '$event2' , '$event3' , '$event4' , '$event5' , '$event6' , '$event7' , '$event8' , '$pointwin1' , '$pointwin2' , '$pointloss1' , '$pointloss2' , '$chance' , '$mine' , '$enchant', '" . $monsters_list . "' , '$level' $extra_buildings_values, '" . $mine_loottables . "', '" . $fish_loottables . "', '" . $hunt_loottables . "', '" . $herbal_loottables . "', '" . $lumberjack_loottables . "', '$tailor_loottables', '$alchemy_loottables', '$zone_background' )";
 			$result = $db->sql_query($sql);
 			if( !$result )
 				message_die(GENERAL_ERROR, "Couldn't insert new zones", "", __LINE__, __FILE__, $sql);
