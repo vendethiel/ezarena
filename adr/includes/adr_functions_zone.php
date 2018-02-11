@@ -3,7 +3,10 @@
 if ( !defined('IN_PHPBB') )
 	die("Hacking attempt");
 
-function adr_item_quest_check($npc_id, $npc_check, $times)
+/*
+ * Check if the character can still accomplish the quest (i.e. has not done it too many times).
+ */
+function adr_npc_check_times($npc_id, $npc_check, $times)
 {
 	if ( $npc_check == "" || $times <= 0 )
 	    return 1;
@@ -21,7 +24,10 @@ function adr_item_quest_check($npc_id, $npc_check, $times)
 	return 1;
 }
 
-function adr_item_quest_check_insert($quest_check, $npc_id, $user_id)
+/**
+ * Marks the player as having visited the NPC one more time
+ */
+function adr_npc_check_times_insert($quest_check, $npc_id, $user_id)
 {
 	global $db;
 	

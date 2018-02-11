@@ -141,10 +141,11 @@ if (empty($mode) || strtolower($mode) == 'main' || $mode == $lang['Adr_admin_map
 		<td class="row2"><span class="gen">'.$lang['Adr_admin_maps_building_types_title'].'</span></td>
 		<td class="row2"><input type="submit" VALUE="'.$lang['Adr_admin_maps_building_types'].'" name="mode"></td>
 	</tr>
-	<tr>
+  ' . ($zonemaplist2 ? /* only show "Create map for zone" if there's at least one unassigned zone */
+	'<tr>
 		<td class="row2"><span class="gen">'.$lang['Adr_admin_maps_townmap_create_title'].'</span></td>
 		<td class="row2"><select name="zone_name2"><option value="">'.$lang['Adr_admin_maps_none'].'</option>'.$zonemaplist2.'</select> <input type="submit" value="'.$lang['Adr_admin_maps_zone_townmap_edit'].'" name="mode"></td>
-	</tr>
+	</tr>' : '') . '
 	<tr>
 		<td class="row2"><span class="gen">'.$lang['Adr_admin_maps_townmap_edit_title'].'</span></td>
 		<td class="row2"><select name="zone_name1"><option value="">'.$lang['Adr_admin_maps_none'].'</option>'.$zonemaplist.'</select> <input type="submit" value="'.$lang['Adr_admin_maps_zone_townmap_edit'].'" name="mode"></td>
@@ -345,7 +346,7 @@ if ($mode == $lang['Adr_admin_maps_zone_townmap_edit'] )
 <tr>
 	<td class="row1" align="center" valign="center">
 <br>
-<b>Cliquez sur une case valide pour la sélectionner.</b>
+<b>Cliquez sur une case valide pour la s&eacute;lectionner.</b>
 <table background="../adr/images/zones/townmap/'.$townmap.'" width="'.$zwidth.'px" height="'.$zheight.'px" cellpadding=0 cellspacing=0 marginwidth=0 marginheight=0 topmargin=0 leftmargin=0 border=1>';
 
 			$cn = 1;

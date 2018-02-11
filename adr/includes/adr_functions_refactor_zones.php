@@ -246,7 +246,7 @@ function zone_npc_actions()
 		}
 		else
 		{
-			if ( adr_item_quest_check($npc_row['npc_id'], $adr_user['character_npc_check'], $npc_row['npc_times'] ) )
+			if ( adr_npc_check_times($npc_row['npc_id'], $adr_user['character_npc_check'], $npc_row['npc_times'] ) )
 			{
 				zone_npc_item_quest_check($npc_row);
 			}
@@ -297,7 +297,7 @@ function zone_npc_actions()
 			}
 		}
 
-		if ( adr_item_quest_check($npc_give_row['npc_id'], $adr_user['character_npc_check'], $npc_give_row['npc_times'] ) )
+		if ( adr_npc_check_times($npc_give_row['npc_id'], $adr_user['character_npc_check'], $npc_give_row['npc_times'] ) )
 		{
 			if ( !$npc_give_row['npc_quest_clue'] )
 			{
@@ -355,8 +355,6 @@ function zone_npc_actions()
 					
 					//Delete the Quest of the log
 					$delsql3 = " DELETE FROM  " . ADR_QUEST_LOG_TABLE . "
-			   			WHERE quest_kill_monster = '".$npc_give_row['npc_kill_monster']."'
-			   			AND quest_kill_monster_current_amount = '".$npc_give_row['npc_monster_amount']."'
 						AND user_id = '$user_id'
 						AND npc_id = '$npc_id'
 				   		";
@@ -418,7 +416,7 @@ function zone_npc_actions()
 
 			//Insert Character in check field
 			if( $npc_give_row['npc_times'] > 0 )
-				adr_item_quest_check_insert( $adr_user['character_npc_check'] , $npc_give_row['npc_id'] , $user_id );
+				adr_npc_check_times_insert( $adr_user['character_npc_check'] , $npc_give_row['npc_id'] , $user_id );
 			//----
 
 			$points_prize_lang = ( $npc_give_row['npc_points'] == 0 ) ? "" : sprintf( $lang['Adr_zone_npc_points_prize'] , number_format( intval( $npc_give_row['npc_points'] ) ) , $board_config['points_name'] ) ;
@@ -555,18 +553,26 @@ function zone_npc_item_quest_check($npc_row)
 	}
 
 	// Check if user has killed enough monsters
+  // V: removed this part, since a NPC can only have a quest
+  //    instead I added a count check
+  /*
+   		AND quest_kill_monster_current_amount = '".$npc_row['npc_monster_amount']."'
+   */
 	$sqlm3 = " SELECT * FROM  " . ADR_QUEST_LOG_TABLE . "
    		WHERE quest_kill_monster = '".$npc_row['npc_kill_monster']."'
-   		AND quest_kill_monster_current_amount = '".$npc_row['npc_monster_amount']."'
 		AND user_id = '$user_id'
 		AND npc_id = '$npc_id'
+    AND quest_kill_monster_current_amount < quest_kill_monster_amount
    		";
 	$resultm3 = $db->sql_query($sqlm3);
 	if( !$resultm3 )
    		message_die(GENERAL_ERROR, 'Could not obtain required quest information', "", __LINE__, __FILE__, $sqlm3);
 	if ( $kills_npc = $db->sql_fetchrow($resultm3) )
 	{
-		if ($kills_npc['quest_kill_monster'] != "" && $kills_npc['quest_kill_monster'] != '0' && ($kills_npc['quest_item_need'] == '0' || $kills_npc['quest_item_need'] == ""))
+    // V: apparently, we check here an "EITHER OR", that is, validate EITHER if we gave the item (earlier this function),
+    //    and here, we validate via mob kills ONLY if we don't also need an item.
+    //    This needs refactored ASAP.
+		if (($kills_npc['quest_item_need'] == '0' || $kills_npc['quest_item_need'] == ""))
 		{
 			$give_lang = sprintf($lang['Adr_zone_npc_complete_kill_quest'], $npc_row['npc_monster_amount'], adr_get_lang($npc_row['npc_kill_monster']));
 			$give = "<br /><br /><form method=\"post\" action=\"".append_sid("adr_zones.$phpEx")."\"><input type=\"hidden\" name=\"npc_id\" value=\"$npc_id\"><input type=\"submit\" name=\"npc_give\" value=\"$give_lang\" class=\"mainoption\" /></form>";

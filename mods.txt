@@ -459,7 +459,7 @@ Addons :
  - NPC should offer to complete quest if completable on first visit - Informpro
  - Heavy refactoring - Informpro
 TODO :
- - Rewrite the checks to complete a quest (items + kills)
+ - Rewrite the checks to complete a quest (items + kills, GH-76)
 
 # ADR : Advanced Zone Restrictions - Informpro
 Etend les restrictions de zones aux pages suivantes (configurable depuis l'ACP) :
