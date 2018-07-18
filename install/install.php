@@ -224,7 +224,10 @@ function guess_lang()
 
 // Begin
 error_reporting  (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
-set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
+if (function_exists('set_magic_quotes_runtime'))
+{
+  @set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
+}
 
 // PHP5 with register_long_arrays off?
 if (!isset($HTTP_POST_VARS) && isset($_POST))
