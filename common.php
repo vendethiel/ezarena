@@ -34,7 +34,10 @@ error_reporting  (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninit
 // V: we modern now
 session_start();
 
-@set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
+if (function_exists('set_magic_quotes_runtime'))
+{
+  @set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
+}
 @ini_set('register_globals',0); 
 @ini_set('variables_order','GPC'); 
 @ini_set('register_argc_argv',0); 
