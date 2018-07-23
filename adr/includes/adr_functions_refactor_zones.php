@@ -252,7 +252,7 @@ function zone_npc_actions()
 			}
 			else
 			{
-				$message = "<img src=\"adr/images/zones/npc/" . $npc_row['npc_img'] . "\"><br /><br /><b>" . $npc_row['npc_name'] . ":</b> <i>\"" . $npc_row['npc_message3'] . "\"</i><br /><br />" . $lang['Adr_zone_event_return'];
+				$message = "<img src=\"adr/images/zones/npc/" . $npc_row['npc_img'] . "\"><br /><br /><b>" . $npc_row['npc_name'] . ":</b><br /><div class=\"npc_dialog\">\"" . $npc_row['npc_message3'] . "\"</div><br /><br />" . $lang['Adr_zone_event_return'];
 				$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
 				message_die(GENERAL_ERROR, $message , $adr_zone_npc_title , '' );
 				break;
@@ -579,7 +579,9 @@ function zone_npc_item_quest_check($npc_row)
 		}
 	}
 
-	$message = "<img src=\"adr/images/zones/npc/" . $npc_row['npc_img'] . "\"><br /><br /><b>" . $npc_row['npc_name'] . ":</b> <i>\"" . $npc_row['npc_message'] . "\"</i>$give<br /><br />" . $lang['Adr_zone_event_return'];
+	$message = "<img src=\"adr/images/zones/npc/" . $npc_row['npc_img'] . "\"><br /><br /><b>" . $npc_row['npc_name'] . ":</b><br/><div class='npc_dialog'>" . $npc_row['npc_message'] . "</div>$give<br /><br />" . $lang['Adr_zone_event_return'];
+  $message .= '<link rel="stylesheet" type="text/css" href="' . $phpbb_root_path . 'templates/_shared/npc-dialog.css" />';
+  $message .= '<script type="text/javascript" src="' . $phpbb_root_path . 'templates/_shared/npc-dialog.js"></script>';
 	$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
 	message_die(GENERAL_MESSAGE, $message , $adr_zone_npc_title );
 }

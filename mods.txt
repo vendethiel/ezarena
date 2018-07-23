@@ -444,6 +444,9 @@ Ajoute un système super-complet de butin pour les monstres, avec des catégorie
 Addons :
  - Fix for ADR 0.4.4+ - Informpro
 
+# ADR : Advanced NPC Dialogs 1.0 - Informpro
+Ajoute un système de dialogues hiérarchiques aux PNJs.
+
 # ADR : Advanced NPC System 2.2.0-beta - Dedo
 Ajoute un système de NPC (PNJ) avancé au Zone Mod, permettant de dépasser la limite des 6 PNJs par zone, et de créer un système de quête simple où le PNJ peut demander à un joueur de lui rapporter un objet contre une expérience/des points/SP/objet
 

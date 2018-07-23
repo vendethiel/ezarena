@@ -96,13 +96,9 @@ function update_npc(newimage)
 	</tr>
 	<tr>
 		<td class="row2" width="60%"><b>{L_NPC_MESSAGE} :</b><br />{L_NPC_MESSAGE_EXPLAIN}</td>
-		<td class="row2" align="center" colspan="2"><textarea name="npc_message" cols="50" rows="5" class="post">{NPC_MSG}</textarea>
-	<!-- BEGIN npc_add -->
-        </td>
-	<!-- END npc_add -->
-	<!-- BEGIN npc_edit -->
- 		<br /><span class="gensmall">{NPC_MSG_EXPLAIN}</span></td>
-	<!-- END npc_edit -->
+		<td class="row2" colspan="2">
+      <textarea name="npc_message" class="npc_dialog">{NPC_MSG}</textarea>
+    </td>
 	</tr>
 </table>
 
@@ -183,3 +179,76 @@ function update_npc(newimage)
 </table>
 
 </form>
+<script type="text/javascript">
+function NpcDialogEditor(writer, el, node) {
+  this.el = el;
+  this.writer = writer;
+  this.node = node;
+  this.draw();
+}
+
+NpcDialogEditor.prototype.draw = function () {
+  var self = this;
+  function drawNode(node) {
+    var root = document.createElement('span');
+
+    var appender = document.createElement('span');
+    appender.textContent = '[+] ';
+    appender.onclick = function () {
+      var text = prompt("Texte ?");
+      if (!node.children) {
+        node.children = [];
+      }
+      node.children.push({text: text});
+      self.draw(); 
+    };
+    root.appendChild(appender);
+
+    var textNode = document.createElement('span');
+    textNode.textContent = node.text;
+    textNode.onclick = function () {
+      node.text = prompt("Texte ?", textNode.textContent);
+      self.draw();
+    };
+    root.appendChild(textNode);
+    if (node.children) {
+      var list = document.createElement('ul');
+      for (var i = 0; i < node.children.length; ++i) {
+        var el = document.createElement('li');
+        var remover = document.createElement('span');
+        remover.textContent = '[-]';
+        remover.onclick = function (i) { /* capture i */
+          return function () {
+            node.children.splice(i, 1);
+            self.draw();
+          };
+        }(i);
+        el.appendChild(remover);
+
+        el.appendChild(drawNode(node.children[i]));
+        list.appendChild(el);
+      }
+
+      root.appendChild(list);
+    }
+    return root;
+  }
+  this.el.innerHTML = '';
+  this.el.appendChild(drawNode(this.node));
+  this.writer.value = JSON.stringify(this.node);
+};
+
+for (var i = 0, xs = document.getElementsByClassName('npc_dialog'); i < xs.length; ++i) {
+  var writer = xs[i];
+  writer.style.display = 'none';
+  var text = writer.value;
+  var container = document.createElement('div');
+  // fairly poor attempt at detecting json...
+  if (text[0] != '{') {
+    new NpcDialogEditor(writer, container, {text: text});
+  } else {
+    new NpcDialogEditor(writer, container, JSON.parse(text));
+  }
+  writer.parentNode.appendChild(container);
+}
+</script>
