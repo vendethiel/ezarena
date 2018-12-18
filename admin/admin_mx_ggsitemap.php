@@ -36,7 +36,7 @@ else
 if( !empty($setmodules) )
 {
   $filename = basename(__FILE__);
-  $module['phpBB_SEO']['GYM_SiteMaps_&_RSS'] = $admin_root_path2.  $filename;
+  $module['General']['GYM_SiteMaps_&_RSS'] = $admin_root_path2.  $filename;
 
   return;
 }

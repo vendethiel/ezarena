@@ -261,7 +261,7 @@ class _sf_tree
 		$sql = 'SELECT cat_id, cat_title, cat_order
 					FROM ' . CATEGORIES_TABLE . '
 					ORDER BY cat_order';
-		if ( !($result = $db->sql_query($sql)) )
+		if ( !($result = $db->sql_query($sql, false, 'sf_tree_read_categories')) )
 		{
 			message_die(GENERAL_ERROR, 'Could not query categories list', '', __LINE__, __FILE__, $sql);
 		}
@@ -284,7 +284,7 @@ class _sf_tree
 		$sql = 'SELECT *
 					FROM ' . FORUMS_TABLE . '
 					ORDER BY cat_id, forum_order';
-		if ( !($result = $db->sql_query($sql)) )
+		if ( !($result = $db->sql_query($sql, false, 'sf_tree_read_forums')) )
 		{
 			message_die(GENERAL_ERROR, 'Could not query forums list', '', __LINE__, __FILE__, $sql);
 		}

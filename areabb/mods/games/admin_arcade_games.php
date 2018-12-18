@@ -43,17 +43,17 @@ if (isset($HTTP_POST_VARS['action']) || isset($HTTP_GET_VARS['action']))
 		$action				= $HTTP_POST_VARS['action']; 
 		$arcade_cattitle	= $HTTP_POST_VARS['arcade_cattitle'];
 		$icones				= $HTTP_POST_VARS['icones'];
-		$arcade_parent		= eregi_replace('[^0-9]','',$HTTP_POST_VARS['arcade_parent']);
-		$arcade_catid		= eregi_replace('[^0-9]','',$HTTP_POST_VARS['arcade_catid']);
-		$to_catid			= eregi_replace('[^0-9]','',$HTTP_POST_VARS['to_catid']);
-		$salle				= eregi_replace('[^0-9]','',$HTTP_POST_VARS['salle']);
+		$arcade_parent		= intval($HTTP_POST_VARS['arcade_parent']);
+		$arcade_catid		= intval($HTTP_POST_VARS['arcade_catid']);
+		$to_catid			= intval($HTTP_POST_VARS['to_catid']);
+		$salle				= intval($HTTP_POST_VARS['salle']);
 		
 	}else{
 		$action 			= $HTTP_GET_VARS['action'];
-		$arcade_catid		= eregi_replace('[^0-9]','',$HTTP_GET_VARS['arcade_catid']);
-		$catid2				= eregi_replace('[^0-9]','',$HTTP_GET_VARS['catid2']);
-		$arcade_catorder	= eregi_replace('[^0-9]','',$HTTP_GET_VARS['arcade_catorder']);
-		$catorder2			= eregi_replace('[^0-9]','',$HTTP_GET_VARS['catorder2']);
+		$arcade_catid		= intval($HTTP_GET_VARS['arcade_catid']);
+		$catid2				= intval($HTTP_GET_VARS['catid2']);
+		$arcade_catorder	= intval($HTTP_GET_VARS['arcade_catorder']);
+		$catorder2			= intval($HTTP_GET_VARS['catorder2']);
 	}
 
 

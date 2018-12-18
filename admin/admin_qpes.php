@@ -16,7 +16,7 @@ define('IN_PHPBB', 1);
 if( !empty($setmodules) )
 {
 	$file = basename(__FILE__);
-	$module['Quick_Post_ES']['Quick_Post_ES'] = $file;
+	$module['General']['Quick_Post_ES'] = $file;
 	return;
 }
 
