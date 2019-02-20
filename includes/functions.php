@@ -528,6 +528,7 @@ function init_userprefs($userdata)
 
 		$board_config['default_lang'] = $default_lang;
 		$userdata['user_lang'] = $default_lang;
+		$db->clear_cache('config_');
 	}
 	elseif ( $board_config['default_lang'] !== $default_lang )
 	{
@@ -541,6 +542,7 @@ function init_userprefs($userdata)
 		}
 
 		$board_config['default_lang'] = $default_lang;
+		$db->clear_cache('config_');
 	}
 
 	include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_main.' . $phpEx);
