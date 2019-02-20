@@ -36,7 +36,7 @@ if ( @file_exists($mx_root_path . 'mx_meta.inc') ) {
 	$phpbb_root_path = './';
 	include($phpbb_root_path . 'extension.inc');
 	include($phpbb_root_path . 'common.'.$phpEx);
-	$paths = array(	'module_path'	=> $phpbb_root_path . 'mx_ggsitemaps/',
+	$paths = array(	'module_path'	=> $phpbb_root_path . 'includes/mx_ggsitemaps/',
 			'lang_path'	=> $phpbb_root_path,
 		);
 	// Start session management

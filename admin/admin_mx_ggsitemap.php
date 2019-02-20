@@ -19,7 +19,7 @@ if ( file_exists( 'admin_board.' . $phpEx ) )
 	$admin_root_path2 = '';
 	$module_root_path2 = $phpbb_root_path = $mx_root_path = './../';
 	require($mx_root_path . 'extension.inc');
-	$module_root_path =  './../mx_ggsitemaps/';
+	$module_root_path =  './../includes/mx_ggsitemaps/';
 	$pathkb = '';
 }
 else
@@ -391,7 +391,7 @@ else
 		}
 	}
 	// Cache settings checks
-	$cache_dir = defined('IN_PORTAL') ? $mx_root_path . 'modules/mx_ggsitemaps/' . $new['ggs_cache_dir'] : $phpbb_root_path .'mx_ggsitemaps/' . $new['ggs_cache_dir'];
+	$cache_dir = defined('IN_PORTAL') ? $mx_root_path . 'modules/mx_ggsitemaps/' . $new['ggs_cache_dir'] : $phpbb_root_path .'includes/mx_ggsitemaps/' . $new['ggs_cache_dir'];
 	$cache_dir = phpbb_realpath($cache_dir);
 	if ($cache_dir{(strlen($cache_dir)-1)} != "/"){
 		$cache_dir .= "/";
