@@ -394,6 +394,10 @@ function session_pagestart($user_ip, $thispage_id)
 				return $userdata;
 			}
 		}
+		else
+		{
+			unset($_SESSION['logged_in']);
+		}
 	}
 	elseif (empty($sessiondata))
 	{
