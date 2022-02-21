@@ -20,7 +20,7 @@ define('BATTLE_TURN_MONSTER', 2);
 
 function adr_duration_text($item, $self_name)
 {
-  global $lang;
+  global $lang, $message;
 	if ($item['item_duration'] < 2)
 	{
 		$message = '</span><span class="gensmall">'; // set new span class
@@ -70,7 +70,7 @@ function adr_next_round($turn, $extra = '')
 
 function adr_use_hp_amulet()
 {
-	global $bat, $challeneger, $hp_regen, $battle_message;
+	global $bat, $challenger, $hp_regen, $battle_message;
 
 	// Check if user a Amulet for HP regen this turn
 	if ($bat['battle_challenger_hp'] != 0)
