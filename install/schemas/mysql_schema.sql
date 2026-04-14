@@ -573,7 +573,7 @@ CREATE TABLE phpbb_ranks (
    rank_min mediumint(8) DEFAULT '0' NOT NULL,
    rank_special tinyint(1) DEFAULT '0',
    rank_image varchar(255),
-   rank_tags TEXT NOT NULL DEFAULT '',
+   rank_tags TEXT NOT NULL,
    PRIMARY KEY (rank_id)
 );
 
@@ -924,7 +924,7 @@ CREATE TABLE phpbb_users (
    user_cell_time INT(11) DEFAULT '0' NOT NULL,
    user_cell_time_judgement INT(11) DEFAULT '0' NOT NULL,
    user_cell_caution INT(8) DEFAULT '0' NOT NULL,
-   user_cell_sentence TEXT DEFAULT '',
+   user_cell_sentence TEXT,
    user_cell_enable_caution INT(8) DEFAULT '0' NOT NULL,
    user_cell_enable_free INT(8) DEFAULT '0' NOT NULL,
    user_cell_celleds INT(8) DEFAULT '0' NOT NULL,
@@ -1429,7 +1429,7 @@ CREATE TABLE phpbb_adr_characters (
   # brewing
   `character_skill_brewing_uses` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ,
   `character_skill_brewing` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ,
-  `character_pre_effects` TEXT DEFAULT '' NULL,
+  `character_pre_effects` TEXT NULL,
 
   # cooking
   `character_skill_cooking_uses` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ,
@@ -1439,7 +1439,7 @@ CREATE TABLE phpbb_adr_characters (
   `character_skill_blacksmithing` INT( 8 ) UNSIGNED DEFAULT '1' NOT NULL ,
 
   # Advanced spell ->0.4.10
-  `character_spell_pre_effects` varchar(255) NOT NULL DEFAULT '',
+  `character_spell_pre_effects` varchar(255) NOT NULL ,
 
   # ADR - Party
   character_party int(8) NOT NULL default'0',
@@ -1745,8 +1745,8 @@ CREATE TABLE phpbb_adr_shops_items (
   # Brewing, etc
   `item_brewing_recipe` INT( 1 ) DEFAULT '0' NOT NULL ,
   `item_recipe_linked_item` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL ,
-  `item_brewing_items_req` TEXT DEFAULT '' NOT NULL ,
-  `item_effect` TEXT DEFAULT '' NOT NULL ,
+  `item_brewing_items_req` TEXT NOT NULL ,
+  `item_effect` TEXT NOT NULL ,
   `item_original_recipe_id` INT( 8 ) DEFAULT '0' NOT NULL ,
   `item_recipe_skill_id` INT( 8 ) DEFAULT '0' NOT NULL ,
 
@@ -2084,16 +2084,16 @@ CREATE TABLE phpbb_adr_bug_fix(
 CREATE TABLE phpbb_adr_stores_user_history(
   user_store_trans_id int(12) NOT NULL default '0',
   user_store_owner_id int(8) NOT NULL default '0',
-  user_store_info TEXT NOT NULL default '',
+  user_store_info TEXT NOT NULL ,
   user_store_total_price int(12) NOT NULL default '0',
   user_store_date int(12) NOT NULL default '0',
-  user_store_buyer TEXT NOT NULL default '',
+  user_store_buyer TEXT NOT NULL ,
   PRIMARY KEY(user_store_trans_id, user_store_owner_id)
 ) ;
 
 # ADR 0.4.5
 ALTER TABLE phpbb_adr_shops_items_type ADD item_type_order MEDIUMINT( 8 ) NOT NULL DEFAULT '1';
-ALTER TABLE `phpbb_adr_shops_items_type` ADD `item_type_category` VARCHAR( 50 ) NOT NULL DEFAULT '';
+ALTER TABLE `phpbb_adr_shops_items_type` ADD `item_type_category` VARCHAR( 50 ) NOT NULL ;
 
 # NPC System
 CREATE TABLE `phpbb_adr_npc` (
@@ -2193,8 +2193,8 @@ CREATE TABLE `phpbb_adr_loottables` (
 );
 
 # ADR - Brewing
-ALTER TABLE `phpbb_adr_battle_list` ADD `battle_effects` TEXT DEFAULT '' NULL;
-ALTER TABLE `phpbb_adr_battle_pvp` ADD `battle_effects` TEXT DEFAULT '' NULL;
+ALTER TABLE `phpbb_adr_battle_list` ADD `battle_effects` TEXT NULL;
+ALTER TABLE `phpbb_adr_battle_pvp` ADD `battle_effects` TEXT NULL;
 ALTER TABLE `phpbb_adr_elements` ADD `element_skill_brewing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
 ALTER TABLE `phpbb_adr_races` ADD `race_skill_brewing_bonus` INT( 8 ) DEFAULT '0' NOT NULL ;
 
@@ -2203,8 +2203,8 @@ CREATE TABLE `phpbb_adr_recipebook` (
   `recipe_owner_id` int(8) DEFAULT '0' NOT NULL,
   `recipe_level` int(8) DEFAULT '0' NOT NULL,
   `recipe_linked_item` INT( 8 ) UNSIGNED DEFAULT '0' NOT NULL,
-  `recipe_items_req` TEXT DEFAULT '' NOT NULL,
-  `recipe_effect` TEXT DEFAULT '' NOT NULL,
+  `recipe_items_req` TEXT NOT NULL,
+  `recipe_effect` TEXT NOT NULL,
   `recipe_original_id` int(8) DEFAULT '0' NOT NULL,
   `recipe_skill_id` int(8) DEFAULT '0' NOT NULL,
   KEY `recipe_id` (`recipe_id`)
@@ -2232,9 +2232,9 @@ CREATE TABLE phpbb_adr_shops_spells (
   
   # ADR - Advanced Spells 0.4.5 upgrade
   `spell_battle` int(1) NOT NULL default '0',
-  `spell_xtreme` text NOT NULL default '',
-  `spell_xtreme_battle` text NOT NULL default '',
-  `spell_xtreme_pvp` text NOT NULL default '',
+  `spell_xtreme` text NOT NULL ,
+  `spell_xtreme_battle` text NOT NULL ,
+  `spell_xtreme_pvp` text NOT NULL ,
 
   # ditto 0.4.9
   `spell_alignment` varchar(255) NOT NULL DEFAULT '0',
@@ -2243,7 +2243,7 @@ CREATE TABLE phpbb_adr_shops_spells (
   # Missing somehow.
   spell_auth int(1) NOT NULL default '0',
   spell_linked_item int(8) NOT NULL default '0',
-  spell_items_req text NOT NULL default '',
+  spell_items_req text NOT NULL ,
 
   KEY spell_id (spell_id),
   KEY spell_owner_id (spell_owner_id)

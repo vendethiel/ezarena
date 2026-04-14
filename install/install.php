@@ -324,8 +324,8 @@ include($phpbb_root_path.'includes/sessions.'.$phpEx);
 
 // Define schema info
 $available_dbms = array(
-	'mysql'=> array(
-		'LABEL'			=> 'MySQL',
+	'mysqli'=> array(
+		'LABEL'			=> 'MySQLi',
 		'SCHEMA'		=> 'mysql', 
 		'DELIM'			=> ';',
 		'DELIM_BASIC'	=> ';',
@@ -747,8 +747,9 @@ else
 
 			case 'mysql':
 			case 'mysql4':
-				$check_exts = 'mysql';
-				$check_other = 'mysql';
+			case 'mysqli':
+				$check_exts = 'mysqli';
+				$check_other = 'mysqli';
 				break;
 
 			case 'postgres':
