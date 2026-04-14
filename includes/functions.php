@@ -219,53 +219,13 @@ function array_merge_replace($array, $newValues)
 */
 function phpbb_ltrim($str, $charlist = false)
 {
-	if ($charlist === false)
-	{
-		return ltrim($str);
-	}
-	
-	$php_version = explode('.', PHP_VERSION);
-
-	// php version < 4.1.0
-	if ((int) $php_version[0] < 4 || ((int) $php_version[0] == 4 && (int) $php_version[1] < 1))
-	{
-		while ($str{0} == $charlist)
-		{
-			$str = substr($str, 1);
-		}
-	}
-	else
-	{
-		$str = ltrim($str, $charlist);
-	}
-
-	return $str;
+  return ltrim($str, $charlist);
 }
 
 // added at phpBB 2.0.12 to fix a bug in PHP 4.3.10 (only supporting charlist in php >= 4.1.0)
 function phpbb_rtrim($str, $charlist = false)
 {
-	if ($charlist === false)
-	{
-		return rtrim($str);
-	}
-	
-	$php_version = explode('.', PHP_VERSION);
-
-	// php version < 4.1.0
-	if ((int) $php_version[0] < 4 || ((int) $php_version[0] == 4 && (int) $php_version[1] < 1))
-	{
-		while ($str{strlen($str)-1} == $charlist)
-		{
-			$str = substr($str, 0, strlen($str)-1);
-		}
-	}
-	else
-	{
-		$str = rtrim($str, $charlist);
-	}
-
-	return $str;
+  return rtrim($str, $charlist);
 }
 
 /**
@@ -804,8 +764,7 @@ function create_date($format, $gmepoch, $tz)
 
 	if ( empty($translate) && $board_config['default_lang'] != 'english' )
 	{
-		@reset($lang['datetime']);
-		while ( list($match, $replace) = @each($lang['datetime']) )
+    foreach ($lang['datetime'] as $match => $replace)
 		{
 			$translate[$match] = $replace;
 		}
@@ -1395,13 +1354,25 @@ function display_qpes_data($qp_acp=false)
 	// config data
 	if (!empty($board_config['users_qp_settings']))
 	{
-		list($board_config['user_qp'], $board_config['user_qp_show'], $board_config['user_qp_subject'], $board_config['user_qp_bbcode'], $board_config['user_qp_smilies'], $board_config['user_qp_more']) = explode('-', $board_config['users_qp_settings']);
+    $_temp_vars = explode('-', $board_config['users_qp_settings']);
+    $board_config['user_qp'] = $_temp_vars[0];
+    $board_config['user_qp_show'] = $_temp_vars[1];
+    $board_config['user_qp_subject'] = $_temp_vars[2];
+    $board_config['user_qp_bbcode'] = $_temp_vars[3];
+    $board_config['user_qp_smilies'] = $_temp_vars[4];
+    $board_config['user_qp_more'] = $_temp_vars[5];
 	}
 
 	// user data
 	if (!empty($userdata['user_qp_settings']))
 	{
-		list($user_qp, $user_qp_show, $user_qp_subject, $user_qp_bbcode, $user_qp_smilies, $user_qp_more) = explode('-', $userdata['user_qp_settings']);
+    $_temp_vars = explode('-', $userdata['user_qp_settings']);
+    $user_qp = $_temp_vars[0];
+    $user_qp_show = $_temp_vars[1];
+    $user_qp_subject = $_temp_vars[2];
+    $user_qp_bbcode = $_temp_vars[3];
+    $user_qp_smilies = $_temp_vars[4];
+    $user_qp_more = $_temp_vars[5];
 	}
 
 	// check if quick reply is enabled
@@ -1905,8 +1876,7 @@ function read_cookies($userdata)
       $val = isset($_COOKIE[$base_name . '_uf']) ? $_COOKIE[$base_name . '_uf'] : 0;
 			$tracking_floor = intval($val);
 			$board_config['tracking_unreads'] = isset($HTTP_COOKIE_VARS[$base_name . '_u']) ? unserialize($HTTP_COOKIE_VARS[$base_name . '_u']) : array();
-			@reset( $board_config['tracking_unreads'] );
-			while ( list($id, $time) = @each($board_config['tracking_unreads']) )
+      foreach ($board_config['tracking_unreads'] as $id => $time)
 			{
 				if ( intval($id) > 0 )
 				{
@@ -1962,8 +1932,9 @@ function write_cookies($userdata)
 		if ( count($board_config['tracking_unreads']) > MAX_COOKIE_ITEM )
 		{
 			$nb = count($board_config['tracking_unreads']) - MAX_COOKIE_ITEM;
-			while ( ($nb > 0) && ( list($id, $time) = @each($board_config['tracking_unreads']) ) )
+      foreach ($board_config['tracking_unreads'] as $id => $time)
 			{
+        if ($nb <= 0) break;
 				unset($board_config['tracking_unreads'][$id]);
 				$nb--;
 			}
@@ -1989,8 +1960,7 @@ function write_cookies($userdata)
 		{
 			$first_found = false;
 			$tracking_floor = 0;
-			@reset($tracking_unreads);
-			while ( list($id, $time) = @each($tracking_unreads) )
+      foreach ($tracking_unreads as $id => $time)
 			{
 				if ( !$first_found )
 				{
@@ -2004,14 +1974,12 @@ function write_cookies($userdata)
 		if ( $board_config['keep_unreads_db'] && $userdata['session_logged_in'] )
 		{
 			$data = intval($tracking_floor);
-			reset($tracking_unreads);
-			while ( list($id, $time) = each($tracking_unreads) )
+      foreach ($tracking_unreads as $id => $time)
 			{
 				if ($id) $data .= ';' . intval($id) . ':' . intval($time);
 			}
 			$data .= '//' . intval($board_config['tracking_time']) . '//';
-			reset($tracking_forums);//board_config['tracking_forums']);
-			while ( list($id, $time) = each($tracking_forums)) //$board_config['tracking_forums']) )
+      foreach ($tracking_forums as $id => $time)
 			{
 				if ($id) $data .= ';' . intval($id) . ':' . intval($time);
 			}
@@ -2059,17 +2027,15 @@ function list_new_unreads(&$forum_unread, $check_auth = 0)
 	if ($tracking_time == '') $tracking_time = 0;	
 	if ( !empty($board_config['tracking_forums']) )
 	{
-		@reset($board_config['tracking_forums']); //Mark whole forum as read records
-		while ( list($id, $time) = @each($board_config['tracking_forums']) )
+    foreach ($board_config['tracking_forums'] as $id => $time)
 		{ //obsolete if forum was marked read before current visit time
 			if ( $time <= $tracking_time )	unset($board_config['tracking_forums'][$id]);
 		}
 	}
 
 	//get list of remembered topic id's
-	@reset($board_config['tracking_unreads']); //Mark whole forum as read records
 	$list_unreads = '';
-	while ( list($id, $time) = @each($board_config['tracking_unreads']) )
+  foreach ($board_config['tracking_unreads'] as $id => $time)
 	{
 		if ($id) $list_unreads .= ($list_unreads ? ',':'') . $id;
 	}

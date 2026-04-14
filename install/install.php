@@ -247,66 +247,60 @@ if (!isset($HTTP_POST_VARS) && isset($_POST))
 }
 
 // Slash data if it isn't slashed
-if (!get_magic_quotes_gpc())
+if (!function_exists('get_magic_quotes_gpc') || !get_magic_quotes_gpc())
 {
 	if (is_array($HTTP_GET_VARS))
 	{
-		while (list($k, $v) = each($HTTP_GET_VARS))
+    foreach ($_GET as $k => $v)
 		{
 			if (is_array($HTTP_GET_VARS[$k]))
 			{
-				while (list($k2, $v2) = each($HTTP_GET_VARS[$k]))
+        foreach ($_GET[$k] as $k2 => $v)
 				{
 					$HTTP_GET_VARS[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_GET_VARS[$k]);
 			}
 			else
 			{
 				$HTTP_GET_VARS[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_GET_VARS);
 	}
 
 	if (is_array($HTTP_POST_VARS))
 	{
-		while (list($k, $v) = each($HTTP_POST_VARS))
+    foreach ($_POST as $k => $v)
 		{
 			if (is_array($HTTP_POST_VARS[$k]))
 			{
-				while (list($k2, $v2) = each($HTTP_POST_VARS[$k]))
+        foreach ($_POST[$k] as $k2 => $v2)
 				{
 					$HTTP_POST_VARS[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_POST_VARS[$k]);
 			}
 			else
 			{
 				$HTTP_POST_VARS[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_POST_VARS);
 	}
 
 	if (is_array($HTTP_COOKIE_VARS))
 	{
-		while (list($k, $v) = each($HTTP_COOKIE_VARS))
+    foreach ($_COOKIE as $k => $v)
 		{
 			if (is_array($HTTP_COOKIE_VARS[$k]))
 			{
-				while (list($k2, $v2) = each($HTTP_COOKIE_VARS[$k]))
+        foreach ($_COOKIE[$k] as $k2 => $v2)
 				{
 					$HTTP_COOKIE_VARS[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_COOKIE_VARS[$k]);
 			}
 			else
 			{
 				$HTTP_COOKIE_VARS[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_COOKIE_VARS);
 	}
 }
 
@@ -323,6 +317,7 @@ $lang = array();
 $error = false;
 
 // Include some required functions
+$table_prefix = 'phpbb_';
 include($phpbb_root_path.'includes/constants.'.$phpEx);
 include($phpbb_root_path.'includes/functions.'.$phpEx);
 include($phpbb_root_path.'includes/sessions.'.$phpEx);
@@ -615,11 +610,8 @@ else if ((empty($install_step) || $admin_pass1 != $admin_pass2 || empty($admin_p
 
 	closedir($dir);
 
-	@asort($lang_options);
-	@reset($lang_options);
-
 	$lang_select = '<select name="lang" onchange="this.form.submit()">';
-	while (list($displayname, $filename) = @each($lang_options))
+  foreach ($lang_options as $displayname => $filename)
 	{
 		$selected = ($language == $filename) ? ' selected="selected"' : '';
 		$lang_select .= '<option value="' . $filename . '"' . $selected . '>' . ucwords($displayname) . '</option>';
@@ -627,7 +619,7 @@ else if ((empty($install_step) || $admin_pass1 != $admin_pass2 || empty($admin_p
 	$lang_select .= '</select>';
 
 	$dbms_select = '<select name="dbms" onchange="if(this.form.upgrade.options[this.form.upgrade.selectedIndex].value == 1){ this.selectedIndex = 0;}">';
-	while (list($dbms_name, $details) = @each($available_dbms))
+  foreach ($available_dbms as $dbms_name => $details)
 	{
 		$selected = ($dbms_name == $dbms) ? 'selected="selected"' : '';
 		$dbms_select .= '<option value="' . $dbms_name . '">' . $details['LABEL'] . '</option>';

@@ -70,69 +70,60 @@ if ((!@ini_get('register_long_arrays') || @ini_get('register_long_arrays') == '0
 // this is a security precaution to prevent someone
 // trying to break out of a SQL statement.
 //
-if( !@get_magic_quotes_gpc() )
+if (!function_exists('get_magic_quotes_gpc') || !get_magic_quotes_gpc())
 {
-	if( is_array($HTTP_GET_VARS) )
+	if (is_array($HTTP_GET_VARS))
 	{
-		while( list($k, $v) = each($HTTP_GET_VARS) )
+    foreach ($_GET as $k => $v)
 		{
-			if( is_array($HTTP_GET_VARS[$k]) )
+			if (is_array($HTTP_GET_VARS[$k]))
 			{
-				while( list($k2, $v2) = each($HTTP_GET_VARS[$k]) )
+        foreach ($_GET[$k] as $k2 => $v)
 				{
 					$HTTP_GET_VARS[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_GET_VARS[$k]);
 			}
 			else
 			{
 				$HTTP_GET_VARS[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_GET_VARS);
 	}
 
-	if( is_array($HTTP_POST_VARS) )
+	if (is_array($HTTP_POST_VARS))
 	{
-		while( list($k, $v) = each($HTTP_POST_VARS) )
+    foreach ($_POST as $k => $v)
 		{
-			if( is_array($HTTP_POST_VARS[$k]) )
+			if (is_array($HTTP_POST_VARS[$k]))
 			{
-				while( list($k2, $v2) = each($HTTP_POST_VARS[$k]) )
+        foreach ($_POST[$k] as $k2 => $v2)
 				{
-					if (!is_array($v2))
-					{
-						$HTTP_POST_VARS[$k][$k2] = addslashes($v2);
-					}
+					$HTTP_POST_VARS[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_POST_VARS[$k]);
 			}
 			else
 			{
 				$HTTP_POST_VARS[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_POST_VARS);
 	}
 
-	if( is_array($HTTP_COOKIE_VARS) )
+	if (is_array($HTTP_COOKIE_VARS))
 	{
-		while( list($k, $v) = each($HTTP_COOKIE_VARS) )
+    foreach ($_COOKIE as $k => v)
 		{
-			if( is_array($HTTP_COOKIE_VARS[$k]) )
+			if (is_array($HTTP_COOKIE_VARS[$k]))
 			{
-				while( list($k2, $v2) = each($HTTP_COOKIE_VARS[$k]) )
+        foreach ($_COOKIE[$k] as $k2 => $v2)
 				{
 					$HTTP_COOKIE_VARS[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_COOKIE_VARS[$k]);
 			}
 			else
 			{
 				$HTTP_COOKIE_VARS[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_COOKIE_VARS);
 	}
 }
 
